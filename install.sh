@@ -10,6 +10,7 @@ SKILLS=(
   "gh-pr-comment-assistant:Analyze and plan fixes for PR review comments"
   "gh-issue-creator:Create GitHub issues from bug/feature/tech-debt templates"
   "gh-pr-description-updater:Read or update PR descriptions using repo template"
+  "verify-pr:Three-phase PR verification (code review, test plan, upstream assumptions)"
   "writing-voice:Direct, personal writing style with AI-slop blacklist"
 )
 
