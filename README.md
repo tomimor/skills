@@ -29,13 +29,13 @@ Agent skills are markdown files that give AI coding assistants specialized knowl
 ### Quick install (all skills)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/tomim/tomim-skills/main/install.sh | bash -s -- --all
+curl -fsSL https://raw.githubusercontent.com/tomimor/tomim-skills/main/install.sh | bash -s -- --all
 ```
 
 ### Install a single skill
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/tomim/tomim-skills/main/install.sh | bash -s -- --skill pr-dashboard
+curl -fsSL https://raw.githubusercontent.com/tomimor/tomim-skills/main/install.sh | bash -s -- --skill pr-dashboard
 ```
 
 ### Manual install
