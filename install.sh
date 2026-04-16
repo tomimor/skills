@@ -14,10 +14,15 @@ SKILLS=(
   "writing-voice:Direct, personal writing style with AI-slop blacklist"
 )
 
+VENDOR_SKILLS=(
+  "impeccable:pbakaus/impeccable:.claude/skills"
+)
+
 TARGET_DIR=""
 INSTALL_ALL=false
 SINGLE_SKILL=""
 FORCE=false
+UPDATE_VENDOR=false
 
 usage() {
   cat <<EOF
@@ -30,6 +35,7 @@ Options:
   --skill <name>     Install a single skill by name
   --target <dir>     Override the install directory
   --force            Overwrite existing skills without confirming
+  --update-vendor    Update vendor submodules to their latest versions
   -h, --help         Show this help message
 
 Running without flags starts an interactive picker.
@@ -40,6 +46,14 @@ EOF
     name="${entry%%:*}"
     desc="${entry#*:}"
     printf "  %-30s %s\n" "$name" "$desc"
+  done
+  echo ""
+  echo "Vendor skills (via git submodules):"
+  for entry in "${VENDOR_SKILLS[@]}"; do
+    local vendor_name="${entry%%:*}"
+    local rest="${entry#*:}"
+    local repo="${rest%%:*}"
+    printf "  %-30s %s\n" "$vendor_name" "https://github.com/$repo"
   done
 }
 
@@ -80,6 +94,59 @@ resolve_source_dir() {
     echo "Error: git is required to download skills remotely." >&2
     exit 1
   fi
+}
+
+init_vendor_submodules() {
+  if [[ -f "$SCRIPT_DIR/.gitmodules" ]]; then
+    echo "Initializing vendor submodules..."
+    git -C "$SCRIPT_DIR" submodule update --init --recursive --quiet 2>/dev/null || true
+  fi
+}
+
+link_vendor_skills() {
+  local skills_dir="$1"
+
+  for entry in "${VENDOR_SKILLS[@]}"; do
+    local vendor_name="${entry%%:*}"
+    local rest="${entry#*:}"
+    local skills_subdir="${rest#*:}"
+    local vendor_skills_path="$SCRIPT_DIR/vendor/$vendor_name/$skills_subdir"
+
+    if [[ ! -d "$vendor_skills_path" ]]; then
+      echo "  Warning: vendor skills not found at $vendor_skills_path (run git submodule update)" >&2
+      continue
+    fi
+
+    local version="unknown"
+    local plugin_json="$SCRIPT_DIR/vendor/$vendor_name/.claude-plugin/plugin.json"
+    if [[ -f "$plugin_json" ]] && command -v grep &>/dev/null; then
+      version=$(grep -o '"version": *"[^"]*"' "$plugin_json" | head -1 | grep -o '"[^"]*"$' | tr -d '"')
+    fi
+
+    echo "  Linking $vendor_name skills (v$version)..."
+    for skill_dir in "$vendor_skills_path"/*/; do
+      [[ -d "$skill_dir" ]] || continue
+      local skill_name
+      skill_name=$(basename "$skill_dir")
+      local link_path="$skills_dir/$skill_name"
+      local rel_target="../vendor/$vendor_name/$skills_subdir/$skill_name"
+
+      if [[ -e "$link_path" ]] && [[ ! -L "$link_path" ]]; then
+        echo "    Skipped $skill_name (local skill takes priority)"
+        continue
+      fi
+
+      ln -sf "$rel_target" "$link_path"
+      echo "    Linked $skill_name"
+    done
+  done
+}
+
+update_vendor() {
+  echo "Updating vendor submodules..."
+  git -C "$SCRIPT_DIR" submodule update --remote --merge --quiet 2>/dev/null
+  link_vendor_skills "$SCRIPT_DIR/skills"
+  echo "Vendor skills updated."
 }
 
 install_skill() {
@@ -193,13 +260,23 @@ main() {
       --skill) SINGLE_SKILL="$2"; shift 2 ;;
       --target) TARGET_DIR="$2"; shift 2 ;;
       --force) FORCE=true; shift ;;
+      --update-vendor) UPDATE_VENDOR=true; shift ;;
       -h|--help) usage; exit 0 ;;
       *) echo "Unknown option: $1" >&2; usage; exit 1 ;;
     esac
   done
 
+  if [[ "$UPDATE_VENDOR" = true ]]; then
+    update_vendor
+    echo ""
+    echo "Done."
+    return
+  fi
+
   local source_dir
   source_dir="$(resolve_source_dir)"
+
+  init_vendor_submodules
 
   if [[ -z "$TARGET_DIR" ]]; then
     pick_platform
@@ -231,6 +308,10 @@ main() {
       done
     fi
   fi
+
+  echo ""
+  echo "Linking vendor skills..."
+  link_vendor_skills "$source_dir"
 
   echo ""
   echo "Done."

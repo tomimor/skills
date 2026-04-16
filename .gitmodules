@@ -1,0 +1,3 @@
+[submodule "vendor/impeccable"]
+	path = vendor/impeccable
+	url = https://github.com/pbakaus/impeccable
