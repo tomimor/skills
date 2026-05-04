@@ -8,7 +8,7 @@ Instructions for AI agents working in this repo.
 tomim-skills/
 ├── skills/                  # All discoverable skills (own + vendor symlinks)
 │   ├── miguel-review/       # Own skill (regular directory)
-│   ├── polish -> ../vendor/impeccable/.claude/skills/polish  # Vendor symlink
+│   ├── impeccable -> ../vendor/impeccable/.claude/skills/impeccable  # Vendor symlink
 │   └── ...
 ├── vendor/                  # Third-party skill repos (git submodules)
 │   └── impeccable/          # pbakaus/impeccable

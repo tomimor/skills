@@ -18,7 +18,7 @@ graph LR
 ```
 
 - **Own skills** live directly in `skills/` as regular directories (e.g. `skills/miguel-review/`)
-- **Vendor skills** are symlinks in `skills/` that point into `vendor/<name>/` submodules (e.g. `skills/polish` -> `../vendor/impeccable/.claude/skills/polish`)
+- **Vendor skills** are symlinks in `skills/` that point into `vendor/<name>/` submodules (e.g. `skills/impeccable` -> `../vendor/impeccable/.claude/skills/impeccable`)
 - The `vendor/` directory contains git submodules pinned to specific commits, each referencing the original upstream repo
 
 This means every agent skill -- whether mine or third-party -- is discoverable from a single `skills/` directory.
@@ -43,30 +43,13 @@ This means every agent skill -- whether mine or third-party -- is discoverable f
 |-------|-------------|
 | [writing-voice](skills/writing-voice/SKILL.md) | Write in a direct, personal, sensory style. Bans AI-giveaway phrases, enforces visual formatting, and includes platform-specific guidance for LinkedIn, X, blog, email, and technical writing. |
 
-### Design -- [Impeccable](https://github.com/pbakaus/impeccable) v2.1.1
+### Design -- [Impeccable](https://github.com/pbakaus/impeccable) v3.0.7
 
-Vendor skills from Paul Bakaus's Impeccable, managed via git submodule.
+Vendor skill from Paul Bakaus's Impeccable, managed via git submodule. Since v3.0, all design commands are consolidated into a single skill with 20 internal commands.
 
 | Skill | Description |
 |-------|-------------|
-| [impeccable](skills/impeccable/SKILL.md) | Create distinctive, production-grade frontend interfaces with high design quality. Supports `craft`, `teach`, and `extract` modes. |
-| [shape](skills/shape/SKILL.md) | Plan UX and UI for a feature before writing code. Runs a discovery interview and produces a design brief. |
-| [polish](skills/polish/SKILL.md) | Final quality pass fixing alignment, spacing, consistency, and micro-details before shipping. |
-| [distill](skills/distill/SKILL.md) | Strip designs to their essence by removing unnecessary complexity. |
-| [audit](skills/audit/SKILL.md) | Technical quality checks across accessibility, performance, theming, and responsive design with scored reports. |
-| [critique](skills/critique/SKILL.md) | Evaluate design from a UX perspective with quantitative scoring, persona testing, and anti-pattern detection. |
-| [adapt](skills/adapt/SKILL.md) | Adapt designs for different screen sizes, devices, and platforms with fluid layouts and breakpoints. |
-| [animate](skills/animate/SKILL.md) | Enhance features with purposeful animations, micro-interactions, and motion effects. |
-| [bolder](skills/bolder/SKILL.md) | Amplify safe or boring designs to be more visually interesting while maintaining usability. |
-| [quieter](skills/quieter/SKILL.md) | Tone down overly aggressive designs, reducing intensity while preserving quality. |
-| [clarify](skills/clarify/SKILL.md) | Improve unclear UX copy, error messages, microcopy, and labels. |
-| [colorize](skills/colorize/SKILL.md) | Add strategic color to monochromatic interfaces for more visual engagement. |
-| [delight](skills/delight/SKILL.md) | Add moments of joy, personality, and unexpected touches that make interfaces memorable. |
-| [harden](skills/harden/SKILL.md) | Make interfaces production-ready: error handling, empty states, i18n, and edge cases. |
-| [layout](skills/layout/SKILL.md) | Improve layout, spacing, and visual rhythm. Fix monotonous grids and weak hierarchy. |
-| [optimize](skills/optimize/SKILL.md) | Diagnose and fix UI performance across loading, rendering, animations, and bundle size. |
-| [overdrive](skills/overdrive/SKILL.md) | Push interfaces past conventional limits with shaders, spring physics, and scroll-driven reveals. |
-| [typeset](skills/typeset/SKILL.md) | Improve typography: font choices, hierarchy, sizing, weight, and readability. |
+| [impeccable](skills/impeccable/SKILL.md) | Design, redesign, shape, critique, audit, polish, and improve frontend interfaces. Commands: `craft`, `shape`, `audit`, `critique`, `animate`, `bolder`, `colorize`, `delight`, `layout`, `overdrive`, `quieter`, `typeset`, `adapt`, `clarify`, `distill`, `harden`, `onboard`, `optimize`, `polish`, `teach`, `document`, `extract`, `live`. |
 
 ## Vendor Skills
 
