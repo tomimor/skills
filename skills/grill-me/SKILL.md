@@ -1,0 +1,93 @@
+---
+name: grill-me
+description:
+  Interview the user relentlessly about a plan or design until reaching shared understanding, resolving each branch of
+  the decision tree. Use when the user wants to stress-test a plan, get grilled on their design, or mentions "grill me".
+---
+
+# Grill Me
+
+Interview the user relentlessly about every aspect of their plan or design until you reach a shared understanding. Walk
+down each branch of the design tree, resolving dependencies between decisions one-by-one.
+
+## Core Rules
+
+1. **One question at a time.** Never batch. Wait for each answer before moving on.
+2. **Always use the AskQuestion tool.** Never list options inline in chat. Every grill question goes through
+   `AskQuestion` with at least two concrete options.
+3. **Always recommend an answer.** For every question, include your recommended option and label it clearly (see
+   format below).
+4. **Explore the codebase before asking.** If a question can be answered by reading files, running `git`, or searching
+   the repo, do that first instead of asking the user.
+5. **Resolve dependencies in order.** Don't ask about leaf decisions before their parents are settled.
+
+## Workflow
+
+### Step 1: Anchor the plan
+
+Restate the plan or design in 1-3 sentences so both of you are working from the same baseline. If the plan is unclear or
+missing, ask one `AskQuestion` to pin down the goal before grilling further.
+
+### Step 2: Build the decision tree (internally)
+
+Before asking anything, sketch the tree of decisions in your head:
+
+- **Roots:** the highest-level choices (architecture, scope, ownership, success criteria).
+- **Branches:** decisions that depend on a root (data model, API shape, UI pattern).
+- **Leaves:** narrow choices that only matter once the branch is fixed (naming, defaults, error copy).
+
+Don't show the tree to the user. Use it to order questions.
+
+### Step 3: Walk the tree, one question at a time
+
+For each unresolved node, in dependency order:
+
+1. **Try to resolve it from the codebase first.** If there's a precedent, an existing pattern, or a config that already
+   answers the question, read it and state the answer instead of asking.
+2. **Otherwise, ask via `AskQuestion`.** Use this format:
+
+   - `prompt`: the question itself, followed by a 1-2 sentence rationale and your recommendation. Mark the recommended
+     option with `(recommended)` in the option label.
+   - `options`: 2-5 concrete, mutually exclusive choices. Always include an `Other / explain` option so the user can
+     redirect you.
+3. **After the answer, restate the decision in one line** and move to the next node. If the answer opens new branches,
+   add them to the tree before continuing.
+
+### Step 4: Stop conditions
+
+Stop grilling when any of these is true:
+
+- Every branch you can see is resolved or explicitly deferred.
+- The user says stop, enough, or equivalent.
+- You're asking about details that don't change the outcome -- bail out and summarize instead.
+
+### Step 5: Summarize the shared understanding
+
+When done, produce a short summary:
+
+- The plan in 2-3 sentences (updated with the decisions made).
+- A bullet list of resolved decisions: `Decision -> chosen option`.
+- A bullet list of explicitly deferred items, if any.
+
+## Question Format
+
+Every `AskQuestion` call must look roughly like this:
+
+- **prompt**: one clear question, then `Recommended: <option>. Why: <one sentence>`.
+- **options**: each option is a short phrase. The recommended one ends with `(recommended)`.
+- **allow_multiple**: `false` unless the decision is genuinely multi-select (e.g. picking which validations to run).
+
+Example shape (do not copy verbatim, adapt to the actual question):
+
+- prompt: "Where should the rate limiter live? Recommended: edge middleware. Why: it stops abusive traffic before it
+  hits app servers."
+- options: `Edge middleware (recommended)`, `App-level middleware`, `Per-route decorator`, `Other / explain`.
+
+## Anti-Patterns
+
+- Do NOT ask multiple questions in one message or one `AskQuestion` call when they aren't independent.
+- Do NOT list options as a markdown bullet list in chat -- use the tool.
+- Do NOT ask questions whose answers are already in the codebase.
+- Do NOT skip the recommendation. "I don't know, what do you think?" is not a grill.
+- Do NOT keep grilling once the tree is resolved. Wrap up.
+- Do NOT make it adversarial. Direct and probing, not hostile.

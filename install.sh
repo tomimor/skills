@@ -12,6 +12,7 @@ SKILLS=(
   "gh-pr-description-updater:Read or update PR descriptions using repo template"
   "verify-pr:Three-phase PR verification (code review, test plan, upstream assumptions)"
   "writing-voice:Direct, personal writing style with AI-slop blacklist"
+  "grill-me:Interview the user relentlessly about a plan or design via AskQuestion"
 )
 
 VENDOR_SKILLS=(
