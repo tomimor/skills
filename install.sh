@@ -13,6 +13,7 @@ SKILLS=(
   "verify-pr:Three-phase PR verification (code review, test plan, upstream assumptions)"
   "writing-voice:Direct, personal writing style with AI-slop blacklist"
   "grill-me:Interview the user relentlessly about a plan or design via AskQuestion"
+  "create-skill:Guide for authoring Cursor agent skills (forked from Cursor built-in)"
 )
 
 VENDOR_SKILLS=(
