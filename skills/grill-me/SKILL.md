@@ -1,8 +1,8 @@
 ---
 name: grill-me
 description:
-  Interview the user relentlessly about a plan or design until reaching shared understanding, resolving each branch of
-  the decision tree. Use when the user wants to stress-test a plan, get grilled on their design, or mentions "grill me".
+  Interviews the user relentlessly about a plan or design until reaching shared understanding, walking the decision tree
+  one branch at a time. Use when the user wants to stress-test a plan, get grilled on their design, or mentions "grill me".
 ---
 
 # Grill Me
@@ -25,8 +25,12 @@ down each branch of the design tree, resolving dependencies between decisions on
 
 ### Step 1: Anchor the plan
 
-Restate the plan or design in 1-3 sentences so both of you are working from the same baseline. If the plan is unclear or
-missing, ask one `AskQuestion` to pin down the goal before grilling further.
+Restate the plan or design as a **"How Might We"** problem statement, in 1-3 sentences, so both of you are working from
+the same baseline. The HMW framing forces clarity on what's actually being solved -- not just what's being built. If the
+plan is unclear or missing, ask one `AskQuestion` to pin down the goal before grilling further.
+
+Example: instead of "we'll add a rate limiter," restate as "How might we keep abusive traffic from degrading API latency
+for paying users?" -- now the grill has a target.
 
 ### Step 2: Build the decision tree (internally)
 
@@ -68,6 +72,10 @@ When done, produce a short summary:
 - The plan in 2-3 sentences (updated with the decisions made).
 - A bullet list of resolved decisions: `Decision -> chosen option`.
 - A bullet list of explicitly deferred items, if any.
+- An **assumptions ledger**: unverified claims the plan is now betting on. For each, name the bet in one line and, if
+  obvious, how it could be invalidated. Example: `Assumes Postgres can sustain 5k writes/s at our row size -- not
+  benchmarked.` This is the negative space of the grill: what survived not because it was confirmed, but because nobody
+  challenged it yet.
 
 ## Question Format
 
@@ -91,3 +99,5 @@ Example shape (do not copy verbatim, adapt to the actual question):
 - Do NOT skip the recommendation. "I don't know, what do you think?" is not a grill.
 - Do NOT keep grilling once the tree is resolved. Wrap up.
 - Do NOT make it adversarial. Direct and probing, not hostile.
+- Do NOT yes-machine a weak premise. If the underlying goal is shaky, say so with specificity and propose a sharper
+  framing -- don't grill the leaves of a bad tree.
