@@ -16,8 +16,8 @@ Read or update the PR description for the current branch using the repo's PR tem
    the **Ask User Questions** tool to clarify before filling in sections. Never guess motivations.
 2. **Confirmation gate:** NEVER run `gh pr edit --body` without showing the full draft to the user first and receiving
    explicit approval.
-3. **Conciseness:** Max 5 bullet points per section. Keep descriptions straightforward -- describe changes, not
-   implementation details.
+3. **Conciseness:** Max 3 bullet points per section, and aim for fewer. One sharp bullet beats three weak ones.
+   Describe the outcome a human reader cares about -- not the technical changes that produced it.
 4. **Brevity:** Aim for under 300 words total across all sections. PR descriptions should be scannable in under 30
    seconds.
 
@@ -86,9 +86,12 @@ git diff $BASE...HEAD
 
 Fill each template section following these rules:
 
-- **What:** Describe what was achieved at an architectural level. Max 5 bullet points. Focus on design decisions,
-  patterns, and system impact -- NOT individual file changes or implementation details.
-- **Why:** Explain the motivation. Max 5 bullet points. If unclear, trigger the clarification gate.
+- **What:** Describe the outcome the PR delivers, in language a non-author can scan in seconds. Max 3 bullets, fewer
+  is better. Each bullet should answer "what is different now?" from a user / system / product perspective -- NOT
+  which functions, files, or patterns changed. If a single sentence covers it, use one bullet.
+- **Why:** Describe the problem this PR solves or the value it unlocks. Max 3 bullets, fewer is better. Stay at the
+  level of motivation and impact (user pain, risk avoided, capability gained). If the motivation is unclear from the
+  diff, trigger the clarification gate instead of guessing.
 - **Relates to:** Link issues if detectable from commits, branch name, or PR title. Use `Closes #N` format.
 - **Evidence:** Remind the user to add screenshots or recordings. The agent cannot fill this section.
 - **Optional sections** (Notes, Env Variables Checklist): Leave commented out unless the changes clearly require them
@@ -141,8 +144,10 @@ EOF
 - Do NOT silently assume `main` as the base branch when no PR is found -- always ask the user
 - Do NOT run `git diff` or `git log` before confirming the base branch with the user (when no PR exists)
 - Do NOT write sentences with more than 20 words.
-- Do NOT write more than 5 bullets per section
+- Do NOT write more than 3 bullets per section; prefer 1-2 when possible
+- Do NOT describe technical changes in What/Why (e.g. "refactored X service", "added Y hook"); describe the resulting
+  behavior, capability, or fix instead
 - Do NOT include implementation details (function names, variable names, file paths) in the What/Why sections unless
-  essential
+  they are the only way to convey the outcome
 - Do NOT fill in the Evidence section -- remind the user to add screenshots
 - Do NOT update the PR on GitHub without explicit user approval
