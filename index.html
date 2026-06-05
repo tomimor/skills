@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>tomim-skills -- agent skills for Cursor and Claude Code</title>
+  <meta name="description" content="A single source of truth for AI agent skills shared between Cursor and Claude Code. Codifies recurring workflows like PR review, GitHub issues, writing voice, and design critique." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%A0%3C/text%3E%3C/svg%3E" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #14171a;
+      --muted: #5b6470;
+      --border: #e6e8eb;
+      --card: #fafbfc;
+      --code-bg: #f3f4f6;
+      --accent: #1f6feb;
+      --accent-fg: #ffffff;
+      --badge-own-bg: #e7f0ff;
+      --badge-own-fg: #0b4ea2;
+      --badge-vendor-bg: #fff1d6;
+      --badge-vendor-fg: #7a4a00;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0d1117;
+        --fg: #e6edf3;
+        --muted: #8b96a3;
+        --border: #21262d;
+        --card: #161b22;
+        --code-bg: #161b22;
+        --accent: #4493f8;
+        --accent-fg: #0d1117;
+        --badge-own-bg: #0b2547;
+        --badge-own-fg: #79b3ff;
+        --badge-vendor-bg: #3a2a06;
+        --badge-vendor-fg: #f0c674;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 24px 96px;
+    }
+    h1, h2, h3 { line-height: 1.25; letter-spacing: -0.01em; }
+    h1 { font-size: 2.25rem; margin: 0 0 8px; }
+    h2 { font-size: 1.5rem; margin: 56px 0 16px; }
+    h3 { font-size: 1.05rem; margin: 28px 0 8px; color: var(--fg); }
+    p { margin: 12px 0; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.9em;
+      background: var(--code-bg);
+      padding: 0.15em 0.35em;
+      border-radius: 4px;
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+    pre code { background: transparent; padding: 0; font-size: inherit; }
+    .tagline { color: var(--muted); font-size: 1.1rem; margin: 0 0 24px; }
+    .cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      font-weight: 500;
+      margin-right: 8px;
+    }
+    .cta.primary { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+    .cta.primary:hover { text-decoration: none; opacity: 0.92; }
+    .cta:hover { text-decoration: none; background: var(--card); }
+    .cta.primary:hover { background: var(--accent); }
+
+    .problems { display: grid; gap: 16px; margin-top: 8px; }
+    .problem {
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    .problem h3 { margin: 0 0 6px; font-size: 1rem; }
+    .problem p { margin: 0; color: var(--muted); }
+
+    .diagram {
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 16px 0;
+      display: flex;
+      justify-content: center;
+    }
+    .diagram svg { width: 100%; max-width: 640px; height: auto; }
+
+    .skills { display: grid; gap: 12px; }
+    .skill {
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .skill-head {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+    .skill-head a { font-weight: 600; font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; }
+    .skill p { margin: 4px 0 0; color: var(--muted); font-size: 0.95rem; }
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .badge.own { background: var(--badge-own-bg); color: var(--badge-own-fg); }
+    .badge.vendor { background: var(--badge-vendor-bg); color: var(--badge-vendor-fg); }
+
+    table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 0.92rem; }
+    th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    th { color: var(--muted); font-weight: 600; }
+    td code { white-space: nowrap; }
+
+    footer {
+      margin-top: 64px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.9rem;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+    }
+
+    @media (max-width: 540px) {
+      .wrap { padding: 32px 18px 64px; }
+      h1 { font-size: 1.75rem; }
+      h2 { font-size: 1.25rem; margin-top: 40px; }
+      .cta { display: block; margin: 0 0 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+
+    <header>
+      <h1>tomim-skills</h1>
+      <p class="tagline">Agent skills I use daily across Cursor and Claude Code.</p>
+      <p>
+        <a class="cta primary" href="#install">Install</a>
+        <a class="cta" href="https://github.com/tomimor/tomim-skills">View on GitHub</a>
+      </p>
+    </header>
+
+    <section>
+      <h2>Problems it solves</h2>
+      <div class="problems">
+        <div class="problem">
+          <h3>Skill drift across tools</h3>
+          <p>Cursor and Claude Code each want their own skills folder, so you end up copy-pasting and they fall out of sync. tomim-skills makes <code>~/.cursor/skills</code> and <code>~/.claude/skills</code> symlinks to a single <code>skills/</code> directory, so both agents read from the same source.</p>
+        </div>
+        <div class="problem">
+          <h3>Mixing your own workflows with third-party skill packs</h3>
+          <p>Vendor packs like <a href="https://github.com/pbakaus/impeccable">Impeccable</a> live in their own repos and update on their own cadence. They're tracked here as git submodules under <code>vendor/</code> and exposed through symlinks in <code>skills/</code>, so one command updates everything: <code>./install.sh --update-vendor</code>.</p>
+        </div>
+        <div class="problem">
+          <h3>No central place to collect, curate, and author skills</h3>
+          <p>Good skills come from everywhere: ones you refined in chat, vendor packs you found on GitHub, forks of someone else's idea, half-finished drafts. Without a hub they scatter into dotfiles, gists, and Slack messages, and you lose track of which ones you actually use. This repo is the hub. Drop your own skills in as folders under <code>skills/</code>, pull in vendor packs as submodules under <code>vendor/</code>, prune what you've outgrown, and replicate the whole set to a new machine with one install script. Authoring, updating, curating, and syncing all run through the same place, version-controlled, on your own cadence.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>How it works</h2>
+      <p>Both Cursor and Claude Code discover skills from a single directory. Own skills live as regular folders under <code>skills/</code>. Vendor skills are symlinks pointing into git submodules under <code>vendor/</code>.</p>
+      <div class="diagram" aria-label="Architecture diagram">
+        <svg viewBox="0 0 640 260" role="img" aria-labelledby="diagramTitle">
+          <title id="diagramTitle">~/.cursor/skills and ~/.claude/skills both symlink to tomim-skills/skills/, which contains own skill directories and vendor symlinks into vendor/</title>
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
+            </marker>
+          </defs>
+          <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="currentColor">
+            <g>
+              <rect x="10" y="20" width="180" height="44" rx="8" fill="none" stroke="currentColor" stroke-width="1.5" />
+              <text x="100" y="46" text-anchor="middle">~/.cursor/skills</text>
+            </g>
+            <g>
+              <rect x="10" y="196" width="180" height="44" rx="8" fill="none" stroke="currentColor" stroke-width="1.5" />
+              <text x="100" y="222" text-anchor="middle">~/.claude/skills</text>
+            </g>
+
+            <g>
+              <rect x="240" y="108" width="180" height="44" rx="8" fill="none" stroke="currentColor" stroke-width="2" />
+              <text x="330" y="134" text-anchor="middle">tomim-skills/skills/</text>
+            </g>
+
+            <g>
+              <rect x="470" y="20" width="160" height="44" rx="8" fill="none" stroke="currentColor" stroke-width="1.5" />
+              <text x="550" y="40" text-anchor="middle">Own skills</text>
+              <text x="550" y="56" text-anchor="middle" font-size="11" opacity="0.7">(directories)</text>
+            </g>
+            <g>
+              <rect x="470" y="196" width="160" height="44" rx="8" fill="none" stroke="currentColor" stroke-width="1.5" />
+              <text x="550" y="216" text-anchor="middle">vendor/&lt;name&gt;/</text>
+              <text x="550" y="232" text-anchor="middle" font-size="11" opacity="0.7">(submodule)</text>
+            </g>
+
+            <g stroke="currentColor" stroke-width="1.5" fill="none" marker-end="url(#arrow)">
+              <path d="M 190 42 L 240 124" />
+              <path d="M 190 218 L 240 138" />
+              <path d="M 420 130 L 470 50" />
+              <path d="M 420 130 L 470 218" />
+            </g>
+
+            <g font-size="10" fill="currentColor" opacity="0.7">
+              <text x="208" y="78">symlink</text>
+              <text x="208" y="190">symlink</text>
+              <text x="430" y="78">contains</text>
+              <text x="430" y="178">symlink</text>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section>
+      <h2>Skills</h2>
+
+      <h3>GitHub workflow</h3>
+      <div class="skills">
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/pr-dashboard/SKILL.md">pr-dashboard</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>One-shot status overview of all your open PRs in a repo: title, review state, CI checks, open comments, and a recommended next step per PR. Use when you want to know which PR to babysit next.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/miguel-review/SKILL.md">miguel-review</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Opinionated diff review against a base branch. Biased toward minimal diffs, deletions over additions, zero tolerance for dead code or premature abstractions. Reports only high-signal issues.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/gh-pr-comment-assistant/SKILL.md">gh-pr-comment-assistant</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Pulls the latest review comments on the current branch's PR, groups them by reviewer and file, summarizes what each one is asking for, and helps plan fixes.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/gh-issue-creator/SKILL.md">gh-issue-creator</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Creates a GitHub issue using one of the repo's templates (bug, feature, tech debt) or a blank issue. Pulls labels dynamically and keeps the description concise.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/gh-pr-description-updater/SKILL.md">gh-pr-description-updater</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Reads or rewrites the current PR's description, strictly following the repo's PR template. Enforces brevity and template compliance.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/verify-pr/SKILL.md">verify-pr</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Three-phase PR verification: code review (delegates to <code>miguel-review</code>), test plan with gap analysis and execution, and validation of upstream assumptions. Produces a structured report.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/ui-review/SKILL.md">ui-review</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Comprehensive frontend UI review across typography, layout, accessibility, responsiveness, copy, and visual polish. Inspects the page in a browser and produces a prioritized list of small, concrete fixes (never rewrites).</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/update-branch/SKILL.md">update-branch</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Pulls the latest from main and merges it into the current working branch. Use when you want to sync a feature branch without leaving the agent.</p>
+        </div>
+      </div>
+
+      <h3>Writing</h3>
+      <div class="skills">
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/writing-voice/SKILL.md">writing-voice</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Writes or rewrites content in a direct, personal, sensory voice. Bans AI-giveaway phrases, enforces visual formatting, and includes platform-specific guidance for LinkedIn, X, blog, email, and technical writing.</p>
+        </div>
+      </div>
+
+      <h3>Authoring skills</h3>
+      <div class="skills">
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/create-skill/SKILL.md">create-skill</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Guide for authoring or auditing agent skills: gathers requirements, writes <code>SKILL.md</code> with frontmatter, structures supporting files, and verifies quality. Forked from Cursor's built-in version.</p>
+        </div>
+      </div>
+
+      <h3>Design</h3>
+      <div class="skills">
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/impeccable/SKILL.md">impeccable</a>
+            <span class="badge vendor">vendor</span>
+          </div>
+          <p>Single skill with 20 internal commands for designing, critiquing, polishing, and animating frontend interfaces. Commands include <code>craft</code>, <code>shape</code>, <code>audit</code>, <code>critique</code>, <code>animate</code>, <code>bolder</code>, <code>colorize</code>, <code>delight</code>, <code>layout</code>, and <code>polish</code>. v3.0.7, from <a href="https://github.com/pbakaus/impeccable">pbakaus/impeccable</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="install">
+      <h2>Setup</h2>
+
+      <h3>Install all skills</h3>
+<pre><code>curl -fsSL https://raw.githubusercontent.com/tomimor/tomim-skills/main/install.sh | bash -s -- --all</code></pre>
+
+      <h3>Install a single skill</h3>
+<pre><code>curl -fsSL https://raw.githubusercontent.com/tomimor/tomim-skills/main/install.sh | bash -s -- --skill pr-dashboard</code></pre>
+
+      <h3>Update vendor skills</h3>
+<pre><code>./install.sh --update-vendor</code></pre>
+
+      <h3>Install flags</h3>
+      <table>
+        <thead><tr><th>Flag</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>--all</code></td><td>Install all skills (non-interactive)</td></tr>
+          <tr><td><code>--skill &lt;name&gt;</code></td><td>Install a single skill by name</td></tr>
+          <tr><td><code>--target &lt;dir&gt;</code></td><td>Override the install directory</td></tr>
+          <tr><td><code>--force</code></td><td>Overwrite existing skills without confirming</td></tr>
+          <tr><td><code>--update-vendor</code></td><td>Update vendor submodules to their latest versions</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Where skills live</h3>
+      <table>
+        <thead><tr><th>Platform</th><th>Path</th></tr></thead>
+        <tbody>
+          <tr><td>Cursor</td><td><code>~/.cursor/skills/&lt;skill-name&gt;/</code></td></tr>
+          <tr><td>Claude Code</td><td><code>~/.claude/skills/&lt;skill-name&gt;/</code></td></tr>
+        </tbody>
+      </table>
+      <p>All GitHub-related skills require the <a href="https://cli.github.com/">GitHub CLI</a> (<code>gh</code>). <code>writing-voice</code> and <code>impeccable</code> have no extra requirements.</p>
+    </section>
+
+    <footer>
+      <span><a href="https://github.com/tomimor/tomim-skills">github.com/tomimor/tomim-skills</a></span>
+      <span><a href="LICENSE">MIT License</a></span>
+    </footer>
+
+  </main>
+</body>
+</html>
