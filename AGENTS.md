@@ -17,7 +17,13 @@ tomim-skills/
 └── AGENTS.md                # This file
 ```
 
-`~/.cursor/skills` and `~/.claude/skills` are both symlinks to `skills/`. Any skill directory (or symlink) inside `skills/` with a `SKILL.md` is automatically available to agents in both Cursor and Claude Code.
+`~/.cursor/skills` is a symlink to `skills/`. `~/.claude/skills` is a real directory whose entries are per-skill symlinks back into `skills/` -- Claude Code does not load skills from a symlinked top-level directory, so the per-skill symlinks are how it picks them up while live edits in this repo still take effect. Any skill directory (or symlink) inside `skills/` with a `SKILL.md` is automatically available to agents in both Cursor and Claude Code.
+
+Re-create the per-skill symlinks if anything drifts:
+
+```bash
+./install.sh --symlink --all --force --target ~/.claude/skills
+```
 
 ## Adding a new own skill
 
@@ -54,7 +60,12 @@ SKILLS=(
 )
 ```
 
-4. Commit the new directory and the updated `install.sh`.
+4. **MANDATORY: Add the skill to `README.md`**. Every skill registered in `install.sh` must appear in the README's
+   skill catalog under an appropriate `###` section. If no existing section fits, create a new one. **Do not skip this
+   step.** The README is the public catalog -- a skill missing from it is effectively undiscoverable. If the skill is
+   adapted from a vendor (e.g. gstack), credit the source in the description with a link.
+
+5. Commit the new directory, the updated `install.sh`, and the updated `README.md` together in a single commit.
 
 ### Own skill conventions
 
@@ -97,7 +108,11 @@ for skill_dir in vendor/<name>/<skills-path>/*/; do
 done
 ```
 
-4. Commit `.gitmodules`, the `vendor/<name>` submodule, the new symlinks, and the updated `install.sh`.
+4. **MANDATORY: Add the vendor skill set to `README.md`**. Same rule as own skills -- every vendor skill exposed via
+   `skills/` must appear in the README catalog, with a link to the upstream repo. Do not skip this step.
+
+5. Commit `.gitmodules`, the `vendor/<name>` submodule, the new symlinks, the updated `install.sh`, and the updated
+   `README.md` together.
 
 ### Vendor skill rules
 
@@ -122,7 +137,7 @@ git commit -m "update <name> to v<new-version>"
 
 | File | Purpose |
 |------|---------|
-| `install.sh` | Installs skills to `~/.cursor/skills` or `~/.claude/skills`. Contains the `SKILLS` and `VENDOR_SKILLS` registries. |
+| `install.sh` | Installs skills to `~/.cursor/skills` or `~/.claude/skills`. Contains the `SKILLS` and `VENDOR_SKILLS` registries. Pass `--symlink` to link skills instead of copying them, which is how `~/.claude/skills` is wired. |
 | `.gitmodules` | Git submodule definitions for vendor skills |
 | `skills/` | The single directory both platforms read from |
 | `vendor/` | Git submodules for third-party skill repos |

@@ -1,0 +1,1501 @@
+{
+  "template_file": "AdsManagerTemplate_v2.3.xltx",
+  "sheet_name": "Ads Manager Template",
+  "n_columns": 143,
+  "encoding": {
+    "txt_encoding": "utf-16-le",
+    "txt_bom": true,
+    "txt_separator": "\t",
+    "txt_line_ending": "\r\n"
+  },
+  "limits_2026": {
+    "name_max_chars": 35,
+    "title_warn_chars": 27,
+    "title_max_chars": 40,
+    "body_warn_chars": 125,
+    "body_max_chars": 2200,
+    "description_warn_chars": 30,
+    "description_max_chars": 200,
+    "import_file_max_bytes": 2000000
+  },
+  "columns": [
+    {
+      "index": 0,
+      "letter": "A",
+      "name": "Campaign ID",
+      "level": "Campaign",
+      "description": "The ID of a campaign. If not specified, we will try and match the campaign ID by the campaign name, and if we cannot find the campaign name, we will create a new campaign with the specified name. Leave blank for new campaign creation.",
+      "format": "Standard numbering format, not in scientific notation, no decimals or commas",
+      "required": "Required for edits"
+    },
+    {
+      "index": 1,
+      "letter": "B",
+      "name": "Campaign Name",
+      "level": "Campaign",
+      "description": "The name of the campaign. If specified, we will try to find the campaign id using this, and if we cannot find an existing campaign with the name specified, we will create a new campaign.",
+      "format": "35 character limit.",
+      "required": "Recommended"
+    },
+    {
+      "index": 2,
+      "letter": "C",
+      "name": "Campaign Status",
+      "level": "Campaign",
+      "description": "This is the run status of your campaign. If you are editing the status of your ad, make sure your campaign status correlates with your ad status. For example, if an ad status us set to \"paused\" but the campaign status is set to \"running\" this can cause errors.",
+      "format": "Active, paused",
+      "required": "Recommended",
+      "valid_values": [
+        "ACTIVE",
+        "ARCHIVED",
+        "DELETED",
+        "PAUSED"
+      ]
+    },
+    {
+      "index": 3,
+      "letter": "D",
+      "name": "Special Ad Categories",
+      "level": "Campaign",
+      "description": "Campaigns that are based in or target the U.S. and contain an ad or ads related to financial products and services, employment, housing, and/or political must include at least one Special Ad Category.",
+      "format": "List one or more of the following, separated by comma: none, financial_products_services, employment, housing, issues_elections_politics.",
+      "required": "Required for all advertisers. Input 'none' if none of the categories apply."
+    },
+    {
+      "index": 4,
+      "letter": "E",
+      "name": "Special Ad Category Country",
+      "level": "Campaign",
+      "description": "Campaigns with the issues_elections_politics Special Ad Category selected must also specify the country that the ad account is authorized to run ads in.",
+      "format": "Two digit ISO country abbreviation",
+      "required": "Required for political ads."
+    },
+    {
+      "index": 5,
+      "letter": "F",
+      "name": "Campaign Objective",
+      "level": "Campaign",
+      "description": "Allows you to specify what to optimize this campaign for. All ads in this campaign must correspond to the selected objective.",
+      "required": "Required",
+      "valid_values": [
+        "App Installs",
+        "Brand Awareness",
+        "Clicks to Website",
+        "Catalog Sales",
+        "Traffic",
+        "Desktop App Engagement",
+        "Desktop App Installs",
+        "Event Responses",
+        "Local Awareness",
+        "Messages",
+        "Mobile App Engagement",
+        "Mobile App Installs",
+        "Offer Claims",
+        "Page Likes",
+        "Page Post Engagement",
+        "Post Engagement",
+        "Product Catalog Sales",
+        "Reach",
+        "Video Views",
+        "Website Conversions",
+        "Conversions",
+        "Lead Generation",
+        "Store Visits",
+        "Store Traffic",
+        "Outcome Awareness",
+        "Outcome Engagement",
+        "Outcome Leads",
+        "Outcome Sales",
+        "App Promotion",
+        "App promotion"
+      ]
+    },
+    {
+      "index": 6,
+      "letter": "G",
+      "name": "Buying Type",
+      "level": "Campaign",
+      "valid_values": [
+        "AUCTION",
+        "FIXED_PRICE",
+        "RESERVED",
+        "MIXED"
+      ]
+    },
+    {
+      "index": 7,
+      "letter": "H",
+      "name": "Campaign Spend Limit",
+      "level": "Campaign",
+      "description": "Maximum campaign spending limit.",
+      "format": "Standard numbering format, decimals up to 2 points, currency symbol not needed.",
+      "required": "Optional"
+    },
+    {
+      "index": 8,
+      "letter": "I",
+      "name": "Campaign Daily Budget",
+      "level": "Campaign",
+      "description": "With daily budget, you may spend more on some days and less on others, but will maintain an average daily budget.",
+      "format": "Standard numbering format, decimals up to 2 points, currency symbol not needed.",
+      "required": "Optional"
+    },
+    {
+      "index": 9,
+      "letter": "J",
+      "name": "Campaign Lifetime Budget",
+      "level": "Campaign",
+      "description": "With lifetime budget, we'll never spend more than that amount.",
+      "format": "Standard numbering format, decimals up to 2 points, currency symbol not needed.",
+      "required": "Optional"
+    },
+    {
+      "index": 10,
+      "letter": "K",
+      "name": "Campaign Bid Strategy",
+      "level": "Campaign",
+      "description": "Choose bid strategy for this campaign when using auction buying type to suit your specific business goals.",
+      "required": "Optional",
+      "valid_values": [
+        "Bid cap",
+        "ROAS goal",
+        "Highest volume or value"
+      ]
+    },
+    {
+      "index": 11,
+      "letter": "L",
+      "name": "Tags",
+      "level": "Campaign",
+      "description": "A list of tags to tag this campaign with.",
+      "format": "Comma-separated",
+      "required": "Optional"
+    },
+    {
+      "index": 12,
+      "letter": "M",
+      "name": "Campaign Is Using L3 Schedule",
+      "level": "Campaign",
+      "description": "True if the CampaignGroup is using L3 Schedule.",
+      "format": "Standard boolean format.",
+      "required": "Recommended"
+    },
+    {
+      "index": 13,
+      "letter": "N",
+      "name": "Campaign Start Time",
+      "level": "Campaign",
+      "description": "The date that you want your campaign group to start. Enter in a value only if you are creating a new campaign group. If you do not specify a start date, we will run your ad immediately until you pause or delete it.",
+      "format": "MM/DD/YY HH:MM",
+      "required": "Recommended"
+    },
+    {
+      "index": 14,
+      "letter": "O",
+      "name": "Campaign Stop Time",
+      "level": "Campaign",
+      "description": "The date that you want your campaign group to end. Only enter in a value if you are creating a new campaign group. If you don't specify an end date, we will run your ad continuously until you pause or delete it.",
+      "format": "MM/DD/YY HH:MM",
+      "required": "Recommended"
+    },
+    {
+      "index": 15,
+      "letter": "P",
+      "name": "Ad Set ID",
+      "level": "Ad Set",
+      "description": "The ID of an ad set. If not specified, we will try and match the ad set ID by the ad set name, and if we cannot find the ad set name, we will create a new ad set with the specified name. Leave blank for new ad set creation",
+      "format": "Standard numbering format, not in scientific notation, no decimals or commas",
+      "required": "Required for edits"
+    },
+    {
+      "index": 16,
+      "letter": "Q",
+      "name": "Ad Set Run Status",
+      "level": "Ad Set",
+      "description": "This is the run status of your ad set. If you are editing the status of your ad, make sure your ad set status correlates with your ad status. For example, if an ad status us set to \"paused\" but the ad set status is set to \"running\" this can cause errors. Make sure both statuses correspond.",
+      "format": "Active, paused",
+      "required": "Recommended",
+      "valid_values": [
+        "PAUSED",
+        "ACTIVE"
+      ]
+    },
+    {
+      "index": 17,
+      "letter": "R",
+      "name": "Ad Set Name",
+      "level": "Ad Set",
+      "description": "The name of the ad set. If specified, we will try to find the ad set id using this, and if we cannot find an existing ad set with the name specified, we will create a new ad set.",
+      "format": "35 character limit.",
+      "required": "Recommended"
+    },
+    {
+      "index": 18,
+      "letter": "S",
+      "name": "Ad Set Time Start",
+      "level": "Ad Set",
+      "description": "The date that you want your ad set to start. Enter in a value only if you are creating a new ad set. If you do not specify a start date, we will run your ad immediately until you pause or delete it. If you specify a future start date, please do not specify an ad status or ad set run status.",
+      "format": "MM/DD/YY HH:MM",
+      "required": "Recommended"
+    },
+    {
+      "index": 19,
+      "letter": "T",
+      "name": "Ad Set Time Stop",
+      "level": "Ad Set",
+      "description": "The date that you want your ad set to end. Only enter in a value if you are creating a new ad set. If you don't specify an end date, we will run your ad continuously until you pause or delete it. If you specify a future start date, please do not specify an ad status or ad set run status.",
+      "format": "MM/DD/YY HH:MM",
+      "required": "Recommended"
+    },
+    {
+      "index": 20,
+      "letter": "U",
+      "name": "Ad Set Daily Budget",
+      "level": "Ad Set",
+      "description": "The daily budget for the ad set, in dollars. This is only used if you are creating a new campaign.",
+      "format": "Standard numbering format, decimals up to 2 points, currency symbol not needed.",
+      "required": "Required (if on daily budget and not using campaign budget optimization)"
+    },
+    {
+      "index": 21,
+      "letter": "V",
+      "name": "Ad Set Lifetime Budget",
+      "level": "Ad Set",
+      "description": "The lifetime budget to spend across the finite lifetime of the ad set. Please complete in order when setting up MOO ads.",
+      "format": "Standard numbering format, decimals up to 2 points, currency symbol not needed.",
+      "required": "Required (if on lifetime budget and not using campaign budget optimization)"
+    },
+    {
+      "index": 22,
+      "letter": "W",
+      "name": "Link Object ID",
+      "level": "Creative",
+      "description": "Please enter in the numeric ID number associated with your Facebook Page or event. To find your Page or event's ID number, please click on the \"Edit Page\" link and copy and paste the string of numbers at the end of the web URL. This is normally a string of at least 8 digits that can be found in your web address bar.",
+      "format": "Page ID or Event ID if creative type is filled out",
+      "required": "Link object ID: Required only if you choose a creative_type of \"fan\" or \"rsvp\"."
+    },
+    {
+      "index": 23,
+      "letter": "X",
+      "name": "Link",
+      "level": "Creative",
+      "description": "The link value or destination URL. Be sure to enter this as a complete URL.",
+      "format": "URL",
+      "required": "Required"
+    },
+    {
+      "index": 24,
+      "letter": "Y",
+      "name": "Application ID",
+      "level": "Creative",
+      "description": "ID of the application to advertise for. This can be found on the Facebook developer site at https://developers.facebook.com/. You will need to register your app before you can run any ads for it.",
+      "format": "Standard numbering format, not in scientific notation, no decimals or commas",
+      "required": "Required for app install and app engagement ads."
+    },
+    {
+      "index": 25,
+      "letter": "Z",
+      "name": "Countries",
+      "level": "Targeting",
+      "description": "Multi-country targeting only works when no state or city is specified. Be sure to enter the 2 letter ISO code for the country.",
+      "format": "ISO country code (ex. US)",
+      "required": "Required"
+    },
+    {
+      "index": 26,
+      "letter": "AA",
+      "name": "Global Regions",
+      "level": "Targeting",
+      "description": "A list of world regions to target. Targeting a world region is equivalent to targeting all countries of that region individually.",
+      "format": "Country group code (ex. europe, north_america, eea)",
+      "required": "Optional"
+    },
+    {
+      "index": 27,
+      "letter": "AB",
+      "name": "Excluded Global Regions",
+      "level": "Targeting",
+      "description": "A list of world regions to exclude from targeting. Equivalent to excluding all countries of that region individually.",
+      "format": "Country group code (ex. europe, north_america, eea)",
+      "required": "Optional"
+    },
+    {
+      "index": 28,
+      "letter": "AC",
+      "name": "Cities",
+      "level": "Targeting",
+      "description": "This field is not supported if you choose to target multiple countries. If you wish to target all, please leave this field empty. Delimit multiple options with a \";\".",
+      "format": "eg. Palo Alto, CA; New York, NY.",
+      "required": "Optional"
+    },
+    {
+      "index": 29,
+      "letter": "AD",
+      "name": "Regions",
+      "level": "Targeting",
+      "description": "Note that this field is not supported if you choose to target multiple countries. Please spell the full name of the region or state. If you wish to target all, please leave this field empty.",
+      "format": "Delimit multiple options with a \",\". Please only enter valid states or regions for the country specified.",
+      "required": "Optional"
+    },
+    {
+      "index": 30,
+      "letter": "AE",
+      "name": "Zip",
+      "level": "Targeting",
+      "description": "ZIP Code: the ZIP code of the region(s).",
+      "format": "Delimit multiple options with a \",\". Please only enter valid zip codes for the country specified.",
+      "required": "Optional"
+    },
+    {
+      "index": 31,
+      "letter": "AF",
+      "name": "Gender",
+      "level": "Targeting",
+      "description": "Gender-specific targeting. Leave blank to target all.",
+      "format": "Men, women",
+      "required": "Optional"
+    },
+    {
+      "index": 32,
+      "letter": "AG",
+      "name": "Age Min",
+      "level": "Targeting",
+      "description": "The minimum age to target. The minimum value for this field is 13. If you do not choose a minimum age, the system will default the minimum age to 13. If you wish to target all, please leave this field empty.",
+      "format": "Standard numbering format.",
+      "required": "Optional"
+    },
+    {
+      "index": 33,
+      "letter": "AH",
+      "name": "Age Max",
+      "level": "Targeting",
+      "description": "The maximum age to target. The maximum value for this field is 65. If you do not choose a maximum age, the system will default the maximum age to 65. If you wish to target all, please leave this field empty.",
+      "format": "Standard numbering format",
+      "required": "Optional"
+    },
+    {
+      "index": 34,
+      "letter": "AI",
+      "name": "Education Status",
+      "level": "Targeting",
+      "description": "Enter a list of education statuses to target. Delimit multiple options with a \",\". If you wish to target all, please leave this field empty.",
+      "format": "College, alumni, high school",
+      "required": "Optional"
+    },
+    {
+      "index": 35,
+      "letter": "AJ",
+      "name": "College Start Year",
+      "level": "Targeting",
+      "description": "Enter in one college year you'd like to target. If you wish to target all, please leave this field empty.",
+      "format": "YYYY (ex. 2002)",
+      "required": "Optional"
+    },
+    {
+      "index": 36,
+      "letter": "AK",
+      "name": "College End Year",
+      "level": "Targeting",
+      "description": "Enter in one college year you'd like to target. If you wish to target all, please leave this field empty.",
+      "format": "YYYY (ex. 2006)",
+      "required": "Optional"
+    },
+    {
+      "index": 37,
+      "letter": "AL",
+      "name": "Interested In",
+      "level": "Targeting",
+      "description": "This field targets the list of genders in which your audience is interested. Delimit multiple options with a \",\". If you wish to target all, please leave this field empty.",
+      "format": "Men, women",
+      "required": "Optional"
+    },
+    {
+      "index": 38,
+      "letter": "AM",
+      "name": "Relationship",
+      "level": "Targeting",
+      "description": "This field targets users with relationship statuses indicated on their profiles within your target audience. Delimit multiple options with a \",\". If you wish to target all, please leave this field empty.",
+      "format": "Single, relationship, engaged, married",
+      "required": "Optional"
+    },
+    {
+      "index": 39,
+      "letter": "AN",
+      "name": "Connections",
+      "level": "Targeting",
+      "description": "This field targets users who are already connected with your group, Page, or application. Enter in the ID for the group, Page, or application. To target multiple objects, enter in ID numbers separated by commas.",
+      "required": "Optional"
+    },
+    {
+      "index": 40,
+      "letter": "AO",
+      "name": "Excluded Connections",
+      "level": "Targeting",
+      "description": "This field target users who are not already connected with your group, Page, or application. Enter in the ID for the group, Page, or application. To target multiple objects, enter in ID numbers separated with commas.",
+      "required": "Optional"
+    },
+    {
+      "index": 41,
+      "letter": "AP",
+      "name": "Friends of Connections",
+      "level": "Targeting",
+      "description": "This field targets the friends of users who are already connected with your group, Page, or application. Enter in the ID for the group, Page, or application. To target multiple objects, enter in ID numbers separated with commas.",
+      "required": "Optional"
+    },
+    {
+      "index": 42,
+      "letter": "AQ",
+      "name": "Locales",
+      "level": "Targeting",
+      "description": "Languages. Separate multiple languages by comma.",
+      "required": "Optional"
+    },
+    {
+      "index": 43,
+      "letter": "AR",
+      "name": "Broad Category Clusters",
+      "level": "Targeting",
+      "description": "This field targets Broad Category clusters. To target Broad Category clusters, you will need find the ID and names by creating a dummy ad in Power Editor with the appropriate cluster(s) and exporting the ad to Excel.",
+      "format": "[ID]:[Cluster Name]",
+      "required": "Optional (populated from asset sheet)"
+    },
+    {
+      "index": 44,
+      "letter": "AS",
+      "name": "Custom Audiences",
+      "level": "Targeting",
+      "description": "To target custom audiences, you will need find the ID and names by creating a dummy ad in Power Editor with the appropriate audiences and exporting the ad to Excel.",
+      "format": "[ID]:[Audience Name], separated by commas. For example: 12345:customers, 12346:other audience",
+      "required": "Optional"
+    },
+    {
+      "index": 45,
+      "letter": "AT",
+      "name": "Excluded Custom Audiences",
+      "level": "Targeting",
+      "description": "Similar to custom audiences column, except this one specifies audiences that should not see your ad. To target custom audiences, you will need find the ID and names by creating a dummy ad in Power Editor with the appropriate audiences and exporting the ad to Excel.",
+      "format": "[ID]:[Audience Name], separated by commas. For example: 12345:customers, 12346:other audience",
+      "required": "Optional"
+    },
+    {
+      "index": 46,
+      "letter": "AU",
+      "name": "Location Cluster IDs",
+      "level": "Targeting",
+      "description": "Location cluster IDs. Separated by comma.",
+      "required": "Optional"
+    },
+    {
+      "index": 47,
+      "letter": "AV",
+      "name": "Excluded Location Cluster IDs",
+      "level": "Targeting",
+      "description": "Excluded location cluster IDs. Separated by comma.",
+      "required": "Optional"
+    },
+    {
+      "index": 48,
+      "letter": "AW",
+      "name": "Publisher Platforms",
+      "level": "Placements",
+      "description": "This determines the publisher platforms where your ad will display. To run your ad on all possible publisher platforms, leave this column blank.",
+      "format": "Any combination of facebook, instagram, audience_network, messenger or whatsapp",
+      "required": "Optional",
+      "valid_values": [
+        "facebook",
+        "instagram",
+        "audience_network",
+        "messenger",
+        "whatsapp"
+      ]
+    },
+    {
+      "index": 49,
+      "letter": "AX",
+      "name": "Device Platforms",
+      "level": "Placements",
+      "description": "This determines the device platforms (device types) where your ad will display. To run your ad on all possible device platforms, leave this column blank.",
+      "format": "Any combination of mobile or desktop",
+      "required": "Required"
+    },
+    {
+      "index": 50,
+      "letter": "AY",
+      "name": "Facebook Positions",
+      "level": "Placements",
+      "description": "This determines the positions on Facebook where your ad will be displayed. To run your ad in all possible Facebook positions, leave this column blank.",
+      "format": "Any combination of feed, right_hand_column, instant_article, instream_video or group",
+      "required": "Optional",
+      "valid_values": [
+        "feed",
+        "right_hand_column",
+        "instant_article",
+        "instream_video",
+        "group"
+      ]
+    },
+    {
+      "index": 51,
+      "letter": "AZ",
+      "name": "Instagram Positions",
+      "level": "Placements",
+      "description": "This determines the positions on Instagram where your ad will be displayed. To run your ad in all possible Instagram positions, leave this column blank.",
+      "format": "Any combination of stream or story",
+      "required": "Optional",
+      "valid_values": [
+        "stream",
+        "story"
+      ]
+    },
+    {
+      "index": 52,
+      "letter": "BA",
+      "name": "Messenger Positions",
+      "level": "Placements",
+      "description": "This determines the positions on Messenger where your ad will be displayed. To run your ad in all possible Messenger positions, leave this column blank.",
+      "format": "Any combination of sponsored_messages or messenger_home",
+      "required": "Optional",
+      "valid_values": [
+        "sponsored_messages"
+      ]
+    },
+    {
+      "index": 53,
+      "letter": "BB",
+      "name": "Oculus Positions",
+      "level": "Placements",
+      "description": "This determines the positions on Oculus where your ad will be displayed. To run your ad on Oculus, select the Oculus positions you want to run on.",
+      "format": "Any combination of vr_apps, twilight_feed or vr_rewarded_video",
+      "required": "Optional",
+      "valid_values": [
+        "vr_apps",
+        "twilight_feed",
+        "vr_rewarded_video"
+      ]
+    },
+    {
+      "index": 54,
+      "letter": "BC",
+      "name": "Audience Network Positions",
+      "level": "Placements",
+      "description": "This determines the positions on Audience Network where your ad will be displayed. To run your ad in all possible Audience Network positions, leave this column blank.",
+      "format": "Any combination of classic, instream_video or rewarded_video",
+      "required": "Optional",
+      "valid_values": [
+        "classic",
+        "instream_video",
+        "rewarded_video"
+      ]
+    },
+    {
+      "index": 55,
+      "letter": "BD",
+      "name": "WhatsApp Positions",
+      "level": "Placements",
+      "description": "This determines the positions on WhatsApp where your ad or message will be sent. To run your ad in all possible WhatsApp positions, leave this column blank.",
+      "format": "Any combination of marketing_messages",
+      "required": "Optional",
+      "valid_values": [
+        "marketing_messages"
+      ]
+    },
+    {
+      "index": 56,
+      "letter": "BE",
+      "name": "Optimization Goal",
+      "level": "Delivery",
+      "description": "The optimization goal is required for all ads.",
+      "required": "Required",
+      "valid_values": [
+        "NONE",
+        "APP_INSTALLS",
+        "BRAND_AWARENESS",
+        "AD_RECALL_LIFT",
+        "CLICKS",
+        "ENGAGED_USERS",
+        "DWELLS",
+        "EVENT_RESPONSES",
+        "IMPRESSIONS",
+        "LEAD_GENERATION",
+        "QUALITY_LEAD",
+        "LINK_CLICKS",
+        "MEDIA_DOWNLOADS",
+        "OFFER_CLAIMS",
+        "OFFSITE_CONVERSIONS",
+        "PAGE_ENGAGEMENT",
+        "PAGE_LIKES",
+        "PAGE_FOLLOWS",
+        "POST_ENGAGEMENT",
+        "QUALITY_CALL",
+        "REACH",
+        "RESEARCH_POLL_RESPONSES",
+        "RETENTION",
+        "RETURN_ON_AD_SPEND",
+        "SOCIAL_IMPRESSIONS",
+        "STORE_VISITS",
+        "VIDEO_VIEWS",
+        "ENGAGED_REACH",
+        "APP_DOWNLOADS",
+        "VIDEO_LONG_VIEWS",
+        "TWO_SECOND_CONTINUOUS_VIDEO_VIEWS",
+        "OFFLINE_CONVERSIONS",
+        "LANDING_PAGE_VIEWS",
+        "VISIT_INSTAGRAM_PROFILE",
+        "ENGAGED_PAGE_VIEWS",
+        "VALUE",
+        "COMPLETED_VIDEO_VIEWS",
+        "THRUPLAY",
+        "SIX_SECOND_VIDEO_VIEWS",
+        "REPLIES",
+        "ONSITE_CONVERSIONS",
+        "DERIVED_EVENTS",
+        "INCREMENTAL_OFFSITE_CONVERSIONS",
+        "APP_INSTALLS_AND_OFFSITE_CONVERSIONS",
+        "CONVERSATIONS",
+        "IN_APP_VALUE",
+        "MESSAGING_PURCHASE_CONVERSION",
+        "MESSAGING_DEEP_CONVERSATION_AND_FOLLOW",
+        "SUBSCRIBERS",
+        "REMINDERS_SET",
+        "MEANINGFUL_CALL_ATTEMPT",
+        "PROFILE_VISIT",
+        "PROFILE_AND_PAGE_ENGAGEMENT",
+        "ADVERTISER_SILOED_VALUE",
+        "AUTOMATIC_OBJECTIVE",
+        "EXTERNAL",
+        "MESSAGING_APPOINTMENT_CONVERSION"
+      ]
+    },
+    {
+      "index": 57,
+      "letter": "BF",
+      "name": "Billing Event",
+      "level": "Delivery",
+      "description": "The billing event is required for all ads.",
+      "required": "Required",
+      "valid_values": [
+        "APP_INSTALLS",
+        "IMPRESSIONS",
+        "LINK_CLICKS",
+        "OFFER_CLAIMS",
+        "PAGE_LIKES",
+        "POST_ENGAGEMENT",
+        "VIDEO_VIEWS",
+        "TWO_SECOND_CONTINUOUS_VIDEO_VIEWS",
+        "COMPLETED_VIDEO_VIEWS",
+        "THRUPLAY",
+        "PURCHASE",
+        "LISTING_INTERACTION",
+        "SIX_SECOND_VIDEO_VIEWS"
+      ]
+    },
+    {
+      "index": 58,
+      "letter": "BG",
+      "name": "Bid Amount",
+      "level": "Delivery",
+      "description": "The bid amount is required for manual bid ads.",
+      "format": "X.XX",
+      "required": "Required"
+    },
+    {
+      "index": 59,
+      "letter": "BH",
+      "name": "Ad Set Bid Strategy",
+      "level": "Ad Set",
+      "description": "Each bid strategy is suited to specific business goals and comes with tradeoffs. If you care most about cost efficiency, the lowest cost bid strategy is best, but it may be harder to get stable costs as you spend. However, if you care most about cost stability, the target cost bid strategy is best, but may be less cost-efficient.",
+      "required": "Required if Advantage campaign budget is disabled.",
+      "valid_values": [
+        "Bid cap",
+        "Highest volume or value",
+        "Highest Value"
+      ]
+    },
+    {
+      "index": 60,
+      "letter": "BI",
+      "name": "Beneficiary (financial ads in Taiwan)",
+      "level": "Compliance",
+      "description": "The person or organization benefiting from your financial products and services ads.",
+      "required": "Required for new, edited, or duplicated ad sets about financial products and services, with audiences in Taiwan."
+    },
+    {
+      "index": 61,
+      "letter": "BJ",
+      "name": "Payer (financial ads in Taiwan)",
+      "level": "Compliance",
+      "description": "The person or organization paying for your financial products and services ads.",
+      "required": "Required for new, edited, or duplicated ad sets about financial products and services, with audiences in Taiwan."
+    },
+    {
+      "index": 62,
+      "letter": "BK",
+      "name": "Advertiser (Taiwan)",
+      "level": "Compliance",
+      "description": "The person or organization benefiting from an ad.",
+      "required": "Required for ad sets that include locations in Taiwan."
+    },
+    {
+      "index": 63,
+      "letter": "BL",
+      "name": "Payer (Taiwan)",
+      "level": "Compliance",
+      "description": "The person or organization paying for an ad.",
+      "required": "Required for ad sets that include locations in Taiwan."
+    },
+    {
+      "index": 64,
+      "letter": "BM",
+      "name": "Advertiser (financial ads in Australia)",
+      "level": "Compliance",
+      "description": "The person or organization benefiting from your financial products and services ads.",
+      "required": "Required for new, edited, or duplicated ad sets about financial products and services, with audiences in Australia."
+    },
+    {
+      "index": 65,
+      "letter": "BN",
+      "name": "Payer (financial ads in Australia)",
+      "level": "Compliance",
+      "description": "The person or organization paying for your financial products and services ads.",
+      "required": "Required for new, edited, or duplicated ad sets about financial products and services, with audiences in Australia."
+    },
+    {
+      "index": 66,
+      "letter": "BO",
+      "name": "Advertiser (Singapore)",
+      "level": "Compliance",
+      "description": "The person or organization benefiting from an ad.",
+      "required": "Required for ad sets that include locations in Singapore."
+    },
+    {
+      "index": 67,
+      "letter": "BP",
+      "name": "Payer (Singapore)",
+      "level": "Compliance",
+      "description": "The person or organization paying for an ad.",
+      "required": "Required for ad sets that include locations in Singapore."
+    },
+    {
+      "index": 68,
+      "letter": "BQ",
+      "name": "Minimum ROAS",
+      "level": "Delivery",
+      "description": "Set a minimum ROAS if you're using the highest value bid strategy and want to make sure the results stay above a certain ROAS amount.",
+      "required": "Optional"
+    },
+    {
+      "index": 69,
+      "letter": "BR",
+      "name": "Ad Set Minimum Spend Limit",
+      "level": "Ad Set",
+      "description": "Provide a minimum target spend limit to control spend on this ad set. We can't guarantee this amount will be spent.",
+      "format": "Standard numbering format, decimals up to 2 points, currency symbol not needed.",
+      "required": "Optional"
+    },
+    {
+      "index": 70,
+      "letter": "BS",
+      "name": "Ad Set Maximum Spend Limit",
+      "level": "Ad Set",
+      "description": "Provide a maximum spend limit to control spend on this ad set. We won't spend more than this amount.",
+      "format": "Standard numbering format, decimals up to 2 points, currency symbol not needed.",
+      "required": "Optional"
+    },
+    {
+      "index": 71,
+      "letter": "BT",
+      "name": "Advertiser (securities ads in India)",
+      "level": "Compliance",
+      "description": "The person or organization benefiting from your financial products and services ads.",
+      "required": "Required for new, edited, or duplicated ad sets about financial products and services, with audiences in India."
+    },
+    {
+      "index": 72,
+      "letter": "BU",
+      "name": "Payer (securities ads in India)",
+      "level": "Compliance",
+      "description": "The person or organization paying for your financial products and services ads.",
+      "required": "Required for new, edited, or duplicated ad sets about financial products and services, with audiences in India."
+    },
+    {
+      "index": 73,
+      "letter": "BV",
+      "name": "Beneficiary (selected locations)",
+      "level": "Compliance",
+      "description": "The person or organization benefiting from an ad.",
+      "required": "May be required for some ad sets."
+    },
+    {
+      "index": 74,
+      "letter": "BW",
+      "name": "Payer (selected locations)",
+      "level": "Compliance",
+      "description": "The person or organization paying for an ad.",
+      "required": "May be required for some ad sets."
+    },
+    {
+      "index": 75,
+      "letter": "BX",
+      "name": "Large Geo Areas",
+      "level": "Targeting",
+      "description": "Large geo areas. Separated by \";\".",
+      "required": "Optional"
+    },
+    {
+      "index": 76,
+      "letter": "BY",
+      "name": "Excluded Large Geo Areas",
+      "level": "Targeting",
+      "description": "Excluded location large geo areas. Separated by \";\".",
+      "required": "Optional"
+    },
+    {
+      "index": 77,
+      "letter": "BZ",
+      "name": "Medium Geo Areas",
+      "level": "Targeting",
+      "description": "Medium Geo Areas. Separated by \";\".",
+      "required": "Optional"
+    },
+    {
+      "index": 78,
+      "letter": "CA",
+      "name": "Excluded Medium Geo Areas",
+      "level": "Targeting",
+      "description": "Excluded location medium geo areas. Separated by \";\".",
+      "required": "Optional"
+    },
+    {
+      "index": 79,
+      "letter": "CB",
+      "name": "Small Geo Areas",
+      "level": "Targeting",
+      "description": "Small geo areas. Separated by \";\".",
+      "required": "Optional"
+    },
+    {
+      "index": 80,
+      "letter": "CC",
+      "name": "Excluded Small Geo Areas",
+      "level": "Targeting",
+      "description": "Excluded location small geo areas. Separated by \";\".",
+      "required": "Optional"
+    },
+    {
+      "index": 81,
+      "letter": "CD",
+      "name": "Metro Areas",
+      "level": "Targeting",
+      "description": "Metro areas. Separated by \";\".",
+      "required": "Optional"
+    },
+    {
+      "index": 82,
+      "letter": "CE",
+      "name": "Excluded Metro Areas",
+      "level": "Targeting",
+      "description": "Excluded location metro areas. Separated by \";\".",
+      "required": "Optional"
+    },
+    {
+      "index": 83,
+      "letter": "CF",
+      "name": "Subcities",
+      "level": "Targeting",
+      "description": "Subcities. Separated by \";\".",
+      "required": "Optional"
+    },
+    {
+      "index": 84,
+      "letter": "CG",
+      "name": "Excluded Subcities",
+      "level": "Targeting",
+      "description": "Excluded location sub-cities. Separated by \";\".",
+      "required": "Optional"
+    },
+    {
+      "index": 85,
+      "letter": "CH",
+      "name": "Neighborhoods",
+      "level": "Targeting",
+      "description": "Neighborhoods. Separated by \";\".",
+      "required": "Optional"
+    },
+    {
+      "index": 86,
+      "letter": "CI",
+      "name": "Excluded Neighborhoods",
+      "level": "Targeting",
+      "description": "Excluded location neighborhoods. Separated by \";\".",
+      "required": "Optional"
+    },
+    {
+      "index": 87,
+      "letter": "CJ",
+      "name": "Subneighborhoods",
+      "level": "Targeting",
+      "description": "Subneighborhoods. Separated by \";\".",
+      "required": "Optional"
+    },
+    {
+      "index": 88,
+      "letter": "CK",
+      "name": "Excluded Subneighborhoods",
+      "level": "Targeting",
+      "description": "Excluded location sub-neighborhoods. Separated by \";\".",
+      "required": "Optional"
+    },
+    {
+      "index": 89,
+      "letter": "CL",
+      "name": "Ad ID",
+      "level": "Ad",
+      "description": "The id of an ad. If not specified, we will try and match the ad id by the ad name, and if we cannot find the ad name, we will create a new ad with the specified name. Each ad id will appear in the \"ad_id\" column in an exported file. Leave blank for new ad creation.",
+      "format": "Standard numbering format, not in scientific notation, no decimals or commas",
+      "required": "Required for edits"
+    },
+    {
+      "index": 90,
+      "letter": "CM",
+      "name": "Ad Status",
+      "level": "Ad",
+      "description": "The run status of an ad. If you are editing the status of your ad, make sure your campaign status correlates with your ad status. For example, if an ad status is set to \"paused\" but the campaign status is set to \"running\" this can cause errors. Make sure both statuses correspond.",
+      "format": "Active, paused",
+      "required": "Recommended",
+      "valid_values": [
+        "PAUSED",
+        "ACTIVE"
+      ]
+    },
+    {
+      "index": 91,
+      "letter": "CN",
+      "name": "Ad Name",
+      "level": "Ad",
+      "description": "The name of the ad.",
+      "format": "35 character limit.",
+      "required": "Required"
+    },
+    {
+      "index": 92,
+      "letter": "CO",
+      "name": "Title",
+      "level": "Creative",
+      "description": "The title copy for the ad creative.",
+      "format": "25 character limit - must adhere to the ad guidelines",
+      "required": "Required"
+    },
+    {
+      "index": 93,
+      "letter": "CP",
+      "name": "Body",
+      "level": "Creative",
+      "description": "The body copy for the ad creative.",
+      "format": "90-character limit for right-hand column ads, or 500-character limit for Feed ads. Must adhere to the ad guidelines.",
+      "required": "Required"
+    },
+    {
+      "index": 94,
+      "letter": "CQ",
+      "name": "Link Description",
+      "level": "Creative",
+      "description": "The link description is additional text used to emphasize why someone might want to visit your website. It only appears for Feed ads.",
+      "required": "Optional"
+    },
+    {
+      "index": 95,
+      "letter": "CR",
+      "name": "Display Link",
+      "level": "Creative",
+      "description": "If you're using a long website address, your display link will show a shorter, friendlier URL in the placements it appears in.",
+      "format": "Domain (eg. \"www.example.com\")",
+      "required": "Optional"
+    },
+    {
+      "index": 96,
+      "letter": "CS",
+      "name": "Image Hash",
+      "level": "Creative",
+      "description": "The unique identifier of the ad's image. The image hash will appear in the exported file only after the image has been uploaded to the account. This value is only available through an exported file.",
+      "required": "Required when making edits"
+    },
+    {
+      "index": 97,
+      "letter": "CT",
+      "name": "Creative Type",
+      "level": "Creative",
+      "description": "Sets the type of ad. Most of the time, this will be \"Page post ad\", but it can be set to \"Standard\" if you only want to run a right-hand column ad. When set to \"Page post ad\", you need to enter your Page ID in the \"Link object ID\" column.",
+      "format": "Standard (right-hand column only) or Page post ad",
+      "required": "Required"
+    },
+    {
+      "index": 98,
+      "letter": "CU",
+      "name": "URL Tags",
+      "level": "Creative"
+    },
+    {
+      "index": 99,
+      "letter": "CV",
+      "name": "Image File Name",
+      "level": "Creative",
+      "description": "The thumbnail image filename and file extension (i.e. the path to an image for an ad, relative to the root of the zip file.) Example: \"image1.jpg\"",
+      "format": "Image1.jpg",
+      "required": "Required"
+    },
+    {
+      "index": 100,
+      "letter": "CW",
+      "name": "Creative Optimization",
+      "level": "Creative",
+      "description": "If you want to have your individual image and links automatically selected and ordered in your ad multiple images & links ad.",
+      "format": "Yes if you want this or no if you don't.",
+      "required": "Optional"
+    },
+    {
+      "index": 101,
+      "letter": "CX",
+      "name": "Product 1 - Link",
+      "level": "Carousel",
+      "description": "The destination link you want for an image/link of your multiple images & links ad.",
+      "format": "A complete URL",
+      "required": "Required for multi image/link only"
+    },
+    {
+      "index": 102,
+      "letter": "CY",
+      "name": "Product 1 - Name",
+      "level": "Carousel",
+      "description": "A brief headline of what you want the image/link of your multiple images & links ad to promote.",
+      "required": "Required for multi image/link only"
+    },
+    {
+      "index": 103,
+      "letter": "CZ",
+      "name": "Product 1 - Description",
+      "level": "Carousel",
+      "description": "The description is additional text used to emphasize why someone might want to visit your website. Only used for multi image/link.",
+      "required": "Optional"
+    },
+    {
+      "index": 104,
+      "letter": "DA",
+      "name": "Product 1 - Marketing Message - Description",
+      "level": "Carousel",
+      "description": "The description is additional text used to include more details about what you are promoting. Only used for multi image/link.",
+      "required": "Optional"
+    },
+    {
+      "index": 105,
+      "letter": "DB",
+      "name": "Product 1 - Image Hash",
+      "level": "Carousel",
+      "description": "The image you want to use to promote your product",
+      "format": "Recommended size: 600 x 600 pixels",
+      "required": "Required for multi image/link only"
+    },
+    {
+      "index": 106,
+      "letter": "DC",
+      "name": "Product 2 - Link",
+      "level": "Carousel",
+      "description": "The destination link you want for an image/link of your multiple images & links ad.",
+      "format": "A complete URL",
+      "required": "Required for multi image/link only"
+    },
+    {
+      "index": 107,
+      "letter": "DD",
+      "name": "Product 2 - Name",
+      "level": "Carousel",
+      "description": "A brief headline of what you want the image/link of your multiple images & links ad to promote.",
+      "required": "Required for multi image/link only"
+    },
+    {
+      "index": 108,
+      "letter": "DE",
+      "name": "Product 2 - Description",
+      "level": "Carousel",
+      "description": "The description is additional text used to emphasize why someone might want to visit your website. Only used for multi image/link.",
+      "required": "Optional"
+    },
+    {
+      "index": 109,
+      "letter": "DF",
+      "name": "Product 2 - Marketing Message - Description",
+      "level": "Carousel",
+      "description": "The description is additional text used to include more details about what you are promoting. Only used for multi image/link.",
+      "required": "Optional"
+    },
+    {
+      "index": 110,
+      "letter": "DG",
+      "name": "Product 2 - Image Hash",
+      "level": "Carousel",
+      "description": "The image you want to use to promote your product",
+      "format": "Recommended size: 600 x 600 pixels",
+      "required": "Required for multi image/link only"
+    },
+    {
+      "index": 111,
+      "letter": "DH",
+      "name": "Product 3 - Link",
+      "level": "Carousel",
+      "description": "The destination link you want for an image/link of your multiple images & links ad.",
+      "format": "A complete URL",
+      "required": "Required for multi image/link only"
+    },
+    {
+      "index": 112,
+      "letter": "DI",
+      "name": "Product 3 - Name",
+      "level": "Carousel",
+      "description": "A brief headline of what you want the image/link of your multiple images & links ad to promote.",
+      "required": "Required for multi image/link only"
+    },
+    {
+      "index": 113,
+      "letter": "DJ",
+      "name": "Product 3 - Description",
+      "level": "Carousel",
+      "description": "The description is additional text used to emphasize why someone might want to visit your website. Only used for multi image/link.",
+      "required": "Optional"
+    },
+    {
+      "index": 114,
+      "letter": "DK",
+      "name": "Product 3 - Marketing Message - Description",
+      "level": "Carousel",
+      "description": "The description is additional text used to include more details about what you are promoting. Only used for multi image/link.",
+      "required": "Optional"
+    },
+    {
+      "index": 115,
+      "letter": "DL",
+      "name": "Product 3 - Image Hash",
+      "level": "Carousel",
+      "description": "The image you want to use to promote your product",
+      "format": "Recommended size: 600 x 600 pixels",
+      "required": "Required for multi image/link only"
+    },
+    {
+      "index": 116,
+      "letter": "DM",
+      "name": "Call to Action",
+      "level": "Creative",
+      "description": "Sets the call to action type of the ad.",
+      "required": "Optional",
+      "valid_values": [
+        "BOOK_TRAVEL",
+        "CONTACT_US",
+        "DONATE",
+        "DONATE_NOW",
+        "DOWNLOAD",
+        "GET_DIRECTIONS",
+        "GO_LIVE",
+        "INTERESTED",
+        "LEARN_MORE",
+        "SEE_DETAILS",
+        "LIKE_PAGE",
+        "MESSAGE_PAGE",
+        "RAISE_MONEY",
+        "SAVE",
+        "SEND_TIP",
+        "SHOP_NOW",
+        "SIGN_UP",
+        "VIEW_INSTAGRAM_PROFILE",
+        "INSTAGRAM_MESSAGE",
+        "LOYALTY_LEARN_MORE",
+        "PURCHASE_GIFT_CARDS",
+        "PAY_TO_ACCESS",
+        "SEE_MORE",
+        "TRY_IN_CAMERA",
+        "WHATSAPP_LINK",
+        "GET_IN_TOUCH",
+        "TRY_NOW",
+        "ASK_A_QUESTION",
+        "START_A_CHAT",
+        "CHAT_NOW",
+        "ASK_US",
+        "CHAT_WITH_US",
+        "BOOK_NOW",
+        "CHECK_AVAILABILITY",
+        "ORDER_NOW",
+        "WHATSAPP_MESSAGE",
+        "GET_MOBILE_APP",
+        "INSTALL_MOBILE_APP",
+        "USE_MOBILE_APP",
+        "INSTALL_APP",
+        "USE_APP",
+        "PLAY_GAME",
+        "TRY_DEMO",
+        "WATCH_VIDEO",
+        "WATCH_MORE",
+        "OPEN_LINK",
+        "NO_BUTTON",
+        "LISTEN_MUSIC",
+        "MOBILE_DOWNLOAD",
+        "GET_OFFER",
+        "GET_OFFER_VIEW",
+        "BUY_NOW",
+        "BUY_TICKETS",
+        "UPDATE_APP",
+        "BET_NOW",
+        "ADD_TO_CART",
+        "SELL_NOW",
+        "GET_SHOWTIMES",
+        "LISTEN_NOW",
+        "GET_EVENT_TICKETS",
+        "REMIND_ME",
+        "SEARCH_MORE",
+        "PRE_REGISTER",
+        "SWIPE_UP_PRODUCT",
+        "SWIPE_UP_SHOP",
+        "PLAY_GAME_ON_FACEBOOK",
+        "VISIT_WORLD",
+        "OPEN_INSTANT_APP",
+        "JOIN_GROUP",
+        "GET_PROMOTIONS",
+        "SEND_UPDATES",
+        "INQUIRE_NOW",
+        "VISIT_PROFILE",
+        "CHAT_ON_WHATSAPP",
+        "EXPLORE_MORE",
+        "CONFIRM",
+        "JOIN_CHANNEL",
+        "MAKE_AN_APPOINTMENT",
+        "ASK_ABOUT_SERVICES",
+        "BOOK_A_CONSULTATION",
+        "GET_A_QUOTE",
+        "BUY_VIA_MESSAGE",
+        "ASK_FOR_MORE_INFO",
+        "VIEW_PRODUCT",
+        "VIEW_CHANNEL",
+        "WATCH_LIVE_VIDEO",
+        "JOIN_LIVE_VIDEO",
+        "IMAGINE"
+      ]
+    },
+    {
+      "index": 117,
+      "letter": "DN",
+      "name": "Story ID",
+      "level": "Creative",
+      "description": "The unique identifier of the specific post/story. This value is required when setting up Page post ad units if you want to use an existing post.",
+      "format": "Standard numbering format, not in scientific notation, no decimals or commas",
+      "required": "Required for Page post ad units"
+    },
+    {
+      "index": 118,
+      "letter": "DO",
+      "name": "Marketing Message Primary Text",
+      "level": "Marketing Messages",
+      "description": "The text of the marketing message. It will appear in the \"Marketing Message Primary Text\" column in an exported file.",
+      "format": "960 character limit.",
+      "required": "Body text is required for messages."
+    },
+    {
+      "index": 119,
+      "letter": "DP",
+      "name": "Marketing Message Auto Reply - Body Text",
+      "level": "Marketing Messages",
+      "description": "The text of the auto reply for a marketing message. It will appear in the \"Marketing Message Auto Reply - Body Text\" column in an exported file.",
+      "format": "600 character limit.",
+      "required": "Required for marketing message auto reply."
+    },
+    {
+      "index": 120,
+      "letter": "DQ",
+      "name": "Marketing Message Auto Reply - Image Hash",
+      "level": "Marketing Messages",
+      "description": "The image you want to use for a marketing message auto reply.",
+      "required": "Optional"
+    },
+    {
+      "index": 121,
+      "letter": "DR",
+      "name": "Marketing Message Auto Reply - Video ID",
+      "level": "Marketing Messages",
+      "description": "The image you want to use for a marketing message autoreply.",
+      "required": "Optional"
+    },
+    {
+      "index": 122,
+      "letter": "DS",
+      "name": "Marketing Message Auto Reply - Button 1 - Text",
+      "level": "Marketing Messages",
+      "description": "The text for a marketing message auto reply button.",
+      "format": "20 character limit.",
+      "required": "Required for a marketing message auto reply button."
+    },
+    {
+      "index": 123,
+      "letter": "DT",
+      "name": "Marketing Message Auto Reply - Button 1 - Type",
+      "level": "Marketing Messages",
+      "description": "The type of a marketing message auto reply button.",
+      "required": "Required for a marketing message auto reply button."
+    },
+    {
+      "index": 124,
+      "letter": "DU",
+      "name": "Marketing Message Auto Reply - Button 1 - URL",
+      "level": "Marketing Messages",
+      "description": "The destination URL for a marketing message auto reply button.",
+      "format": "2000 character limit.",
+      "required": "Required for a marketing message auto reply button."
+    },
+    {
+      "index": 125,
+      "letter": "DV",
+      "name": "Marketing Message Button 1 - Button Text",
+      "level": "Marketing Messages",
+      "description": "The text of a button for a marketing message. It will appear in the \"Marketing Message Button 1 - Button Text\" column in an exported file.",
+      "format": "25 character limit.",
+      "required": "Optional"
+    },
+    {
+      "index": 126,
+      "letter": "DW",
+      "name": "Marketing Message Button 1 - Type",
+      "level": "Marketing Messages",
+      "description": "The type of a button for a marketing message. It will appear in the \"Marketing Message Button 1 - Type\" column in an exported file.",
+      "required": "Optional"
+    },
+    {
+      "index": 127,
+      "letter": "DX",
+      "name": "Marketing Message Button 1 - Response Text",
+      "level": "Marketing Messages",
+      "description": "The response text for a marketing message. It will appear in the \"Marketing Message Button 1 - Response Text\" column in an exported file.",
+      "format": "960 character limit.",
+      "required": "Required for reply button."
+    },
+    {
+      "index": 128,
+      "letter": "DY",
+      "name": "Marketing Message Button 1 - Image Hash",
+      "level": "Marketing Messages",
+      "description": "The hash for the image for a marketing message button. It will appear in the \"Marketing Message Button 1 - Image Hash\" column in an exported file.",
+      "required": "Optional"
+    },
+    {
+      "index": 129,
+      "letter": "DZ",
+      "name": "Marketing Message Button 1 - Video ID",
+      "level": "Marketing Messages",
+      "description": "The video you want to use for a marketing message button.",
+      "required": "Optional"
+    },
+    {
+      "index": 130,
+      "letter": "EA",
+      "name": "Marketing Message Button 1 - Video Thumbnail URL",
+      "level": "Marketing Messages",
+      "description": "The video thumbnail URL for the video for a marketing message button.",
+      "required": "Optional"
+    },
+    {
+      "index": 131,
+      "letter": "EB",
+      "name": "Marketing Message Button 1 - Call to Action Button - Text",
+      "level": "Marketing Messages",
+      "description": "The text for a call to action button for a marketing message button.",
+      "format": "20 character limit.",
+      "required": "Required for a call to action button."
+    },
+    {
+      "index": 132,
+      "letter": "EC",
+      "name": "Marketing Message Button 1 - Call to Action Button - Type",
+      "level": "Marketing Messages",
+      "description": "The type of a call to action button for a marketing message button.",
+      "required": "Required for a call to action button."
+    },
+    {
+      "index": 133,
+      "letter": "ED",
+      "name": "Marketing Message Button 1 - Call to Action Button - URL",
+      "level": "Marketing Messages",
+      "description": "The destination URL for a call to action button for a marketing message button.",
+      "format": "2000 character limit.",
+      "required": "Required for a call to action button."
+    },
+    {
+      "index": 134,
+      "letter": "EE",
+      "name": "Marketing Message Button 2 - Button Text",
+      "level": "Marketing Messages",
+      "description": "The text of a button for a marketing message. It will appear in the \"Marketing Message Button 2 - Button Text\" column in an exported file.",
+      "format": "25 character limit.",
+      "required": "Optional"
+    },
+    {
+      "index": 135,
+      "letter": "EF",
+      "name": "Marketing Message Button 2 - Type",
+      "level": "Marketing Messages",
+      "description": "The type of a button for a marketing message. It will appear in the \"Marketing Message Button 2 - Type\" column in an exported file.",
+      "required": "Optional"
+    },
+    {
+      "index": 136,
+      "letter": "EG",
+      "name": "Marketing Message Button 2 - Response Text",
+      "level": "Marketing Messages",
+      "description": "The response text for a marketing message. It will appear in the \"Marketing Message Button 2 - Response Text\" column in an exported file.",
+      "format": "960 character limit.",
+      "required": "Required for reply button."
+    },
+    {
+      "index": 137,
+      "letter": "EH",
+      "name": "Marketing Message Button 2 - Image Hash",
+      "level": "Marketing Messages",
+      "description": "The hash for the image for a marketing message button. It will appear in the \"Marketing Message Button 2 - Image Hash\" column in an exported file.",
+      "required": "Optional"
+    },
+    {
+      "index": 138,
+      "letter": "EI",
+      "name": "Marketing Message Button 2 - Video ID",
+      "level": "Marketing Messages",
+      "description": "The video you want to use for a marketing message button.",
+      "required": "Optional"
+    },
+    {
+      "index": 139,
+      "letter": "EJ",
+      "name": "Marketing Message Button 2 - Video Thumbnail URL",
+      "level": "Marketing Messages",
+      "description": "The video thumbnail URL for the video for a marketing message button.",
+      "required": "Optional"
+    },
+    {
+      "index": 140,
+      "letter": "EK",
+      "name": "Marketing Message Button 2 - Call to Action Button - Text",
+      "level": "Marketing Messages",
+      "description": "The text for a call to action button for a marketing message button.",
+      "format": "20 character limit.",
+      "required": "Required for a call to action button."
+    },
+    {
+      "index": 141,
+      "letter": "EL",
+      "name": "Marketing Message Button 2 - Call to Action Button - Type",
+      "level": "Marketing Messages",
+      "description": "The type of a call to action button for a marketing message button.",
+      "required": "Required for a call to action button."
+    },
+    {
+      "index": 142,
+      "letter": "EM",
+      "name": "Marketing Message Button 2 - Call to Action Button - URL",
+      "level": "Marketing Messages",
+      "description": "The destination URL for a call to action button for a marketing message button.",
+      "format": "2000 character limit.",
+      "required": "Required for a call to action button."
+    }
+  ]
+}

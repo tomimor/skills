@@ -1,0 +1,32 @@
+account:
+  page_id: "1234567890"
+
+creatives:
+  - id: hero_a
+    files:
+      "4:5": hero_a_4x5.jpg
+      "9:16": hero_a_9x16.jpg
+  - id: hero_b
+    files:
+      "4:5": hero_b_4x5.jpg
+      "9:16": hero_b_9x16.jpg
+
+campaigns:
+  - name: "Spring 2026 sale"
+    objective: "Outcome Leads"
+    daily_budget: 50.00
+    ad_sets:
+      - name: "Broad AR 25-54"
+        ads:
+          - name: "Hero A v1"
+            title: "Spring sale"
+            body: "Limited-time offer for spring 2026."
+            link: "https://example.com/spring"
+            cta: SHOP_NOW
+            creative_id: hero_a
+          - name: "Hero B v1"
+            title: "Save big"
+            body: "Don't miss our spring promotion."
+            link: "https://example.com/spring"
+            cta: SHOP_NOW
+            creative_id: hero_b

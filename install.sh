@@ -13,7 +13,19 @@ SKILLS=(
   "verify-pr:Three-phase PR verification (code review, test plan, upstream assumptions)"
   "writing-voice:Direct, personal writing style with AI-slop blacklist"
   "grill-me:Interview the user relentlessly about a plan or design via AskQuestion"
+  "improve-prompt:Critique and rewrite a prompt using general prompt engineering best practices"
   "create-skill:Guide for authoring Cursor agent skills (forked from Cursor built-in)"
+  "git-worktrees:Worktree workflow so parallel agent chats stop colliding on branches"
+  "goal-cursor:Anthropic-style /goal loop adapted for Cursor's stop hook"
+  "meta-ads-bulk-creator:Build Meta Ads Manager bulk-import files (.xlsx + Unicode .txt) from a YAML brief"
+  "gh-pr-list:Numbered Slack message of your non-draft open PRs in the current repo"
+  "gh-issue-triage:Pick the top 3 AI-ready issues in the current repo with a kickoff prompt for each"
+  "review-pr:Review a teammate's PR and emit copy-paste-ready, senior-level comments"
+  "investigate:Systematic root-cause debugging with the Iron Law (no fix without root cause) -- adapted from gstack"
+  "benchmark:Performance regression detection for web pages (Core Web Vitals, bundles, baselines) -- adapted from gstack"
+  "office-hours:YC-style premise interrogation and design partner. No code -- ends with an assignment -- adapted from gstack"
+  "verification-before-completion:Gate that forces fresh proof before any 'done' claim -- adapted from obra/superpowers"
+  "qa-manual:Drive a web feature in Chrome MCP through happy path + edges, produce evidence"
 )
 
 VENDOR_SKILLS=(
@@ -26,6 +38,7 @@ INSTALL_ALL=false
 SINGLE_SKILL=""
 FORCE=false
 UPDATE_VENDOR=false
+SYMLINK=false
 
 usage() {
   cat <<EOF
@@ -38,6 +51,7 @@ Options:
   --skill <name>     Install a single skill by name
   --target <dir>     Override the install directory
   --force            Overwrite existing skills without confirming
+  --symlink          Symlink skills into the target instead of copying (live edits)
   --update-vendor    Update vendor submodules to their latest versions
   -h, --help         Show this help message
 
@@ -152,6 +166,42 @@ update_vendor() {
   echo "Vendor skills updated."
 }
 
+install_goal_cursor_hook() {
+  local hooks_file="$HOME/.cursor/hooks.json"
+  local hook_cmd="python3 \$HOME/.cursor/skills/goal-cursor/scripts/stop_hook.py"
+
+  mkdir -p "$HOME/.cursor"
+
+  HOOKS_FILE="$hooks_file" HOOK_CMD="$hook_cmd" python3 - <<'PY'
+import json
+import os
+from pathlib import Path
+
+path = Path(os.environ["HOOKS_FILE"])
+cmd = os.environ["HOOK_CMD"]
+
+if path.exists():
+    try:
+        data = json.loads(path.read_text("utf-8"))
+    except json.JSONDecodeError:
+        print(f"  Warning: {path} is not valid JSON; refusing to overwrite.")
+        raise SystemExit(1)
+else:
+    data = {}
+
+data.setdefault("version", 1)
+hooks = data.setdefault("hooks", {})
+stop_list = hooks.setdefault("stop", [])
+
+if any(isinstance(h, dict) and h.get("command") == cmd for h in stop_list):
+    print(f"  goal-cursor stop hook already present in {path}")
+else:
+    stop_list.append({"command": cmd, "loop_limit": None, "timeout": 60})
+    path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+    print(f"  Added goal-cursor stop hook to {path}")
+PY
+}
+
 install_skill() {
   local source_dir="$1"
   local skill_name="$2"
@@ -172,8 +222,13 @@ install_skill() {
 
   mkdir -p "$target"
   rm -rf "$dest"
-  cp -r "$src" "$dest"
-  echo "  Installed $skill_name -> $dest"
+  if [[ "$SYMLINK" = true ]]; then
+    ln -sfn "$src" "$dest"
+    echo "  Linked $skill_name -> $dest"
+  else
+    cp -r "$src" "$dest"
+    echo "  Installed $skill_name -> $dest"
+  fi
 }
 
 pick_platform() {
@@ -263,6 +318,7 @@ main() {
       --skill) SINGLE_SKILL="$2"; shift 2 ;;
       --target) TARGET_DIR="$2"; shift 2 ;;
       --force) FORCE=true; shift ;;
+      --symlink) SYMLINK=true; shift ;;
       --update-vendor) UPDATE_VENDOR=true; shift ;;
       -h|--help) usage; exit 0 ;;
       *) echo "Unknown option: $1" >&2; usage; exit 1 ;;
@@ -315,6 +371,13 @@ main() {
   echo ""
   echo "Linking vendor skills..."
   link_vendor_skills "$source_dir"
+
+  if [[ "$TARGET_DIR" == *"/.cursor/skills" ]] && [[ -d "$TARGET_DIR/goal-cursor" ]]; then
+    echo ""
+    echo "Configuring goal-cursor stop hook..."
+    install_goal_cursor_hook
+    echo "  Tip: set GOAL_CURSOR_EVAL_MODEL, GOAL_CURSOR_MAX_TURNS, or ANTHROPIC_API_KEY to customise the evaluator."
+  fi
 
   echo ""
   echo "Done."

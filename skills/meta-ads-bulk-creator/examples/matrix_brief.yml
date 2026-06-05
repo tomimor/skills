@@ -1,0 +1,38 @@
+account:
+  page_id: "1234567890"
+
+creatives:
+  - id: lifestyle_a
+    files:
+      "4:5": lifestyle_a_4x5.jpg
+      "9:16": lifestyle_a_9x16.jpg
+  - id: lifestyle_b
+    files:
+      "4:5": lifestyle_b_4x5.jpg
+      "9:16": lifestyle_b_9x16.jpg
+  - id: product_shot
+    files:
+      "4:5": product_shot_4x5.jpg
+      "9:16": product_shot_9x16.jpg
+
+campaigns:
+  - name: "Q2 2026 leads test"
+    objective: "Outcome Leads"
+    daily_budget: 80.00
+    ad_sets:
+      - name: "Broad AR 25-54 / WhatsApp"
+        creative_matrix:
+          link: "https://example.com/contact"
+          cta: WHATSAPP_MESSAGE
+          titles:
+            - "Talk to us"
+            - "Get a quote"
+            - "We're here to help"
+          bodies:
+            - "Tap to chat with our team on WhatsApp. No forms, no waiting."
+            - "Quick questions get quick answers. Message us directly."
+            - "Real humans, real answers. WhatsApp us anytime."
+          creative_ids:
+            - lifestyle_a
+            - lifestyle_b
+            - product_shot

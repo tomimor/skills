@@ -37,6 +37,27 @@ This means every agent skill -- whether mine or third-party -- is discoverable f
 | [verify-pr](skills/verify-pr/SKILL.md) | Three-phase PR verification: code review (via miguel-review), test plan with gap analysis, and upstream assumption validation. |
 | [ui-review](skills/ui-review/SKILL.md) | Comprehensive frontend UI review across typography, layout, accessibility, responsiveness, copy, visual polish, and design critique. |
 
+### Verification & QA
+
+| Skill | Description |
+|-------|-------------|
+| [verification-before-completion](skills/verification-before-completion/SKILL.md) | Gate that blocks "done" claims without fresh, executed proof. Forces running a proof command and reading its output before claiming success. Adapted from [obra/superpowers](https://github.com/obra/superpowers). |
+| [qa-manual](skills/qa-manual/SKILL.md) | Drive a web feature in Chrome MCP through happy path + 2-3 edge cases, capturing screenshots, console errors, and network failures. Produces the evidence that `verification-before-completion` gates on. |
+
+### Engineering & Debug
+
+| Skill | Description |
+|-------|-------------|
+| [investigate](skills/investigate/SKILL.md) | Systematic root-cause debugging with the Iron Law -- no fix without a confirmed root cause. Five phases: collect, pattern-match, hypothesize, fix, verify. 3-strike rule escalates to the user. Adapted from [gstack](https://github.com/garrytan/gstack). |
+| [benchmark](skills/benchmark/SKILL.md) | Performance regression detection for web pages. Captures baselines (page load, Core Web Vitals, bundles), compares subsequent runs, and flags regressions by configurable thresholds. Uses Chrome MCP, Lighthouse, or Playwright. Adapted from [gstack](https://github.com/garrytan/gstack). |
+
+### Product & Brainstorming
+
+| Skill | Description |
+|-------|-------------|
+| [office-hours](skills/office-hours/SKILL.md) | YC-style premise interrogation. Six forcing questions in startup mode, generative questions in builder mode, 2-3 alternative approaches, and a mandatory written assignment. Never writes code. Adapted from [gstack](https://github.com/garrytan/gstack). |
+| [grill-me](skills/grill-me/SKILL.md) | Interview the user relentlessly about a plan or design, one decision at a time, via `AskQuestion`. Resolves the decision tree in dependency order and produces an assumptions ledger. |
+
 ### Writing
 
 | Skill | Description |
