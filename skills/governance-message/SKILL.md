@@ -1,0 +1,175 @@
+---
+name: governance-message
+description: >-
+  Generate a Slack-ready governance proposal message from a single proposal URL
+  (forum post, Tally vote, Snapshot, etc.). Fetches the page, extracts proposer,
+  summary, context, and risk, then drafts the message using the fixed governance
+  template. Use when the user mentions governance message, gov proposal, gov
+  message, gobernanza, Slack message for a proposal, ZKsync proposal summary,
+  Tally vote summary, or pastes a proposal link and asks for a write-up.
+---
+
+# Governance Message
+
+Turn a governance proposal URL into a concise, Slack-ready summary using the
+fixed template below.
+
+## Critical rules
+
+1. **Input is a single URL.** The skill argument is the proposal link. If the
+   user did not provide one, ask for it before doing anything else.
+2. **Fetch before drafting.** Always pull the page via `WebFetch` first. Never
+   draft from prior knowledge of the proposal -- proposals get amended.
+3. **Clarification gate.** If voting stance, risk level, or rationale are not
+   derivable from the page, STOP and ask the user via `AskUserQuestion`. Never
+   guess a stance.
+4. **Confirmation gate.** Show the full draft to the user and wait for explicit
+   approval before posting, copying, or sending anywhere.
+5. **Template is fixed.** Do not invent sections. Do not reorder. Do not drop
+   bullets. The structure below is the contract.
+6. **Concision.** Each section is 1-2 sentences or 1-3 bullets. Aim for a
+   message a reader can scan in under 30 seconds.
+
+## Workflow
+
+### Step 1 -- Receive the URL
+
+The user invokes the skill with a link. Examples:
+
+- `https://forum.zknation.io/t/...`
+- `https://www.tally.xyz/gov/zksync/proposal/...`
+- `https://snapshot.org/#/.../proposal/...`
+
+If no URL was provided, ask:
+
+```
+Question: "Paste the proposal URL you want summarized."
+```
+
+### Step 2 -- Fetch the page
+
+Use `WebFetch` with a prompt that extracts only what the template needs:
+
+```
+WebFetch(url=<URL>, prompt="Extract the following from this governance
+proposal page:
+- Title
+- Proposer (name + role/affiliation if shown)
+- Date posted / voting window
+- One-paragraph summary of what is being asked
+- Background / context
+- Amounts, timelines, or parameters being requested
+- Stated risks and mitigations
+- Any linked companion proposal (forum <-> Tally/Snapshot)
+Return as structured bullet points.")
+```
+
+If the page is behind auth or rate-limited, tell the user and ask them to
+paste the proposal text.
+
+### Step 3 -- Identify missing inputs
+
+The template requires three things the page rarely states for you:
+
+| Field | Where to get it |
+|-------|------------------|
+| **Voting Stance** | Approve or Reject -- ask the user |
+| **Risk Level** | Low / Medium / High -- propose one based on the diff, then confirm |
+| **Companion link** | If you only have a forum link, ask for the Tally/Snapshot link (and vice versa) |
+
+Use `AskUserQuestion`:
+
+```
+Question: "What's your voting stance on this proposal?"
+Options: Approve | Reject | Abstain | Need more discussion
+
+Question: "What risk level should I assign?"
+Options: Low Risk | Medium Risk | High Risk
+```
+
+### Step 4 -- Draft the message
+
+Fill the template verbatim. Keep the title bracket format exactly as shown.
+
+````markdown
+[Gov Proposal: <Short Title> -> <Risk Level> -> <Voting Stance>]
+
+**Summary:** <1-2 sentences on the proposal's objective and main ask.>
+
+- **Voting Stance:** <Approve :white_check_mark: | Reject :x:>
+- **Proposer:** <Name + relevant affiliation>
+- **Link to Proposal:** [<Forum label>](<forum-url>) - [<Tally/Snapshot label>](<voting-url>)
+
+---
+
+**Context:**
+
+- <1-2 bullets on the background or issue being addressed.>
+
+**Analysis:**
+<1 sentence general overview of why this matters.>
+
+- PRO: <Strongest argument in favor.>
+- CON: <Strongest argument against.>
+
+**Voting Stance Explanation:**
+
+- <Bullet justifying the stance: operational need, risk, benefit.>
+- <Optional second bullet if a second reason is genuinely distinct.>
+
+**Message for voting reasons:**
+<1-2 sentence rationale suitable for the on-chain vote reason field.>
+````
+
+### Step 5 -- Present and confirm
+
+Show the full draft in a fenced code block. Ask:
+
+```
+Question: "Ready to deliver, or want edits?"
+Options: Looks good | Edit a section | Regenerate from scratch | Cancel
+```
+
+### Step 6 -- Deliver
+
+After approval, ask where the message should go:
+
+```
+Question: "How do you want to use this message?"
+Options: Copy to clipboard | Send to Slack via MCP | Just show it again
+```
+
+For Slack delivery, only use a Slack MCP tool if one is available in the
+session. Otherwise, fall back to copy/show.
+
+## Template field guidelines
+
+- **Title:** Short, descriptive. No proposal number unless the protocol uses
+  numbers as primary IDs (e.g. ZIP-XX). Keep under 8 words.
+- **Risk Level:** Low = routine funding, parameter tweaks, well-precedented
+  ops. Medium = new program, sizable funding, novel mechanism. High =
+  protocol-level changes, large token movements, governance structure changes,
+  irreversible actions.
+- **Voting Stance emoji:** Approve uses `:white_check_mark:`, Reject uses
+  `:x:`, Abstain uses `:black_square_button:`. Slack renders these inline.
+- **Link to Proposal:** Always include both forum and on-chain links when both
+  exist. Forum-only or vote-only is fine if only one exists; do not invent
+  the other.
+- **Analysis:** Exactly one general-overview sentence, exactly one PRO bullet,
+  exactly one CON bullet. If you cannot identify a real CON, the proposal is
+  probably under-analyzed -- push back instead of inventing one.
+- **Message for voting reasons:** Reads well as a standalone on-chain comment
+  -- no internal jargon, no "we" without antecedent.
+
+## Anti-patterns
+
+- Do NOT draft without fetching the page.
+- Do NOT guess the voting stance from the proposer's tone.
+- Do NOT fabricate a CON to look balanced -- name a real one or note that the
+  PRO clearly dominates.
+- Do NOT add sections the template doesn't have (Timeline, Next Steps,
+  Appendix, etc.). Out-of-template content belongs in a reply, not the lead
+  message.
+- Do NOT exceed 3 bullets in any section.
+- Do NOT include the raw URL inline when a markdown link works.
+- Do NOT post or send the message before the user explicitly approves the draft.

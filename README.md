@@ -64,6 +64,12 @@ This means every agent skill -- whether mine or third-party -- is discoverable f
 |-------|-------------|
 | [writing-voice](skills/writing-voice/SKILL.md) | Write in a direct, personal, sensory style. Bans AI-giveaway phrases, enforces visual formatting, and includes platform-specific guidance for LinkedIn, X, blog, email, and technical writing. |
 
+### Governance & Voting
+
+| Skill | Description |
+|-------|-------------|
+| [governance-message](skills/governance-message/SKILL.md) | Turn a governance proposal URL (forum, Tally, Snapshot) into a Slack-ready summary. Fetches the page, extracts proposer + context + risks, and drafts the message using a fixed template with voting stance, risk level, PRO/CON, and on-chain vote rationale. |
+
 ### Design -- [Impeccable](https://github.com/pbakaus/impeccable) v3.0.7
 
 Vendor skill from Paul Bakaus's Impeccable, managed via git submodule. Since v3.0, all design commands are consolidated into a single skill with 20 internal commands.
