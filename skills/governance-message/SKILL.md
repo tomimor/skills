@@ -38,10 +38,11 @@ fixed template below.
    `<url|label>` for links, no `#` headers, no `**bold**`, no `[label](url)`,
    no horizontal rules. See [Slack mrkdwn cheatsheet](#slack-mrkdwn-cheatsheet).
 9. **Plain message, not a document.** The deliverable is a single chat message
-   ready to paste into Slack. Never write it to a `.md` file. Never add a
-   title, preamble, or trailing explanation around it. Present it inside a
-   fenced code block in chat so the user can click the copy button and paste
-   straight into Slack.
+   ready to paste into Slack. Never write it to a `.md` file. Never wrap it
+   in a fenced code block. Never add a title, preamble, or trailing
+   explanation. Emit the message as the bare chat reply with the Slack mrkdwn
+   characters (`*`, `<url|label>`, `•`, `:emoji:`) as literal text so the
+   user copies it straight from the chat into Slack.
 
 ## Workflow
 
@@ -103,7 +104,8 @@ Options: Low Risk | Medium Risk | High Risk
 ### Step 4 -- Draft the message
 
 Fill the template verbatim, in Slack mrkdwn. Keep the title bracket format
-exactly as shown.
+exactly as shown. The fenced block below is documentation; the actual chat
+output in Step 5 is plain text with no backticks.
 
 ````
 [Gov Proposal: <Short Title> -> <Risk Level> -> <Voting Stance>]
@@ -132,15 +134,17 @@ exactly as shown.
 
 ### Step 5 -- Present for copy-paste
 
-Output the message inside a single fenced code block, nothing else around it
-except a one-line preface and the confirm question below. The code block lets
-the user hit the copy button and paste directly into Slack.
+Emit the message as the bare chat reply -- plain text with Slack mrkdwn
+characters (`*Bold:*`, `<url|label>`, `•`, `:emoji:`) written literally.
 
+- No fenced code block, no triple backticks, no indentation that triggers a
+  code block.
 - No "Here is the draft for your review:" prose.
 - No headings, no list of what changed, no recap of the proposal.
-- No trailing summary after the block.
+- No trailing summary after the message.
 
-Then ask:
+After the message, on a new line, ask the confirm question. That single
+question is the only thing allowed alongside the draft.
 
 ```
 Question: "Ready as-is, or want edits?"
@@ -149,13 +153,13 @@ Options: Looks good | Edit a section | Regenerate | Cancel
 
 ### Step 6 -- Iterate or hand off
 
-On "Looks good", say so in one line and stop -- the user copies from the code
-block themselves. Do not save the message to a file unless the user
-explicitly asks. Do not auto-send to Slack unless the user explicitly asks
-and a Slack MCP tool is connected.
+On "Looks good", reply in one line ("Done.") and stop -- the user copies the
+message from the chat themselves. Do not save the message to a file unless
+the user explicitly asks. Do not auto-send to Slack unless the user
+explicitly asks and a Slack MCP tool is connected.
 
 On "Edit a section", ask which section and what to change, then re-emit the
-full message in a fresh code block.
+full message as plain chat text (still no code block).
 
 ## Template field guidelines
 
@@ -190,10 +194,12 @@ full message in a fresh code block.
   `---` rules) -- Slack renders them as literal characters.
 - Do NOT include the raw URL inline when a `<url|label>` works.
 - Do NOT post or send the message before the user explicitly approves the draft.
-- Do NOT write the message to a file. The deliverable is a chat message in a
-  code block, ready to copy-paste into Slack.
+- Do NOT write the message to a file. The deliverable is a plain chat reply
+  ready to copy-paste into Slack.
+- Do NOT wrap the message in a fenced code block, triple backticks, or any
+  indentation that would render as code. Emit it as plain chat text.
 - Do NOT wrap the message in prose ("Here is your governance message:" /
-  "Let me know if you'd like changes"). The code block is the whole reply.
+  "Let me know if you'd like changes"). The bare message is the whole reply.
 
 ## Slack mrkdwn cheatsheet
 
