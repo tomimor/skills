@@ -27,7 +27,7 @@ SKILLS=(
   "verification-before-completion:Gate that forces fresh proof before any 'done' claim -- adapted from obra/superpowers"
   "qa-manual:Drive a web feature in Chrome MCP through happy path + edges, produce evidence"
   "governance-message:Slack-ready governance proposal summary from a single proposal URL"
-  "lottie-prompt:Write a structured prompt and build a Lottie animation via the Lottie Creator MCP, then log it"
+  "lottie-prompt-to-animation:Write a structured prompt and build a Lottie animation via the Lottie Creator MCP, then log it"
 )
 
 VENDOR_SKILLS=(

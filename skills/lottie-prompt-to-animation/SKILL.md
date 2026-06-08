@@ -1,5 +1,5 @@
 ---
-name: lottie-prompt
+name: lottie-prompt-to-animation
 description: >-
   Turn an animation idea into a structured prompt and build it as a Lottie
   animation with an AI assistant via the Lottie Creator MCP, applying
@@ -9,7 +9,7 @@ description: >-
   MCP, or register/log example animation prompts.
 ---
 
-# Lottie Prompt
+# Lottie Prompt to Animation
 
 Two jobs in one skill:
 
