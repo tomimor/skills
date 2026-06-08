@@ -29,6 +29,10 @@ fixed template below.
    bullets. The structure below is the contract.
 6. **Concision.** Each section is 1-2 sentences or 1-3 bullets. Aim for a
    message a reader can scan in under 30 seconds.
+7. **Always English.** The drafted message is always written in English,
+   regardless of the language the user is speaking. If the source proposal is
+   in another language, translate it. Conversation around the draft can be in
+   any language, but the deliverable is English.
 
 ## Workflow
 
