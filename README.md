@@ -64,6 +64,12 @@ This means every agent skill -- whether mine or third-party -- is discoverable f
 |-------|-------------|
 | [writing-voice](skills/writing-voice/SKILL.md) | Write in a direct, personal, sensory style. Bans AI-giveaway phrases, enforces visual formatting, and includes platform-specific guidance for LinkedIn, X, blog, email, and technical writing. |
 
+### Animation & Motion
+
+| Skill | Description |
+|-------|-------------|
+| [lottie-prompt](skills/lottie-prompt/SKILL.md) | Turn an animation idea into a structured prompt, build it as a Lottie animation via the [Lottie Creator MCP](https://docs.lottiefiles.com/en/creator/13_ai-tools/lottie-creator-mcp) with motion-design judgment (timing, easing, choreography), then log the prompt + result in a reusable registry. Motion principles adapted from [LottieFiles' motion-design-skill](https://github.com/lottiefiles/motion-design-skill). |
+
 ### Governance & Voting
 
 | Skill | Description |
