@@ -37,6 +37,11 @@ fixed template below.
    GitHub/CommonMark. That means `*bold*` (single asterisks), `_italic_`,
    `<url|label>` for links, no `#` headers, no `**bold**`, no `[label](url)`,
    no horizontal rules. See [Slack mrkdwn cheatsheet](#slack-mrkdwn-cheatsheet).
+9. **Plain message, not a document.** The deliverable is a single chat message
+   ready to paste into Slack. Never write it to a `.md` file. Never add a
+   title, preamble, or trailing explanation around it. Present it inside a
+   fenced code block in chat so the user can click the copy button and paste
+   straight into Slack.
 
 ## Workflow
 
@@ -125,26 +130,32 @@ exactly as shown.
 <1-2 sentence rationale suitable for the on-chain vote reason field.>
 ````
 
-### Step 5 -- Present and confirm
+### Step 5 -- Present for copy-paste
 
-Show the full draft in a fenced code block. Ask:
+Output the message inside a single fenced code block, nothing else around it
+except a one-line preface and the confirm question below. The code block lets
+the user hit the copy button and paste directly into Slack.
+
+- No "Here is the draft for your review:" prose.
+- No headings, no list of what changed, no recap of the proposal.
+- No trailing summary after the block.
+
+Then ask:
 
 ```
-Question: "Ready to deliver, or want edits?"
-Options: Looks good | Edit a section | Regenerate from scratch | Cancel
+Question: "Ready as-is, or want edits?"
+Options: Looks good | Edit a section | Regenerate | Cancel
 ```
 
-### Step 6 -- Deliver
+### Step 6 -- Iterate or hand off
 
-After approval, ask where the message should go:
+On "Looks good", say so in one line and stop -- the user copies from the code
+block themselves. Do not save the message to a file unless the user
+explicitly asks. Do not auto-send to Slack unless the user explicitly asks
+and a Slack MCP tool is connected.
 
-```
-Question: "How do you want to use this message?"
-Options: Copy to clipboard | Send to Slack via MCP | Just show it again
-```
-
-For Slack delivery, only use a Slack MCP tool if one is available in the
-session. Otherwise, fall back to copy/show.
+On "Edit a section", ask which section and what to change, then re-emit the
+full message in a fresh code block.
 
 ## Template field guidelines
 
@@ -179,6 +190,10 @@ session. Otherwise, fall back to copy/show.
   `---` rules) -- Slack renders them as literal characters.
 - Do NOT include the raw URL inline when a `<url|label>` works.
 - Do NOT post or send the message before the user explicitly approves the draft.
+- Do NOT write the message to a file. The deliverable is a chat message in a
+  code block, ready to copy-paste into Slack.
+- Do NOT wrap the message in prose ("Here is your governance message:" /
+  "Let me know if you'd like changes"). The code block is the whole reply.
 
 ## Slack mrkdwn cheatsheet
 
