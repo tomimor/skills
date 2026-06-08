@@ -33,6 +33,10 @@ fixed template below.
    regardless of the language the user is speaking. If the source proposal is
    in another language, translate it. Conversation around the draft can be in
    any language, but the deliverable is English.
+8. **Slack mrkdwn only.** The output uses Slack's `mrkdwn` flavor, not
+   GitHub/CommonMark. That means `*bold*` (single asterisks), `_italic_`,
+   `<url|label>` for links, no `#` headers, no `**bold**`, no `[label](url)`,
+   no horizontal rules. See [Slack mrkdwn cheatsheet](#slack-mrkdwn-cheatsheet).
 
 ## Workflow
 
@@ -93,35 +97,31 @@ Options: Low Risk | Medium Risk | High Risk
 
 ### Step 4 -- Draft the message
 
-Fill the template verbatim. Keep the title bracket format exactly as shown.
+Fill the template verbatim, in Slack mrkdwn. Keep the title bracket format
+exactly as shown.
 
-````markdown
+````
 [Gov Proposal: <Short Title> -> <Risk Level> -> <Voting Stance>]
 
-**Summary:** <1-2 sentences on the proposal's objective and main ask.>
+*Summary:* <1-2 sentences on the proposal's objective and main ask.>
 
-- **Voting Stance:** <Approve :white_check_mark: | Reject :x:>
-- **Proposer:** <Name + relevant affiliation>
-- **Link to Proposal:** [<Forum label>](<forum-url>) - [<Tally/Snapshot label>](<voting-url>)
+• *Voting Stance:* <Approve :white_check_mark: | Reject :x:>
+• *Proposer:* <Name + relevant affiliation>
+• *Link to Proposal:* <<forum-url>|Forum> - <<voting-url>|Tally>
 
----
+*Context:*
+• <1-2 bullets on the background or issue being addressed.>
 
-**Context:**
-
-- <1-2 bullets on the background or issue being addressed.>
-
-**Analysis:**
+*Analysis:*
 <1 sentence general overview of why this matters.>
+• PRO: <Strongest argument in favor.>
+• CON: <Strongest argument against.>
 
-- PRO: <Strongest argument in favor.>
-- CON: <Strongest argument against.>
+*Voting Stance Explanation:*
+• <Bullet justifying the stance: operational need, risk, benefit.>
+• <Optional second bullet if a second reason is genuinely distinct.>
 
-**Voting Stance Explanation:**
-
-- <Bullet justifying the stance: operational need, risk, benefit.>
-- <Optional second bullet if a second reason is genuinely distinct.>
-
-**Message for voting reasons:**
+*Message for voting reasons:*
 <1-2 sentence rationale suitable for the on-chain vote reason field.>
 ````
 
@@ -175,5 +175,33 @@ session. Otherwise, fall back to copy/show.
   Appendix, etc.). Out-of-template content belongs in a reply, not the lead
   message.
 - Do NOT exceed 3 bullets in any section.
-- Do NOT include the raw URL inline when a markdown link works.
+- Do NOT use GitHub/CommonMark syntax (`**bold**`, `[label](url)`, `#` headers,
+  `---` rules) -- Slack renders them as literal characters.
+- Do NOT include the raw URL inline when a `<url|label>` works.
 - Do NOT post or send the message before the user explicitly approves the draft.
+
+## Slack mrkdwn cheatsheet
+
+Slack `mrkdwn` is similar to Markdown but with key differences. Use these
+exact tokens in every draft:
+
+| Need | Slack mrkdwn | NOT |
+|------|--------------|-----|
+| Bold | `*bold*` | `**bold**` |
+| Italic | `_italic_` | `*italic*` |
+| Strikethrough | `~strike~` | `~~strike~~` |
+| Inline code | `` `code` `` | same as Markdown |
+| Code block | ` ```...``` ` | same as Markdown |
+| Link | `<https://x.com\|label>` | `[label](https://x.com)` |
+| Bare link | `<https://x.com>` | `https://x.com` |
+| Bullet | `• item` or `- item` | `* item` |
+| Blockquote | `> text` | same as Markdown |
+| Heading | not supported -- use `*Bold:*` | `# Heading` |
+| Horizontal rule | not supported -- use a blank line | `---` |
+| User mention | `<@U12345>` | `@username` |
+| Channel mention | `<#C12345\|name>` | `#channel` |
+| Emoji | `:white_check_mark:` | unicode also works |
+
+The pipe `|` inside `<url|label>` must NOT be escaped when pasted into Slack;
+the table above escapes it only because it conflicts with Markdown table
+syntax.
