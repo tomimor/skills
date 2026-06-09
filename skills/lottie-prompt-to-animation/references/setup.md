@@ -1,9 +1,13 @@
 # Lottie Creator MCP — setup & troubleshooting
 
-The Lottie Creator MCP connects an AI assistant (Claude, Cursor, Windsurf, and
-40+ others) to the LottieFiles Creator API through a local bridge, so the
-assistant can build and edit animations in Creator on your behalf via natural
-language.
+The **LottieFiles Creator MCP** (`@lottiefiles/creator-mcp`) connects an AI
+assistant (Claude, Cursor, Windsurf, and 40+ others) to the LottieFiles Creator
+API through a local bridge, so the assistant can build and edit animations in
+Creator on your behalf via natural language.
+
+> Don't confuse it with `mcp-server-lottiefiles` (a community package that only
+> *searches* existing animations). For authoring, use `@lottiefiles/creator-mcp`.
+> Official guide: lottie.link/mcp-guide.
 
 ## Prerequisites
 
@@ -11,43 +15,43 @@ language.
 - Node.js available (the MCP runs via `npx`).
 - An MCP-capable assistant.
 
-## Install with Smithery (fastest)
+## Claude Code (one command)
 
 ```bash
-npx -y smithery install mcp-server-lottiefiles --client claude
+claude mcp add lottiefiles-creator -- npx -y @lottiefiles/creator-mcp@latest
 ```
 
-Swap `--client claude` for `cursor`, `windsurf`, etc. as needed.
+## Claude Desktop (manual config)
 
-## Manual config
+Edit the config file and add the server under `mcpServers`:
 
-Open the assistant's MCP config and add the LottieFiles server:
-
-- **Claude Desktop**: `Settings → Developer → Edit Config`
-- **Claude Code**: `~/.claude.json` or a project-level `.mcp.json`
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+- **Linux**: `~/.config/Claude/claude_desktop_config.json`
 
 ```json
 {
   "mcpServers": {
-    "lottiefiles": {
+    "lottiefiles-creator": {
       "command": "npx",
-      "args": ["-y", "mcp-server-lottiefiles"]
+      "args": ["-y", "@lottiefiles/creator-mcp@latest"]
     }
   }
 }
 ```
 
-Restart the assistant after editing. On first use you may be prompted to
+Restart the assistant after editing. On first use you'll be prompted to
 authenticate with your LottieFiles account.
 
 > Config shape can change between MCP versions — confirm against the official
-> docs at docs.lottiefiles.com (Creator → AI Tools → Lottie Creator MCP) and the
-> Smithery package page if the server fails to start.
+> guide at lottie.link/mcp-guide (or docs.lottiefiles.com → Creator → AI Tools →
+> Lottie Creator MCP) if the server fails to start.
 
 ## Verify before building
 
 List the assistant's MCP tools and confirm the LottieFiles server connected and
-exposed its tools. If it didn't connect, fix setup first — don't silently
+exposed its tools — or just ask it: *"Using the lottiefiles tool, search for a
+rocket launch animation."* If it didn't connect, fix setup first; don't silently
 fall back to hand-writing Lottie JSON, which defeats the point of the workflow.
 
 ## Pair with the motion-design skill

@@ -30,13 +30,13 @@ If the user just wants an off-the-shelf loader, search the marketplace. Use this
 ## Prerequisites (one-time setup)
 
 1. A LottieFiles account with **Creator** access (the MCP drives the editor on your behalf).
-2. The **Lottie Creator MCP** registered with your assistant. Quick path with Smithery:
+2. The **LottieFiles Creator MCP** (`@lottiefiles/creator-mcp`) registered with your assistant. In Claude Code:
 
    ```bash
-   npx -y smithery install mcp-server-lottiefiles --client claude
+   claude mcp add lottiefiles-creator -- npx -y @lottiefiles/creator-mcp@latest
    ```
 
-   Manual path: open the assistant's MCP config (`Settings → Developer → Edit Config` in Claude Desktop, or `~/.claude.json` / `.mcp.json` for Claude Code) and add the `mcp-server-lottiefiles` entry, then restart the assistant.
+   In Claude Desktop, add the same `npx -y @lottiefiles/creator-mcp@latest` entry to `claude_desktop_config.json` and restart. (Don't use `mcp-server-lottiefiles` — that one only *searches*, it doesn't author.)
 3. Confirm the MCP tools are live before building — list tools and verify the LottieFiles server connected. If it didn't, stop and fix setup; do not hand-write JSON as a silent fallback.
 
 See [references/setup.md](references/setup.md) for config details and troubleshooting.
