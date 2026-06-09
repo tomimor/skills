@@ -64,6 +64,12 @@ This means every agent skill -- whether mine or third-party -- is discoverable f
 |-------|-------------|
 | [writing-voice](skills/writing-voice/SKILL.md) | Write in a direct, personal, sensory style. Bans AI-giveaway phrases, enforces visual formatting, and includes platform-specific guidance for LinkedIn, X, blog, email, and technical writing. |
 
+### Learning
+
+| Skill | Description |
+|-------|-------------|
+| [teach](skills/teach/SKILL.md) | Teach a new skill or concept across multiple sessions, using the current directory as a stateful teaching workspace -- mission grounding, curated high-trust resources, learning records, an opinionated glossary, and beautiful self-contained HTML lessons built around tight feedback loops. Adapted from [mattpocock/skills](https://github.com/mattpocock/skills). |
+
 ### Governance & Voting
 
 | Skill | Description |
@@ -159,7 +165,7 @@ Skills use the same SKILL.md format across platforms. The only difference is whe
 | Cursor | `~/.cursor/skills/<skill-name>/` |
 | Claude Code | `~/.claude/skills/<skill-name>/` |
 
-All skills in this repo require the [GitHub CLI](https://cli.github.com/) (`gh`) except `writing-voice` and the Impeccable design skills.
+All skills in this repo require the [GitHub CLI](https://cli.github.com/) (`gh`) except `writing-voice`, `teach`, and the Impeccable design skills.
 
 ## License
 
