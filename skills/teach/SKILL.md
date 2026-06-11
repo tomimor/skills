@@ -5,11 +5,13 @@ description: >-
   current directory as a stateful teaching workspace (mission, curated
   resources, learning records, glossary, and beautiful HTML lessons). Use when
   the user says "teach me X", wants to learn a topic over time, or asks for a
-  personalized lesson plan. Adapted from mattpocock/skills.
+  personalized lesson plan.
 argument-hint: "What would you like to learn about?"
 ---
 
 # Teach
+
+_Adapted from [mattpocock/skills](https://github.com/mattpocock/skills)'s `/teach` skill. Restructured for this repo's conventions. Original credit to Matt Pocock and contributors._
 
 The user has asked you to teach them something. This is a **stateful** request --
 they intend to learn the topic over multiple sessions. Treat the current
@@ -32,7 +34,7 @@ only when there is something real to put in it.
   [references/learning-record-format.md](references/learning-record-format.md).
 - `lessons/0001-<slug>.html` -- The primary unit of teaching: self-contained,
   beautiful HTML lessons, each teaching one tightly-scoped thing.
-- `reference/<name>.html` -- Compressed cheat-sheets for quick review (syntax,
+- `cheatsheets/<name>.html` -- Compressed cheat-sheets for quick review (syntax,
   algorithms, poses, sequences). Beautiful, print-friendly documents.
 - `NOTES.md` -- Scratchpad for the user's stated teaching preferences and your
   working notes.
@@ -115,15 +117,15 @@ can test skills in the real world. Find high-reputation communities and record
 them in `RESOURCES.md`. If the user opts out of communities, respect it and note
 the preference.
 
-## Reference documents
+## Cheat-sheets
 
-While creating lessons, also build reference documents in `reference/`. Lessons
-are rarely revisited; reference docs are. They are the compressed essence of a
-lesson, formatted for quick lookup: syntax and snippets for code, algorithms and
+While creating lessons, also build cheat-sheets in `cheatsheets/`. Lessons are
+rarely revisited; cheat-sheets are. They are the compressed essence of a lesson,
+formatted for quick lookup: syntax and snippets for code, algorithms and
 flowcharts for processes, poses and sequences for movement, glossaries for any
 topic with its own nomenclature.
 
-The **glossary** is the most important reference. Once it exists, adhere to its
+The **glossary** is the most important cheat-sheet. Once it exists, adhere to its
 terminology in every lesson.
 
 ## Recording preferences
