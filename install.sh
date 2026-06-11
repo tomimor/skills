@@ -32,6 +32,7 @@ SKILLS=(
 VENDOR_SKILLS=(
   "impeccable:pbakaus/impeccable:.claude/skills"
   "remotion:remotion-dev/skills:skills"
+  "improve:shadcn/improve:skills"
 )
 
 TARGET_DIR=""

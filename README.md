@@ -78,6 +78,14 @@ Vendor skill from Paul Bakaus's Impeccable, managed via git submodule. Since v3.
 |-------|-------------|
 | [impeccable](skills/impeccable/SKILL.md) | Design, redesign, shape, critique, audit, polish, and improve frontend interfaces. Commands: `craft`, `shape`, `audit`, `critique`, `animate`, `bolder`, `colorize`, `delight`, `layout`, `overdrive`, `quieter`, `typeset`, `adapt`, `clarify`, `distill`, `harden`, `onboard`, `optimize`, `polish`, `teach`, `document`, `extract`, `live`. |
 
+### Planning & Delegation -- [improve](https://github.com/shadcn/improve) v1.0.0
+
+Vendor skill from shadcn, managed via git submodule. An advisor (never an implementer): it audits a codebase, vets the findings, and writes self-contained plans that a cheaper model can execute and that it then reviews. The plan is the product.
+
+| Skill | Description |
+|-------|-------------|
+| [improve](skills/improve/SKILL.md) | Audit any codebase across nine categories (correctness, security, perf, tests, tech debt, deps, DX, docs, direction), rank findings by leverage, and write executable plans into `plans/`. Never edits source itself. Variants: `quick`, `deep`, `<category>`, `branch`, `next`, `plan <desc>`, `review-plan`, `execute`, `reconcile`, `--issues`. |
+
 ## Vendor Skills
 
 Vendor skills are third-party skill sets managed as git submodules under `vendor/`. They're linked into `skills/` via symlinks so agents discover them alongside your own skills.
