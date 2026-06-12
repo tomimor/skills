@@ -4,3 +4,6 @@
 [submodule "vendor/remotion"]
 	path = vendor/remotion
 	url = https://github.com/remotion-dev/skills
+[submodule "vendor/improve"]
+	path = vendor/improve
+	url = https://github.com/shadcn/improve
