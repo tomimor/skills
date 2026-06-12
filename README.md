@@ -37,6 +37,12 @@ This means every agent skill -- whether mine or third-party -- is discoverable f
 | [verify-pr](skills/verify-pr/SKILL.md) | Three-phase PR verification: code review (via miguel-review), test plan with gap analysis, and upstream assumption validation. |
 | [ui-review](skills/ui-review/SKILL.md) | Comprehensive frontend UI review across typography, layout, accessibility, responsiveness, copy, visual polish, and design critique. |
 
+### Git Workflow
+
+| Skill | Description |
+|-------|-------------|
+| [save-and-archive](skills/save-and-archive/SKILL.md) | Land a worktree conversation onto main in solo projects: auto-commit pending work, sync with origin/main resolving conflicts inside the worktree, fast-forward main, push, and remove the worktree. Counterpart to `git-worktrees`. |
+
 ### Verification & QA
 
 | Skill | Description |

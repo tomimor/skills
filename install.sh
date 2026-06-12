@@ -27,6 +27,7 @@ SKILLS=(
   "verification-before-completion:Gate that forces fresh proof before any 'done' claim -- adapted from obra/superpowers"
   "qa-manual:Drive a web feature in Chrome MCP through happy path + edges, produce evidence"
   "governance-message:Slack-ready governance proposal summary from a single proposal URL"
+  "save-and-archive:Land worktree work onto main (commit, sync, ff-merge, push, cleanup) for solo projects"
 )
 
 VENDOR_SKILLS=(
