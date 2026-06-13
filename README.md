@@ -50,6 +50,7 @@ This means every agent skill -- whether mine or third-party -- is discoverable f
 |-------|-------------|
 | [investigate](skills/investigate/SKILL.md) | Systematic root-cause debugging with the Iron Law -- no fix without a confirmed root cause. Five phases: collect, pattern-match, hypothesize, fix, verify. 3-strike rule escalates to the user. Adapted from [gstack](https://github.com/garrytan/gstack). |
 | [benchmark](skills/benchmark/SKILL.md) | Performance regression detection for web pages. Captures baselines (page load, Core Web Vitals, bundles), compares subsequent runs, and flags regressions by configurable thresholds. Uses Chrome MCP, Lighthouse, or Playwright. Adapted from [gstack](https://github.com/garrytan/gstack). |
+| [agent-guide-bootstrap](skills/agent-guide-bootstrap/SKILL.md) | Bootstrap the full `AGENTS.md` + `.agents/` guide system for a repo using progressive disclosure: terse always-on root file, on-demand domain guides with "Do Not" lists, canonical reference files (not stale embedded code), and tool-specific redirects (CLAUDE.md). |
 
 ### Product & Brainstorming
 
