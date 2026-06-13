@@ -37,6 +37,12 @@ This means every agent skill -- whether mine or third-party -- is discoverable f
 | [verify-pr](skills/verify-pr/SKILL.md) | Three-phase PR verification: code review (via miguel-review), test plan with gap analysis, and upstream assumption validation. |
 | [ui-review](skills/ui-review/SKILL.md) | Comprehensive frontend UI review across typography, layout, accessibility, responsiveness, copy, visual polish, and design critique. |
 
+### Git Workflow
+
+| Skill | Description |
+|-------|-------------|
+| [save-and-archive](skills/save-and-archive/SKILL.md) | Land a worktree conversation onto main in solo projects: auto-commit pending work, sync with origin/main resolving conflicts inside the worktree, fast-forward main, push, and remove the worktree. Counterpart to `git-worktrees`. |
+
 ### Verification & QA
 
 | Skill | Description |
@@ -65,6 +71,18 @@ This means every agent skill -- whether mine or third-party -- is discoverable f
 |-------|-------------|
 | [writing-voice](skills/writing-voice/SKILL.md) | Write in a direct, personal, sensory style. Bans AI-giveaway phrases, enforces visual formatting, and includes platform-specific guidance for LinkedIn, X, blog, email, and technical writing. |
 
+### Learning
+
+| Skill | Description |
+|-------|-------------|
+| [teach](skills/teach/SKILL.md) | Teach a new skill or concept across multiple sessions, using the current directory as a stateful teaching workspace -- mission grounding, curated high-trust resources, learning records, an opinionated glossary, and beautiful self-contained HTML lessons built around tight feedback loops. Adapted from [mattpocock/skills](https://github.com/mattpocock/skills). |
+
+### Governance & Voting
+
+| Skill | Description |
+|-------|-------------|
+| [governance-message](skills/governance-message/SKILL.md) | Turn a governance proposal URL (forum, Tally, Snapshot) into a Slack-ready summary. Fetches the page, extracts proposer + context + risks, and drafts the message using a fixed template with voting stance, risk level, PRO/CON, and on-chain vote rationale. |
+
 ### Design -- [Impeccable](https://github.com/pbakaus/impeccable) v3.0.7
 
 Vendor skill from Paul Bakaus's Impeccable, managed via git submodule. Since v3.0, all design commands are consolidated into a single skill with 20 internal commands.
@@ -72,6 +90,14 @@ Vendor skill from Paul Bakaus's Impeccable, managed via git submodule. Since v3.
 | Skill | Description |
 |-------|-------------|
 | [impeccable](skills/impeccable/SKILL.md) | Design, redesign, shape, critique, audit, polish, and improve frontend interfaces. Commands: `craft`, `shape`, `audit`, `critique`, `animate`, `bolder`, `colorize`, `delight`, `layout`, `overdrive`, `quieter`, `typeset`, `adapt`, `clarify`, `distill`, `harden`, `onboard`, `optimize`, `polish`, `teach`, `document`, `extract`, `live`. |
+
+### Planning & Delegation -- [improve](https://github.com/shadcn/improve) v1.0.0
+
+Vendor skill from shadcn, managed via git submodule. An advisor (never an implementer): it audits a codebase, vets the findings, and writes self-contained plans that a cheaper model can execute and that it then reviews. The plan is the product.
+
+| Skill | Description |
+|-------|-------------|
+| [improve](skills/improve/SKILL.md) | Audit any codebase across nine categories (correctness, security, perf, tests, tech debt, deps, DX, docs, direction), rank findings by leverage, and write executable plans into `plans/`. Never edits source itself. Variants: `quick`, `deep`, `<category>`, `branch`, `next`, `plan <desc>`, `review-plan`, `execute`, `reconcile`, `--issues`. |
 
 ## Vendor Skills
 
@@ -154,7 +180,7 @@ Skills use the same SKILL.md format across platforms. The only difference is whe
 | Cursor | `~/.cursor/skills/<skill-name>/` |
 | Claude Code | `~/.claude/skills/<skill-name>/` |
 
-All skills in this repo require the [GitHub CLI](https://cli.github.com/) (`gh`) except `writing-voice` and the Impeccable design skills.
+All skills in this repo require the [GitHub CLI](https://cli.github.com/) (`gh`) except `writing-voice`, `teach`, and the Impeccable design skills.
 
 ## License
 
