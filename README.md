@@ -82,6 +82,12 @@ This means every agent skill -- whether mine or third-party -- is discoverable f
 |-------|-------------|
 | [governance-message](skills/governance-message/SKILL.md) | Turn a governance proposal URL (forum, Tally, Snapshot) into a Slack-ready summary. Fetches the page, extracts proposer + context + risks, and drafts the message using a fixed template with voting stance, risk level, PRO/CON, and on-chain vote rationale. |
 
+### Frontend & Design
+
+| Skill | Description |
+|-------|-------------|
+| [grid-review](skills/grid-review/SKILL.md) | Read-only audit of a web page's layout grid. Measures column adherence, baseline rhythm, and optical ink alignment in pixels (Müller-Brockmann), then critiques grid appropriateness, type scale, flush-left, white space, measure, and color-as-identifier (Vignelli). Rigorous on declared CSS grids; falls back to inferred-grid checks on arbitrary pages. Adapted from [hyperagent-public-skills](https://github.com/alexmcdonnell-airtable/hyperagent-public-skills). |
+
 ### Design -- [Impeccable](https://github.com/pbakaus/impeccable) v3.0.7
 
 Vendor skill from Paul Bakaus's Impeccable, managed via git submodule. Since v3.0, all design commands are consolidated into a single skill with 20 internal commands.
