@@ -57,6 +57,7 @@ This means every agent skill -- whether mine or third-party -- is discoverable f
 |-------|-------------|
 | [office-hours](skills/office-hours/SKILL.md) | YC-style premise interrogation. Six forcing questions in startup mode, generative questions in builder mode, 2-3 alternative approaches, and a mandatory written assignment. Never writes code. Adapted from [gstack](https://github.com/garrytan/gstack). |
 | [grill-me](skills/grill-me/SKILL.md) | Interview the user relentlessly about a plan or design, one decision at a time, via `AskQuestion`. Resolves the decision tree in dependency order and produces an assumptions ledger. |
+| [whats-missing](skills/whats-missing/SKILL.md) | Surface the single most important blindspot in a plan, decision, or situation -- not a list of risks, the one piece most likely to change the call. Checks the frame first, generates candidates across 8 lenses, applies a stretch test, and either commits to one with an observable signal and a cheap test or returns an equally-weighted "no blindspot". |
 
 ### Writing
 

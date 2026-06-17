@@ -26,6 +26,7 @@ SKILLS=(
   "office-hours:YC-style premise interrogation and design partner. No code -- ends with an assignment -- adapted from gstack"
   "verification-before-completion:Gate that forces fresh proof before any 'done' claim -- adapted from obra/superpowers"
   "qa-manual:Drive a web feature in Chrome MCP through happy path + edges, produce evidence"
+  "whats-missing:Surface the single most important blindspot in a plan or decision -- not a list, the one piece that changes the call"
 )
 
 VENDOR_SKILLS=(
