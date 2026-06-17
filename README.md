@@ -37,6 +37,12 @@ This means every agent skill -- whether mine or third-party -- is discoverable f
 | [verify-pr](skills/verify-pr/SKILL.md) | Three-phase PR verification: code review (via miguel-review), test plan with gap analysis, and upstream assumption validation. |
 | [ui-review](skills/ui-review/SKILL.md) | Comprehensive frontend UI review across typography, layout, accessibility, responsiveness, copy, visual polish, and design critique. |
 
+### Git Workflow
+
+| Skill | Description |
+|-------|-------------|
+| [save-and-archive](skills/save-and-archive/SKILL.md) | Land a worktree conversation onto main in solo projects: auto-commit pending work, sync with origin/main resolving conflicts inside the worktree, fast-forward main, push, and remove the worktree. Counterpart to `git-worktrees`. |
+
 ### Verification & QA
 
 | Skill | Description |
@@ -50,6 +56,7 @@ This means every agent skill -- whether mine or third-party -- is discoverable f
 |-------|-------------|
 | [investigate](skills/investigate/SKILL.md) | Systematic root-cause debugging with the Iron Law -- no fix without a confirmed root cause. Five phases: collect, pattern-match, hypothesize, fix, verify. 3-strike rule escalates to the user. Adapted from [gstack](https://github.com/garrytan/gstack). |
 | [benchmark](skills/benchmark/SKILL.md) | Performance regression detection for web pages. Captures baselines (page load, Core Web Vitals, bundles), compares subsequent runs, and flags regressions by configurable thresholds. Uses Chrome MCP, Lighthouse, or Playwright. Adapted from [gstack](https://github.com/garrytan/gstack). |
+| [agent-guide-bootstrap](skills/agent-guide-bootstrap/SKILL.md) | Bootstrap the full `AGENTS.md` + `.agents/` guide system for a repo using progressive disclosure: terse always-on root file, on-demand domain guides with "Do Not" lists, canonical reference files (not stale embedded code), and tool-specific redirects (CLAUDE.md). |
 
 ### Product & Brainstorming
 
@@ -65,6 +72,24 @@ This means every agent skill -- whether mine or third-party -- is discoverable f
 |-------|-------------|
 | [writing-voice](skills/writing-voice/SKILL.md) | Write in a direct, personal, sensory style. Bans AI-giveaway phrases, enforces visual formatting, and includes platform-specific guidance for LinkedIn, X, blog, email, and technical writing. |
 
+### Learning
+
+| Skill | Description |
+|-------|-------------|
+| [teach](skills/teach/SKILL.md) | Teach a new skill or concept across multiple sessions, using the current directory as a stateful teaching workspace -- mission grounding, curated high-trust resources, learning records, an opinionated glossary, and beautiful self-contained HTML lessons built around tight feedback loops. Adapted from [mattpocock/skills](https://github.com/mattpocock/skills). |
+
+### Governance & Voting
+
+| Skill | Description |
+|-------|-------------|
+| [governance-message](skills/governance-message/SKILL.md) | Turn a governance proposal URL (forum, Tally, Snapshot) into a Slack-ready summary. Fetches the page, extracts proposer + context + risks, and drafts the message using a fixed template with voting stance, risk level, PRO/CON, and on-chain vote rationale. |
+
+### Frontend & Design
+
+| Skill | Description |
+|-------|-------------|
+| [grid-review](skills/grid-review/SKILL.md) | Read-only audit of a web page's layout grid. Measures column adherence, baseline rhythm, and optical ink alignment in pixels (Müller-Brockmann), then critiques grid appropriateness, type scale, flush-left, white space, measure, and color-as-identifier (Vignelli). Rigorous on declared CSS grids; falls back to inferred-grid checks on arbitrary pages. Adapted from [hyperagent-public-skills](https://github.com/alexmcdonnell-airtable/hyperagent-public-skills). |
+
 ### Design -- [Impeccable](https://github.com/pbakaus/impeccable) v3.0.7
 
 Vendor skill from Paul Bakaus's Impeccable, managed via git submodule. Since v3.0, all design commands are consolidated into a single skill with 20 internal commands.
@@ -72,6 +97,14 @@ Vendor skill from Paul Bakaus's Impeccable, managed via git submodule. Since v3.
 | Skill | Description |
 |-------|-------------|
 | [impeccable](skills/impeccable/SKILL.md) | Design, redesign, shape, critique, audit, polish, and improve frontend interfaces. Commands: `craft`, `shape`, `audit`, `critique`, `animate`, `bolder`, `colorize`, `delight`, `layout`, `overdrive`, `quieter`, `typeset`, `adapt`, `clarify`, `distill`, `harden`, `onboard`, `optimize`, `polish`, `teach`, `document`, `extract`, `live`. |
+
+### Planning & Delegation -- [improve](https://github.com/shadcn/improve) v1.0.0
+
+Vendor skill from shadcn, managed via git submodule. An advisor (never an implementer): it audits a codebase, vets the findings, and writes self-contained plans that a cheaper model can execute and that it then reviews. The plan is the product.
+
+| Skill | Description |
+|-------|-------------|
+| [improve](skills/improve/SKILL.md) | Audit any codebase across nine categories (correctness, security, perf, tests, tech debt, deps, DX, docs, direction), rank findings by leverage, and write executable plans into `plans/`. Never edits source itself. Variants: `quick`, `deep`, `<category>`, `branch`, `next`, `plan <desc>`, `review-plan`, `execute`, `reconcile`, `--issues`. |
 
 ## Vendor Skills
 
@@ -154,7 +187,7 @@ Skills use the same SKILL.md format across platforms. The only difference is whe
 | Cursor | `~/.cursor/skills/<skill-name>/` |
 | Claude Code | `~/.claude/skills/<skill-name>/` |
 
-All skills in this repo require the [GitHub CLI](https://cli.github.com/) (`gh`) except `writing-voice` and the Impeccable design skills.
+All skills in this repo require the [GitHub CLI](https://cli.github.com/) (`gh`) except `writing-voice`, `teach`, and the Impeccable design skills.
 
 ## License
 
