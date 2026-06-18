@@ -106,13 +106,14 @@ Vendor skill from shadcn, managed via git submodule. An advisor (never an implem
 |-------|-------------|
 | [improve](skills/improve/SKILL.md) | Audit any codebase across nine categories (correctness, security, perf, tests, tech debt, deps, DX, docs, direction), rank findings by leverage, and write executable plans into `plans/`. Never edits source itself. Variants: `quick`, `deep`, `<category>`, `branch`, `next`, `plan <desc>`, `review-plan`, `execute`, `reconcile`, `--issues`. |
 
-### Animations -- [Emil Kowalski](https://github.com/emilkowalski/skill)
+### Animations & Design Engineering -- [Emil Kowalski](https://github.com/emilkowalski/skill)
 
-Vendor skill from Emil Kowalski's design-engineering pack ([animations.dev](https://animations.dev/)), managed via git submodule. Only the `review-animations` skill is linked from this pack.
+Vendor skills from Emil Kowalski's design-engineering pack ([animations.dev](https://animations.dev/)), managed via git submodule.
 
 | Skill | Description |
 |-------|-------------|
 | [review-animations](skills/review-animations/SKILL.md) | Specialized review skill that measures animation and motion code against a high craft bar: justified motion, frequency-appropriate timing, responsive easing, sub-300ms UI, correct transform-origin, interruptibility, GPU-only properties, reduced-motion, and cohesion. Emits a `Before/After/Why` findings table and a tiered Block/Approve verdict. |
+| [emil-design-eng](skills/emil-design-eng/SKILL.md) | Build-time companion to `review-animations`: Emil's full design-engineering playbook for crafting interfaces that feel right. Covers the animation decision framework, component building (responsive buttons, origin-aware popovers, `@starting-style` enter states), CSS transform and `clip-path` techniques, gesture/drag interactions, performance, accessibility, and the "Sonner principles." |
 
 ## Vendor Skills
 
@@ -130,8 +131,8 @@ Vendor skills are third-party skill sets managed as git submodules under `vendor
    VENDOR_SKILLS=(
      "impeccable:pbakaus/impeccable:.claude/skills"
      "<name>:<owner>/<repo>:<path-to-skills-dir>"
-     # Optional 4th field pins which skills to link (omit to link them all):
-     "emil:emilkowalski/skill:skills:review-animations"
+     # Optional 4th field pins which skills to link (comma-separated; omit to link them all):
+     "emil:emilkowalski/skill:skills:review-animations,emil-design-eng"
    )
    ```
 

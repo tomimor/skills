@@ -37,7 +37,7 @@ VENDOR_SKILLS=(
   "impeccable:pbakaus/impeccable:.claude/skills"
   "remotion:remotion-dev/skills:skills"
   "improve:shadcn/improve:skills"
-  "emil:emilkowalski/skill:skills:review-animations"
+  "emil:emilkowalski/skill:skills:review-animations,emil-design-eng"
 )
 
 TARGET_DIR=""
