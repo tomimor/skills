@@ -26,13 +26,19 @@ SKILLS=(
   "office-hours:YC-style premise interrogation and design partner. No code -- ends with an assignment -- adapted from gstack"
   "verification-before-completion:Gate that forces fresh proof before any 'done' claim -- adapted from obra/superpowers"
   "qa-manual:Drive a web feature in Chrome MCP through happy path + edges, produce evidence"
+  "agent-guide-bootstrap:Bootstrap AGENTS.md + .agents/ guide system for a repo (progressive disclosure)"
   "governance-message:Slack-ready governance proposal summary from a single proposal URL"
+  "teach:Stateful multi-session teaching workspace (mission, resources, HTML lessons) -- adapted from mattpocock/skills"
+  "save-and-archive:Land worktree work onto main (commit, sync, ff-merge, push, cleanup) for solo projects"
+  "whats-missing:Surface the single most important blindspot in a plan or decision -- not a list, the one piece that changes the call"
   "lottie-prompt-to-animation:Write a structured prompt and build a Lottie animation via the Lottie Creator MCP, then log it"
 )
 
 VENDOR_SKILLS=(
   "impeccable:pbakaus/impeccable:.claude/skills"
   "remotion:remotion-dev/skills:skills"
+  "improve:shadcn/improve:skills"
+  "emil:emilkowalski/skill:skills:review-animations,emil-design-eng"
 )
 
 TARGET_DIR=""
@@ -126,9 +132,10 @@ link_vendor_skills() {
   local skills_dir="$1"
 
   for entry in "${VENDOR_SKILLS[@]}"; do
-    local vendor_name="${entry%%:*}"
-    local rest="${entry#*:}"
-    local skills_subdir="${rest#*:}"
+    # Format: name:owner/repo:skills_subdir[:skill1,skill2,...]
+    # The optional 4th field pins which skills to link; omit it to link them all.
+    local vendor_name repo skills_subdir skills_filter
+    IFS=':' read -r vendor_name repo skills_subdir skills_filter <<< "$entry"
     local vendor_skills_path="$SCRIPT_DIR/vendor/$vendor_name/$skills_subdir"
 
     if [[ ! -d "$vendor_skills_path" ]]; then
@@ -142,8 +149,19 @@ link_vendor_skills() {
       version=$(grep -o '"version": *"[^"]*"' "$plugin_json" | head -1 | grep -o '"[^"]*"$' | tr -d '"')
     fi
 
+    local skill_dirs=()
+    if [[ -n "${skills_filter:-}" ]]; then
+      local wanted name
+      IFS=',' read -ra wanted <<< "$skills_filter"
+      for name in "${wanted[@]}"; do
+        skill_dirs+=("$vendor_skills_path/$name/")
+      done
+    else
+      skill_dirs=("$vendor_skills_path"/*/)
+    fi
+
     echo "  Linking $vendor_name skills (v$version)..."
-    for skill_dir in "$vendor_skills_path"/*/; do
+    for skill_dir in "${skill_dirs[@]}"; do
       [[ -d "$skill_dir" ]] || continue
       local skill_name
       skill_name=$(basename "$skill_dir")

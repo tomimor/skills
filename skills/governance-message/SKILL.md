@@ -33,6 +33,16 @@ fixed template below.
    regardless of the language the user is speaking. If the source proposal is
    in another language, translate it. Conversation around the draft can be in
    any language, but the deliverable is English.
+8. **Slack mrkdwn only.** The output uses Slack's `mrkdwn` flavor, not
+   GitHub/CommonMark. That means `*bold*` (single asterisks), `_italic_`,
+   `<url|label>` for links, no `#` headers, no `**bold**`, no `[label](url)`,
+   no horizontal rules. See [Slack mrkdwn cheatsheet](#slack-mrkdwn-cheatsheet).
+9. **Plain message, not a document.** The deliverable is a single chat message
+   ready to paste into Slack. Never write it to a `.md` file. Never wrap it
+   in a fenced code block. Never add a title, preamble, or trailing
+   explanation. Emit the message as the bare chat reply with the Slack mrkdwn
+   characters (`*`, `<url|label>`, `•`, `:emoji:`) as literal text so the
+   user copies it straight from the chat into Slack.
 
 ## Workflow
 
@@ -93,58 +103,63 @@ Options: Low Risk | Medium Risk | High Risk
 
 ### Step 4 -- Draft the message
 
-Fill the template verbatim. Keep the title bracket format exactly as shown.
+Fill the template verbatim, in Slack mrkdwn. Keep the title bracket format
+exactly as shown. The fenced block below is documentation; the actual chat
+output in Step 5 is plain text with no backticks.
 
-````markdown
+````
 [Gov Proposal: <Short Title> -> <Risk Level> -> <Voting Stance>]
 
-**Summary:** <1-2 sentences on the proposal's objective and main ask.>
+*Summary:* <1-2 sentences on the proposal's objective and main ask.>
 
-- **Voting Stance:** <Approve :white_check_mark: | Reject :x:>
-- **Proposer:** <Name + relevant affiliation>
-- **Link to Proposal:** [<Forum label>](<forum-url>) - [<Tally/Snapshot label>](<voting-url>)
+• *Voting Stance:* <Approve :white_check_mark: | Reject :x:>
+• *Proposer:* <Name + relevant affiliation>
+• *Link to Proposal:* <<forum-url>|Forum> - <<voting-url>|Tally>
 
----
+*Context:*
+• <1-2 bullets on the background or issue being addressed.>
 
-**Context:**
-
-- <1-2 bullets on the background or issue being addressed.>
-
-**Analysis:**
+*Analysis:*
 <1 sentence general overview of why this matters.>
+• PRO: <Strongest argument in favor.>
+• CON: <Strongest argument against.>
 
-- PRO: <Strongest argument in favor.>
-- CON: <Strongest argument against.>
+*Voting Stance Explanation:*
+• <Bullet justifying the stance: operational need, risk, benefit.>
+• <Optional second bullet if a second reason is genuinely distinct.>
 
-**Voting Stance Explanation:**
-
-- <Bullet justifying the stance: operational need, risk, benefit.>
-- <Optional second bullet if a second reason is genuinely distinct.>
-
-**Message for voting reasons:**
+*Message for voting reasons:*
 <1-2 sentence rationale suitable for the on-chain vote reason field.>
 ````
 
-### Step 5 -- Present and confirm
+### Step 5 -- Present for copy-paste
 
-Show the full draft in a fenced code block. Ask:
+Emit the message as the bare chat reply -- plain text with Slack mrkdwn
+characters (`*Bold:*`, `<url|label>`, `•`, `:emoji:`) written literally.
+
+- No fenced code block, no triple backticks, no indentation that triggers a
+  code block.
+- No "Here is the draft for your review:" prose.
+- No headings, no list of what changed, no recap of the proposal.
+- No trailing summary after the message.
+
+After the message, on a new line, ask the confirm question. That single
+question is the only thing allowed alongside the draft.
 
 ```
-Question: "Ready to deliver, or want edits?"
-Options: Looks good | Edit a section | Regenerate from scratch | Cancel
+Question: "Ready as-is, or want edits?"
+Options: Looks good | Edit a section | Regenerate | Cancel
 ```
 
-### Step 6 -- Deliver
+### Step 6 -- Iterate or hand off
 
-After approval, ask where the message should go:
+On "Looks good", reply in one line ("Done.") and stop -- the user copies the
+message from the chat themselves. Do not save the message to a file unless
+the user explicitly asks. Do not auto-send to Slack unless the user
+explicitly asks and a Slack MCP tool is connected.
 
-```
-Question: "How do you want to use this message?"
-Options: Copy to clipboard | Send to Slack via MCP | Just show it again
-```
-
-For Slack delivery, only use a Slack MCP tool if one is available in the
-session. Otherwise, fall back to copy/show.
+On "Edit a section", ask which section and what to change, then re-emit the
+full message as plain chat text (still no code block).
 
 ## Template field guidelines
 
@@ -175,5 +190,39 @@ session. Otherwise, fall back to copy/show.
   Appendix, etc.). Out-of-template content belongs in a reply, not the lead
   message.
 - Do NOT exceed 3 bullets in any section.
-- Do NOT include the raw URL inline when a markdown link works.
+- Do NOT use GitHub/CommonMark syntax (`**bold**`, `[label](url)`, `#` headers,
+  `---` rules) -- Slack renders them as literal characters.
+- Do NOT include the raw URL inline when a `<url|label>` works.
 - Do NOT post or send the message before the user explicitly approves the draft.
+- Do NOT write the message to a file. The deliverable is a plain chat reply
+  ready to copy-paste into Slack.
+- Do NOT wrap the message in a fenced code block, triple backticks, or any
+  indentation that would render as code. Emit it as plain chat text.
+- Do NOT wrap the message in prose ("Here is your governance message:" /
+  "Let me know if you'd like changes"). The bare message is the whole reply.
+
+## Slack mrkdwn cheatsheet
+
+Slack `mrkdwn` is similar to Markdown but with key differences. Use these
+exact tokens in every draft:
+
+| Need | Slack mrkdwn | NOT |
+|------|--------------|-----|
+| Bold | `*bold*` | `**bold**` |
+| Italic | `_italic_` | `*italic*` |
+| Strikethrough | `~strike~` | `~~strike~~` |
+| Inline code | `` `code` `` | same as Markdown |
+| Code block | ` ```...``` ` | same as Markdown |
+| Link | `<https://x.com\|label>` | `[label](https://x.com)` |
+| Bare link | `<https://x.com>` | `https://x.com` |
+| Bullet | `• item` or `- item` | `* item` |
+| Blockquote | `> text` | same as Markdown |
+| Heading | not supported -- use `*Bold:*` | `# Heading` |
+| Horizontal rule | not supported -- use a blank line | `---` |
+| User mention | `<@U12345>` | `@username` |
+| Channel mention | `<#C12345\|name>` | `#channel` |
+| Emoji | `:white_check_mark:` | unicode also works |
+
+The pipe `|` inside `<url|label>` must NOT be escaped when pasted into Slack;
+the table above escapes it only because it conflicts with Markdown table
+syntax.
