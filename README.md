@@ -106,6 +106,14 @@ Vendor skill from shadcn, managed via git submodule. An advisor (never an implem
 |-------|-------------|
 | [improve](skills/improve/SKILL.md) | Audit any codebase across nine categories (correctness, security, perf, tests, tech debt, deps, DX, docs, direction), rank findings by leverage, and write executable plans into `plans/`. Never edits source itself. Variants: `quick`, `deep`, `<category>`, `branch`, `next`, `plan <desc>`, `review-plan`, `execute`, `reconcile`, `--issues`. |
 
+### Animations -- [Emil Kowalski](https://github.com/emilkowalski/skill)
+
+Vendor skill from Emil Kowalski's design-engineering pack ([animations.dev](https://animations.dev/)), managed via git submodule. Only the `review-animations` skill is linked from this pack.
+
+| Skill | Description |
+|-------|-------------|
+| [review-animations](skills/review-animations/SKILL.md) | Specialized review skill that measures animation and motion code against a high craft bar: justified motion, frequency-appropriate timing, responsive easing, sub-300ms UI, correct transform-origin, interruptibility, GPU-only properties, reduced-motion, and cohesion. Emits a `Before/After/Why` findings table and a tiered Block/Approve verdict. |
+
 ## Vendor Skills
 
 Vendor skills are third-party skill sets managed as git submodules under `vendor/`. They're linked into `skills/` via symlinks so agents discover them alongside your own skills.
@@ -122,6 +130,8 @@ Vendor skills are third-party skill sets managed as git submodules under `vendor
    VENDOR_SKILLS=(
      "impeccable:pbakaus/impeccable:.claude/skills"
      "<name>:<owner>/<repo>:<path-to-skills-dir>"
+     # Optional 4th field pins which skills to link (omit to link them all):
+     "emil:emilkowalski/skill:skills:review-animations"
    )
    ```
 

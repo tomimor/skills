@@ -37,6 +37,7 @@ VENDOR_SKILLS=(
   "impeccable:pbakaus/impeccable:.claude/skills"
   "remotion:remotion-dev/skills:skills"
   "improve:shadcn/improve:skills"
+  "emil:emilkowalski/skill:skills:review-animations"
 )
 
 TARGET_DIR=""
@@ -130,9 +131,10 @@ link_vendor_skills() {
   local skills_dir="$1"
 
   for entry in "${VENDOR_SKILLS[@]}"; do
-    local vendor_name="${entry%%:*}"
-    local rest="${entry#*:}"
-    local skills_subdir="${rest#*:}"
+    # Format: name:owner/repo:skills_subdir[:skill1,skill2,...]
+    # The optional 4th field pins which skills to link; omit it to link them all.
+    local vendor_name repo skills_subdir skills_filter
+    IFS=':' read -r vendor_name repo skills_subdir skills_filter <<< "$entry"
     local vendor_skills_path="$SCRIPT_DIR/vendor/$vendor_name/$skills_subdir"
 
     if [[ ! -d "$vendor_skills_path" ]]; then
@@ -146,8 +148,19 @@ link_vendor_skills() {
       version=$(grep -o '"version": *"[^"]*"' "$plugin_json" | head -1 | grep -o '"[^"]*"$' | tr -d '"')
     fi
 
+    local skill_dirs=()
+    if [[ -n "${skills_filter:-}" ]]; then
+      local wanted name
+      IFS=',' read -ra wanted <<< "$skills_filter"
+      for name in "${wanted[@]}"; do
+        skill_dirs+=("$vendor_skills_path/$name/")
+      done
+    else
+      skill_dirs=("$vendor_skills_path"/*/)
+    fi
+
     echo "  Linking $vendor_name skills (v$version)..."
-    for skill_dir in "$vendor_skills_path"/*/; do
+    for skill_dir in "${skill_dirs[@]}"; do
       [[ -d "$skill_dir" ]] || continue
       local skill_name
       skill_name=$(basename "$skill_dir")

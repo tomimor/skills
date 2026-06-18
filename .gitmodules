@@ -7,3 +7,6 @@
 [submodule "vendor/improve"]
 	path = vendor/improve
 	url = https://github.com/shadcn/improve
+[submodule "vendor/emil"]
+	path = vendor/emil
+	url = https://github.com/emilkowalski/skill
