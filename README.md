@@ -2,16 +2,12 @@
 
 # 🧠 tomim-skills
 
-### Agent Skills
-
 [![Skills](https://img.shields.io/badge/skills-34-1f6feb?style=flat-square)](#skills)
 [![Install](https://img.shields.io/badge/install-one%20command-22c55e?style=flat-square)](#install)
 
 </div>
 
----
-
-Agent skills for **Cursor** and **Claude Code**, kept in one place. Write a workflow once and both editors pick it up. Third-party packs ([Impeccable](https://github.com/pbakaus/impeccable), [improve](https://github.com/shadcn/improve), [Remotion](https://github.com/remotion-dev/skills), [Emil Kowalski](https://github.com/emilkowalski/skill)) are vendored as git submodules and update with one command.
+Agent skills for **Cursor** and **Claude Code**, kept in one place. Third-party packs are vendored as git submodules and updated with one command.
 
 ## Quick start
 
@@ -22,8 +18,6 @@ curl -fsSL https://raw.githubusercontent.com/tomimor/tomim-skills/main/install.s
 # …or just grab one
 curl -fsSL https://raw.githubusercontent.com/tomimor/tomim-skills/main/install.sh | bash -s -- --skill pr-dashboard
 ```
-
-Then ask your agent to run it: *"give me a PR dashboard for this repo"* or *"miguel review this branch."*
 
 ## Why this exists
 
