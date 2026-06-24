@@ -75,7 +75,7 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 
 | Skill | What it does |
 |-------|--------------|
-| 🟦 [ui-review](skills/ui-review/SKILL.md) | Parallel frontend review across typography, layout, accessibility, responsiveness, copy, and polish. Prioritized small fixes, never rewrites. |
+| 🟦 [ui-review](skills/ui-review/SKILL.md) | Parallel frontend review across typography, layout, accessibility, responsiveness, copy, and polish. Prioritized small fixes, never rewrites. Polish pass includes a CSS-details checklist (concentric radius, tabular-nums, text-wrap, font smoothing, image outlines) adapted from [make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better). |
 | 🟦 [grid-review](skills/grid-review/SKILL.md) | Read-only audit of a page's layout grid: column adherence, baseline rhythm, optical alignment, then a critique. Adapted from [hyperagent-public-skills](https://github.com/alexmcdonnell-airtable/hyperagent-public-skills). |
 | 🟧 [impeccable](skills/impeccable/SKILL.md) | Design, critique, polish, and animate frontend interfaces. 20 internal commands (`craft`, `audit`, `animate`, `polish`, …). v3.0.7, from [pbakaus/impeccable](https://github.com/pbakaus/impeccable). |
 | 🟧 [review-animations](skills/review-animations/SKILL.md) | Review animation and motion code against a high craft bar: justified motion, responsive easing, sub-300ms UI, correct `transform-origin`, interruptibility, GPU-only props, reduced-motion. Emits a Before/After/Why table and a Block/Approve verdict. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |

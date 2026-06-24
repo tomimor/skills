@@ -107,6 +107,16 @@ The 7 dimensions:
 
 All skill paths are under: `/Users/tomimor/.claude/plugins/cache/impeccable/impeccable/1.5.1/.claude/skills/`
 
+**The Polish subagent must also read [css-polish-details.md](css-polish-details.md)** (in this skill
+directory) and apply its checklist. Append this line to the Polish subagent's prompt, after the
+Impeccable skill path:
+
+```
+Also read the CSS polish checklist at {ui-review skill dir}/css-polish-details.md and report any
+missing details: concentric border radius, tabular numbers, text-wrap balance/pretty, font
+smoothing, and image outlines.
+```
+
 **If the user selected specific focus areas** in Phase 0, only launch those subagents.
 
 ## Phase 3: Aggregate and Deduplicate
