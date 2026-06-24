@@ -19,6 +19,7 @@ SKILLS=(
   "goal-cursor:Anthropic-style /goal loop adapted for Cursor's stop hook"
   "meta-ads-bulk-creator:Build Meta Ads Manager bulk-import files (.xlsx + Unicode .txt) from a YAML brief"
   "gh-pr-list:Numbered Slack message of your non-draft open PRs in the current repo"
+  "pr-ready-message:One-line Slack 'Ready for review' message for a PR, with the title linked to the PR"
   "gh-issue-triage:Pick the top 3 AI-ready issues in the current repo with a kickoff prompt for each"
   "review-pr:Review a teammate's PR and emit copy-paste-ready, senior-level comments"
   "investigate:Systematic root-cause debugging with the Iron Law (no fix without root cause) -- adapted from gstack"

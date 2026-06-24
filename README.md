@@ -55,6 +55,7 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 | 🟦 [gh-pr-comment-assistant](skills/gh-pr-comment-assistant/SKILL.md) | Fetch the latest PR review comments, group and prioritize them, summarize each reviewer's ask, and plan the fixes. |
 | 🟦 [gh-pr-description-updater](skills/gh-pr-description-updater/SKILL.md) | Read or rewrite a PR description following the repo's template. Enforces brevity and template compliance. |
 | 🟦 [gh-pr-list](skills/gh-pr-list/SKILL.md) | A short, copy-paste Slack message of your open PRs, split into "Ready for review" and "Drafts." |
+| 🟦 [pr-ready-message](skills/pr-ready-message/SKILL.md) | A one-line, copy-paste Slack "Ready for review" message for a single PR, with the PR title linked to the PR and a reviewer cc'd. |
 | 🟦 [gh-issue-creator](skills/gh-issue-creator/SKILL.md) | Create a well-labeled GitHub issue from a bug, feature, or tech-debt template. Fetches labels dynamically. |
 | 🟦 [gh-issue-triage](skills/gh-issue-triage/SKILL.md) | Score open, unassigned issues against an AI-readiness rubric and return the top 3 with a ready-to-paste kickoff prompt each. |
 | 🟦 [git-worktrees](skills/git-worktrees/SKILL.md) | Give every agent conversation its own branch in its own directory, so parallel chats stop clobbering each other. |
