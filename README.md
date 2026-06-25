@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🧠 tomim-skills
+# 🧠 skills
 
 [![Skills](https://img.shields.io/badge/skills-34-1f6feb?style=flat-square)](#skills)
 [![Install](https://img.shields.io/badge/install-one%20command-22c55e?style=flat-square)](#install)
@@ -13,10 +13,10 @@ Agent skills for **Cursor** and **Claude Code**, kept in one place. Third-party 
 
 ```bash
 # Install everything
-curl -fsSL https://raw.githubusercontent.com/tomimor/tomim-skills/main/install.sh | bash -s -- --all
+curl -fsSL https://raw.githubusercontent.com/tomimor/skills/main/install.sh | bash -s -- --all
 
 # …or just grab one
-curl -fsSL https://raw.githubusercontent.com/tomimor/tomim-skills/main/install.sh | bash -s -- --skill pr-dashboard
+curl -fsSL https://raw.githubusercontent.com/tomimor/skills/main/install.sh | bash -s -- --skill pr-dashboard
 ```
 
 ## Why this exists
@@ -31,7 +31,7 @@ Both editors discover skills from a single directory. Own skills live as regular
 
 ```mermaid
 graph LR
-    CursorSkills["~/.cursor/skills"] -->|symlink| SkillsDir["tomim-skills/skills/"]
+    CursorSkills["~/.cursor/skills"] -->|symlink| SkillsDir["skills/skills/"]
     ClaudeSkills["~/.claude/skills"] -->|symlink| SkillsDir
     SkillsDir --> OwnSkills["Own skills<br/>(directories)"]
     SkillsDir --> VendorLinks["Vendor symlinks"]
@@ -149,10 +149,10 @@ Vendor skills are third-party packs tracked as git submodules under `vendor/` an
 
 ```bash
 # All skills (non-interactive)
-curl -fsSL https://raw.githubusercontent.com/tomimor/tomim-skills/main/install.sh | bash -s -- --all
+curl -fsSL https://raw.githubusercontent.com/tomimor/skills/main/install.sh | bash -s -- --all
 
 # A single skill
-curl -fsSL https://raw.githubusercontent.com/tomimor/tomim-skills/main/install.sh | bash -s -- --skill pr-dashboard
+curl -fsSL https://raw.githubusercontent.com/tomimor/skills/main/install.sh | bash -s -- --skill pr-dashboard
 ```
 
 Running `install.sh` with no flags starts an interactive picker.

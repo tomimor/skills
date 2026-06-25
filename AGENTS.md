@@ -5,7 +5,7 @@ Instructions for AI agents working in this repo.
 ## Repo structure
 
 ```
-tomim-skills/
+skills/
 ├── skills/                  # All discoverable skills (own + vendor symlinks)
 │   ├── miguel-review/       # Own skill (regular directory)
 │   ├── impeccable -> ../vendor/impeccable/.claude/skills/impeccable  # Vendor symlink

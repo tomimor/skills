@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>tomim-skills -- agent skills for Cursor and Claude Code</title>
+  <title>skills -- agent skills for Cursor and Claude Code</title>
   <meta name="description" content="A single source of truth for AI agent skills shared between Cursor and Claude Code. Codifies recurring workflows like PR review, GitHub issues, writing voice, and design critique." />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%A0%3C/text%3E%3C/svg%3E" />
   <style>
@@ -161,11 +161,11 @@
   <main class="wrap">
 
     <header>
-      <h1>tomim-skills</h1>
+      <h1>skills</h1>
       <p class="tagline">Agent skills I use daily across Cursor and Claude Code.</p>
       <p>
         <a class="cta primary" href="#install">Install</a>
-        <a class="cta" href="https://github.com/tomimor/tomim-skills">View on GitHub</a>
+        <a class="cta" href="https://github.com/tomimor/skills">View on GitHub</a>
       </p>
     </header>
 
@@ -174,7 +174,7 @@
       <div class="problems">
         <div class="problem">
           <h3>Skill drift across tools</h3>
-          <p>Cursor and Claude Code each want their own skills folder, so you end up copy-pasting and they fall out of sync. tomim-skills makes <code>~/.cursor/skills</code> and <code>~/.claude/skills</code> symlinks to a single <code>skills/</code> directory, so both agents read from the same source.</p>
+          <p>Cursor and Claude Code each want their own skills folder, so you end up copy-pasting and they fall out of sync. skills makes <code>~/.cursor/skills</code> and <code>~/.claude/skills</code> symlinks to a single <code>skills/</code> directory, so both agents read from the same source.</p>
         </div>
         <div class="problem">
           <h3>Mixing your own workflows with third-party skill packs</h3>
@@ -192,7 +192,7 @@
       <p>Both Cursor and Claude Code discover skills from a single directory. Own skills live as regular folders under <code>skills/</code>. Vendor skills are symlinks pointing into git submodules under <code>vendor/</code>.</p>
       <div class="diagram" aria-label="Architecture diagram">
         <svg viewBox="0 0 640 260" role="img" aria-labelledby="diagramTitle">
-          <title id="diagramTitle">~/.cursor/skills and ~/.claude/skills both symlink to tomim-skills/skills/, which contains own skill directories and vendor symlinks into vendor/</title>
+          <title id="diagramTitle">~/.cursor/skills and ~/.claude/skills both symlink to skills/skills/, which contains own skill directories and vendor symlinks into vendor/</title>
           <defs>
             <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
               <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
@@ -210,7 +210,7 @@
 
             <g>
               <rect x="240" y="108" width="180" height="44" rx="8" fill="none" stroke="currentColor" stroke-width="2" />
-              <text x="330" y="134" text-anchor="middle">tomim-skills/skills/</text>
+              <text x="330" y="134" text-anchor="middle">skills/skills/</text>
             </g>
 
             <g>
@@ -357,10 +357,10 @@
       <h2>Setup</h2>
 
       <h3>Install all skills</h3>
-<pre><code>curl -fsSL https://raw.githubusercontent.com/tomimor/tomim-skills/main/install.sh | bash -s -- --all</code></pre>
+<pre><code>curl -fsSL https://raw.githubusercontent.com/tomimor/skills/main/install.sh | bash -s -- --all</code></pre>
 
       <h3>Install a single skill</h3>
-<pre><code>curl -fsSL https://raw.githubusercontent.com/tomimor/tomim-skills/main/install.sh | bash -s -- --skill pr-dashboard</code></pre>
+<pre><code>curl -fsSL https://raw.githubusercontent.com/tomimor/skills/main/install.sh | bash -s -- --skill pr-dashboard</code></pre>
 
       <h3>Update vendor skills</h3>
 <pre><code>./install.sh --update-vendor</code></pre>
@@ -389,7 +389,7 @@
     </section>
 
     <footer>
-      <span><a href="https://github.com/tomimor/tomim-skills">github.com/tomimor/tomim-skills</a></span>
+      <span><a href="https://github.com/tomimor/skills">github.com/tomimor/skills</a></span>
       <span><a href="LICENSE">MIT License</a></span>
     </footer>
 
