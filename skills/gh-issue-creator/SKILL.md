@@ -1,10 +1,10 @@
 ---
 name: gh-issue-creator
 description:
-  Create a GitHub issue in the current repo using one of the predefined issue templates (bug, feature, tech debt) or as
-  a blank issue. Fetches available labels dynamically, maps user intent to the right template, and enforces concise
-  problem descriptions. Use when the user mentions creating an issue, filing a bug, opening a ticket, or reporting a
-  problem.
+  Create a GitHub issue in the current repo. Prefers the repo's own issue templates when present, otherwise falls back
+  to the skill's built-in templates (bug, feature, tech debt) or a blank issue. Fetches available labels dynamically,
+  maps user intent to the right template, and enforces concise problem descriptions. Use when the user mentions creating
+  an issue, filing a bug, opening a ticket, or reporting a problem.
 ---
 
 # GitHub Issue Creator
@@ -20,7 +20,18 @@ Create concise, well-labeled GitHub issues in the current repo using the predefi
 3. **Conciseness over completeness:** Each section in the issue body should be 2-4 sentences max. Only include sections
    the user provided content for. Prefer brevity over verbosity.
 
-## Issue Templates
+## Template Source Precedence
+
+**Always prefer the repo's own issue templates over the skill's built-in ones.** Resolve the source in this order:
+
+1. **Repo-native templates** -- if the repo ships issue templates (in `.github/ISSUE_TEMPLATE/`, a legacy
+   `.github/ISSUE_TEMPLATE.md`, or the `docs/`/root variants), use those. Read
+   [repo-templates.md](references/repo-templates.md) for how to detect, list, and parse them.
+2. **Skill built-in templates** -- only when the repo has no native templates, fall back to the three definitions below.
+
+Either way, blank issues (freeform) remain available -- no template file needed.
+
+### Skill built-in templates
 
 Three template definitions live in the `references/` folder. Read the relevant file for the chosen issue type to get
 field definitions, required/optional markers, and an example body.
@@ -30,8 +41,6 @@ field definitions, required/optional markers, and an example body.
 | Bug Report      | [bug-report.md](references/bug-report.md)           |
 | Feature Request | [feature-request.md](references/feature-request.md) |
 | Tech Debt       | [tech-debt.md](references/tech-debt.md)             |
-
-Blank issues (freeform) are also supported -- no template file needed.
 
 ## Workflow
 
@@ -44,18 +53,27 @@ gh repo view --json nameWithOwner -q '.nameWithOwner'
 **If not inside a git repo or `gh` fails:** Inform the user and stop. **If `gh` is not authenticated:** Show error and
 suggest `gh auth login`. Stop.
 
-### Step 2: Determine Issue Type
+### Step 2: Detect Repo Issue Templates
 
-If the user hasn't specified the type, use the **Ask User Questions** tool with these options:
+Check whether the repo ships its own issue templates before doing anything else. Follow the detection commands in
+[repo-templates.md](references/repo-templates.md).
 
-- Bug Report
-- Feature Request
-- Tech Debt
-- Blank issue (freeform)
+- **Repo templates found:** set the template source to **repo**. The discovered template names become the options for
+  the type picker in Step 3, and you will parse the matched template file (markdown or issue form) in Step 5.
+- **No repo templates:** set the template source to **skill** and use the built-in templates.
 
-If the type is obvious from context (e.g., "file a bug for..."), skip the picker and proceed.
+### Step 3: Determine Issue Type / Template
 
-### Step 3: Fetch Labels and Resolve Issue Type
+If the user hasn't specified the type, use the **Ask User Questions** tool to pick one:
+
+- **Source = repo:** offer the discovered template names (from their `name`/`about` fields), plus **Blank issue
+  (freeform)** unless the repo's `config.yml` disables blank issues. If the user's intent clearly matches one template
+  (e.g., "file a bug" -> the "Bug report" template), skip the picker and proceed.
+- **Source = skill:** offer Bug Report, Feature Request, Tech Debt, Blank issue (freeform).
+
+If the type is obvious from context, skip the picker and proceed.
+
+### Step 4: Fetch Labels and Resolve Issue Type
 
 Fetch labels dynamically:
 
@@ -66,41 +84,53 @@ gh label list --limit 100
 **Labels:** Select the best-fit labels from the available list based on the issue type and content. No labels are
 hardcoded -- always pick dynamically.
 
-**Issue types:** This repo uses GitHub issue types. Map the chosen template to a type name:
+**Issue types:** This repo uses GitHub issue types. Resolve the type name as follows:
 
-| Template        | Issue type name |
-| --------------- | --------------- |
-| Bug Report      | Bug             |
-| Feature Request | Feature         |
-| Tech Debt       | Task            |
+- **Source = repo:** infer the best-fit type from the template's intent and its frontmatter `labels` (e.g. a template
+  named/labeled "bug" -> `Bug`, "feature"/"enhancement" -> `Feature`, otherwise -> `Task`).
+- **Source = skill:** map the chosen template directly:
 
-If free form issue, define the best suited type from the issue types (Bug, Feature or Task).
+  | Template        | Issue type name |
+  | --------------- | --------------- |
+  | Bug Report      | Bug             |
+  | Feature Request | Feature         |
+  | Tech Debt       | Task            |
+
+For a free-form/blank issue, pick the best-suited type (Bug, Feature, or Task).
 
 > **Note:** `gh issue type list` and `gh issue create --type` are not valid CLI commands. Issue types must be set via
-> the REST API after creation (see Step 8).
+> the REST API after creation (see Step 9).
 
-### Step 4: Gather Issue Details
+### Step 5: Gather Issue Details
 
 **Clarification gate:** If the user has not clearly stated what the issue is about, use the **Ask User Questions** tool
 to clarify before proceeding.
 
-Read the companion file for the chosen template type (see Issue Templates table above). Use the **Fields** table in that
-file to determine what to gather and which fields are required vs optional. Only the first field in each template is
-required -- keep it lightweight.
+- **Source = repo:** read the matched template file and parse it per [repo-templates.md](references/repo-templates.md)
+  (markdown frontmatter + body skeleton, or issue-form `body[]` fields). Gather content for each section/field, honoring
+  the template's required markers. Carry over the template's frontmatter `title` seed, `labels`, and `assignees`.
+- **Source = skill:** read the companion file for the chosen template type (see the built-in templates table above). Use
+  its **Fields** table to determine what to gather and which fields are required vs optional. Only the first field in
+  each template is required -- keep it lightweight.
 
 For **blank issues**, gather a freeform title and body. Keep the body to 2-4 sentences.
 
-### Step 5: Draft the Issue
+### Step 6: Draft the Issue
 
-- **Title:** A short description in imperative mood (e.g., `Fix pagination on user list`). No type prefix.
-- **Body:** Format using markdown headers matching the template fields. Only include sections the user provided content
-  for. Follow the **Example Body** in the companion file for the correct structure.
-- **Labels:** Best-fit labels from the dynamically fetched list.
-- **Type:** The matched issue type from the fetch step (if available).
+- **Title:** A short description in imperative mood (e.g., `Fix pagination on user list`). No type prefix unless the repo
+  template's `title` seed specifies one (then honor it).
+- **Body:**
+  - **Source = repo:** follow the matched template's structure -- keep its headings and ordering, drop HTML
+    `<!-- comment -->` hints, and fill each section from what the user provided. Omit sections with no content.
+  - **Source = skill:** format using markdown headers matching the template fields, following the **Example Body** in
+    the companion file. Only include sections the user provided content for.
+- **Labels:** Best-fit labels from the dynamically fetched list. For repo templates, start from the template's
+  frontmatter `labels` and add best-fit labels on top.
+- **Type:** The resolved issue type from Step 4 (if available).
 - **Related:** If the user mentions related issues or PRs, include a `## Related` section with links at the end of the
   body.
 
-### Step 6: Present Preview
+### Step 7: Present Preview
 
 Show the full draft using this template:
 
@@ -112,15 +142,15 @@ Show the full draft using this template:
 **Body:**
 <full issue body>
 
-<template name> was used to generate this issue.
+<template name> (<repo template | skill template>) was used to generate this issue.
 ```
 
-### Step 7: Await Approval
+### Step 8: Await Approval
 
 **Confirmation gate:** Wait for explicit user approval before creating. Use the **Ask User Questions** tool to ask the
 user if they want to create the issue as-is, or if they want to make any changes.
 
-### Step 8: Create and Report
+### Step 9: Create and Report
 
 **Create the issue**:
 
@@ -129,7 +159,7 @@ gh issue create --title "<title>" --body "<body>" --label "<label1>,<label2>"
 ```
 
 **Set the issue type**. Extract the issue number from the returned URL, then set the type using the REST API with the
-human-readable type name from the Step 3 table:
+human-readable type name resolved in Step 4:
 
 ```bash
 gh api -X PATCH repos/<owner>/<repo>/issues/<number> -f type="<issue_type_name>"
@@ -153,3 +183,5 @@ After creation, display the issue URL as a clickable markdown link:
 - Do NOT write walls of text in the issue body
 - Do NOT include solution proposals unless the user provides one or explicitly asks
 - Do NOT hardcode labels -- always fetch dynamically from the repo
+- Do NOT fall back to the skill's built-in templates when the repo has its own issue templates -- repo templates win
+- Do NOT count `.github/ISSUE_TEMPLATE/config.yml` as a template -- it is configuration only
