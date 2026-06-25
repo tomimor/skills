@@ -22,12 +22,38 @@ subagents. Produces a plan artifact with explicit, ready-to-apply recommendation
 
 ## Phase 0: Context Gathering
 
+### Resolve Impeccable skill paths
+
+This review delegates to Impeccable's dimension skills. Locate them **once** and reuse the
+result as `{IMPECCABLE_SKILLS}` everywhere below -- never hard-code an absolute or
+version-pinned path. Run:
+
+```bash
+IMPECCABLE_SKILLS=""
+# 1. Installed alongside this skill -- the default for the tomimor/skills install.sh,
+#    which symlinks each Impeccable dimension as a sibling skill.
+for base in "$HOME/.claude/skills" "$HOME/.cursor/skills"; do
+  if [ -f "$base/polish/SKILL.md" ] && [ -f "$base/frontend-design/SKILL.md" ]; then
+    IMPECCABLE_SKILLS="$base"; break
+  fi
+done
+# 2. Installed as a Claude Code plugin -- pick the highest version present.
+if [ -z "$IMPECCABLE_SKILLS" ]; then
+  IMPECCABLE_SKILLS="$(ls -d "$HOME"/.claude/plugins/cache/impeccable/impeccable/*/.claude/skills 2>/dev/null | sort -V | tail -1)"
+fi
+echo "${IMPECCABLE_SKILLS:-NOT_FOUND}"
+```
+
+If it prints `NOT_FOUND`, tell the user Impeccable isn't installed (install it via the
+tomimor/skills `install.sh`, or add the `impeccable` plugin) and stop. Otherwise use the
+printed directory as `{IMPECCABLE_SKILLS}` for every skill path below.
+
 ### Design Context
 
 Check for design context in this order:
 1. Current instructions -- if a **Design Context** section is loaded, proceed.
 2. `.impeccable.md` in project root -- read it. If it has context, proceed.
-3. Neither exists -- read and run the **teach-impeccable** skill at `/Users/tomimor/.claude/plugins/cache/impeccable/impeccable/1.5.1/.claude/skills/teach-impeccable/SKILL.md` before continuing.
+3. Neither exists -- read and run the **teach-impeccable** skill at `{IMPECCABLE_SKILLS}/teach-impeccable/SKILL.md` before continuing.
 
 ### User Input
 
@@ -71,7 +97,7 @@ You are reviewing a frontend page for {DIMENSION} issues.
 
 First, read the skill file at {SKILL_PATH} and follow its assessment criteria.
 Also read the frontend-design base skill at:
-/Users/tomimor/.claude/plugins/cache/impeccable/impeccable/1.5.1/.claude/skills/frontend-design/SKILL.md
+{IMPECCABLE_SKILLS}/frontend-design/SKILL.md
 
 Then analyze the page using this context:
 - Design context: {design_context from .impeccable.md or instructions}
@@ -97,15 +123,15 @@ The 7 dimensions:
 
 | # | Dimension | Skill Path | Criteria Focus |
 |---|-----------|-----------|----------------|
-| 1 | **Audit** | `.../skills/audit/SKILL.md` | Accessibility (contrast, ARIA, keyboard, semantics), performance (layout thrashing, expensive animations), theming (hard-coded colors, dark mode), responsive (fixed widths, touch targets), anti-patterns (AI slop tells) |
-| 2 | **Critique** | `.../skills/critique/SKILL.md` | Visual hierarchy, information architecture, emotional resonance, composition & balance, discoverability, typography as communication, color purpose, states & edge cases, microcopy |
-| 3 | **Typography** | `.../skills/typeset/SKILL.md` | Font choices (generic defaults?), type scale consistency, hierarchy clarity, readability (line length, line height), weight consistency, font loading |
-| 4 | **Layout** | `.../skills/arrange/SKILL.md` | Spacing system consistency, visual rhythm (tight grouping vs generous separation), grid usage, card monotony, hierarchy through space, squint test |
-| 5 | **Responsive** | `.../skills/adapt/SKILL.md` | Breakpoint coverage, touch targets (44px minimum), content reflow, orientation handling, input method adaptation |
-| 6 | **Copy** | `.../skills/clarify/SKILL.md` | Error messages, form labels, button/CTA text, empty states, loading states, help text, terminology consistency |
-| 7 | **Polish** | `.../skills/polish/SKILL.md` | Pixel alignment, interaction states (all 8 states), transitions & easing, icon consistency, focus indicators, reduced motion support |
+| 1 | **Audit** | `{IMPECCABLE_SKILLS}/audit/SKILL.md` | Accessibility (contrast, ARIA, keyboard, semantics), performance (layout thrashing, expensive animations), theming (hard-coded colors, dark mode), responsive (fixed widths, touch targets), anti-patterns (AI slop tells) |
+| 2 | **Critique** | `{IMPECCABLE_SKILLS}/critique/SKILL.md` | Visual hierarchy, information architecture, emotional resonance, composition & balance, discoverability, typography as communication, color purpose, states & edge cases, microcopy |
+| 3 | **Typography** | `{IMPECCABLE_SKILLS}/typeset/SKILL.md` | Font choices (generic defaults?), type scale consistency, hierarchy clarity, readability (line length, line height), weight consistency, font loading |
+| 4 | **Layout** | `{IMPECCABLE_SKILLS}/arrange/SKILL.md` | Spacing system consistency, visual rhythm (tight grouping vs generous separation), grid usage, card monotony, hierarchy through space, squint test |
+| 5 | **Responsive** | `{IMPECCABLE_SKILLS}/adapt/SKILL.md` | Breakpoint coverage, touch targets (44px minimum), content reflow, orientation handling, input method adaptation |
+| 6 | **Copy** | `{IMPECCABLE_SKILLS}/clarify/SKILL.md` | Error messages, form labels, button/CTA text, empty states, loading states, help text, terminology consistency |
+| 7 | **Polish** | `{IMPECCABLE_SKILLS}/polish/SKILL.md` | Pixel alignment, interaction states (all 8 states), transitions & easing, icon consistency, focus indicators, reduced motion support |
 
-All skill paths are under: `/Users/tomimor/.claude/plugins/cache/impeccable/impeccable/1.5.1/.claude/skills/`
+All skill paths in the table are relative to `{IMPECCABLE_SKILLS}` resolved in Phase 0 (e.g. `{IMPECCABLE_SKILLS}/audit/SKILL.md`).
 
 **The Polish subagent must also read [css-polish-details.md](css-polish-details.md)** (in this skill
 directory) and apply its checklist. Append this line to the Polish subagent's prompt, after the
