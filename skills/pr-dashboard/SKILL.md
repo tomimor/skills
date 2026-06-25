@@ -31,6 +31,18 @@ gh pr view NUMBER --repo OWNER/REPO \
   --json reviewDecision,reviews,comments,statusCheckRollup,mergeable,mergeStateStatus
 ```
 
+## Status Icon
+
+Assign each PR a single status icon. This icon is used both in the detail rows and in the copy-paste summary. Pick the **first** matching rule, in priority order:
+
+| Icon | Meaning | Condition |
+|------|---------|-----------|
+| 🔴 | CI failing | `statusCheckRollup` has any failing check |
+| 🟠 | Changes requested | `reviewDecision` = CHANGES_REQUESTED |
+| 📝 | Draft | `isDraft` = true |
+| 🟡 | Awaiting review | review pending / no reviewers / CI still pending |
+| 🟢 | Green — ready to merge | `reviewDecision` = APPROVED and all CI checks passing |
+
 ## Build the Report
 
 For each PR, present a row with:
@@ -64,7 +76,7 @@ Derive one recommended action per PR using this priority:
 ```
 ## PR Dashboard: {owner/repo}
 
-### 1. {title}
+### {icon} 1. {title}
 - **PR**: [#{number}]({url}) | **Branch**: `{branch}`
 - **Size**: +{additions} / -{deletions} | **Updated**: {relative_time}
 - **Status**: {Draft/Ready} | **Reviews**: {review_summary} | **CI**: {ci_summary}
@@ -73,8 +85,23 @@ Derive one recommended action per PR using this priority:
 
 ---
 (repeat for each PR)
-
-**Summary**: {total} open PRs — {approved} approved, {changes_requested} need changes, {awaiting} awaiting review, {draft} drafts
 ```
 
-Sort PRs by priority: changes requested first, then awaiting review, then drafts, then approved.
+## Copy-Paste Summary
+
+After the detailed report, always end with a **copy-paste summary** block. This is the part the user drops straight into a Slack message — keep it tight: one line per PR, just the **status icon** followed by the **PR title as a link** to its GitHub URL. No branch, size, or extra metadata.
+
+```
+**PR dashboard check — {owner/repo}**
+
+{icon} [{title}]({url})
+{icon} [{title}]({url})
+{icon} [{title}]({url})
+```
+
+Notes:
+- Use the markdown link `[{title}]({url})` so the title is clickable and lands on the PR in GitHub.
+- One PR per line, nothing else — this keeps it clean to paste into Slack.
+- Sort the lines by priority so the most urgent PRs are on top: 🔴 failing → 🟠 changes requested → 📝 draft → 🟡 awaiting review → 🟢 ready to merge.
+
+Sort the detailed report by the same priority order.
