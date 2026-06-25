@@ -19,21 +19,22 @@ Emit exactly this one line as a plain chat reply — no code block, no preamble,
 no trailing prose. The user copies it straight from chat into Slack.
 
 ```
-:greenpr: Ready for review: <PR_URL|PR_TITLE> cc REVIEWER
+:greenpr: Ready for review: [PR_TITLE](PR_URL) cc REVIEWER
 ```
 
 (The fenced block above is documentation. The real reply is the bare line.)
 
 Rendered example:
 
-> :greenpr: Ready for review: <https://github.com/acme/repo/pull/42|chore(repo): repo baseline (templates, protection, secret scan)> cc @alice
+> :greenpr: Ready for review: [chore(repo): repo baseline (templates, protection, secret scan)](https://github.com/acme/repo/pull/42) cc @alice
 
 Filling the slots:
 
 - `:greenpr:` — a custom Slack emoji. Keep it verbatim; do not substitute.
-- `<PR_URL|PR_TITLE>` — Slack `mrkdwn` link syntax, NOT Markdown `[label](url)`.
-  The title is the label, the URL is the target. If the title contains `|` or
-  `>`, drop them from the label so the link doesn't break.
+- `[PR_TITLE](PR_URL)` — markdown link syntax. Slack's composer auto-converts
+  this to a clickable link when a human pastes the message. Use this form, NOT
+  the `<url|label>` `mrkdwn` form — that one only renders when a bot posts via
+  the Slack API, and shows up as literal text when pasted by hand.
 - `PR_TITLE` — the PR title verbatim (usually a conventional-commit subject like
   `chore(repo): ...`). Do not rewrite, shorten, or translate it.
 - `REVIEWER` — `<@U012ABC>` if you have the Slack user ID, else `@handle`.
