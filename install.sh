@@ -31,6 +31,9 @@ SKILLS=(
   "teach:Stateful multi-session teaching workspace (mission, resources, HTML lessons) -- adapted from mattpocock/skills"
   "save-and-archive:Land worktree work onto main (commit, sync, ff-merge, push, cleanup) for solo projects"
   "whats-missing:Surface the single most important blindspot in a plan or decision -- not a list, the one piece that changes the call"
+  "ui-review:Parallel frontend UI review (typography, layout, a11y, responsiveness, copy, polish) -- prioritized small fixes, never rewrites"
+  "grid-review:Read-only audit of a page's layout grid (column adherence, baseline rhythm, optical alignment) with a critique"
+  "update-branch:Pull the latest from main and merge it into the current working branch"
 )
 
 VENDOR_SKILLS=(
