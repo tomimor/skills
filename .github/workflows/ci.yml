@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: shellcheck install.sh
+        run: shellcheck install.sh
+
+      - name: install.sh --help smoke test
+        run: bash install.sh --help
+
+      - name: validate skills (frontmatter + array sync)
+        run: bash install.sh --check
