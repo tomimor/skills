@@ -172,6 +172,9 @@ cp -r skills/pr-dashboard ~/.claude/skills/     # Claude Code
 | `--skill <name>` | Install a single skill by name |
 | `--target <dir>` | Override the install directory |
 | `--force` | Overwrite existing skills without confirming |
+| `--symlink` | Symlink skills into the target instead of copying (live edits) |
+| `--self` | Wire this repo into your own `~/.cursor` and `~/.claude` with edit-once symlinks |
+| `--check` | Validate skill frontmatter and `SKILLS`-array sync, then exit (used in CI) |
 | `--update-vendor` | Update vendor submodules to their latest versions |
 
 ## Platform compatibility

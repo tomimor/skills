@@ -49,6 +49,10 @@ SINGLE_SKILL=""
 FORCE=false
 UPDATE_VENDOR=false
 SYMLINK=false
+CHECK=false
+SELF=false
+SOURCE_DIR=""
+CLEANUP_TMP=""
 
 usage() {
   cat <<EOF
@@ -62,6 +66,8 @@ Options:
   --target <dir>     Override the install directory
   --force            Overwrite existing skills without confirming
   --symlink          Symlink skills into the target instead of copying (live edits)
+  --self             Wire this repo into your own ~/.cursor and ~/.claude (edit-once symlinks)
+  --check            Validate skill frontmatter and SKILLS-array sync, then exit
   --update-vendor    Update vendor submodules to their latest versions
   -h, --help         Show this help message
 
@@ -105,22 +111,25 @@ confirm_overwrite() {
   return 0
 }
 
+# Sets SOURCE_DIR to the skills directory. When run outside the repo, clones it
+# to a temp dir and registers an EXIT trap to clean up. Must be called directly
+# (not via $(...)) so the trap is installed in the main shell, not a subshell.
 resolve_source_dir() {
   if [[ -d "$SCRIPT_DIR/skills" ]]; then
-    echo "$SCRIPT_DIR/skills"
+    SOURCE_DIR="$SCRIPT_DIR/skills"
     return
   fi
 
-  local tmp
-  tmp="$(mktemp -d)"
-  echo "Downloading skills from $REPO_URL..." >&2
-  if command -v git &>/dev/null; then
-    git clone --depth 1 --quiet "$REPO_URL" "$tmp/repo" 2>/dev/null
-    echo "$tmp/repo/skills"
-  else
+  if ! command -v git &>/dev/null; then
     echo "Error: git is required to download skills remotely." >&2
     exit 1
   fi
+
+  CLEANUP_TMP="$(mktemp -d)"
+  trap 'rm -rf "$CLEANUP_TMP"' EXIT
+  echo "Downloading skills from $REPO_URL..." >&2
+  git clone --depth 1 --quiet "$REPO_URL" "$CLEANUP_TMP/repo" 2>/dev/null
+  SOURCE_DIR="$CLEANUP_TMP/repo/skills"
 }
 
 init_vendor_submodules() {
@@ -175,7 +184,10 @@ link_vendor_skills() {
         continue
       fi
 
-      ln -sf "$rel_target" "$link_path"
+      # -n (no-dereference): without it, re-running over an existing symlink that
+      # points at a directory makes ln create the link *inside* that directory,
+      # producing nested self-symlinks inside the submodules.
+      ln -sfn "$rel_target" "$link_path"
       echo "    Linked $skill_name"
     done
   done
@@ -186,6 +198,114 @@ update_vendor() {
   git -C "$SCRIPT_DIR" submodule update --remote --merge --quiet 2>/dev/null
   link_vendor_skills "$SCRIPT_DIR/skills"
   echo "Vendor skills updated."
+}
+
+in_array() {
+  local needle="$1"; shift
+  local item
+  for item in "$@"; do
+    [[ "$item" == "$needle" ]] && return 0
+  done
+  return 1
+}
+
+# Validate every own skill (directory with a SKILL.md) and that the SKILLS array
+# stays in sync with the directories on disk. Returns non-zero on any problem so
+# it can gate CI.
+check_skills() {
+  local src="$SCRIPT_DIR/skills"
+  local errors=0
+  local -a dir_skills=()
+  local -a arr_skills=()
+
+  local entry
+  for entry in "${SKILLS[@]}"; do
+    arr_skills+=("${entry%%:*}")
+  done
+
+  local dir skill_name md decl_name
+  for dir in "$src"/*/; do
+    [[ -L "${dir%/}" ]] && continue   # vendor symlinks are validated upstream
+    skill_name="$(basename "$dir")"
+    dir_skills+=("$skill_name")
+    md="$dir/SKILL.md"
+
+    if [[ ! -f "$md" ]]; then
+      echo "  ✗ $skill_name: missing SKILL.md"
+      errors=$((errors + 1))
+      continue
+    fi
+
+    decl_name="$(sed -n 's/^name:[[:space:]]*//p' "$md" | head -1 | tr -d ' "'\''\r')"
+    if [[ -z "$decl_name" ]]; then
+      echo "  ✗ $skill_name: SKILL.md has no 'name:' frontmatter"
+      errors=$((errors + 1))
+    elif [[ "$decl_name" != "$skill_name" ]]; then
+      echo "  ✗ $skill_name: frontmatter name '$decl_name' != directory name"
+      errors=$((errors + 1))
+    fi
+
+    if ! grep -qE '^description:' "$md"; then
+      echo "  ✗ $skill_name: SKILL.md has no 'description:' frontmatter"
+      errors=$((errors + 1))
+    fi
+  done
+
+  local s
+  for s in "${dir_skills[@]}"; do
+    in_array "$s" "${arr_skills[@]}" || {
+      echo "  ✗ $s: skill directory not listed in install.sh SKILLS array"
+      errors=$((errors + 1))
+    }
+  done
+  for s in "${arr_skills[@]}"; do
+    [[ -d "$src/$s" ]] || {
+      echo "  ✗ $s: in SKILLS array but no skills/$s directory"
+      errors=$((errors + 1))
+    }
+  done
+
+  if [[ $errors -eq 0 ]]; then
+    echo "OK: ${#dir_skills[@]} own skills valid and in sync with the SKILLS array."
+    return 0
+  fi
+  echo ""
+  echo "$errors problem(s) found."
+  return 1
+}
+
+# Wire this repo into the author's own machine with edit-once symlinks.
+# Cursor loads skills from a symlinked top-level dir, so a single dir symlink
+# works there. Claude Code does NOT, so it needs per-skill symlinks instead.
+install_self() {
+  resolve_source_dir
+  local source_dir="$SOURCE_DIR"
+  init_vendor_submodules
+
+  echo "Linking vendor skills into repo skills/ ..."
+  link_vendor_skills "$source_dir"
+
+  if [[ -d "$HOME/.cursor" ]]; then
+    if [[ -e "$HOME/.cursor/skills" && ! -L "$HOME/.cursor/skills" ]]; then
+      echo "  Warning: ~/.cursor/skills is a real directory, not a symlink; leaving it untouched." >&2
+    else
+      ln -sfn "$source_dir" "$HOME/.cursor/skills"
+      echo "  Cursor: ~/.cursor/skills -> $source_dir"
+    fi
+  fi
+
+  if [[ -d "$HOME/.claude" ]]; then
+    mkdir -p "$HOME/.claude/skills"
+    local entry name
+    for entry in "$source_dir"/*/; do
+      name="$(basename "$entry")"
+      ln -sfn "$source_dir/$name" "$HOME/.claude/skills/$name"
+    done
+    echo "  Claude: per-skill symlinks in ~/.claude/skills"
+  fi
+
+  echo ""
+  echo "Done."
 }
 
 install_goal_cursor_hook() {
@@ -263,7 +383,8 @@ pick_platform() {
     exit 1
   fi
 
-  local platform_arr=($platforms)
+  local platform_arr=()
+  read -ra platform_arr <<< "$platforms"
 
   if [[ ${#platform_arr[@]} -eq 1 ]]; then
     TARGET_DIR="${platform_arr[0]#*:}"
@@ -341,11 +462,22 @@ main() {
       --target) TARGET_DIR="$2"; shift 2 ;;
       --force) FORCE=true; shift ;;
       --symlink) SYMLINK=true; shift ;;
+      --self) SELF=true; shift ;;
+      --check) CHECK=true; shift ;;
       --update-vendor) UPDATE_VENDOR=true; shift ;;
       -h|--help) usage; exit 0 ;;
       *) echo "Unknown option: $1" >&2; usage; exit 1 ;;
     esac
   done
+
+  if [[ "$CHECK" = true ]]; then
+    if check_skills; then exit 0; else exit 1; fi
+  fi
+
+  if [[ "$SELF" = true ]]; then
+    install_self
+    return
+  fi
 
   if [[ "$UPDATE_VENDOR" = true ]]; then
     update_vendor
@@ -354,8 +486,8 @@ main() {
     return
   fi
 
-  local source_dir
-  source_dir="$(resolve_source_dir)"
+  resolve_source_dir
+  local source_dir="$SOURCE_DIR"
 
   init_vendor_submodules
 
