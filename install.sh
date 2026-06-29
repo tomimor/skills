@@ -16,7 +16,6 @@ SKILLS=(
   "improve-prompt:Critique and rewrite a prompt using general prompt engineering best practices"
   "create-skill:Guide for authoring Cursor agent skills (forked from Cursor built-in)"
   "git-worktrees:Worktree workflow so parallel agent chats stop colliding on branches"
-  "goal-cursor:Anthropic-style /goal loop adapted for Cursor's stop hook"
   "meta-ads-bulk-creator:Build Meta Ads Manager bulk-import files (.xlsx + Unicode .txt) from a YAML brief"
   "gh-pr-list:Numbered Slack message of your non-draft open PRs in the current repo"
   "gh-issue-triage:Pick the top 3 AI-ready issues in the current repo with a kickoff prompt for each"
@@ -308,42 +307,6 @@ install_self() {
   echo "Done."
 }
 
-install_goal_cursor_hook() {
-  local hooks_file="$HOME/.cursor/hooks.json"
-  local hook_cmd="python3 \$HOME/.cursor/skills/goal-cursor/scripts/stop_hook.py"
-
-  mkdir -p "$HOME/.cursor"
-
-  HOOKS_FILE="$hooks_file" HOOK_CMD="$hook_cmd" python3 - <<'PY'
-import json
-import os
-from pathlib import Path
-
-path = Path(os.environ["HOOKS_FILE"])
-cmd = os.environ["HOOK_CMD"]
-
-if path.exists():
-    try:
-        data = json.loads(path.read_text("utf-8"))
-    except json.JSONDecodeError:
-        print(f"  Warning: {path} is not valid JSON; refusing to overwrite.")
-        raise SystemExit(1)
-else:
-    data = {}
-
-data.setdefault("version", 1)
-hooks = data.setdefault("hooks", {})
-stop_list = hooks.setdefault("stop", [])
-
-if any(isinstance(h, dict) and h.get("command") == cmd for h in stop_list):
-    print(f"  goal-cursor stop hook already present in {path}")
-else:
-    stop_list.append({"command": cmd, "loop_limit": None, "timeout": 60})
-    path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
-    print(f"  Added goal-cursor stop hook to {path}")
-PY
-}
-
 install_skill() {
   local source_dir="$1"
   local skill_name="$2"
@@ -525,13 +488,6 @@ main() {
   echo ""
   echo "Linking vendor skills..."
   link_vendor_skills "$source_dir"
-
-  if [[ "$TARGET_DIR" == *"/.cursor/skills" ]] && [[ -d "$TARGET_DIR/goal-cursor" ]]; then
-    echo ""
-    echo "Configuring goal-cursor stop hook..."
-    install_goal_cursor_hook
-    echo "  Tip: set GOAL_CURSOR_EVAL_MODEL, GOAL_CURSOR_MAX_TURNS, or ANTHROPIC_API_KEY to customise the evaluator."
-  fi
 
   echo ""
   echo "Done."

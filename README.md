@@ -98,7 +98,6 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 |-------|--------------|
 | 🟦 [create-skill](skills/create-skill/SKILL.md) | Author or audit agent skills: gather requirements, write `SKILL.md`, structure supporting files, verify quality. |
 | 🟦 [improve-prompt](skills/improve-prompt/SKILL.md) | Critique and rewrite a prompt using best practices, returning a short critique plus a drop-in rewrite. |
-| 🟦 [goal-cursor](skills/goal-cursor/SKILL.md) | A per-workspace goal that keeps Cursor auto-iterating until an evaluator confirms it's met. Cursor's take on Claude Code's `/goal`. |
 | 🟦 [meta-ads-bulk-creator](skills/meta-ads-bulk-creator/SKILL.md) | Build Meta Ads Manager bulk-import files from a YAML brief, validated against Meta's enums and limits. |
 | 🟧 [improve](skills/improve/SKILL.md) | An advisor, never an implementer: audit a codebase, rank findings by leverage, and write executable plans for a cheaper model to run. v1.0.0, from [shadcn/improve](https://github.com/shadcn/improve). |
 | 🟧 [remotion](skills/remotion/SKILL.md) | Best practices for [Remotion](https://github.com/remotion-dev/skills): programmatic video creation in React. |
