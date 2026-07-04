@@ -38,11 +38,15 @@ Hard rules for the whole loop:
   is a fix; deleting a live feature to make a finding disappear is
   cheating. The only exits for a finding are a verified fix or a
   user-approved justification.
-- **Pin the scanner version for the whole run.** Resolve once at
-  baseline (`npm view react-doctor version`), then invoke
-  `npx react-doctor@<version>` everywhere. react-doctor is pre-1.0 —
-  `@latest` moves the goalposts mid-run and makes "progress"
-  unmeasurable.
+- **Pin the scanner version per run — every new run starts from
+  latest.** At baseline, resolve the current latest once
+  (`npm view react-doctor version`), then invoke
+  `npx react-doctor@<version>` for the rest of the run. This is not
+  about freezing on an old version: each fresh run picks up whatever
+  is newest. It is about intra-run measurability — `@latest`
+  re-resolves on every invocation, and react-doctor is pre-1.0 and
+  releases often, so a mid-run release with new rules would make a
+  correct fix look like a regression or trip the stall detector.
 - **One root cause per iteration.** A root cause may span many files
   (the same anti-pattern repeated); it may not bundle unrelated rules.
 - **Preserve unrelated work.** Never commit, revert, or stash changes
@@ -132,10 +136,18 @@ Fresh command output is the only acceptable proof. Show the final scan.
 
 ## Re-running later
 
-This loop finishes — but the score decays as code and scanner evolve.
-The cheap maintenance variant: periodically (or in CI) run
-`npx react-doctor@<version> --score` per app against the version
-recorded in the last report; only a drop below that report's final
-score triggers a new full run. When intentionally adopting a newer
-scanner version, re-baseline first — new rules are new work, not
-regressions.
+This loop finishes — but the score decays as both the code and the
+scanner evolve, and new rules in newer scanner versions are exactly
+the findings you want surfaced. The cheap maintenance variant:
+periodically (or in CI) run `npx react-doctor@latest --score` per app
+and compare against the last report:
+
+- **Same scanner version as the last report**: a score drop means the
+  code regressed → trigger a new full run.
+- **Newer scanner version**: don't read a drop as a code regression —
+  re-baseline with the new version (a fresh Phase 1) and treat any new
+  findings as new work for a full run. Record the new version in that
+  run's report.
+
+Either way the maintenance check always scans with latest; pinning
+only ever applies inside a single remediation run.
