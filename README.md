@@ -7,7 +7,7 @@
 
 </div>
 
-Agent skills for **Cursor** and **Claude Code**, kept in one place. Third-party packs are vendored as git submodules and updated with one command.
+Agent skills library. Third-party packs are vendored as git submodules that I can easily update. 
 
 ## Quick start
 
