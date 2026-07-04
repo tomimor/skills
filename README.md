@@ -2,7 +2,7 @@
 
 # 🧠 skills
 
-[![Skills](https://img.shields.io/badge/skills-35-1f6feb?style=flat-square)](#skills)
+[![Skills](https://img.shields.io/badge/skills-36-1f6feb?style=flat-square)](#skills)
 [![Install](https://img.shields.io/badge/install-one%20command-22c55e?style=flat-square)](#install)
 
 </div>
@@ -99,6 +99,7 @@ Skills that run in iterations with explicit terminal states, designed to drive a
 | Skill | What it does |
 |-------|--------------|
 | 🟦 [loop-cve-audit](skills/loop-cve-audit/SKILL.md) | Iterative dependency-CVE remediation: scan with advisory tooling, prove reachability with call-path evidence, fix the highest-risk finding with the smallest credible change, re-verify, repeat. Ends CLEAN, ASSESSED (evidence + approved risk decisions), or BLOCKED. |
+| 🟦 [loop-react-doctor](skills/loop-react-doctor/SKILL.md) | Drive every React app to a version-pinned [react-doctor](https://www.npmjs.com/package/react-doctor) 100/100, one root cause per iteration with tiered verification. Never silences findings; ends PERFECT, JUSTIFIED (user-approved exceptions), STALLED, or BLOCKED. |
 
 ### 🧰 Authoring, planning & more
 
