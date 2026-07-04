@@ -34,6 +34,7 @@ SKILLS=(
   "ui-review:Parallel frontend UI review (typography, layout, a11y, responsiveness, copy, polish) -- prioritized small fixes, never rewrites"
   "grid-review:Read-only audit of a page's layout grid (column adherence, baseline rhythm, optical alignment) with a critique"
   "update-branch:Pull the latest from main and merge it into the current working branch"
+  "loop-cve-audit:Iterative CVE remediation loop -- scan, prove reachability, fix smallest-first, re-verify, repeat"
 )
 
 VENDOR_SKILLS=(

@@ -2,7 +2,7 @@
 
 # 🧠 skills
 
-[![Skills](https://img.shields.io/badge/skills-34-1f6feb?style=flat-square)](#skills)
+[![Skills](https://img.shields.io/badge/skills-35-1f6feb?style=flat-square)](#skills)
 [![Install](https://img.shields.io/badge/install-one%20command-22c55e?style=flat-square)](#install)
 
 </div>
@@ -91,6 +91,14 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 | 🟦 [writing-voice](skills/writing-voice/SKILL.md) | Write in a direct, personal, sensory style. Bans AI-giveaway phrases, with per-platform guidance (LinkedIn, X, blog, email). |
 | 🟦 [governance-message](skills/governance-message/SKILL.md) | Turn a governance proposal URL (forum, Tally, Snapshot) into a Slack-ready summary with stance, risk, and PRO/CON. |
 | 🟦 [teach](skills/teach/SKILL.md) | Teach a concept across sessions using the current directory as a stateful workspace. Adapted from [mattpocock/skills](https://github.com/mattpocock/skills). |
+
+### 🔁 Loops
+
+Skills that run in iterations with explicit terminal states, designed to drive a repo toward a verified goal (or to re-run on a schedule) instead of doing a one-shot task.
+
+| Skill | What it does |
+|-------|--------------|
+| 🟦 [loop-cve-audit](skills/loop-cve-audit/SKILL.md) | Iterative dependency-CVE remediation: scan with advisory tooling, prove reachability with call-path evidence, fix the highest-risk finding with the smallest credible change, re-verify, repeat. Ends CLEAN, ASSESSED (evidence + approved risk decisions), or BLOCKED. |
 
 ### 🧰 Authoring, planning & more
 
