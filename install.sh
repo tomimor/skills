@@ -35,7 +35,7 @@ SKILLS=(
   "grid-review:Read-only audit of a page's layout grid (column adherence, baseline rhythm, optical alignment) with a critique"
   "update-branch:Pull the latest from main and merge it into the current working branch"
   "loop-cve-audit:Iterative CVE remediation loop -- scan, prove reachability, fix smallest-first, re-verify, repeat"
-  "loop-react-doctor:Drive every React app to a verified react-doctor 100/100, one root cause per iteration"
+  "loop-react-doctor:Drive every React app to a verified react-doctor 100/100 (latest at run start), one root cause per iteration"
 )
 
 VENDOR_SKILLS=(

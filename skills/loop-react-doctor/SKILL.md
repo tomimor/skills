@@ -2,9 +2,10 @@
 name: loop-react-doctor
 description: >-
   Iterative React-health loop: inventory every React app in the repo,
-  baseline with a version-pinned react-doctor scan, fix one root cause
-  per iteration, and re-verify until every app scores 100/100 or every
-  remaining finding has a user-approved written justification. Never
+  baseline with the latest react-doctor (pinned for the rest of the
+  run), fix one root cause per iteration, and re-verify until every app
+  scores 100/100 or every remaining finding has a user-approved written
+  justification. Never
   silences findings with ignores, exclusions, or deleted behavior, and
   stops itself after two iterations without measurable progress. Use
   when the user mentions react-doctor, React health score, React
