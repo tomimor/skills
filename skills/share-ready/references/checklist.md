@@ -55,7 +55,7 @@ browsers resize what you ship:
 |---|---|---|
 | `favicon.ico` | multi-size 16/32/48 at site root | Legacy browsers, old crawlers, tools that hit `/favicon.ico` blind |
 | `icon.svg` | vector | Modern browsers; supports dark mode via internal `@media (prefers-color-scheme)` CSS |
-| `apple-touch-icon.png` | 180×180, **opaque** | iOS home screen/share sheet; iOS puts black behind alpha — flatten on a background, ~20px padding looks best |
+| `apple-touch-icon.png` | 180×180, **opaque** | iOS home screen/share sheet; iOS puts black behind alpha — flatten on a background. Art that fills the frame edge-to-edge usually looks better with ~20px of breathing room baked into the source |
 | `icon-192.png` | 192×192 | Manifest: Android home screen |
 | `icon-512.png` | 512×512 | Manifest: splash screen |
 | `icon-maskable-512.png` | 512×512, art within center 80% | Manifest `purpose: "maskable"`: Android adaptive icons. Safe zone = centered circle, radius 40% of width (409px on 512). Check at maskable.app |

@@ -54,8 +54,8 @@ Infer from the repo before asking anything:
 | Source logo | `logo*`, `icon*` in `public/`, `assets/`, `static/`, root; existing favicon |
 | Locale | `<html lang>`, i18n config |
 
-Then ask the user (AskQuestion, one batch) **only** the fields that are
-missing or ambiguous — typically: marketing-quality description (the inferred
+Then ask the user — one batched round of questions — **only** the fields
+that are missing or ambiguous — typically: marketing-quality description (the inferred
 one is often dev-facing), production URL if not deployed yet, X/Twitter
 handle (`twitter:site`), and which image to use as the icon source if none
 found. Propose the inferred values as defaults so a single "looks good"
@@ -70,7 +70,9 @@ every tag, attribute, and recommended value — is
 regardless of framework:
 
 - **Fix, don't append.** Replace wrong/duplicate tags; never leave two
-  `og:title`s in the document.
+  `og:title`s in the document. When a replacement orphans an old asset file
+  (a retired favicon, a superseded og image), list it in the report so the
+  user can delete it — don't delete user-created files yourself.
 - **`og:image` and `og:url` must be absolute URLs** (scheme + host). This is
   the single most common breakage.
 - **Per-page vs site-wide.** Site-wide defaults (site_name, favicon,
@@ -88,12 +90,15 @@ regardless of framework:
   `scripts/generate-favicons.sh <logo> <public-dir> --pad-maskable`
   (ImageMagick, falls back to npx sharp-cli). If the logo is an SVG, also
   ship it directly as `<link rel="icon" type="image/svg+xml">`.
-- og:image 1200×630: copy `assets/og-template.html`, fill brand
-  colors/copy, render with `scripts/render-og-image.mjs <template> <out.png>`
-  (Playwright). In Next.js App Router prefer the native
-  `opengraph-image.tsx` + `ImageResponse` route instead — see frameworks.md.
-  If the user already has a designed og:image, use it — never overwrite
-  existing brand assets, only add missing ones.
+- og:image 1200×630: copy `assets/og-template.html` into the project (keep
+  the filled copy committed so the card is regenerable), fill brand
+  colors/copy, render with `scripts/render-og-image.mjs <template> <out.png>`.
+  The script imports `playwright` from the project — `npm i -D playwright`
+  if absent (browser download can be skipped when a system Chromium exists;
+  the script falls back to it automatically). In Next.js App Router prefer
+  the native `opengraph-image.tsx` + `ImageResponse` route instead — see
+  frameworks.md. If the user already has a designed og:image, use it —
+  never overwrite existing brand assets, only add missing ones.
 - `site.webmanifest` with `name`, `short_name`, `icons` (192, 512, and a
   `purpose: "maskable"` 512), `theme_color`, `background_color`,
   `display: "standalone"`.
@@ -105,7 +110,10 @@ regardless of framework:
 2. Run `node scripts/verify-share-ready.mjs <url>` — it parses the rendered
    head, checks every required tag, fetches each asset (status,
    content-type, weight), and validates the manifest. Fix every FAIL; report
-   WARNs to the user with a recommendation.
+   WARNs to the user with a recommendation. On a not-yet-deployed site the
+   production og:image URL can't resolve — the script detects this (same
+   path serves locally) and reports it as a WARN to re-verify after deploy,
+   not a FAIL.
 3. Spot-check with `curl -A "facebookexternalhit/1.1" <url>` that the tags
    are present in the raw HTML for a scraper user-agent.
 4. Close with the **post-deploy checklist** (these need a public URL):
