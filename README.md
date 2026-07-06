@@ -2,7 +2,7 @@
 
 # 🧠 skills
 
-[![Skills](https://img.shields.io/badge/skills-36-1f6feb?style=flat-square)](#skills)
+[![Skills](https://img.shields.io/badge/skills-37-1f6feb?style=flat-square)](#skills)
 [![Install](https://img.shields.io/badge/install-one%20command-22c55e?style=flat-square)](#install)
 
 </div>
@@ -79,6 +79,7 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 | 🟦 [grid-review](skills/grid-review/SKILL.md) | Read-only audit of a page's layout grid: column adherence, baseline rhythm, optical alignment, then a critique. Adapted from [hyperagent-public-skills](https://github.com/alexmcdonnell-airtable/hyperagent-public-skills). |
 | 🟧 [impeccable](skills/impeccable/SKILL.md) | Design, critique, polish, and animate frontend interfaces. 20 internal commands (`craft`, `audit`, `animate`, `polish`, …). v3.7.1, from [pbakaus/impeccable](https://github.com/pbakaus/impeccable). |
 | 🟧 [review-animations](skills/review-animations/SKILL.md) | Review animation and motion code against a high craft bar: justified motion, responsive easing, sub-300ms UI, correct `transform-origin`, interruptibility, GPU-only props, reduced-motion. Emits a Before/After/Why table and a Block/Approve verdict. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
+| 🟦 [share-ready](skills/share-ready/SKILL.md) | Audit + fully configure how a site looks when shared (Open Graph, Twitter/X cards, per-platform quirks) and in the browser (title, favicons, theme-color, web manifest). Detects the framework, infers brand values from the repo, generates missing assets (favicon set, 1200×630 og:image), and verifies everything end-to-end with a local script. |
 | 🟧 [emil-design-eng](skills/emil-design-eng/SKILL.md) | Build-time companion to `review-animations`: Emil Kowalski's design-engineering playbook for crafting interfaces that feel right — animation decision framework, component building, transforms, gestures, performance, a11y. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
 
 ### 💡 Product, thinking & writing

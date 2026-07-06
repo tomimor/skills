@@ -36,6 +36,7 @@ SKILLS=(
   "update-branch:Pull the latest from main and merge it into the current working branch"
   "loop-cve-audit:Iterative CVE remediation loop -- scan, prove reachability, fix smallest-first, re-verify, repeat"
   "loop-react-doctor:Drive every React app to a verified react-doctor 100/100 (latest at run start), one root cause per iteration"
+  "share-ready:Audit + fully configure link previews (OG, Twitter cards) and browser presentation (favicons, manifest), generate assets, verify locally"
 )
 
 VENDOR_SKILLS=(
