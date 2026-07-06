@@ -106,8 +106,12 @@ Preferred extension `.webmanifest` (served as `application/manifest+json`);
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220" />
 ```
 
-Colors the Android Chrome toolbar / installed-PWA title bar. Any valid CSS
-color; the `media` attribute takes any media query. Pair with
+Colors the Android Chrome toolbar / installed-PWA title bar / Safari chrome.
+Any valid CSS color; the `media` attribute takes any media query. Support is
+uneven: Firefox and regular desktop Chrome tabs ignore it (desktop Chrome
+applies it only to installed PWAs), and alpha values are ignored — don't
+treat it as guaranteed, treat it as free polish. The manifest's `theme_color`
+additionally rejects transparency and CSS variables. Pair with
 `<meta name="color-scheme" content="light dark">` so native form controls
 match.
 

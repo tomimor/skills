@@ -2,7 +2,9 @@
 
 What each platform actually reads and where previews silently break. Consult
 when the user cares about a specific platform or a preview "looks wrong"
-somewhere specific.
+somewhere specific. Platform behavior is largely empirical (observed, not
+spec'd) and changes without notice — when a specific limit matters, confirm
+with that platform's validator rather than trusting the number.
 
 Universal facts first:
 
@@ -18,7 +20,8 @@ Universal facts first:
   may render without image (scrape is async) — declaring dimensions fixes it.
 - Image: ≥600×315 recommended, 1200×630 ideal, 8MB cap.
 - Cache ~7 days; bust via Sharing Debugger "Scrape Again" (or the Batch
-  Invalidator for many URLs).
+  Invalidator for many URLs). Even after a re-scrape, CDN image propagation
+  can lag up to ~24h.
 
 ## WhatsApp
 
@@ -53,7 +56,9 @@ Universal facts first:
 
 - Standard OG. 1200×627 documented, 1200×630 fine. Min 200px wide.
 - Cache ~7 days; bust with the Post Inspector
-  (linkedin.com/post-inspector) — also shows scrape errors.
+  (linkedin.com/post-inspector) — also shows scrape errors. The refresh
+  applies to future shares only; already-published posts keep the old
+  preview.
 
 ## Discord
 
@@ -80,9 +85,10 @@ Universal facts first:
 
 ## Google Search (bonus — affects "preview" in SERPs)
 
-- `<title>`/`meta description` are the snippet inputs;
-  `max-image-preview:large` (default when absent is up to Google) allows
-  full-width image previews e.g. in Discover.
+- `<title>`/`meta description` are the snippet inputs. Large image previews
+  in Discover require `max-image-preview:large` **plus** images ≥1200px
+  wide; the same robots rule now also governs image previews in AI
+  Overviews.
 - `rel=canonical` mismatch with og:url can split preview equity across URL
   variants.
 
