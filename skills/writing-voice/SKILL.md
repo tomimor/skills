@@ -185,97 +185,12 @@ Run the verify checklist below before finalizing.
 
 ---
 
-## Platform Guidance
+## References
 
-### LinkedIn
-
-- Lead with a personal story or bold opinion (first 2 lines must hook before "see more")
-- Short paragraphs, heavy whitespace
-- End with a question to drive comments
-- Emojis: sparingly, as visual markers (not decoration)
-- Carousel posts: one idea per slide, punchy headers
-- Sign off with a feedback ask when testing new formats
-
-### Twitter / X
-
-- Tighter and punchier than LinkedIn
-- One idea per tweet
-- Threads: first tweet is the hook, last tweet is the CTA
-- No hashtags in the tweet body — they break reading flow
-- Use line breaks between ideas
-
-### Blog
-
-- Same stacking principle — subheads every 2-3 paragraphs
-- Longer form is fine, but every paragraph must earn its place
-- TL;DR at the top or bottom for long pieces
-- Internal links where relevant
-- Close with a clear CTA
-
-### Website copy
-
-- Scannable: visitors skim before they read
-- Benefit-first: what does the reader get?
-- CTA clarity: one obvious next step
-- Remove jargon — write for the person, not the industry
-
-### Email
-
-- Subject line = hook (same 2-second rule)
-- First sentence gets to the point
-- Short paragraphs, conversational tone
-- One ask per email
-- Sign off warmly but briefly
-
-### Commits / PRs / Technical writing
-
-- Same directness: say what changed and why
-- No filler: "Updated the thing" not "This PR aims to address the issue of updating the thing"
-- Active voice: "Fix auth timeout" not "Auth timeout issue has been fixed"
-
----
-
-## Examples
-
-### Explaining a concept
-
-**Bad (generic AI)**:
-"Ethereum is a versatile blockchain platform that serves multiple functions in the decentralized ecosystem. Its utility extends beyond simple transactions, making it a multi-faceted digital asset that stakeholders should consider for their portfolio."
-
-**Good (your voice)**:
-"ETH isn't just money — it's fuel.
-
-Think of it like oil: you can burn it in gas engines or pour it into tanks as collateral.
-
-Its versatility shines because it powers the Web3 economy at every level.
-
-It's simple. It's powerful. And yes, it's something you could tell your grandpa, and he'd get it."
-
-### Sharing news
-
-**Bad (generic AI)**:
-"In a groundbreaking move that is set to transform the agricultural landscape, Tether has announced a significant investment of over $700 million in Adecoagro, marking a pivotal moment in the convergence of digital finance and traditional agriculture."
-
-**Good (your voice)**:
-"Big news from Argentina: Tether just made its boldest move yet — investing $700M in agriculture.
-
-More than an acquisition, this deal connects digital finance to real-world needs.
-
-And for me? It hits home. My family's roots run deep in the Argentinian agrosector, making this a personal milestone."
-
-### Motivating action
-
-**Bad (generic AI)**:
-"Don't let others get ahead of you! Act now before you fall behind! Unleash your potential and dive into the world of Web3 before it's too late!"
-
-**Good (your voice)**:
-"The tools are here. The opportunities are still unrealized.
-
-Some companies are living 5 years ahead. Some industries are just getting started.
-
-The gap is an opportunity.
-
-So... keep building."
+- Per-platform structure rules (LinkedIn, X, blog, website, email, commits/PRs):
+  [references/platform-guidance.md](references/platform-guidance.md)
+- Before/after examples of the target voice:
+  [references/examples.md](references/examples.md)
 
 ---
 

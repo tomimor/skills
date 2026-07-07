@@ -3,9 +3,10 @@ name: qa-manual
 description: >-
   Drives a local web app through Chrome MCP across the happy path plus 2-3
   edge cases, capturing screenshots, console errors, and network failures
-  to produce QA evidence. Use when manually QA'ing a web feature, testing a
-  flow in the browser, exercising a change before claiming it works, or
-  producing evidence for verification-before-completion.
+  to produce QA evidence. Use when the user says "QA this", "test this
+  manually", "verify the flow", "see if it works in the browser", or when
+  exercising a change before claiming it works or producing evidence for
+  verification-before-completion.
 ---
 
 # QA Manual (web)
@@ -18,15 +19,6 @@ is evidence — `verification-before-completion` is the gate that consumes it.
 After implementing a UI or web-flow change, before claiming it works. Pair
 with `verification-before-completion`: this skill produces the evidence, that
 one enforces the gate.
-
-Trigger phrases that should activate this skill:
-
-- "QA this"
-- "test this manually"
-- "verify the flow"
-- "see if it works in the browser"
-- "exercise the feature"
-- "manually check it"
 
 ## Pre-flight
 

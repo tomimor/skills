@@ -1,6 +1,6 @@
 ---
 name: office-hours
-description:
+description: >-
   YC-style office hours brainstorm that interrogates the premise of a product idea (or builder side-project) through
   six forcing questions, generates 2-3 alternative approaches, and ends with a written assignment -- never writes code.
   Use when the user mentions office hours, brainstorm this, is this worth building, validate this idea, or wants a
@@ -29,7 +29,7 @@ Ask at the start which mode applies:
 
 If the user resists choosing, default to **Startup** -- the friction is the value.
 
-## Critical Rules
+## Critical rules
 
 1. **No code.** Not even pseudocode in the design doc. Architecture sketches OK; implementation not.
 2. **One question at a time.** Use `AskUserQuestion`. Batched questions destroy the forcing function.
@@ -134,7 +134,7 @@ If the user pushes back ("just help me, stop asking questions"):
 3. Only allow a **full skip** if the user volunteers concrete evidence -- named users, revenue, observable demand. If
    they don't, say so: "I can skip the grilling, but you're flying blind without the evidence. Your call."
 
-## Anti-Patterns
+## Anti-patterns
 
 - Do NOT generate code, scaffolding, file trees, or implementation details.
 - Do NOT skip the Assignment. A session without one was a chat, not office hours.

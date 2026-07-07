@@ -1,6 +1,6 @@
 ---
 name: investigate
-description:
+description: >-
   Systematic root-cause debugging that enforces an "Iron Law" (no fix without a confirmed root cause) and walks
   investigation through five phases -- collect, pattern-match, hypothesize, fix, verify. Use when the user says debug
   this, fix this bug, why is this broken, root cause, or investigate.
@@ -18,7 +18,7 @@ Debug a bug methodically. Find the root cause **before** writing a fix. Never pa
 **No fix without a confirmed root cause.** If you can't explain in one sentence why the bug happens, you are not allowed
 to edit code. Investigate more.
 
-## Critical Rules
+## Critical rules
 
 1. **One hypothesis at a time.** State it, then prove or disprove it before moving on.
 2. **3-strike rule.** If three independent hypotheses fail, stop and escalate to the user. Do not keep trying.
@@ -108,7 +108,7 @@ End every investigation with one of:
 - **ESCALATE** -- 3 hypotheses failed, or the issue spans architecture you shouldn't unilaterally change. Hand back to
   the user with what was tried and what's left.
 
-## Anti-Patterns
+## Anti-patterns
 
 - Do NOT add try/catch to make the error disappear. That is not a fix.
 - Do NOT refactor surrounding code "while you're in there." Stay on root cause.

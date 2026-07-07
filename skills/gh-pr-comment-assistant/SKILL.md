@@ -1,6 +1,6 @@
 ---
 name: gh-pr-comment-assistant
-description:
+description: >-
   Fetch the latest PR review comments for the current branch, analyze and summarize feedback, and help the developer
   plan fixes. Use when the user mentions PR comments, review feedback, reviewer requests, or wants to understand and
   address PR review comments.
@@ -11,10 +11,10 @@ description:
 Analyze PR review comments for the current branch, summarize feedback, and help the developer plan fixes or apply
 suggestions if necessary.
 
-## Critical Rules
+## Critical rules
 
-1. **Clarification gate:** If any reviewer comment is ambiguous or you are unsure what they mean, STOP and use the **Ask
-   User Questions** tool to clarify before proposing a resolution. Never guess.
+1. **Clarification gate:** If any reviewer comment is ambiguous or you are unsure what they mean, STOP and use the
+   **AskUserQuestion** tool to clarify before proposing a resolution. Never guess.
 2. **Confirmation gate:** NEVER apply code changes without explicit user approval. Always present the full plan first
    and wait for "go ahead."
 3. **Minimal diff mindset:** When proposing code changes, change only what's necessary to address the feedback. Don't
@@ -66,7 +66,7 @@ For each comment or thread:
 3. Propose a concrete action: code change, decision, or no-op
 4. Provide brief reasoning for the proposed action
 
-**Clarification gate:** If a comment is ambiguous, use the **Ask User Questions** tool to ask the user before proposing
+**Clarification gate:** If a comment is ambiguous, use the **AskUserQuestion** tool to ask the user before proposing
 a resolution.
 
 ### Step 5: Present Analysis and Discuss
@@ -80,7 +80,7 @@ Present all comments using this template:
 **Proposed action:** <code change | decision | no-op> -- <brief reasoning>
 ```
 
-After presenting the analysis, switch to **Plan mode** and use the **Ask User Questions** tool with **one question per
+After presenting the analysis, switch to **Plan mode** and use the **AskUserQuestion** tool with **one question per
 comment group**. Each question should:
 
 - Use the comment summary as the prompt, customized to that specific comment
@@ -106,7 +106,7 @@ Work through comments based on the developer's direction. For each comment being
 
 Repeat until the developer is satisfied or decides to continue on their own.
 
-## Anti-Patterns
+## Anti-patterns
 
 - NEVER reply or resolve comments automatically.
 - Do NOT propose changes without explaining why or understanding the user's comment intent.

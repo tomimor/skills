@@ -6,8 +6,9 @@ description: >-
   and .agents/design-decisions.md using progressive disclosure and
   canonical references instead of stale embedded code. Use when the user
   mentions setting up AGENTS.md, bootstrapping an agent guide, configuring
-  CLAUDE.md for a repo, "set up agent context", or onboarding a new repo
-  for AI coding agents.
+  CLAUDE.md for a repo, "set up agent context", onboarding a new repo for
+  AI coding agents, wanting agents productive in a repo they just joined,
+  or wanting to encode a rule after an agent made the same mistake twice.
 ---
 
 # Agent Guide Bootstrap
@@ -15,13 +16,6 @@ description: >-
 Generate the full agent-guide system for a repo so AI coding assistants (Claude Code, Cursor, Copilot, Codex) get the right context at the right time.
 
 **The system uses progressive disclosure**: a terse always-on `AGENTS.md` (~80 lines) + on-demand domain guides + canonical reference files. One source of truth — tool-specific files like `CLAUDE.md` are thin redirects.
-
-## Additional triggers
-
-Beyond the description's "Use when…" phrases, also invoke when:
-
-- User joined a new repo and wants AI agents productive.
-- User notices an agent making the same mistake twice and wants to encode the rule.
 
 ## Critical rules
 

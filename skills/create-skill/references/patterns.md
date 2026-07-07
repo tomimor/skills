@@ -152,8 +152,9 @@ A well-structured skill:
 ```
 code-review/
 ├── SKILL.md
-├── STANDARDS.md
-└── examples.md
+└── references/
+    ├── standards.md
+    └── examples.md
 ```
 
 ```markdown
@@ -194,6 +195,6 @@ Format feedback as:
 
 ## Additional Resources
 
-- For detailed coding standards, see [STANDARDS.md](STANDARDS.md)
-- For example reviews, see [examples.md](examples.md)
+- For detailed coding standards, see [references/standards.md](references/standards.md)
+- For example reviews, see [references/examples.md](references/examples.md)
 ```

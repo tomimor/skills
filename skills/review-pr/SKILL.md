@@ -14,7 +14,7 @@ Review a teammate's PR and emit copy-paste-ready review comments. The bar is
 high: only flag things that genuinely improve the code. Silence is a valid
 result.
 
-## Critical Rules
+## Critical rules
 
 1. **Text-only output.** Never run `gh pr comment`, `gh pr review`, or any
    `gh api` write call. The user pastes comments themselves.
@@ -75,7 +75,7 @@ comment. First person, direct, specific. No praise sandwiches, no hedging
 stacks, no AI tells.
 
 For tone calibration on borderline cases, see
-[examples.md](examples.md).
+[examples.md](references/examples.md).
 
 ### Step 5: Output
 
@@ -108,7 +108,7 @@ Nothing worth commenting on. <M> candidates considered, all dropped.
 Do not print the dropped candidates by default. If the user asks, list them
 with a one-line reason each.
 
-## Anti-Patterns
+## Anti-patterns
 
 - Do NOT post to GitHub. Text output only.
 - Do NOT reply to existing review threads -- this skill drafts new comments.

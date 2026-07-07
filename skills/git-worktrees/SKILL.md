@@ -59,7 +59,7 @@ Classify by the first matching row, top to bottom:
 | `ACTUAL` is empty | Detached HEAD at `<DETACHED_SHA>`. | `git checkout <EXPECTED>`. If the SHA holds unique work, run `git branch rescue/<ts> <DETACHED_SHA>` first. See recovery.md Scenario F. |
 | `HOLDER` is set and != `ROOT` | Branch `<EXPECTED>` is already checked out at `<HOLDER>`. Git can't share branches across worktrees. | Open that worktree instead, or pick a different branch here. See recovery.md Scenario G. |
 | `LOCAL_BRANCH` is empty | Branch `<EXPECTED>` no longer exists locally. | `git fetch origin && git checkout -B <EXPECTED> origin/<EXPECTED>` if the remote has it, else remove this worktree via the cleanup flow. |
-| `STATUS` is non-empty | Uncommitted changes sitting on the wrong branch (`<ACTUAL>`). | Ask via `AskQuestion`: (a) move via stash + switch + pop (recovery.md Scenario A), (b) commit here on `<ACTUAL>` if they really belong, (c) discard. |
+| `STATUS` is non-empty | Uncommitted changes sitting on the wrong branch (`<ACTUAL>`). | Ask via `AskUserQuestion`: (a) move via stash + switch + pop (recovery.md Scenario A), (b) commit here on `<ACTUAL>` if they really belong, (c) discard. |
 | `AHEAD` > 0 | `<AHEAD>` unpushed commits on `<ACTUAL>` that may belong on `<EXPECTED>`. | Stop. Do NOT auto-reset. See recovery.md Scenario B (reflog + cherry-pick). |
 | Otherwise | Stray `git checkout`. Clean worktree, branch exists, no other worktree holds it. | `git checkout <EXPECTED>` -- safe single command. |
 
@@ -103,7 +103,7 @@ If the current dir is already that path, you're in the main checkout. Otherwise 
   ```
   Slugify to `<n>-<short-kebab-title>` (lowercase, hyphens, max ~40 chars).
 - If the user gave a branch name, use it verbatim.
-- Otherwise, ask once via `AskQuestion` with a sensible default option.
+- Otherwise, ask once via `AskUserQuestion` with a sensible default option.
 
 ### Step 3: Refresh the base
 
@@ -219,7 +219,7 @@ git -C "$MAIN_ROOT" worktree prune
 
 If `branch -d` fails because the branch isn't merged locally (e.g. squash-merged on GitHub), confirm with the user once before falling back to `-D`.
 
-## Anti-Patterns
+## Anti-patterns
 
 - Do NOT `git checkout` a different branch inside an existing worktree. Create a new worktree instead.
 - Do NOT nest worktrees inside the main checkout. Always use a sibling directory.

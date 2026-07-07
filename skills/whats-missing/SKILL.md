@@ -14,7 +14,7 @@ description: >-
 Surface the single highest-leverage thing the user hasn't seen, or honestly say there isn't one. Not a list of risks.
 Not a brainstorm. One blindspot -- or a calibrated no -- with an observable signal and a cheap test.
 
-## Critical Rules
+## Critical rules
 
 1. **One blindspot, or a calibrated no.** Either pick the single most important thing and commit, or use the
    no-blindspot template. A ranked list is a dodge. So is a stretched "best of weak candidates" pick.

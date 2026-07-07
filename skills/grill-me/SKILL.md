@@ -1,6 +1,6 @@
 ---
 name: grill-me
-description:
+description: >-
   Interviews the user relentlessly about a plan or design until reaching shared understanding, walking the decision tree
   one branch at a time. Use when the user wants to stress-test a plan, get grilled on their design, or mentions "grill me".
 ---
@@ -10,11 +10,11 @@ description:
 Interview the user relentlessly about every aspect of their plan or design until you reach a shared understanding. Walk
 down each branch of the design tree, resolving dependencies between decisions one-by-one.
 
-## Core Rules
+## Critical rules
 
 1. **One question at a time.** Never batch. Wait for each answer before moving on.
-2. **Always use the AskQuestion tool.** Never list options inline in chat. Every grill question goes through
-   `AskQuestion` with at least two concrete options.
+2. **Always use the AskUserQuestion tool.** Never list options inline in chat. Every grill question goes through
+   `AskUserQuestion` with at least two concrete options.
 3. **Always recommend an answer.** For every question, include your recommended option and label it clearly (see
    format below).
 4. **Explore the codebase before asking.** If a question can be answered by reading files, running `git`, or searching
@@ -27,7 +27,7 @@ down each branch of the design tree, resolving dependencies between decisions on
 
 Restate the plan or design as a **"How Might We"** problem statement, in 1-3 sentences, so both of you are working from
 the same baseline. The HMW framing forces clarity on what's actually being solved -- not just what's being built. If the
-plan is unclear or missing, ask one `AskQuestion` to pin down the goal before grilling further.
+plan is unclear or missing, ask one `AskUserQuestion` to pin down the goal before grilling further.
 
 Example: instead of "we'll add a rate limiter," restate as "How might we keep abusive traffic from degrading API latency
 for paying users?" -- now the grill has a target.
@@ -48,7 +48,7 @@ For each unresolved node, in dependency order:
 
 1. **Try to resolve it from the codebase first.** If there's a precedent, an existing pattern, or a config that already
    answers the question, read it and state the answer instead of asking.
-2. **Otherwise, ask via `AskQuestion`.** Use this format:
+2. **Otherwise, ask via `AskUserQuestion`.** Use this format:
 
    - `prompt`: the question itself, followed by a 1-2 sentence rationale and your recommendation. Mark the recommended
      option with `(recommended)` in the option label.
@@ -79,7 +79,7 @@ When done, produce a short summary:
 
 ## Question Format
 
-Every `AskQuestion` call must look roughly like this:
+Every `AskUserQuestion` call must look roughly like this:
 
 - **prompt**: one clear question, then `Recommended: <option>. Why: <one sentence>`.
 - **options**: each option is a short phrase. The recommended one ends with `(recommended)`.
@@ -91,9 +91,9 @@ Example shape (do not copy verbatim, adapt to the actual question):
   hits app servers."
 - options: `Edge middleware (recommended)`, `App-level middleware`, `Per-route decorator`, `Other / explain`.
 
-## Anti-Patterns
+## Anti-patterns
 
-- Do NOT ask multiple questions in one message or one `AskQuestion` call when they aren't independent.
+- Do NOT ask multiple questions in one message or one `AskUserQuestion` call when they aren't independent.
 - Do NOT list options as a markdown bullet list in chat -- use the tool.
 - Do NOT ask questions whose answers are already in the codebase.
 - Do NOT skip the recommendation. "I don't know, what do you think?" is not a grill.

@@ -61,7 +61,7 @@ learning this.
 
 If `MISSION.md` is empty or the mission is vague, **your first job is to
 interview the user about why they want this**, then write `MISSION.md`. Use the
-`AskQuestion` tool, one question at a time, pushing concrete over abstract
+`AskUserQuestion` tool, one question at a time, pushing concrete over abstract
 ("ship a Rust CLI to my team" beats "learn Rust"). A bad mission is worse than
 no mission: without it, lessons drift abstract and you lose the ability to judge
 what to teach next.
@@ -138,7 +138,7 @@ record it in `NOTES.md` so future sessions and lessons honor it.
 1. **Orient.** Read whatever workspace files already exist (`MISSION.md`,
    `learning-records/`, `GLOSSARY.md`, `NOTES.md`) to recover state.
 2. **Mission check.** If the mission is missing or vague, interview the user via
-   `AskQuestion` and write `MISSION.md` before teaching.
+   `AskUserQuestion` and write `MISSION.md` before teaching.
 3. **Find or refresh knowledge.** Ensure `RESOURCES.md` has high-trust sources
    for what you are about to teach; search the web if not.
 4. **Pick the next thing** in the zone of proximal development.

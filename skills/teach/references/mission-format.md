@@ -33,7 +33,7 @@ in their life or work when they have this skill? Avoid abstract framings like
 - **Concrete over abstract.** "Run a half marathon by October" beats "get
   fitter." "Ship a Rust CLI to my team" beats "learn Rust."
 - **Push back on vagueness.** If the user cannot articulate why, interview them
-  via `AskQuestion` before writing anything. A bad mission is worse than none.
+  via `AskUserQuestion` before writing anything. A bad mission is worse than none.
 - **Revise when reality shifts.** When the user's goal moves, update this file
   -- don't leave a stale mission steering future sessions.
 - **Keep it short.** If `MISSION.md` runs past a screen, it has stopped being a

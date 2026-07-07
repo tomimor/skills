@@ -1,6 +1,6 @@
 ---
 name: gh-issue-creator
-description:
+description: >-
   Create a GitHub issue in the current repo using one of the predefined issue templates (bug, feature, tech debt) or as
   a blank issue. Fetches available labels dynamically, maps user intent to the right template, and enforces concise
   problem descriptions. Use when the user mentions creating an issue, filing a bug, opening a ticket, or reporting a
@@ -11,10 +11,10 @@ description:
 
 Create concise, well-labeled GitHub issues in the current repo using the predefined issue templates.
 
-## Critical Rules
+## Critical rules
 
-1. **Clarification gate:** If the user's description is vague or missing key details, STOP and use the **Ask User
-   Questions** tool to ask for specifics before drafting. Never guess what the issue is about.
+1. **Clarification gate:** If the user's description is vague or missing key details, STOP and use the
+   **AskUserQuestion** tool to ask for specifics before drafting. Never guess what the issue is about.
 2. **Confirmation gate:** NEVER run `gh issue create` without showing the full draft to the user first and receiving
    explicit approval.
 3. **Conciseness over completeness:** Each section in the issue body should be 2-4 sentences max. Only include sections
@@ -46,7 +46,7 @@ suggest `gh auth login`. Stop.
 
 ### Step 2: Determine Issue Type
 
-If the user hasn't specified the type, use the **Ask User Questions** tool with these options:
+If the user hasn't specified the type, use the **AskUserQuestion** tool with these options:
 
 - Bug Report
 - Feature Request
@@ -82,7 +82,7 @@ If free form issue, define the best suited type from the issue types (Bug, Featu
 
 ### Step 4: Gather Issue Details
 
-**Clarification gate:** If the user has not clearly stated what the issue is about, use the **Ask User Questions** tool
+**Clarification gate:** If the user has not clearly stated what the issue is about, use the **AskUserQuestion** tool
 to clarify before proceeding.
 
 Read the companion file for the chosen template type (see Issue Templates table above). Use the **Fields** table in that
@@ -118,7 +118,7 @@ Show the full draft using this template:
 
 ### Step 7: Await Approval
 
-**Confirmation gate:** Wait for explicit user approval before creating. Use the **Ask User Questions** tool to ask the
+**Confirmation gate:** Wait for explicit user approval before creating. Use the **AskUserQuestion** tool to ask the
 user if they want to create the issue as-is, or if they want to make any changes.
 
 ### Step 8: Create and Report
@@ -150,10 +150,7 @@ After creation, display the issue URL as a clickable markdown link:
 - No excessive reproduction steps. Keep it to the essentials
 - Link to related PRs or issues if relevant context exists
 
-## Anti-Patterns
+## Anti-patterns
 
-- Do NOT create the issue on GitHub without explicit user approval
 - Do NOT skip label assignment -- always check available labels and pick the best fit
-- Do NOT write walls of text in the issue body
 - Do NOT include solution proposals unless the user provides one or explicitly asks
-- Do NOT hardcode labels -- always fetch dynamically from the repo

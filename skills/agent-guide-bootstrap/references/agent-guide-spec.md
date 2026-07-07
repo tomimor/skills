@@ -279,7 +279,7 @@ description: <one-line trigger description>
 
 # <Skill Name>
 
-## Critical Rules
+## Critical rules
 
 - NEVER <destructive action> without explicit user approval.
 - <other non-negotiable constraints>
@@ -292,7 +292,7 @@ description: <one-line trigger description>
 3. <Gate: confirm with user before proceeding>
 4. <Final step>
 
-## Anti-Patterns
+## Anti-patterns
 
 - Do not <common mistake>.
 - Do not <common mistake>.

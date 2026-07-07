@@ -17,8 +17,8 @@ differentiator vs. a generic UI review: this skill **measures in pixels** — it
 returns numbers, not a vibe. Qualitative judgment sits on top of the measured facts, never instead of
 them.
 
-Discipline and fix catalog live in [grid-discipline.md](grid-discipline.md); the output shape is
-[report-template.md](report-template.md).
+Discipline and fix catalog live in [grid-discipline.md](references/grid-discipline.md); the output shape is
+[report-template.md](references/report-template.md).
 
 ## Critical rules
 
@@ -80,7 +80,7 @@ numbers unreliable (see grid-discipline §1.3); prefer Path A when optical findi
 
 ### Phase 3 — Synthesize
 
-Read [grid-discipline.md](grid-discipline.md) and turn the JSON into the report:
+Read [grid-discipline.md](references/grid-discipline.md) and turn the JSON into the report:
 1. **Section 1 (measured):** list real `columnViolations` / `baselineViolations` / `opticalViolations`,
    worst offset first, each with its law citation and a one-line fix. A clean width is a finding too —
    say it passed. In **inferred** mode, prefix column findings with the confidence and the estimate
@@ -90,7 +90,7 @@ Read [grid-discipline.md](grid-discipline.md) and turn the JSON into the report:
    with the appropriateness question.
 3. **Top 3 moves:** the smallest changes with the most effect.
 
-Use the severity mapping at the bottom of grid-discipline.md. Fill [report-template.md](report-template.md).
+Use the severity mapping at the bottom of grid-discipline.md. Fill [report-template.md](references/report-template.md).
 
 ### Phase 4 — Deliver
 

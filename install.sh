@@ -12,7 +12,7 @@ SKILLS=(
   "gh-pr-description-updater:Read or update PR descriptions using repo template"
   "verify-pr:Three-phase PR verification (code review, test plan, upstream assumptions)"
   "writing-voice:Direct, personal writing style with AI-slop blacklist"
-  "grill-me:Interview the user relentlessly about a plan or design via AskQuestion"
+  "grill-me:Interview the user relentlessly about a plan or design via AskUserQuestion"
   "improve-prompt:Critique and rewrite a prompt using general prompt engineering best practices"
   "create-skill:Author or audit agent skills (SKILL.md format, structure, quality checklist)"
   "git-worktrees:Worktree workflow so parallel agent chats stop colliding on branches"

@@ -11,7 +11,7 @@ description: >-
 Three-phase verification of the current branch's PR. Produces a structured report the developer reviews before
 deciding what to address.
 
-## Critical Rules
+## Critical rules
 
 1. **No changes = no verification.** If `git diff` is empty, inform the user and stop.
 2. **Read before flagging.** For every finding, read the surrounding file context. Never flag based on diff hunks alone.
@@ -216,12 +216,11 @@ One sentence: what's the overall state of this PR?
 Numbered list of concrete next steps, ordered by priority.
 ```
 
-## Anti-Patterns
+## Anti-patterns
 
 - Do NOT duplicate the miguel-review checks -- delegate, don't reimplement.
 - Do NOT suggest tests for trivial changes (import reordering, type-only changes, formatting).
 - Do NOT fabricate source-of-truth paths -- if you can't find the upstream source, say "Unverified."
-- Do NOT apply fixes without developer approval. Running tests is observation, not a fix -- always run them.
 - Do NOT skip Phase 2b or Phase 3. Run targeted tests when specific files are available; fall back to the full suite.
 - Do NOT treat flaky tests (pass on retry) as failures -- note them as flaky in the report.
 

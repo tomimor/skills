@@ -12,7 +12,7 @@ description: >-
 
 Review the current branch's diff with a bias toward simplicity, small diffs, and deleting code.
 
-## Critical Rules
+## Critical rules
 
 1. **No changes = no review.** If `git diff` is empty, inform the user and stop.
 2. **Read before judging.** For non-trivial changes, read surrounding context before flagging issues.
@@ -86,8 +86,8 @@ Briefly acknowledge what was done well.
 
 ## Additional Resources
 
-- For review philosophy and tone guidance, see [philosophy.md](philosophy.md)
-- For example critiques showing the expected tone, see [examples.md](examples.md)
+- For review philosophy and tone guidance, see [philosophy.md](references/philosophy.md)
+- For example critiques showing the expected tone, see [examples.md](references/examples.md)
 
 ## Adjacent skills
 

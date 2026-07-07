@@ -36,7 +36,8 @@ fixed template below.
 8. **Slack mrkdwn only.** The output uses Slack's `mrkdwn` flavor, not
    GitHub/CommonMark. That means `*bold*` (single asterisks), `_italic_`,
    `<url|label>` for links, no `#` headers, no `**bold**`, no `[label](url)`,
-   no horizontal rules. See [Slack mrkdwn cheatsheet](#slack-mrkdwn-cheatsheet).
+   no horizontal rules. Full token table:
+   [references/slack-mrkdwn.md](references/slack-mrkdwn.md).
 9. **Plain message, not a document.** The deliverable is a single chat message
    ready to paste into Slack. Never write it to a `.md` file. Never wrap it
    in a fenced code block. Never add a title, preamble, or trailing
@@ -134,17 +135,9 @@ output in Step 5 is plain text with no backticks.
 
 ### Step 5 -- Present for copy-paste
 
-Emit the message as the bare chat reply -- plain text with Slack mrkdwn
-characters (`*Bold:*`, `<url|label>`, `•`, `:emoji:`) written literally.
-
-- No fenced code block, no triple backticks, no indentation that triggers a
-  code block.
-- No "Here is the draft for your review:" prose.
-- No headings, no list of what changed, no recap of the proposal.
-- No trailing summary after the message.
-
-After the message, on a new line, ask the confirm question. That single
-question is the only thing allowed alongside the draft.
+Emit the message as the bare chat reply per rule 9 -- no code block, no
+surrounding prose, no recap. After the message, on a new line, ask the confirm
+question. That single question is the only thing allowed alongside the draft.
 
 ```
 Question: "Ready as-is, or want edits?"
@@ -182,47 +175,10 @@ full message as plain chat text (still no code block).
 
 ## Anti-patterns
 
-- Do NOT draft without fetching the page.
 - Do NOT guess the voting stance from the proposer's tone.
 - Do NOT fabricate a CON to look balanced -- name a real one or note that the
   PRO clearly dominates.
 - Do NOT add sections the template doesn't have (Timeline, Next Steps,
   Appendix, etc.). Out-of-template content belongs in a reply, not the lead
   message.
-- Do NOT exceed 3 bullets in any section.
-- Do NOT use GitHub/CommonMark syntax (`**bold**`, `[label](url)`, `#` headers,
-  `---` rules) -- Slack renders them as literal characters.
 - Do NOT include the raw URL inline when a `<url|label>` works.
-- Do NOT post or send the message before the user explicitly approves the draft.
-- Do NOT write the message to a file. The deliverable is a plain chat reply
-  ready to copy-paste into Slack.
-- Do NOT wrap the message in a fenced code block, triple backticks, or any
-  indentation that would render as code. Emit it as plain chat text.
-- Do NOT wrap the message in prose ("Here is your governance message:" /
-  "Let me know if you'd like changes"). The bare message is the whole reply.
-
-## Slack mrkdwn cheatsheet
-
-Slack `mrkdwn` is similar to Markdown but with key differences. Use these
-exact tokens in every draft:
-
-| Need | Slack mrkdwn | NOT |
-|------|--------------|-----|
-| Bold | `*bold*` | `**bold**` |
-| Italic | `_italic_` | `*italic*` |
-| Strikethrough | `~strike~` | `~~strike~~` |
-| Inline code | `` `code` `` | same as Markdown |
-| Code block | ` ```...``` ` | same as Markdown |
-| Link | `<https://x.com\|label>` | `[label](https://x.com)` |
-| Bare link | `<https://x.com>` | `https://x.com` |
-| Bullet | `• item` or `- item` | `* item` |
-| Blockquote | `> text` | same as Markdown |
-| Heading | not supported -- use `*Bold:*` | `# Heading` |
-| Horizontal rule | not supported -- use a blank line | `---` |
-| User mention | `<@U12345>` | `@username` |
-| Channel mention | `<#C12345\|name>` | `#channel` |
-| Emoji | `:white_check_mark:` | unicode also works |
-
-The pipe `|` inside `<url|label>` must NOT be escaped when pasted into Slack;
-the table above escapes it only because it conflicts with Markdown table
-syntax.

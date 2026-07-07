@@ -1,6 +1,6 @@
 ---
 name: benchmark
-description:
+description: >-
   Performance regression detection for web pages -- captures baselines for page load, Core Web Vitals, and resource
   sizes, then compares subsequent runs and flags regressions by configurable thresholds. Use when the user mentions
   benchmark, perf check, performance regression, Core Web Vitals, page speed, or wants to track frontend performance
@@ -16,7 +16,7 @@ available). Original credit to Garry Tan and contributors._
 Measure page performance, save it as a baseline, and detect regressions on later runs. Do not optimize blindly --
 measure first, then change one thing, then measure again.
 
-## Critical Rules
+## Critical rules
 
 1. **Capture a baseline before changing anything.** A benchmark without a baseline is just a number.
 2. **Single-variable rule.** Compare runs that differ in one change only. Otherwise the diff is noise.
@@ -122,7 +122,7 @@ URL, tool used, run count, branch, timestamp.
 If `--trend` was passed, also emit a 3-line trend per metric across the last N runs in `.benchmark-reports/`:
 direction (up/down/flat), slope, and the date the trend started.
 
-## Anti-Patterns
+## Anti-patterns
 
 - Do NOT benchmark `localhost` dev servers and present the result as Core Web Vitals.
 - Do NOT report a single-run number. Variance is real.

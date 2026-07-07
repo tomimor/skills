@@ -104,7 +104,7 @@ The rewrite must NOT:
 - Bloat the prompt with hedging language ("please try to", "if possible").
 - Introduce Claude-, GPT-, or model-specific knobs the user did not ask for.
 
-## Anti-Patterns to Fix on Sight
+## Anti-patterns to fix on sight
 
 - **"Be helpful / be concise / be professional"** — vague. Replace with concrete behavior or examples.
 - **"Don't hallucinate"** — tell the model what to do instead: "Only state claims supported by the provided documents. If unsure, say 'not in the documents.'"

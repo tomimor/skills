@@ -1,6 +1,6 @@
 ---
 name: gh-pr-description-updater
-description:
+description: >-
   Read or update the PR description for the current branch, strictly following the repo's PR template. Enforces concise
   bullet points and template compliance. Use when the user mentions PR description, PR body, updating a pull request, or
   filling in the PR template.
@@ -10,10 +10,10 @@ description:
 
 Read or update the PR description for the current branch using the repo's PR template.
 
-## Critical Rules
+## Critical rules
 
 1. **Clarification gate:** If unsure about the "Why" behind certain changes, or if the diff is ambiguous, STOP and use
-   the **Ask User Questions** tool to clarify before filling in sections. Never guess motivations.
+   the **AskUserQuestion** tool to clarify before filling in sections. Never guess motivations.
 2. **Confirmation gate:** NEVER run `gh pr edit --body` without showing the full draft to the user first and receiving
    explicit approval.
 3. **Conciseness:** Max 3 bullet points per section, and aim for fewer. One sharp bullet beats three weak ones.
@@ -46,7 +46,7 @@ commands. First, list recent remote branches for context:
 git branch -r --sort=-committerdate | head -3
 ```
 
-Then use the **Ask User Questions** tool with the discovered branches as options:
+Then use the **AskUserQuestion** tool with the discovered branches as options:
 
 ```
 Question: "No open PR found for branch `$BRANCH`. Which base branch should I diff against?"
@@ -120,7 +120,7 @@ EOF
 )"
 ```
 
-**If no PR exists**, use the **Ask User Questions** tool to let the user choose a delivery method:
+**If no PR exists**, use the **AskUserQuestion** tool to let the user choose a delivery method:
 
 ```
 Question: "How would you like to use this description?"
@@ -138,7 +138,7 @@ EOF
 )"
 ```
 
-## Anti-Patterns
+## Anti-patterns
 
 - Do NOT hardcode `main` as the base branch
 - Do NOT silently assume `main` as the base branch when no PR is found -- always ask the user

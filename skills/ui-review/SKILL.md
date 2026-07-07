@@ -13,7 +13,7 @@ description: >-
 Comprehensive frontend review that orchestrates 7 Impeccable analysis dimensions via parallel
 subagents. Produces a plan artifact with explicit, ready-to-apply recommendations.
 
-## Critical Rules
+## Critical rules
 
 1. **Recommendations are the deliverable.** The subagents produce concrete fixes (exact code changes). Present those directly -- users apply them, they don't re-run the skills.
 2. **Small changes only.** Every recommendation must be a targeted edit: a CSS value, a token swap, a copy string, a missing attribute. Never suggest structural rewrites, component replacements, or architectural changes.
@@ -41,7 +41,7 @@ Check for design context in this order:
 
 ### User Input
 
-Use the AskQuestion tool to gather:
+Use the AskUserQuestion tool to gather:
 
 ```
 Questions:
@@ -118,12 +118,12 @@ The 7 dimensions:
 
 `...` in the Skill Path column is `IMPECCABLE_DIR` resolved in Phase 0. If a dimension file isn't found there by that name (layout varies by Impeccable version), glob for it; if the pack is absent, drop {SKILL_PATH} from the prompt and use the Criteria Focus column alone.
 
-**The Polish subagent must also read [css-polish-details.md](css-polish-details.md)** (in this skill
+**The Polish subagent must also read [css-polish-details.md](references/css-polish-details.md)** (in this skill
 directory) and apply its checklist. Append this line to the Polish subagent's prompt, after the
 Impeccable skill path:
 
 ```
-Also read the CSS polish checklist at {ui-review skill dir}/css-polish-details.md and report any
+Also read the CSS polish checklist at {ui-review skill dir}/references/css-polish-details.md and report any
 missing details: concentric border radius, tabular numbers, text-wrap balance/pretty, font
 smoothing, and image outlines.
 ```
@@ -145,13 +145,13 @@ After all subagents return:
 
 ## Phase 4: Plan Artifact
 
-Generate the final review report following the template in [review-template.md](review-template.md).
+Generate the final review report following the template in [review-template.md](references/review-template.md).
 
 Present the full report to the user. Every finding must include the explicit recommendation (the exact change to make).
 
 After presenting, ask the user: "Would you like me to apply any of these recommendations?"
 
-## Anti-Patterns
+## Anti-patterns
 
 - Do NOT re-run Impeccable skills as a recommendation. The subagents already did the analysis -- their recommendations are the deliverable.
 - Do NOT suggest vague fixes ("improve the contrast"). Be specific ("Change `color: #999` to `color: var(--text-secondary)` on line 42").

@@ -25,7 +25,7 @@ Not for: editing one or two ads (use Ads Manager UI), API-based ad creation (thi
 
 ## The 5-step workflow
 
-1. **Gather a brief** from the user (YAML preferred). If they have nothing, ask via AskQuestion: campaign name, objective, daily budget, link, CTA, headlines, bodies, image filenames. Default everything else.
+1. **Gather a brief** from the user (YAML preferred). If they have nothing, ask via AskUserQuestion: campaign name, objective, daily budget, link, CTA, headlines, bodies, image filenames. Default everything else.
 2. **Validate** with `python scripts/build_import.py brief.yml --check`. Read the report. Fix errors before proceeding.
 3. **Build** with `python scripts/build_import.py brief.yml --out ./output --images ./images`. Outputs `output.xlsx` and `output.txt`.
 4. **Have the user review** `output.xlsx`. Spot-check ad names, copy, image filenames, audience.
