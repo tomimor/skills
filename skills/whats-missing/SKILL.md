@@ -140,3 +140,8 @@ Plan: "add a 1-hour cache to `/users` to cut DB load."
 - Do NOT manufacture a blindspot when the situation is well-scoped. The calibrated no is a first-class outcome, not
   a fallback for laziness -- it fires when the stretch test fires.
 - Do NOT include code unless the blindspot is literally a line of code -- words are cheaper.
+
+## Adjacent skills
+
+A **single sharp blindspot** is this skill. For a full interrogation of a plan/design's decisions, use `grill-me`.
+For stress-testing a **product idea's premise**, use `office-hours`.

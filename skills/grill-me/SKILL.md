@@ -101,3 +101,9 @@ Example shape (do not copy verbatim, adapt to the actual question):
 - Do NOT make it adversarial. Direct and probing, not hostile.
 - Do NOT yes-machine a weak premise. If the underlying goal is shaky, say so with specificity and propose a sharper
   framing -- don't grill the leaves of a bad tree.
+
+## Adjacent skills
+
+Full interrogation of a **plan/design's decisions** is this skill. For interrogating a **product idea's premise**
+(is it worth building?), use `office-hours`. For a **single sharp blindspot** instead of a full grill, use
+`whats-missing`.

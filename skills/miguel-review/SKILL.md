@@ -1,9 +1,11 @@
 ---
 name: miguel-review
-description:
-  Opinionated code review that prioritizes minimal diffs, deletions over additions, and zero tolerance for dead code or
-  premature abstractions. Reviews the current branch diff against a base branch. Use when the user mentions miguel
-  review, PR review, diff review, code review, or audit.
+description: >-
+  Opinionated code review of the user's own working diff that prioritizes
+  minimal diffs, deletions over additions, and zero tolerance for dead code
+  or premature abstractions. Reviews the current branch diff against a base
+  branch. Use when the user mentions miguel review, diff review, or asks to
+  review their own changes/branch before pushing.
 ---
 
 # Miguel Review
@@ -86,3 +88,13 @@ Briefly acknowledge what was done well.
 
 - For review philosophy and tone guidance, see [philosophy.md](philosophy.md)
 - For example critiques showing the expected tone, see [examples.md](examples.md)
+
+## Adjacent skills
+
+| Ask | Skill |
+|---|---|
+| Review **my working diff** (shape/simplicity) | **miguel-review** (this skill) |
+| Review a **teammate's PR** → paste-ready comments | review-pr |
+| Heavyweight **verify** my PR (tests, assumptions) | verify-pr |
+| **Respond to** reviewer comments on my PR | gh-pr-comment-assistant |
+| Status overview of **my open PRs** | pr-dashboard |

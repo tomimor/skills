@@ -119,3 +119,13 @@ with a one-line reason each.
   comments, not a review summary.
 - Do NOT run tests, builds, or any heavyweight verification. That's
   `verify-pr`'s job.
+
+## Adjacent skills
+
+| Ask | Skill |
+|---|---|
+| Review a **teammate's PR** → paste-ready comments | **review-pr** (this skill) |
+| Review **my working diff** (shape/simplicity) | miguel-review |
+| Heavyweight **verify** my PR (tests, assumptions) | verify-pr |
+| **Respond to** reviewer comments on my PR | gh-pr-comment-assistant |
+| Status overview of **my open PRs** | pr-dashboard |

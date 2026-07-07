@@ -18,7 +18,6 @@ SKILLS=(
   "git-worktrees:Worktree workflow so parallel agent chats stop colliding on branches"
   "goal-cursor:Anthropic-style /goal loop adapted for Cursor's stop hook"
   "meta-ads-bulk-creator:Build Meta Ads Manager bulk-import files (.xlsx + Unicode .txt) from a YAML brief"
-  "gh-pr-list:Numbered Slack message of your non-draft open PRs in the current repo"
   "gh-issue-triage:Pick the top 3 AI-ready issues in the current repo with a kickoff prompt for each"
   "review-pr:Review a teammate's PR and emit copy-paste-ready, senior-level comments"
   "investigate:Systematic root-cause debugging with the Iron Law (no fix without root cause) -- adapted from gstack"

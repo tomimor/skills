@@ -160,3 +160,10 @@ After presenting, ask the user: "Would you like me to apply any of these recomme
 - Do NOT skip the browser inspection. Visual context is essential.
 - Do NOT launch subagents sequentially. Always launch in parallel.
 - Do NOT present findings without deduplication. Overlapping findings from different subagents must be merged.
+
+## Pair with / defer to
+
+- `grid-review` — deep, **measured** layout-grid audit (px-level column/baseline checks); defer grid questions there.
+- `benchmark` — page performance and Core Web Vitals; out of scope here.
+- `qa-manual` — behavior verification in the browser; this skill is about polish, that one about function.
+- `share-ready` — link previews, favicons, and social/meta presentation.

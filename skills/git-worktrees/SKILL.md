@@ -135,9 +135,9 @@ git -C "$MAIN_ROOT" worktree add "$WT_PATH" "origin/$BRANCH"
 
 ### Step 5: Reseat the agent into the worktree
 
-Try the Cursor MCP first; fall back cleanly for any other agent.
+Try the agent's reseat mechanism first; fall back cleanly when there isn't one.
 
-- **If `cursor-app-control.move_agent_to_root` is available**, call it with `rootPath="$WT_PATH"`. From this point the conversation continues rooted in the new worktree.
+- **If a reseat tool is available** (Claude Code: `EnterWorktree`; Cursor: `cursor-app-control.move_agent_to_root` with `rootPath="$WT_PATH"`), call it. From this point the conversation continues rooted in the new worktree.
 - **Otherwise**, print:
   ```
   Worktree ready: <WT_PATH>
@@ -149,7 +149,7 @@ Try the Cursor MCP first; fall back cleanly for any other agent.
     cd     "<WT_PATH>"     # for terminal-based agents
   ```
 
-Do not try to detect the agent via environment variables. Try the MCP call, fall back if it isn't there.
+Do not try to detect the agent via environment variables. Try the reseat tool, fall back if it isn't there.
 
 ### Step 6: Report
 
@@ -199,7 +199,7 @@ BRANCH=$(git branch --show-current)
 
 Before removing the worktree directory, move out of it -- otherwise the agent ends up in a ghost cwd.
 
-- If `cursor-app-control.move_agent_to_root` is available, call it with `rootPath="$MAIN_ROOT"`.
+- If a reseat tool is available (Claude Code: `ExitWorktree`; Cursor: `cursor-app-control.move_agent_to_root` with `rootPath="$MAIN_ROOT"`), call it.
 - Otherwise, tell the user to open the main root in their agent before continuing.
 
 ### Step 4: Remove the worktree
@@ -226,7 +226,7 @@ If `branch -d` fails because the branch isn't merged locally (e.g. squash-merged
 - Do NOT share a worktree between two agent conversations.
 - Do NOT `rm -rf` a worktree directory manually. Always go through `git worktree remove`.
 - Do NOT remove the worktree before reseating the agent out of it.
-- Do NOT sniff `CURSOR_*` / `CLAUDE_*` env vars to pick a strategy. Try the MCP, fall back.
+- Do NOT sniff `CURSOR_*` / `CLAUDE_*` env vars to pick a strategy. Try the reseat tool, fall back.
 
 ## Recovery
 

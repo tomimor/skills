@@ -224,3 +224,13 @@ Numbered list of concrete next steps, ordered by priority.
 - Do NOT apply fixes without developer approval. Running tests is observation, not a fix -- always run them.
 - Do NOT skip Phase 2b or Phase 3. Run targeted tests when specific files are available; fall back to the full suite.
 - Do NOT treat flaky tests (pass on retry) as failures -- note them as flaky in the report.
+
+## Adjacent skills
+
+| Ask | Skill |
+|---|---|
+| Heavyweight **verify** my PR (tests, assumptions) | **verify-pr** (this skill) |
+| Review **my working diff** (shape/simplicity) | miguel-review |
+| Review a **teammate's PR** → paste-ready comments | review-pr |
+| **Respond to** reviewer comments on my PR | gh-pr-comment-assistant |
+| Status overview of **my open PRs** | pr-dashboard |

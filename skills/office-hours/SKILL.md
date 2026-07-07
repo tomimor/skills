@@ -142,3 +142,8 @@ If the user pushes back ("just help me, stop asking questions"):
 - Do NOT propose 3 alternatives that are obviously the same idea with different names.
 - Do NOT keep grilling after the user has given a specific, evidence-backed answer. Move on.
 - Do NOT use AI vocabulary in the design doc ("delve", "robust", "leverage", "foster"). Builder talking to builder.
+
+## Adjacent skills
+
+Interrogating a **product idea's premise** is this skill. For walking a **plan/design's decision tree** once the
+idea is settled, use `grill-me`. For a **single sharp blindspot** on a decision already made, use `whats-missing`.

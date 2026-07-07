@@ -2,7 +2,7 @@
 
 # 🧠 skills
 
-[![Skills](https://img.shields.io/badge/skills-37-1f6feb?style=flat-square)](#skills)
+[![Skills](https://img.shields.io/badge/skills-36-1f6feb?style=flat-square)](#skills)
 [![Install](https://img.shields.io/badge/install-one%20command-22c55e?style=flat-square)](#install)
 
 </div>
@@ -48,13 +48,12 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 
 | Skill | What it does |
 |-------|--------------|
-| 🟦 [pr-dashboard](skills/pr-dashboard/SKILL.md) | Status overview of all your open PRs: title, reviews, CI, open comments, and a recommended next step per PR. |
+| 🟦 [pr-dashboard](skills/pr-dashboard/SKILL.md) | Status overview of all your open PRs: title, reviews, CI, open comments, and a recommended next step per PR. Quick mode emits just a Slack-ready "Ready for review / Drafts" list. |
 | 🟦 [miguel-review](skills/miguel-review/SKILL.md) | Opinionated diff review biased toward minimal diffs and deletions, with zero tolerance for dead code or premature abstractions. |
 | 🟦 [review-pr](skills/review-pr/SKILL.md) | Senior-level review of a teammate's PR: a short list of high-signal comments to paste into GitHub. Drops nitpicks; never auto-posts. |
 | 🟦 [verify-pr](skills/verify-pr/SKILL.md) | Three-phase PR verification: code review (via `miguel-review`), test plan with gap analysis, and upstream-assumption validation. |
 | 🟦 [gh-pr-comment-assistant](skills/gh-pr-comment-assistant/SKILL.md) | Fetch the latest PR review comments, group and prioritize them, summarize each reviewer's ask, and plan the fixes. |
 | 🟦 [gh-pr-description-updater](skills/gh-pr-description-updater/SKILL.md) | Read or rewrite a PR description following the repo's template. Enforces brevity and template compliance. |
-| 🟦 [gh-pr-list](skills/gh-pr-list/SKILL.md) | A short, copy-paste Slack message of your open PRs, split into "Ready for review" and "Drafts." |
 | 🟦 [gh-issue-creator](skills/gh-issue-creator/SKILL.md) | Create a well-labeled GitHub issue from a bug, feature, or tech-debt template. Fetches labels dynamically. |
 | 🟦 [gh-issue-triage](skills/gh-issue-triage/SKILL.md) | Score open, unassigned issues against an AI-readiness rubric and return the top 3 with a ready-to-paste kickoff prompt each. |
 | 🟦 [git-worktrees](skills/git-worktrees/SKILL.md) | Give every agent conversation its own branch in its own directory, so parallel chats stop clobbering each other. |

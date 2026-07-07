@@ -113,3 +113,13 @@ Repeat until the developer is satisfied or decides to continue on their own.
 - Do NOT group unrelated comments together
 - Do NOT apply code changes without developer approval
 - Do NOT refactor code beyond what the feedback requires
+
+## Adjacent skills
+
+| Ask | Skill |
+|---|---|
+| **Respond to** reviewer comments on my PR | **gh-pr-comment-assistant** (this skill) |
+| Review **my working diff** (shape/simplicity) | miguel-review |
+| Review a **teammate's PR** → paste-ready comments | review-pr |
+| Heavyweight **verify** my PR (tests, assumptions) | verify-pr |
+| Status overview of **my open PRs** | pr-dashboard |
