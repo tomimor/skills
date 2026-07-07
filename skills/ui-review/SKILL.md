@@ -18,16 +18,26 @@ subagents. Produces a plan artifact with explicit, ready-to-apply recommendation
 1. **Recommendations are the deliverable.** The subagents produce concrete fixes (exact code changes). Present those directly -- users apply them, they don't re-run the skills.
 2. **Small changes only.** Every recommendation must be a targeted edit: a CSS value, a token swap, a copy string, a missing attribute. Never suggest structural rewrites, component replacements, or architectural changes.
 3. **Report, don't fix.** Present the full review. Never apply changes without explicit user approval.
-4. **Browser-first.** Use cursor-ide-browser MCP to visually inspect the live page before analysis.
+4. **Browser-first.** Visually inspect the live page before analysis using whichever browser tool is connected (Chrome MCP / browser-eval MCP / IDE browser).
 
 ## Phase 0: Context Gathering
+
+### Locate the Impeccable pack
+
+The per-dimension review criteria come from the **Impeccable** skill pack, which is installed alongside this skill (in this repo it lives at `skills/impeccable`, vendored from [pbakaus/impeccable](https://github.com/pbakaus/impeccable); when installed it is a sibling of this skill's directory, e.g. `~/.claude/skills/impeccable` or `~/.cursor/skills/impeccable`). Find it once and reuse the path:
+
+```bash
+IMPECCABLE_DIR=$(dirname <this skill's directory>)/impeccable
+```
+
+Internal layout varies by Impeccable version -- locate each dimension's file by name (glob for `audit`, `critique`, `typeset`, etc. under `IMPECCABLE_DIR`), never by a hardcoded internal path. **If the pack is not installed**, tell the user and run the review anyway using the **Criteria Focus** column of the dimension table below as each subagent's criteria.
 
 ### Design Context
 
 Check for design context in this order:
 1. Current instructions -- if a **Design Context** section is loaded, proceed.
 2. `.impeccable.md` in project root -- read it. If it has context, proceed.
-3. Neither exists -- read and run the **teach-impeccable** skill at `/Users/tomimor/.claude/plugins/cache/impeccable/impeccable/1.5.1/.claude/skills/teach-impeccable/SKILL.md` before continuing.
+3. Neither exists -- run Impeccable's teach/setup flow (the `teach-impeccable` file under `IMPECCABLE_DIR`) before continuing. If the pack is absent, ask the user for the essentials instead: brand personality, target feel, and any design tokens.
 
 ### User Input
 
@@ -47,9 +57,9 @@ If the user already provided the URL and context in their message, skip redundan
 
 Navigate to the page and capture its current state:
 
-1. **Navigate**: Use `browser_navigate` to open the URL.
-2. **Screenshot**: Use `browser_take_screenshot` to capture the visual state.
-3. **Snapshot**: Use `browser_snapshot` to get the aria/accessibility tree.
+1. **Navigate**: Open the URL with the browser tool's navigate action.
+2. **Screenshot**: Capture the visual state with its screenshot action.
+3. **Snapshot**: Get the aria/accessibility tree if the tool exposes one (otherwise evaluate `document.body` structure via its JS-eval action).
 4. **Source files**: Ask the user which source files to review, or infer from the page structure. Read them with the Read tool.
 
 Store all captured context -- it gets passed to every subagent.
@@ -69,9 +79,10 @@ Each subagent prompt follows this template. Replace `{DIMENSION}`, `{SKILL_PATH}
 ```
 You are reviewing a frontend page for {DIMENSION} issues.
 
-First, read the skill file at {SKILL_PATH} and follow its assessment criteria.
-Also read the frontend-design base skill at:
-/Users/tomimor/.claude/plugins/cache/impeccable/impeccable/1.5.1/.claude/skills/frontend-design/SKILL.md
+First, read the Impeccable file for this dimension at {SKILL_PATH} and follow its
+assessment criteria. Also read Impeccable's base design file (`frontend-design`,
+located under {IMPECCABLE_DIR}). If Impeccable is not installed, use the criteria
+listed below instead.
 
 Then analyze the page using this context:
 - Design context: {design_context from .impeccable.md or instructions}
@@ -105,7 +116,7 @@ The 7 dimensions:
 | 6 | **Copy** | `.../skills/clarify/SKILL.md` | Error messages, form labels, button/CTA text, empty states, loading states, help text, terminology consistency |
 | 7 | **Polish** | `.../skills/polish/SKILL.md` | Pixel alignment, interaction states (all 8 states), transitions & easing, icon consistency, focus indicators, reduced motion support |
 
-All skill paths are under: `/Users/tomimor/.claude/plugins/cache/impeccable/impeccable/1.5.1/.claude/skills/`
+`...` in the Skill Path column is `IMPECCABLE_DIR` resolved in Phase 0. If a dimension file isn't found there by that name (layout varies by Impeccable version), glob for it; if the pack is absent, drop {SKILL_PATH} from the prompt and use the Criteria Focus column alone.
 
 **The Polish subagent must also read [css-polish-details.md](css-polish-details.md)** (in this skill
 directory) and apply its checklist. Append this line to the Polish subagent's prompt, after the

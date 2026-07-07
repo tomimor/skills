@@ -66,7 +66,8 @@ gh label list --limit 100
 **Labels:** Select the best-fit labels from the available list based on the issue type and content. No labels are
 hardcoded -- always pick dynamically.
 
-**Issue types:** This repo uses GitHub issue types. Map the chosen template to a type name:
+**Issue types:** GitHub issue types are an org-level feature that may not be enabled
+for the repo. When they are, map the chosen template to a type name:
 
 | Template        | Issue type name |
 | --------------- | --------------- |
@@ -134,6 +135,9 @@ human-readable type name from the Step 3 table:
 ```bash
 gh api -X PATCH repos/<owner>/<repo>/issues/<number> -f type="<issue_type_name>"
 ```
+
+If this call fails because issue types aren't enabled for the repo/org, skip it
+silently — the labels already classify the issue. Any other error, report it.
 
 After creation, display the issue URL as a clickable markdown link:
 
