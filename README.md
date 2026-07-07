@@ -183,7 +183,7 @@ cp -r skills/pr-dashboard ~/.claude/skills/     # Claude Code
 | `--force` | Overwrite existing skills without confirming |
 | `--symlink` | Symlink skills into the target instead of copying (live edits) |
 | `--self` | Wire this repo into your own `~/.cursor` and `~/.claude` with edit-once symlinks |
-| `--check` | Validate skill frontmatter and `SKILLS`-array sync, then exit (used in CI) |
+| `--check` | Lint skills: frontmatter, 500-line/1024-char budgets, link resolution, banned tokens, `SKILLS`-array + README sync (used in CI) |
 | `--update-vendor` | Update vendor submodules to their latest versions |
 
 ## Platform compatibility

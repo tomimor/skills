@@ -69,7 +69,7 @@ Options:
   --force            Overwrite existing skills without confirming
   --symlink          Symlink skills into the target instead of copying (live edits)
   --self             Wire this repo into your own ~/.cursor and ~/.claude (edit-once symlinks)
-  --check            Validate skill frontmatter and SKILLS-array sync, then exit
+  --check            Lint skills (frontmatter, line/desc budgets, links, banned tokens, registry/README sync), then exit
   --update-vendor    Update vendor submodules to their latest versions
   -h, --help         Show this help message
 
@@ -249,6 +249,59 @@ check_skills() {
 
     if ! grep -qE '^description:' "$md"; then
       echo "  ✗ $skill_name: SKILL.md has no 'description:' frontmatter"
+      errors=$((errors + 1))
+    fi
+
+    # Line budget: SKILL.md must stay under 500 lines (move detail to references/)
+    local lines
+    lines=$(wc -l < "$md")
+    if (( lines > 500 )); then
+      echo "  ✗ $skill_name: SKILL.md is $lines lines (limit 500 -- move detail to references/)"
+      errors=$((errors + 1))
+    fi
+
+    # Description quality: <=1024 chars and includes a "Use when" trigger sentence
+    local desc
+    desc="$(awk 'BEGIN{fm=0}
+      /^---[[:space:]]*$/{fm++; if(fm==2) exit; next}
+      fm==1 && /^description:/{d=1; sub(/^description:[[:space:]]*(>-|>|\|-?)?[[:space:]]*/,""); if(length($0)) buf=buf $0 " "; next}
+      fm==1 && d && /^[A-Za-z_-]+:/{d=0}
+      fm==1 && d {gsub(/^[[:space:]]+/,""); buf=buf $0 " "}
+      END{print buf}' "$md")"
+    if (( ${#desc} > 1024 )); then
+      echo "  ✗ $skill_name: description is ${#desc} chars (limit 1024)"
+      errors=$((errors + 1))
+    fi
+    if [[ -n "$desc" ]] && ! grep -qi "use when" <<<"$desc"; then
+      echo "  ✗ $skill_name: description lacks a \"Use when ...\" trigger sentence"
+      errors=$((errors + 1))
+    fi
+
+    # Banned content: machine-specific absolute paths, non-canonical ask-tool names
+    local banned
+    banned=$( (grep -rn --include='*.md' -e '/Users/' -e 'Ask User Questions' "$dir" 2>/dev/null;
+               grep -rnw --include='*.md' 'AskQuestion' "$dir" 2>/dev/null) | head -3 || true)
+    if [[ -n "$banned" ]]; then
+      echo "  ✗ $skill_name: banned token (machine path, or ask-tool not spelled AskUserQuestion):"
+      awk '{print "      " $0}' <<<"$banned"
+      errors=$((errors + 1))
+    fi
+
+    # Relative links in SKILL.md must resolve (skip URLs and template placeholders)
+    local link
+    while IFS= read -r link; do
+      [[ -z "$link" ]] && continue
+      [[ "$link" =~ ^https?:// || "$link" == *'{'* || "$link" == *'<'* || "$link" == *' '* ]] && continue
+      [[ "$link" =~ \.(md|sh|py|mjs|js|json|ya?ml|html|txt|xltx)$ ]] || continue
+      if [[ ! -e "$dir$link" ]]; then
+        echo "  ✗ $skill_name: SKILL.md links to missing file: $link"
+        errors=$((errors + 1))
+      fi
+    done < <(grep -o '\[[^]]*\]([^)]*)' "$md" 2>/dev/null | sed 's/^.*](//; s/)$//; s/#.*$//' | sort -u)
+
+    # Every own skill must appear in the README catalog
+    if ! grep -q "skills/$skill_name/SKILL.md" "$SCRIPT_DIR/README.md" 2>/dev/null; then
+      echo "  ✗ $skill_name: missing from README.md catalog"
       errors=$((errors + 1))
     fi
   done

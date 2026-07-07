@@ -47,7 +47,7 @@ Run the prompt through the nine principles. Note which are missing, weak, or con
 
 The **Anti-Patterns** section below lists concrete surface forms of these categories.
 
-### Step 3: Ask 1-3 questions via `AskQuestion`
+### Step 3: Ask 1-3 questions via `AskUserQuestion`
 
 Only ask about context that is not already in the prompt. Skip any question the prompt already answers. Typical questions, in priority order:
 
@@ -55,7 +55,7 @@ Only ask about context that is not already in the prompt. Skip any question the 
 2. **Desired output format.** "What should the output look like? Plain prose, JSON, structured report, code-only?"
 3. **Success criteria.** "What does a good response look like? What failure mode are you trying to fix?"
 
-One question per `AskQuestion` call. Always include an "Other / explain" option. Stop asking as soon as you have enough to rewrite.
+One question per `AskUserQuestion` call. Always include an "Other / explain" option. Stop asking as soon as you have enough to rewrite.
 
 ### Step 4: Produce the critique
 

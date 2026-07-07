@@ -69,10 +69,26 @@ SKILLS=(
 
 ### Own skill conventions
 
-- **Name**: lowercase, hyphens, max 64 chars (e.g. `miguel-review`, `gh-issue-creator`)
-- **Description**: third person, includes both WHAT it does and WHEN to use it
-- **SKILL.md body**: under 500 lines; use reference files for detailed content
-- **Reference files**: one level deep only (link from SKILL.md, never chain references)
+Enforced by `./install.sh --check` (runs in CI) — run it before committing skill changes.
+
+- **Name**: lowercase, hyphens, max 64 chars, matches the directory (e.g. `miguel-review`)
+- **Description**: folded `>-` style, third person, ≤1024 chars, WHAT it does + a
+  `Use when …` trigger sentence. Trigger phrases live **only** here — the body loads
+  after activation, so in-body trigger lists are dead tokens. Don't claim trigger
+  phrases a sibling skill already claims.
+- **SKILL.md body**: under 500 lines; move detail into `references/`
+- **Reference files**: under `references/`, one level deep only (link from SKILL.md,
+  never chain references)
+- **Canonical section order**: intro paragraph (attribution here if adapted) →
+  `## Critical rules` → `## Workflow` → `## Output format` (if there's a deliverable) →
+  `## Anti-patterns` → references/adjacent skills. Sentence-case headings.
+- **Anti-patterns don't mirror rules**: an anti-pattern that just negates a critical
+  rule costs the tokens twice — cut it.
+- **Tool naming**: the ask-the-user tool is always spelled `AskUserQuestion`; browser
+  automation is referenced tool-agnostically ("Chrome MCP / browser-eval tool,
+  whichever is connected").
+- **No machine-specific absolute paths** (`/Users/...`): resolve sibling skills and
+  vendor packs relative to the installed skills directory.
 - **No narration comments**: don't add comments that just repeat what the code does
 
 ## Adding a new vendor skill set
