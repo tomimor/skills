@@ -2,7 +2,7 @@
 
 # 🧠 skills
 
-[![Skills](https://img.shields.io/badge/skills-37-1f6feb?style=flat-square)](#skills)
+[![Skills](https://img.shields.io/badge/skills-39-1f6feb?style=flat-square)](#skills)
 [![Install](https://img.shields.io/badge/install-one%20command-22c55e?style=flat-square)](#install)
 
 </div>
@@ -82,6 +82,7 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 | 🟦 [share-ready](skills/share-ready/SKILL.md) | Audit + fully configure how a site looks when shared (Open Graph, Twitter/X cards, per-platform quirks) and in the browser (title, favicons, theme-color, web manifest). Detects the framework, infers brand values from the repo, generates missing assets (favicon set, 1200×630 og:image), and verifies everything end-to-end with a local script. |
 | 🟧 [emil-design-eng](skills/emil-design-eng/SKILL.md) | Build-time companion to `review-animations`: Emil Kowalski's design-engineering playbook for crafting interfaces that feel right — animation decision framework, component building, transforms, gestures, performance, a11y. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
 | 🟧 [animation-vocabulary](skills/animation-vocabulary/SKILL.md) | Reverse-lookup glossary that turns a vague description of a motion effect into its exact term ("the bouncy thing when a popover opens" → Pop in; "the iOS rubber-band scroll" → Rubber-banding). For naming an effect, not designing or building one. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
+| 🟧 [apple-design](skills/apple-design/SKILL.md) | Apple's approach to interface design and fluid, physical motion, translated for the web: gesture-driven UI, spring animations, drag/swipe/sheet interactions, momentum and interruptible transitions, translucent materials and depth, typography, reduced-motion, and the design foundations behind Apple-style interfaces. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
 
 ### 💡 Product, thinking & writing
 
