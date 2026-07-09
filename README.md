@@ -92,6 +92,13 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 | 🟦 [governance-message](skills/governance-message/SKILL.md) | Turn a governance proposal URL (forum, Tally, Snapshot) into a Slack-ready summary with stance, risk, and PRO/CON. |
 | 🟦 [teach](skills/teach/SKILL.md) | Teach a concept across sessions using the current directory as a stateful workspace. Adapted from [mattpocock/skills](https://github.com/mattpocock/skills). |
 
+### 📣 Marketing & asset generation
+
+| Skill | What it does |
+|-------|--------------|
+| 🟦 [higgsfield-assets](skills/higgsfield-assets/SKILL.md) | Consistent asset sets via Higgsfield MCP: person/character sheets, product sheets, and landing-page kits. Anchor sheet first, locked prompt blocks, reference-image reuse, and a manifest so sets survive across sessions. |
+| 🟦 [meta-ads-bulk-creator](skills/meta-ads-bulk-creator/SKILL.md) | Build Meta Ads Manager bulk-import files from a YAML brief, validated against Meta's enums and limits. |
+
 ### 🧰 Authoring, planning & more
 
 | Skill | What it does |
@@ -99,7 +106,6 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 | 🟦 [create-skill](skills/create-skill/SKILL.md) | Author or audit agent skills: gather requirements, write `SKILL.md`, structure supporting files, verify quality. |
 | 🟦 [improve-prompt](skills/improve-prompt/SKILL.md) | Critique and rewrite a prompt using best practices, returning a short critique plus a drop-in rewrite. |
 | 🟦 [goal-cursor](skills/goal-cursor/SKILL.md) | A per-workspace goal that keeps Cursor auto-iterating until an evaluator confirms it's met. Cursor's take on Claude Code's `/goal`. |
-| 🟦 [meta-ads-bulk-creator](skills/meta-ads-bulk-creator/SKILL.md) | Build Meta Ads Manager bulk-import files from a YAML brief, validated against Meta's enums and limits. |
 | 🟧 [improve](skills/improve/SKILL.md) | An advisor, never an implementer: audit a codebase, rank findings by leverage, and write executable plans for a cheaper model to run. v1.0.0, from [shadcn/improve](https://github.com/shadcn/improve). |
 | 🟧 [remotion](skills/remotion/SKILL.md) | Best practices for [Remotion](https://github.com/remotion-dev/skills): programmatic video creation in React. |
 
