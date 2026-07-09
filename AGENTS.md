@@ -2,6 +2,24 @@
 
 Instructions for AI agents working in this repo.
 
+> `CLAUDE.md` is a symlink to this file — there is one source of truth. Edit `AGENTS.md`.
+
+## What this repo is
+
+A personal library of agent skills shared between Cursor and Claude Code. There is no application code to build or run — the "product" is the `skills/` directory plus `install.sh`, which installs skills into `~/.cursor/skills` and `~/.claude/skills`. The `create-skill` skill (`skills/create-skill/SKILL.md`) is the in-repo authoring guide.
+
+## Commands
+
+```bash
+bash install.sh --check       # Validate frontmatter + SKILLS-array sync (this is what CI runs)
+shellcheck install.sh         # Lint the install script (also run by CI)
+bash install.sh --help        # Smoke test / list all skills
+./install.sh --update-vendor  # Pull latest vendor submodules and re-link
+git submodule update --init --recursive   # Populate vendor/ after a fresh clone
+```
+
+There are no tests beyond `--check` and shellcheck. CI (`.github/workflows/ci.yml`) fails if any skill directory is missing from the `SKILLS` array in `install.sh`, if any `SKILL.md` lacks `name:`/`description:` frontmatter, or if the frontmatter `name` doesn't match the directory name — so always run `bash install.sh --check` after adding or renaming a skill.
+
 ## Repo structure
 
 ```
