@@ -10,7 +10,7 @@ description: >-
   set of images that must look like they belong together.
 ---
 
-# Higgsfield asset sheets
+# higgsfield-assets
 
 Produces sets of images that stay consistent across generations. The core move is always the same: generate one **anchor sheet**, lock its **prompt blocks**, and derive every later asset from the anchor by reference — never by re-describing from memory.
 
@@ -24,7 +24,7 @@ Not for: one-off single images (just call `generate_image` directly), video gene
 
 ## The five rules
 
-1. **Anchor first, derivatives second.** The sheet is the source of truth. Never generate scene/marketing images before the anchor is approved by the user.
+1. **Anchor first, derivatives second.** The sheet is the source of truth. Never generate scene/marketing images before the anchor is approved. When the user asked for the full set in one message (or the run is unattended), treat that as pre-approval: generate the anchor, self-check it against the brief, note the assumption, and proceed — present anchor and derivatives together.
 2. **Lock the blocks.** The identity/product/style description block is immutable once approved — reuse it byte-for-byte at the *start* of every derivative prompt. Only the scene/angle/action part changes.
 3. **One variable per generation.** Change the camera angle *or* the environment *or* the action — never two at once. Drift compounds.
 4. **Reference beats text.** Pass the anchor's `job_id` (or uploaded `media_id`) in `medias` on every derivative call. Text blocks keep style consistent; the reference keeps identity consistent.
@@ -50,6 +50,8 @@ Collect (ask only for what's missing; default the rest):
 | Text-only character concept (no photo refs) | `soul_cast` |
 | Products, commercial, ads | `marketing_studio_image` |
 | 4K output, legible text/labels, diagrams | `nano_banana_pro` |
+
+This table is a snapshot — Higgsfield's catalog evolves, and `models_explore` is the source of truth. If a listed model is missing or a better fit exists, trust `models_explore` over the table.
 
 Unsure → `models_explore(action:'recommend')` with the goal and input context. Check supported `aspect_ratios` and `medias` roles via `models_explore` before the first call. Preflight cost with `get_cost:true` on the first generation of a batch; check `balance` for large kits.
 
