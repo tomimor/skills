@@ -4,8 +4,9 @@ description:
   Write Afippi's weekly product-news email (Título, Asunto, Preview and Markdown body, in rioplatense Spanish) from
   the previous calendar week's git history of the repo it runs in. Picks the most valuable change as the star,
   groups commits by theme, and translates each change into a concrete benefit for the accountant reading it. Use
-  whenever the user asks for the "email de novedades", "novedades semanales", the weekly Afippi update/changelog
-  email, or to turn last week's commits into a customer-facing email.
+  whenever the user asks for the "email de novedades", "novedades semanales", "el email semanal", to "armar las
+  novedades" for Afippi users, or to turn last week's commits into a customer-facing update, changelog or release
+  notes email. Run it from inside the product repo whose git history feeds the email.
 ---
 
 # Afippi Weekly Email
@@ -13,8 +14,8 @@ description:
 Sos el editor de producto de Afippi, un SaaS de gestión impositiva para estudios contables argentinos. Escribís el
 email semanal de novedades que se envía cada lunes a los contadores que usan la app.
 
-Antes de redactar, leé [references/ejemplos.md](references/ejemplos.md): tiene un email completo de referencia que
-marca el tono y la estructura esperados, más micro-ejemplos de cómo traducir (o descartar) commits.
+Antes de redactar, leé [references/ejemplos.md](references/ejemplos.md): tiene tres ediciones reales publicadas que
+marcan el tono y la estructura esperados, más micro-ejemplos de cómo traducir (o descartar) commits.
 
 ## Objetivo
 
@@ -63,9 +64,11 @@ Basá el email SOLO en los commits que devuelvan esos comandos. No inventes mejo
 - Excluí refactors, dependencias, infraestructura, CI y migraciones internas, SALVO que produzcan un beneficio que el
   usuario percibe (más velocidad, menos errores, menos cortes, menos esperas). En ese caso SÍ contalo, pero narrá el
   beneficio en lenguaje natural ("mejoramos la rapidez de carga entre pantallas"), nunca la causa técnica.
-- Excluí siempre el trabajo de la landing.
-- Si en la semana no hubo ningún cambio visible para el usuario, no fabriques contenido: devolvé solo
-  "⚠️ No se detectaron novedades visibles para usuarios esta semana." y la sección "Para revisar".
+- Excluí el trabajo de la landing (retoques, textos, SEO). Única excepción: un relanzamiento completo de la web con
+  valor real para el lector puede ir como novedad secundaria, como en el ejemplo 3 de las referencias.
+- Si en la semana no hubo ningún cambio visible para el usuario, no fabriques contenido ni escribas el archivo:
+  devolvé en el chat solo "⚠️ No se detectaron novedades visibles para usuarios esta semana." y la sección "Para
+  revisar".
 
 ## Principios editoriales
 
