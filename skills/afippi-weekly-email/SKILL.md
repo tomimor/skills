@@ -93,6 +93,10 @@ Basá el email SOLO en los commits que devuelvan esos comandos. No inventes mejo
 8. **Cadencia consistente:** es SEMANAL. Llamalo semanal en todos lados.
 9. **Tono cercano pero sin humo.** El registro coloquial argentino ("sin vueltas", "hacían ruido", "preparando la
    cancha") está bien y diferencia; mantenelo sin sobreprometer.
+10. **Continuidad entre ediciones.** Si una novedad cumple algo prometido en un email anterior, retomá el hilo ("hace
+    un par de ediciones les contábamos que estábamos preparando la cancha... bueno, ya están acá"): le muestra al
+    lector que los anuncios se cumplen. Si tenés acceso a las ediciones anteriores, revisalas; si no, buscá en los
+    commits de semanas previas pistas de qué se venía anunciando.
 
 ## Estilo Markdown
 
@@ -139,8 +143,15 @@ Luego el cuerpo en Markdown, español rioplatense:
 
    Tomás y Agustín."
 
-Emojis permitidos: los de los subtítulos de sección (⭐️ ✨ 🛠️ 🐞 🙏🏼) y el ⚠️ del caso sin novedades. No uses otros. No
-incluyas hashes ni nombres de PR en el email.
+Esta estructura es la base, no una jaula: si la semana fue monotemática (un solo lanzamiento grande), flexionala como
+en el ejemplo 2 de [references/ejemplos.md](references/ejemplos.md): la estrella puede ser "¿Qué cambia?", seguirle
+una sección instructiva, y las secciones de soporte pueden fusionarse en una sola. Después de la firma puede ir una
+PD breve y humana (un feriado, un guiño estacional) si sale natural; como máximo una.
+
+Emojis permitidos: los de los subtítulos de sección (⭐️ ✨ 🛠️ 🐞 🙏🏼) y el ⚠️ del caso sin novedades. Podés cambiar el
+emoji de una sección por uno temático cuando la novedad lo pide (📜 para un reporte nuevo, 💻 para instrucciones de
+instalación), como en las ediciones publicadas. Fuera de los subtítulos y la PD no uses emojis. No incluyas hashes ni
+nombres de PR en el email.
 
 ## Antes de entregar
 
