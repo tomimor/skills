@@ -3,6 +3,9 @@
 Tres ediciones reales publicadas, escritas por Tomás, para calibrar tono, estructura y criterio de inclusión. Cada
 una trae una nota de qué patrón muestra. Cuando haya nuevas ediciones que salieron bien, agregalas acá.
 
+Son referencia de tono y estructura, NO de hechos: no cites su contenido como historia reciente de Afippi en el
+email que estés escribiendo (lo que cuentan puede haber pasado hace meses o no aplicar a tu semana).
+
 ## Ejemplo 1: edición de LANZAMIENTO
 
 Por ser la primera, incluye el párrafo que presenta el canal. En ediciones normales ese párrafo NO va: se abre con el
