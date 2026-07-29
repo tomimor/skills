@@ -38,6 +38,7 @@ SKILLS=(
   "loop-react-doctor:Drive every React app to a verified react-doctor 100/100 (latest at run start), one root cause per iteration"
   "share-ready:Audit + fully configure link previews (OG, Twitter cards) and browser presentation (favicons, manifest), generate assets, verify locally"
   "seo-geo-audit:Technical SEO/GEO audit + fixes (crawlability, sitemaps, robots + AI crawlers, canonicals, structured data, rendering) with a scripted live-site auditor"
+  "afippi-weekly-email:Afippi's weekly product-news email from last week's git history (rioplatense Spanish, benefit-first)"
 )
 
 VENDOR_SKILLS=(

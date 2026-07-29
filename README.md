@@ -95,6 +95,7 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 | 🟦 [writing-voice](skills/writing-voice/SKILL.md) | Write in a direct, personal, sensory style. Bans AI-giveaway phrases, with per-platform guidance (LinkedIn, X, blog, email). |
 | 🟦 [governance-message](skills/governance-message/SKILL.md) | Turn a governance proposal URL (forum, Tally, Snapshot) into a Slack-ready summary with stance, risk, and PRO/CON. |
 | 🟦 [teach](skills/teach/SKILL.md) | Teach a concept across sessions using the current directory as a stateful workspace. Adapted from [mattpocock/skills](https://github.com/mattpocock/skills). |
+| 🟦 [afippi-weekly-email](skills/afippi-weekly-email/SKILL.md) | Turn the previous calendar week's git history into Afippi's weekly customer email: picks the star change, groups commits by theme, and sells each one as a concrete benefit for accountants, in rioplatense Spanish. |
 
 ### 🔁 Loops
 
