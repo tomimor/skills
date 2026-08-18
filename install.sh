@@ -38,6 +38,7 @@ SKILLS=(
   "loop-react-doctor:Drive every React app to a verified react-doctor 100/100 (latest at run start), one root cause per iteration"
   "share-ready:Audit + fully configure link previews (OG, Twitter cards) and browser presentation (favicons, manifest), generate assets, verify locally"
   "seo-geo-audit:Technical SEO/GEO audit + fixes (crawlability, sitemaps, robots + AI crawlers, canonicals, structured data, rendering) with a scripted live-site auditor"
+  "google-style:Write and review developer docs against the Google developer documentation style guide"
 )
 
 VENDOR_SKILLS=(
