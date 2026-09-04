@@ -1,6 +1,6 @@
 # Word list
 
-Distilled from the [Google word list](https://developers.google.com/style/word-list). When a term is marked "don't use," replace it or rewrite the sentence — don't keep it with a disclaimer.
+Distilled from the [Google word list](https://developers.google.com/style/word-list). When a term is marked "don't use," replace it or rewrite the sentence—don't keep it with a disclaimer.
 
 ## Never use
 
@@ -18,7 +18,8 @@ Non-inclusive, violent, or ableist terms. These are must-fix findings in a revie
 | grandfathered, grandfather clause | legacy, exempted, exempted by prior policy |
 | crazy, insane, lame, dumb, blind to, deaf to, cripple, crippled, handicapped | unexpected, surprising, unaware of, disabled, limited, restricted |
 | guys | everyone, folks, people, you all |
-| man hours, manpower, manned, chairman, middleman | person hours, workforce, staffed, chair, intermediary |
+| man hours, manpower, manned, chairman, middleman | person hours, personnel, staffed, chair, intermediary |
+| mankind, manmade, freshman, salesman, repairman | humanity, manufactured, first-year student, salesperson, technician |
 | he, she, his, her (generic) | they, their; or rewrite in second person |
 | abort | stop, cancel, end, exit |
 | kill, terminate | stop, force quit, end, cancel |
@@ -46,22 +47,24 @@ Non-inclusive, violent, or ableist terms. These are must-fix findings in a revie
 | obviously, of course, clearly, needless to say | (delete) |
 | note that, it is important to note that, it should be noted | (delete, or use a `Note:` callout) |
 | in the event that | if |
-| at this point in time, at this time | now — or better, delete it |
+| at this point in time, at this time | now—or better, delete it |
 | a number of, a variety of | many, several, or the actual number |
 | and/or | and, or, or "A, B, or both" |
 | &amp; (ampersand) | and (unless part of a proper name) |
 | slash (/) meaning "or" | or |
 | we will, in this section we discuss, this document describes | (delete the pre-announcement and start) |
 | deprecate (as "delete") | deprecate means "discourage but still supported"; use remove, delete, or turn down for actual removal |
-| may | can (ability), might (possibility), must (requirement) — "may" is ambiguous |
+| may | can (ability), might (possibility), must (requirement)—"may" is ambiguous |
 | should (as a requirement) | must for requirements; keep should for recommendations |
 | once (as "after") | after ("once" means "one time") |
 | since (as "because") | because ("since" implies time) |
 | while (as "although") | although, whereas |
 | as (as "because") | because |
 | above, below | preceding, following, earlier, later, or a link to the section |
-| currently, presently, new, newly, recently, soon, upcoming, in the future | (delete — docs must read correctly a year from now) |
+| currently, presently, new, newly, recently, soon, upcoming, in the future | (delete—docs must read correctly a year from now) |
 | easy to use, powerful, robust, seamless, world-class | describe what it does instead |
+| best, simplest, fastest, guarantees | unverifiable claims - state the measurable property instead ("best practices" is a fixed term and fine) |
+| tl;dr, ymmv, rtfm, imo, fwiw | write the words out |
 | think, want, know, see (of software) | don't anthropomorphize: "the parser rejects the input," not "the parser doesn't like the input" |
 | jargon: bake in, drink from the firehose, low-hanging fruit, out of the box, ping me, dogfood, 10x | plain English |
 
@@ -87,6 +90,35 @@ Non-inclusive, violent, or ableist terms. These are must-fix findings in a revie
 | third-party (adjective), third party (noun) | |
 | real time (noun), real-time (adjective) | |
 | left pane, navigation menu | left-hand side, hamburger menu |
+| app | application |
+| administrator | admin |
+| regular expression | regex |
+| style sheet | stylesheet |
+| checkbox | check box |
+| path | file path, path name |
+| username | account name |
+| capability, feature | functionality |
+| unavailable | grayed-out |
+| sign in to | sign into |
+| phone, mobile phone | cellphone, smartphone |
+| mobile data, mobile network | cellular data, cellular network |
+| API key | developer key, console key |
+| import, load | ingest |
+| automatically update | autoupdate |
+| firewall rules | firewalls |
+| OK, okay | ok, Okay |
+| Wi-Fi | WiFi, wifi |
+| 3D | 3-D |
+| OAuth 2.0 | OAuth2, Oauth |
+| approximately | approx. |
+| also known as | a.k.a., aka |
+| data is (singular) | data are |
+| clear (a checkbox) | uncheck, unselect |
+| turn off, off | disable (as the reader's action) |
+
+### American spelling
+
+Use American forms: `color` not `colour`, `labor` not `labour`, `center` not `centre`, and `-ize`/`-ization` not `-ise`/`-isation` (`initialize`, `organization`). Keep the original spelling inside code, API names, and quoted text.
 
 ## Interaction verbs
 
@@ -100,8 +132,8 @@ Non-inclusive, violent, or ableist terms. These are must-fix findings in a revie
 | press | Keys and key combinations: "press Enter," "press Ctrl+C" |
 | go to | Navigating to a page or URL |
 | open | Files, apps, dialogs |
-| turn on / turn off | Toggles and settings — not "enable"/"disable" for the user's action; use enable/disable for what code does |
-| run / execute | Commands and scripts — "run the command," not "issue" or "fire off" |
+| turn on / turn off | Toggles and settings—not "enable"/"disable" for the user's action; use enable/disable for what code does |
+| run / execute | Commands and scripts—"run the command," not "issue" or "fire off" |
 
 ## Commonly confused
 
@@ -112,7 +144,7 @@ Non-inclusive, violent, or ableist terms. These are must-fix findings in a revie
 | affect / effect | verb / noun |
 | ensure / insure / assure | make certain / indemnify / reassure a person |
 | fewer / less | countable / uncountable |
-| login / log in | noun / verb — but prefer sign-in and sign in |
+| login / log in | noun / verb—but prefer sign-in and sign in |
 | e.g. / i.e. | don't use either; "for example" / "that is" |
 | deprecated / obsolete | discouraged but working / no longer available |
 | parameter / argument | the declared name / the value passed |

@@ -1,0 +1,57 @@
+{
+  "skill_name": "writing-google-style",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "style review of quickstart.md against the Google developer docs style guide; don't rewrite it yet",
+      "expected_output": "review-docs-page",
+      "assertions": [
+        "Flags the title-case headings and calls for sentence case",
+        "Flags 'whitelist' as non-inclusive and offers allowlist or a rewrite",
+        "Flags at least two distinct passive-voice sentences",
+        "Flags the non-descriptive 'click [here]' link text",
+        "Flags timeless-wording violations ('currently', 'will be added soon')",
+        "Flags the Latin abbreviations (E.g. and i.e.)",
+        "Catches at least one deep-cut rule: 'Data are' -> data is, 5 p.m. -> PM, 12/31/2025 date format, 'vault(s)', '1st', or 'highly-recommended'",
+        "Gives a concrete suggested rewrite for findings rather than only naming the problem",
+        "Groups or ranks findings by severity instead of a flat undifferentiated list",
+        "Respects the instruction not to rewrite the page yet (no full rewritten document delivered)"
+      ],
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "turn raw eng-call notes into a webhooks how-to page in Google style",
+      "expected_output": "write-howto",
+      "assertions": [
+        "Heading is sentence case and task-based",
+        "Written in second person with no 'we will' / first-person narration",
+        "Numbered procedure with the location stated before the action",
+        "Surfaces the 5-second 2xx requirement before or at the step where it matters, not buried at the end",
+        "Contains none of: simply, just, easy, please, e.g., i.e., click here",
+        "Preserves every technical fact from the notes (HMAC SHA-256, X-Vaultly-Signature, 5 seconds, 6 retries, 10s backoff, all 3 event names, Settings > Webhooks)",
+        "Keeps the constant-time comparison warning and frames it as a caution or warning",
+        "Uses code font for the header name and event names",
+        "style-scan.sh reports no candidates on the produced page (excluding the emdash and heading heuristics)"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "make the Go error strings and CLI help text consistent and actually helpful",
+      "expected_output": "nonprose-surfaces",
+      "assertions": [
+        "Go file still compiles (go build succeeds)",
+        "No error string starts with a capitalised 'Error:' prefix or ends with an exclamation point",
+        "'please login first' loses the 'please' and uses sign in / log in correctly",
+        "'operation aborted' no longer uses 'abort'",
+        "'Sanity check' in the doc comment is replaced with a non-ableist phrase",
+        "Error messages say what the reader can do next, not just what failed",
+        "CLI help summaries use sentence case and imperative mood ('Create a vault', not 'Creates A New Vault')",
+        "CLI help drops 'Currently' and 'please note'",
+        "Doc comment for RotateSecret uses present tense rather than 'will rotate'"
+      ],
+      "files": []
+    }
+  ]
+}

@@ -42,7 +42,10 @@ BEGIN {
   rule[++n] = "banned"
   re[n] = "(simply|just|easy|easily|effortless|obviously|of course|clearly|needless to say|trivial|please|in order to|utilize|leverage|allows you to|enables you to|note that|a number of|and/or)"
   rule[++n] = "timeless"
-  re[n] = "(currently|presently|at this time|recently|newly|soon|in the near future|upcoming|coming soon|new feature|will be available|will be supported)"
+  # "new", "now", and "recently" are deliberately absent: they have common
+  # non-temporal senses ("create a new project", "recently used"), and the Vale
+  # Google package measured them turning 14 hits into 117 on a 950-file corpus.
+  re[n] = "(currently|presently|at this time|latest|soon|in the near future|upcoming|coming soon|will be available|will be supported)"
   rule[++n] = "latin"
   re[n] = "(e\\.g\\.|i\\.e\\.|etc\\.|viz\\.|cf\\.|n\\.b\\.|per se|via)"
   rule[++n] = "inclusive"
@@ -53,6 +56,23 @@ BEGIN {
   re[n] = "(will|shall|won.t) +[a-z]+"
   rule[++n] = "passive"
   re[n] = "(is|are|was|were|be|been|being) +[a-z]+(ed|en) +by"
+  rule[++n] = "claims"
+  re[n] = "(best|simplest|fastest|guarantee|guarantees|world.class|blazing|seamless)"
+  rule[++n] = "ordinal"
+  re[n] = "[0-9]+(st|nd|rd|th)"
+  rule[++n] = "plurals"
+  re[n] = "[a-z]+\\(s\\)"
+  rule[++n] = "ampm"
+  re[n] = "([0-9] ?[ap]\\.m\\.|[0-9][ap]m)"
+  rule[++n] = "dates"
+  # Written without {n,m} intervals: mawk does not support them by default.
+  re[n] = "([0-9][0-9]?[/.][0-9][0-9]?[/.][0-9][0-9][0-9][0-9]|[0-9][0-9]? (jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]* [0-9][0-9][0-9][0-9])"
+  rule[++n] = "spelling"
+  re[n] = "(colour|labour|centre|behaviour|[a-z]+nise|[a-z]+nised|[a-z]+isation)"
+  rule[++n] = "lyhyphen"
+  re[n] = "[a-z]+ly-[a-z]+"
+  rule[++n] = "emdash"
+  re[n] = "[ \t](\xe2\x80\x94|\xe2\x80\x93)[ \t]"
   rules = n
   findings = 0
 }
@@ -76,6 +96,7 @@ in_fence { next }
     if (match(text, probe)) {
       hit = substr(text, RSTART, RLENGTH)
       gsub(/^[^a-z0-9\[]+|[^a-z0-9\]]+$/, "", hit)
+      if (rule[i] == "claims" && hit == "best" && text ~ /best practice/) continue
       report(rule[i], hit, original)
     }
   }
@@ -90,6 +111,8 @@ in_fence { next }
     for (w = 2; w <= m; w++)
       if (words[w] ~ /^[A-Z][a-z]+$/) caps++
     if (caps >= 2) report("heading", "title case?", original)
+    if ((only == "" || only == "headpunct") && head ~ /[a-z0-9]\.[ \t]*$/)
+      report("headpunct", "period in heading", original)
   }
 }
 
