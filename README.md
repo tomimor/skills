@@ -93,7 +93,7 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 | 🟦 [grill-me](skills/grill-me/SKILL.md) | Interview you about a plan, one decision at a time, resolving the decision tree into an assumptions ledger. |
 | 🟦 [whats-missing](skills/whats-missing/SKILL.md) | Surface the single most important blindspot in a plan, with an observable signal and a cheap test. |
 | 🟦 [writing-voice](skills/writing-voice/SKILL.md) | Write in a direct, personal, sensory style. Bans AI-giveaway phrases, with per-platform guidance (LinkedIn, X, blog, email). |
-| 🟦 [google-style](skills/google-style/SKILL.md) | Write and review developer docs against the [Google developer documentation style guide](https://developers.google.com/style): second person, active voice, timeless wording, Google's word list, and an inclusive/accessible-language review pass. |
+| 🟦 [writing-google-style](skills/writing-google-style/SKILL.md) | Write and review developer docs in [Google style](https://developers.google.com/style): second person, active voice, timeless wording, Google's word list, plus a fence-aware scanner that flags mechanical violations without tripping on code samples. |
 | 🟦 [governance-message](skills/governance-message/SKILL.md) | Turn a governance proposal URL (forum, Tally, Snapshot) into a Slack-ready summary with stance, risk, and PRO/CON. |
 | 🟦 [teach](skills/teach/SKILL.md) | Teach a concept across sessions using the current directory as a stateful workspace. Adapted from [mattpocock/skills](https://github.com/mattpocock/skills). |
 
