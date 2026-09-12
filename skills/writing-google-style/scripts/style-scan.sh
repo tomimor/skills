@@ -97,6 +97,8 @@ in_fence { next }
       hit = substr(text, RSTART, RLENGTH)
       gsub(/^[^a-z0-9\[]+|[^a-z0-9\]]+$/, "", hit)
       if (rule[i] == "claims" && hit == "best" && text ~ /best practice/) continue
+      # "as soon as" is a conditional, not a release date.
+      if (rule[i] == "timeless" && hit == "soon" && text ~ /as soon as/) continue
       report(rule[i], hit, original)
     }
   }
