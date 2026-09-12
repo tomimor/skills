@@ -18,6 +18,21 @@ A working distillation of the [Google developer documentation style guide](https
 
 **Precedence.** The project's own style guide wins. This guide fills its gaps. Anything neither covers goes to Merriam-Webster and the Chicago Manual of Style. Never "correct" a project's established house term into Google's preference—flag the conflict instead.
 
+## What to load
+
+This file is self-contained for most documentation work. The rules below, the word table, the formatting quick reference, and the scanner cover the large majority of real tasks, and the scanner catches the mechanical violations without anyone having to memorize them.
+
+Reading all four supporting files before starting is the failure mode to avoid: it costs roughly four times the context and rarely changes the output. Load one only when its trigger actually fires.
+
+| Load | When |
+|------|------|
+| `references/word-list.md` | You need a ruling on a specific term that isn't in the table below, or the task is explicitly a terminology audit |
+| `references/formatting.md` | The task involves code samples, numbered procedures, notices, tables, or images—anything past running prose |
+| `references/grammar-and-mechanics.md` | A punctuation, capitalization, number, date, or abbreviation question the quick reference below doesn't settle |
+| `examples.md` | You want a model for the review report shape, or the user asked for a worked example |
+
+If you're reaching for a reference to confirm something the scanner already checks, run the scanner instead.
+
 ## The rules that matter most
 
 Ordered by how much damage getting them wrong does:
@@ -93,7 +108,7 @@ Draft in this style rather than writing loose and cleaning up after. Run the sca
 4. **Don't repeat yourself.** Cite the first two or three instances of a recurring rule, then collapse the rest: "14 more instances of passive voice—all fixed in the diff."
 5. **Stop where asked.** A review request ends with the report. A fix request ends with applied edits and a summary of what changed.
 
-For a worked before-and-after, see [examples.md](examples.md).
+If you want a model for the report shape before writing one, [examples.md](examples.md) has a worked before-and-after and a sample report.
 
 ### Large doc sets
 
@@ -125,7 +140,7 @@ Every hit needs a human read—`will` inside a quoted error string, or `master` 
 
 Use the reserved example values: `example.com` for domains, `192.0.2.0/24` for IP addresses, `800-555-0100` for phone numbers, and fictional, varied personal names. Never a real credential, hostname, or customer name.
 
-Details for code samples, procedures, notices, tables, images, and links are in [references/formatting.md](references/formatting.md).
+Handling code samples, procedures, notices, tables, or images? Those have their own rules in [references/formatting.md](references/formatting.md). Plain prose doesn't need it.
 
 ## Beyond prose docs
 
@@ -138,14 +153,9 @@ The same rules apply to text that ships inside software, with these emphases:
 - **API reference.** One sentence per field saying what it is, then constraints, then the default. Don't restate the field name ("The name. The name of the resource"). Document what happens when it's omitted.
 - **Code comments.** Present tense, explain why rather than what, and keep the same word list—a comment saying "sanity check the input" ships to every reader of the file.
 
-## References
+## Sourcing
 
-- [references/word-list.md](references/word-list.md)—banned terms with replacements, preferred spellings, interaction verbs, confusables, product-name rules.
-- [references/formatting.md](references/formatting.md)—text formatting, headings, lists, procedures, code samples, links, notices, tables, images.
-- [references/grammar-and-mechanics.md](references/grammar-and-mechanics.md)—voice and tone, punctuation, capitalization, numbers and dates, abbreviations, global audience, inclusive and accessible writing.
-- [examples.md](examples.md)—a full before-and-after rewrite with the reasoning per change.
-
-These are a distillation, not a replacement. The rules and word list here were cross-checked against [errata-ai/google](https://github.com/errata-ai/google), the Vale style package that encodes this guide as machine-readable rules—useful as a second opinion, and as a source of empirical notes about which rules produce false positives in real corpora. It lags the guide and omits the reasoning, so for anything ambiguous or unlisted, go to the canonical pages:
+The guidance here is a distillation, not a replacement. The rules and word list here were cross-checked against [errata-ai/google](https://github.com/errata-ai/google), the Vale style package that encodes this guide as machine-readable rules—useful as a second opinion, and as a source of empirical notes about which rules produce false positives in real corpora. It lags the guide and omits the reasoning, so for anything ambiguous or unlisted, go to the canonical pages:
 [Highlights](https://developers.google.com/style/highlights) ·
 [Voice and tone](https://developers.google.com/style/tone) ·
 [Word list](https://developers.google.com/style/word-list) ·
