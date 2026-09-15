@@ -200,7 +200,7 @@ Skills use the same `SKILL.md` format everywhere. The only difference is where t
 | Cursor | `~/.cursor/skills/<skill-name>/` |
 | Claude Code | `~/.claude/skills/<skill-name>/` |
 
-Most GitHub-related skills need the [GitHub CLI](https://cli.github.com/) (`gh`). `writing-voice`, `teach`, `remotion`, and the Impeccable design skills have no extra requirements.
+Most GitHub-related skills need the [GitHub CLI](https://cli.github.com/) (`gh`). `writing-voice`, `writing-google-style`, `teach`, `remotion`, and the Impeccable design skills have no extra requirements — `writing-google-style` ships a scanner script, but it needs only `bash` and `awk`.
 
 ## License
 
