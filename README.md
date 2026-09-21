@@ -121,12 +121,12 @@ Skills that run in iterations with explicit terminal states, designed to drive a
 
 Vendor skills are third-party packs tracked as git submodules under `vendor/` and linked into `skills/` so agents discover them alongside your own.
 
-| Vendor | Source | Version |
-|--------|--------|---------|
-| Impeccable | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | v4.3.1 |
-| improve | [shadcn/improve](https://github.com/shadcn/improve) | v1.0.0 |
-| Remotion | [remotion-dev/skills](https://github.com/remotion-dev/skills) | latest |
-| Emil Kowalski | [emilkowalski/skill](https://github.com/emilkowalski/skill) | latest |
+| Vendor | Source | Version | Linked skills |
+|--------|--------|---------|---------------|
+| Impeccable | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | v4.3.1 | `impeccable` |
+| improve | [shadcn/improve](https://github.com/shadcn/improve) | v1.0.0 | `improve` |
+| Remotion | [remotion-dev/skills](https://github.com/remotion-dev/skills) | v4.0.526 (2026-09-17) | `remotion-best-practices` (router that bundles the 11 per-topic skills) |
+| Emil Kowalski | [emilkowalski/skill](https://github.com/emilkowalski/skill) | main (2026-09-15) | `review-animations`, `emil-design-eng`, `animation-vocabulary`, `apple-design` — upstream also ships `animate`, `animate-expo`, `improve-animations`, `find-animation-opportunities`, `prototype`, `pick-ui-library`, `mobile-native`, `ask-sonner`, `write-swift`; add any of them to the `emil` entry in `VENDOR_SKILLS` to link it |
 
 **Update all vendors to their latest upstream:**
 
