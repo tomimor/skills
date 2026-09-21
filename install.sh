@@ -43,7 +43,7 @@ SKILLS=(
 
 VENDOR_SKILLS=(
   "impeccable:pbakaus/impeccable:.claude/skills"
-  "remotion:remotion-dev/skills:skills"
+  "remotion:remotion-dev/skills:skills:remotion-best-practices"
   "improve:shadcn/improve:skills"
   "emil:emilkowalski/skill:skills:review-animations,emil-design-eng,animation-vocabulary,apple-design"
 )

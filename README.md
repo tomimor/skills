@@ -2,7 +2,7 @@
 
 # 🧠 skills
 
-[![Skills](https://img.shields.io/badge/skills-39-1f6feb?style=flat-square)](#skills)
+[![Skills](https://img.shields.io/badge/skills-41-1f6feb?style=flat-square)](#skills)
 [![Install](https://img.shields.io/badge/install-one%20command-22c55e?style=flat-square)](#install)
 
 </div>
@@ -77,7 +77,7 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 |-------|--------------|
 | 🟦 [ui-review](skills/ui-review/SKILL.md) | Parallel frontend review across typography, layout, accessibility, responsiveness, copy, and polish. Prioritized small fixes, never rewrites. Polish pass includes a CSS-details checklist (concentric radius, tabular-nums, text-wrap, font smoothing, image outlines) adapted from [make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better). |
 | 🟦 [grid-review](skills/grid-review/SKILL.md) | Read-only audit of a page's layout grid: column adherence, baseline rhythm, optical alignment, then a critique. Adapted from [hyperagent-public-skills](https://github.com/alexmcdonnell-airtable/hyperagent-public-skills). |
-| 🟧 [impeccable](skills/impeccable/SKILL.md) | Design, critique, polish, and animate frontend interfaces. 20 internal commands (`craft`, `audit`, `animate`, `polish`, …). v3.7.1, from [pbakaus/impeccable](https://github.com/pbakaus/impeccable). |
+| 🟧 [impeccable](skills/impeccable/SKILL.md) | Design, critique, polish, and animate frontend interfaces. 24 internal commands (`shape`, `audit`, `critique`, `animate`, `polish`, `live`, `generate`, …; `craft` is now a deprecated alias). Its `impeccable context` launcher downloads a self-contained binary on first run, no Node required. v4.3.1, from [pbakaus/impeccable](https://github.com/pbakaus/impeccable). |
 | 🟧 [review-animations](skills/review-animations/SKILL.md) | Review animation and motion code against a high craft bar: justified motion, responsive easing, sub-300ms UI, correct `transform-origin`, interruptibility, GPU-only props, reduced-motion. Emits a Before/After/Why table and a Block/Approve verdict. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
 | 🟦 [share-ready](skills/share-ready/SKILL.md) | Audit + fully configure how a site looks when shared (Open Graph, Twitter/X cards, per-platform quirks) and in the browser (title, favicons, theme-color, web manifest). Detects the framework, infers brand values from the repo, generates missing assets (favicon set, 1200×630 og:image), and verifies everything end-to-end with a local script. |
 | 🟦 [seo-geo-audit](skills/seo-geo-audit/SKILL.md) | Technical SEO/GEO audit + fixes for a site: crawlability, sitemaps, robots.txt + AI crawler policy (GPTBot, ClaudeBot, PerplexityBot…), canonicals, structured data, rendering strategy, hreflang, CWV basics, and search-engine verification. Ships a dependency-free live-site auditor script and a verified-vs-folklore GEO reference. |
@@ -115,7 +115,7 @@ Skills that run in iterations with explicit terminal states, designed to drive a
 | 🟦 [goal-cursor](skills/goal-cursor/SKILL.md) | A per-workspace goal that keeps Cursor auto-iterating until an evaluator confirms it's met. Cursor's take on Claude Code's `/goal`. |
 | 🟦 [meta-ads-bulk-creator](skills/meta-ads-bulk-creator/SKILL.md) | Build Meta Ads Manager bulk-import files from a YAML brief, validated against Meta's enums and limits. |
 | 🟧 [improve](skills/improve/SKILL.md) | An advisor, never an implementer: audit a codebase, rank findings by leverage, and write executable plans for a cheaper model to run. v1.0.0, from [shadcn/improve](https://github.com/shadcn/improve). |
-| 🟧 [remotion](skills/remotion/SKILL.md) | Best practices for [Remotion](https://github.com/remotion-dev/skills): programmatic video creation in React. |
+| 🟧 [remotion-best-practices](skills/remotion-best-practices/SKILL.md) | Router for all [Remotion](https://github.com/remotion-dev/skills) skills (programmatic video creation in React): create, markup, maps, captions, render, studio, SaaS, interactivity, docs, upgrade, multimedia. Upstream split the old `remotion` skill into this router plus per-topic skills; only the router is linked here since it bundles the rest. |
 
 ## Vendor skills
 
@@ -123,7 +123,7 @@ Vendor skills are third-party packs tracked as git submodules under `vendor/` an
 
 | Vendor | Source | Version |
 |--------|--------|---------|
-| Impeccable | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | v3.7.1 |
+| Impeccable | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | v4.3.1 |
 | improve | [shadcn/improve](https://github.com/shadcn/improve) | v1.0.0 |
 | Remotion | [remotion-dev/skills](https://github.com/remotion-dev/skills) | latest |
 | Emil Kowalski | [emilkowalski/skill](https://github.com/emilkowalski/skill) | latest |
@@ -200,7 +200,7 @@ Skills use the same `SKILL.md` format everywhere. The only difference is where t
 | Cursor | `~/.cursor/skills/<skill-name>/` |
 | Claude Code | `~/.claude/skills/<skill-name>/` |
 
-Most GitHub-related skills need the [GitHub CLI](https://cli.github.com/) (`gh`). `writing-voice`, `writing-google-style`, `teach`, `remotion`, and the Impeccable design skills have no extra requirements — `writing-google-style` ships a scanner script, but it needs only `bash` and `awk`.
+Most GitHub-related skills need the [GitHub CLI](https://cli.github.com/) (`gh`). `writing-voice`, `writing-google-style`, `teach`, and `remotion-best-practices` have no extra requirements — `writing-google-style` ships a scanner script, but it needs only `bash` and `awk`. `impeccable` downloads its self-contained launcher binary once on first run (no Node or other runtime needed).
 
 ## License
 
