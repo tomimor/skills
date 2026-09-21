@@ -162,7 +162,7 @@
 
     <header>
       <h1>skills</h1>
-      <p class="tagline">Agent skills I use daily across Cursor and Claude Code.</p>
+      <p class="tagline">41 agent skills I use daily across Cursor and Claude Code.</p>
       <p>
         <a class="cta primary" href="#install">Install</a>
         <a class="cta" href="https://github.com/tomimor/skills">View on GitHub</a>
@@ -245,124 +245,315 @@
     <section>
       <h2>Skills</h2>
 
-      <h3>GitHub workflow</h3>
+      <h3>GitHub &amp; Git</h3>
       <div class="skills">
         <div class="skill">
           <div class="skill-head">
             <a href="skills/pr-dashboard/SKILL.md">pr-dashboard</a>
             <span class="badge own">own</span>
           </div>
-          <p>One-shot status overview of all your open PRs in a repo: title, review state, CI checks, open comments, and a recommended next step per PR. Use when you want to know which PR to babysit next.</p>
+          <p>Status overview of all your open PRs: title, reviews, CI, open comments, and a recommended next step per PR.</p>
         </div>
         <div class="skill">
           <div class="skill-head">
             <a href="skills/miguel-review/SKILL.md">miguel-review</a>
             <span class="badge own">own</span>
           </div>
-          <p>Opinionated diff review against a base branch. Biased toward minimal diffs, deletions over additions, zero tolerance for dead code or premature abstractions. Reports only high-signal issues.</p>
+          <p>Opinionated diff review biased toward minimal diffs and deletions, with zero tolerance for dead code or premature abstractions.</p>
         </div>
         <div class="skill">
           <div class="skill-head">
-            <a href="skills/gh-pr-comment-assistant/SKILL.md">gh-pr-comment-assistant</a>
+            <a href="skills/review-pr/SKILL.md">review-pr</a>
             <span class="badge own">own</span>
           </div>
-          <p>Pulls the latest review comments on the current branch's PR, groups them by reviewer and file, summarizes what each one is asking for, and helps plan fixes.</p>
-        </div>
-        <div class="skill">
-          <div class="skill-head">
-            <a href="skills/gh-issue-creator/SKILL.md">gh-issue-creator</a>
-            <span class="badge own">own</span>
-          </div>
-          <p>Creates a GitHub issue using one of the repo's templates (bug, feature, tech debt) or a blank issue. Pulls labels dynamically and keeps the description concise.</p>
-        </div>
-        <div class="skill">
-          <div class="skill-head">
-            <a href="skills/gh-pr-description-updater/SKILL.md">gh-pr-description-updater</a>
-            <span class="badge own">own</span>
-          </div>
-          <p>Reads or rewrites the current PR's description, strictly following the repo's PR template. Enforces brevity and template compliance.</p>
+          <p>Senior-level review of a teammate's PR: a short list of high-signal comments to paste into GitHub. Drops nitpicks; never auto-posts.</p>
         </div>
         <div class="skill">
           <div class="skill-head">
             <a href="skills/verify-pr/SKILL.md">verify-pr</a>
             <span class="badge own">own</span>
           </div>
-          <p>Three-phase PR verification: code review (delegates to <code>miguel-review</code>), test plan with gap analysis and execution, and validation of upstream assumptions. Produces a structured report.</p>
+          <p>Three-phase PR verification: code review (via <code>miguel-review</code>), test plan with gap analysis, and upstream-assumption validation.</p>
         </div>
         <div class="skill">
           <div class="skill-head">
-            <a href="skills/ui-review/SKILL.md">ui-review</a>
+            <a href="skills/gh-pr-comment-assistant/SKILL.md">gh-pr-comment-assistant</a>
             <span class="badge own">own</span>
           </div>
-          <p>Comprehensive frontend UI review across typography, layout, accessibility, responsiveness, copy, and visual polish. Inspects the page in a browser and produces a prioritized list of small, concrete fixes (never rewrites).</p>
+          <p>Fetch the latest PR review comments, group and prioritize them, summarize each reviewer's ask, and plan the fixes.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/gh-pr-description-updater/SKILL.md">gh-pr-description-updater</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Read or rewrite a PR description following the repo's template. Enforces brevity and template compliance.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/gh-pr-list/SKILL.md">gh-pr-list</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>A short, copy-paste Slack message of your open PRs, split into “Ready for review” and “Drafts.”</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/gh-issue-creator/SKILL.md">gh-issue-creator</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Create a well-labeled GitHub issue from a bug, feature, or tech-debt template. Fetches labels dynamically.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/gh-issue-triage/SKILL.md">gh-issue-triage</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Score open, unassigned issues against an AI-readiness rubric and return the top 3 with a ready-to-paste kickoff prompt each.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/git-worktrees/SKILL.md">git-worktrees</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Give every agent conversation its own branch in its own directory, so parallel chats stop clobbering each other.</p>
         </div>
         <div class="skill">
           <div class="skill-head">
             <a href="skills/update-branch/SKILL.md">update-branch</a>
             <span class="badge own">own</span>
           </div>
-          <p>Pulls the latest from main and merges it into the current working branch. Use when you want to sync a feature branch without leaving the agent.</p>
+          <p>Pull the latest from main and merge it into the current working branch.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/save-and-archive/SKILL.md">save-and-archive</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Land a worktree onto main in solo projects: auto-commit, sync, resolve conflicts, fast-forward, push, and remove the worktree.</p>
         </div>
       </div>
 
-      <h3>Writing</h3>
+      <h3>Debugging &amp; QA</h3>
       <div class="skills">
         <div class="skill">
           <div class="skill-head">
-            <a href="skills/writing-voice/SKILL.md">writing-voice</a>
+            <a href="skills/verification-before-completion/SKILL.md">verification-before-completion</a>
             <span class="badge own">own</span>
           </div>
-          <p>Writes or rewrites content in a direct, personal, sensory voice. Bans AI-giveaway phrases, enforces visual formatting, and includes platform-specific guidance for LinkedIn, X, blog, email, and technical writing.</p>
+          <p>A gate that blocks “done” claims without fresh, executed proof. Adapted from <a href="https://github.com/obra/superpowers">obra/superpowers</a>.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/qa-manual/SKILL.md">qa-manual</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Drive a web feature through Chrome MCP across the happy path + 2–3 edge cases, capturing screenshots, console errors, and network failures.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/investigate/SKILL.md">investigate</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Root-cause debugging under the Iron Law: no fix without a confirmed cause. Five phases, 3-strike escalation. Adapted from <a href="https://github.com/garrytan/gstack">gstack</a>.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/benchmark/SKILL.md">benchmark</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Performance-regression detection for web pages: capture baselines, compare runs, flag regressions. Adapted from <a href="https://github.com/garrytan/gstack">gstack</a>.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/agent-guide-bootstrap/SKILL.md">agent-guide-bootstrap</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Bootstrap a full <code>AGENTS.md</code> + <code>.agents/</code> guide system using progressive disclosure.</p>
         </div>
       </div>
 
-      <h3>Authoring skills</h3>
+      <h3>Frontend &amp; design</h3>
       <div class="skills">
         <div class="skill">
           <div class="skill-head">
-            <a href="skills/create-skill/SKILL.md">create-skill</a>
+            <a href="skills/ui-review/SKILL.md">ui-review</a>
             <span class="badge own">own</span>
           </div>
-          <p>Guide for authoring or auditing agent skills: gathers requirements, writes <code>SKILL.md</code> with frontmatter, structures supporting files, and verifies quality. Forked from Cursor's built-in version.</p>
+          <p>Parallel frontend review across typography, layout, accessibility, responsiveness, copy, and polish. Prioritized small fixes, never rewrites. Polish pass includes a CSS-details checklist adapted from <a href="https://github.com/jakubkrehel/make-interfaces-feel-better">make-interfaces-feel-better</a>.</p>
         </div>
-      </div>
-
-      <h3>Design</h3>
-      <div class="skills">
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/grid-review/SKILL.md">grid-review</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Read-only audit of a page’s layout grid: column adherence, baseline rhythm, optical alignment, then a critique. Adapted from <a href="https://github.com/alexmcdonnell-airtable/hyperagent-public-skills">hyperagent-public-skills</a>.</p>
+        </div>
         <div class="skill">
           <div class="skill-head">
             <a href="skills/impeccable/SKILL.md">impeccable</a>
             <span class="badge vendor">vendor</span>
           </div>
-          <p>Single skill with 24 internal commands for designing, critiquing, polishing, and animating frontend interfaces. Commands include <code>shape</code>, <code>audit</code>, <code>critique</code>, <code>animate</code>, <code>bolder</code>, <code>colorize</code>, <code>delight</code>, <code>layout</code>, <code>polish</code>, <code>live</code>, and <code>generate</code> (<code>craft</code> is a deprecated alias). v4.3.1, from <a href="https://github.com/pbakaus/impeccable">pbakaus/impeccable</a>.</p>
+          <p>Design, critique, polish, and animate frontend interfaces. 24 internal commands (<code>shape</code>, <code>audit</code>, <code>critique</code>, <code>animate</code>, <code>polish</code>, <code>live</code>, <code>generate</code>, …; <code>craft</code> is now a deprecated alias). Its <code>impeccable context</code> launcher downloads a self-contained binary on first run, no Node required. v4.3.1, from <a href="https://github.com/pbakaus/impeccable">pbakaus/impeccable</a>.</p>
         </div>
         <div class="skill">
           <div class="skill-head">
             <a href="skills/review-animations/SKILL.md">review-animations</a>
             <span class="badge vendor">vendor</span>
           </div>
-          <p>Reviews animation and motion code against a high craft bar derived from Emil Kowalski's design-engineering philosophy: justified motion, frequency-appropriate timing, responsive easing, sub-300ms UI, correct <code>transform-origin</code>, interruptibility, GPU-only properties, and reduced-motion. Emits a Before/After/Why findings table and a Block/Approve verdict. From <a href="https://github.com/emilkowalski/skill">emilkowalski/skill</a>.</p>
+          <p>Review animation and motion code against a high craft bar: justified motion, responsive easing, sub-300ms UI, correct <code>transform-origin</code>, interruptibility, GPU-only props, reduced-motion. Emits a Before/After/Why table and a Block/Approve verdict. From <a href="https://github.com/emilkowalski/skill">emilkowalski/skill</a>.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/share-ready/SKILL.md">share-ready</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Audit + fully configure how a site looks when shared (Open Graph, Twitter/X cards, per-platform quirks) and in the browser (title, favicons, theme-color, web manifest). Detects the framework, infers brand values from the repo, generates missing assets (favicon set, 1200×630 og:image), and verifies everything end-to-end with a local script.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/seo-geo-audit/SKILL.md">seo-geo-audit</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Technical SEO/GEO audit + fixes for a site: crawlability, sitemaps, robots.txt + AI crawler policy (GPTBot, ClaudeBot, PerplexityBot…), canonicals, structured data, rendering strategy, hreflang, CWV basics, and search-engine verification. Ships a dependency-free live-site auditor script and a verified-vs-folklore GEO reference.</p>
         </div>
         <div class="skill">
           <div class="skill-head">
             <a href="skills/emil-design-eng/SKILL.md">emil-design-eng</a>
             <span class="badge vendor">vendor</span>
           </div>
-          <p>Build-time companion to <code>review-animations</code>: Emil Kowalski's full design-engineering playbook for crafting interfaces that feel right. Covers the animation decision framework, component building (responsive buttons, origin-aware popovers, <code>@starting-style</code> enter states), CSS transform and <code>clip-path</code> techniques, gesture/drag interactions, performance, and accessibility. From <a href="https://github.com/emilkowalski/skill">emilkowalski/skill</a>.</p>
+          <p>Build-time companion to <code>review-animations</code>: Emil Kowalski’s design-engineering playbook for crafting interfaces that feel right — animation decision framework, component building, transforms, gestures, performance, a11y. From <a href="https://github.com/emilkowalski/skill">emilkowalski/skill</a>.</p>
         </div>
         <div class="skill">
           <div class="skill-head">
             <a href="skills/animation-vocabulary/SKILL.md">animation-vocabulary</a>
             <span class="badge vendor">vendor</span>
           </div>
-          <p>Reverse-lookup glossary that turns a vague description of a web animation or motion effect into its exact term ("the bouncy thing when a popover opens" → Pop in; "the iOS rubber-band scroll" → Rubber-banding). A curated 90+ term vocabulary spanning entrances, sequencing, transforms, transitions, scroll, interaction feedback, easing, springs, loops, and performance. For naming an effect, not designing or building one. From <a href="https://github.com/emilkowalski/skill">emilkowalski/skill</a>.</p>
+          <p>Reverse-lookup glossary that turns a vague description of a motion effect into its exact term (“the bouncy thing when a popover opens” → Pop in; “the iOS rubber-band scroll” → Rubber-banding). For naming an effect, not designing or building one. From <a href="https://github.com/emilkowalski/skill">emilkowalski/skill</a>.</p>
         </div>
         <div class="skill">
           <div class="skill-head">
             <a href="skills/apple-design/SKILL.md">apple-design</a>
             <span class="badge vendor">vendor</span>
           </div>
-          <p>Apple's approach to interface design and fluid, physical motion, translated for the web. For building or reviewing gesture-driven UI, spring animations, drag/swipe/sheet interactions, momentum and interruptible transitions, translucent materials and depth, typography (optical sizing, tracking, leading), reduced-motion, and the design foundations (feedback, spatial consistency, restraint) behind Apple-style interfaces. From <a href="https://github.com/emilkowalski/skill">emilkowalski/skill</a>.</p>
+          <p>Apple’s approach to interface design and fluid, physical motion, translated for the web: gesture-driven UI, spring animations, drag/swipe/sheet interactions, momentum and interruptible transitions, translucent materials and depth, typography, reduced-motion, and the design foundations behind Apple-style interfaces. From <a href="https://github.com/emilkowalski/skill">emilkowalski/skill</a>.</p>
+        </div>
+      </div>
+
+      <h3>Product, thinking &amp; writing</h3>
+      <div class="skills">
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/office-hours/SKILL.md">office-hours</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>YC-style premise interrogation: six forcing questions, alternative approaches, and a written assignment. Never writes code. Adapted from <a href="https://github.com/garrytan/gstack">gstack</a>.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/grill-me/SKILL.md">grill-me</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Interview you about a plan, one decision at a time, resolving the decision tree into an assumptions ledger.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/whats-missing/SKILL.md">whats-missing</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Surface the single most important blindspot in a plan, with an observable signal and a cheap test.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/writing-voice/SKILL.md">writing-voice</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Write in a direct, personal, sensory style. Bans AI-giveaway phrases, with per-platform guidance (LinkedIn, X, blog, email).</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/writing-google-style/SKILL.md">writing-google-style</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Write and review developer docs in <a href="https://developers.google.com/style">Google style</a>: second person, active voice, timeless wording, Google’s word list, plus a fence-aware scanner that flags mechanical violations without tripping on code samples.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/governance-message/SKILL.md">governance-message</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Turn a governance proposal URL (forum, Tally, Snapshot) into a Slack-ready summary with stance, risk, and PRO/CON.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/teach/SKILL.md">teach</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Teach a concept across sessions using the current directory as a stateful workspace. Adapted from <a href="https://github.com/mattpocock/skills">mattpocock/skills</a>.</p>
+        </div>
+      </div>
+
+      <h3>Loops</h3>
+      <p>Skills that run in iterations with explicit terminal states, designed to drive a repo toward a verified goal (or to re-run on a schedule) instead of doing a one-shot task.</p>
+      <div class="skills">
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/loop-cve-audit/SKILL.md">loop-cve-audit</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Iterative dependency-CVE remediation: scan with advisory tooling, prove reachability with call-path evidence, fix the highest-risk finding with the smallest credible change, re-verify, repeat. Ends CLEAN, ASSESSED (evidence + approved risk decisions), or BLOCKED.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/loop-react-doctor/SKILL.md">loop-react-doctor</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Drive every React app to a <a href="https://www.npmjs.com/package/react-doctor">react-doctor</a> 100/100 (latest at run start, pinned within the run), one root cause per iteration with tiered verification. Never silences findings; ends PERFECT, JUSTIFIED (user-approved exceptions), STALLED, or BLOCKED.</p>
+        </div>
+      </div>
+
+      <h3>Authoring, planning &amp; more</h3>
+      <div class="skills">
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/create-skill/SKILL.md">create-skill</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Author or audit agent skills: gather requirements, write <code>SKILL.md</code>, structure supporting files, verify quality.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/improve-prompt/SKILL.md">improve-prompt</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Critique and rewrite a prompt using best practices, returning a short critique plus a drop-in rewrite.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/goal-cursor/SKILL.md">goal-cursor</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>A per-workspace goal that keeps Cursor auto-iterating until an evaluator confirms it’s met. Cursor’s take on Claude Code’s <code>/goal</code>.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/meta-ads-bulk-creator/SKILL.md">meta-ads-bulk-creator</a>
+            <span class="badge own">own</span>
+          </div>
+          <p>Build Meta Ads Manager bulk-import files from a YAML brief, validated against Meta’s enums and limits.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/improve/SKILL.md">improve</a>
+            <span class="badge vendor">vendor</span>
+          </div>
+          <p>An advisor, never an implementer: audit a codebase, rank findings by leverage, and write executable plans for a cheaper model to run. v1.0.0, from <a href="https://github.com/shadcn/improve">shadcn/improve</a>.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/remotion-best-practices/SKILL.md">remotion-best-practices</a>
+            <span class="badge vendor">vendor</span>
+          </div>
+          <p>Router for all <a href="https://github.com/remotion-dev/skills">Remotion</a> skills (programmatic video creation in React): create, markup, maps, captions, render, studio, SaaS, interactivity, docs, upgrade, multimedia. Only the router is linked here since it bundles the rest.</p>
         </div>
       </div>
     </section>
@@ -387,6 +578,9 @@
           <tr><td><code>--skill &lt;name&gt;</code></td><td>Install a single skill by name</td></tr>
           <tr><td><code>--target &lt;dir&gt;</code></td><td>Override the install directory</td></tr>
           <tr><td><code>--force</code></td><td>Overwrite existing skills without confirming</td></tr>
+          <tr><td><code>--symlink</code></td><td>Symlink skills into the target instead of copying (live edits)</td></tr>
+          <tr><td><code>--self</code></td><td>Wire this repo into your own <code>~/.cursor</code> and <code>~/.claude</code> with edit-once symlinks</td></tr>
+          <tr><td><code>--check</code></td><td>Validate skill frontmatter and <code>SKILLS</code>-array sync, then exit (used in CI)</td></tr>
           <tr><td><code>--update-vendor</code></td><td>Update vendor submodules to their latest versions</td></tr>
         </tbody>
       </table>
@@ -399,7 +593,7 @@
           <tr><td>Claude Code</td><td><code>~/.claude/skills/&lt;skill-name&gt;/</code></td></tr>
         </tbody>
       </table>
-      <p>All GitHub-related skills require the <a href="https://cli.github.com/">GitHub CLI</a> (<code>gh</code>). <code>writing-voice</code> has no extra requirements; <code>impeccable</code> downloads its self-contained launcher binary once on first run.</p>
+      <p>Most GitHub-related skills need the <a href="https://cli.github.com/">GitHub CLI</a> (<code>gh</code>). <code>writing-voice</code>, <code>writing-google-style</code>, <code>teach</code>, and <code>remotion-best-practices</code> have no extra requirements (<code>writing-google-style</code> ships a scanner script that needs only <code>bash</code> and <code>awk</code>). <code>impeccable</code> downloads its self-contained launcher binary once on first run.</p>
     </section>
 
     <footer>
