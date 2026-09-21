@@ -46,6 +46,7 @@ VENDOR_SKILLS=(
   "remotion:remotion-dev/skills:skills:remotion-best-practices"
   "improve:shadcn/improve:skills"
   "emil:emilkowalski/skill:skills:review-animations,emil-design-eng,animation-vocabulary,apple-design"
+  "cloudflare:cloudflare/skills:skills"
 )
 
 TARGET_DIR=""
