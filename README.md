@@ -2,7 +2,7 @@
 
 # 🧠 skills
 
-[![Skills](https://img.shields.io/badge/skills-41-1f6feb?style=flat-square)](#skills)
+[![Skills](https://img.shields.io/badge/skills-55-1f6feb?style=flat-square)](#skills)
 [![Install](https://img.shields.io/badge/install-one%20command-22c55e?style=flat-square)](#install)
 
 </div>
@@ -117,6 +117,27 @@ Skills that run in iterations with explicit terminal states, designed to drive a
 | 🟧 [improve](skills/improve/SKILL.md) | An advisor, never an implementer: audit a codebase, rank findings by leverage, and write executable plans for a cheaper model to run. v1.0.0, from [shadcn/improve](https://github.com/shadcn/improve). |
 | 🟧 [remotion-best-practices](skills/remotion-best-practices/SKILL.md) | Router for all [Remotion](https://github.com/remotion-dev/skills) skills (programmatic video creation in React): create, markup, maps, captions, render, studio, SaaS, interactivity, docs, upgrade, multimedia. Upstream split the old `remotion` skill into this router plus per-topic skills; only the router is linked here since it bundles the rest. |
 
+### ☁️ Cloudflare
+
+All from [cloudflare/skills](https://github.com/cloudflare/skills). Most bias toward retrieving current Cloudflare docs over pre-trained knowledge.
+
+| Skill | What it does |
+|-------|--------------|
+| 🟧 [cloudflare](skills/cloudflare/SKILL.md) | Entry point: pick the right Cloudflare products for an app, API, agent, storage, networking, or security need, then route to the matching skill or docs. |
+| 🟧 [workers-best-practices](skills/workers-best-practices/SKILL.md) | Write, review, and configure Workers against production best practices. |
+| 🟧 [wrangler](skills/wrangler/SKILL.md) | Run or troubleshoot Wrangler commands and configure Worker projects for local dev, deploys, and resource management. |
+| 🟧 [durable-objects](skills/durable-objects/SKILL.md) | Build, debug, or review Durable Objects for persistent state and coordination. |
+| 🟧 [agents-sdk](skills/agents-sdk/SKILL.md) | Build, debug, or review apps on the Cloudflare Agents SDK (`agents` package). |
+| 🟧 [sandbox-stable](skills/sandbox-stable/SKILL.md) | Build or maintain Sandbox apps on the stable `@cloudflare/sandbox`. |
+| 🟧 [sandbox-next](skills/sandbox-next/SKILL.md) | Build or maintain Sandbox apps on `@cloudflare/sandbox@next` (SDK 1.0 preview). |
+| 🟧 [sandbox-migrate-to-next](skills/sandbox-migrate-to-next/SKILL.md) | Migrate a Sandbox app from stable to `@cloudflare/sandbox@next`. |
+| 🟧 [nextjs-on-cloudflare](skills/nextjs-on-cloudflare/SKILL.md) | Build, migrate, and deploy Next.js apps on Workers with vinext, or choose between vinext and OpenNext. |
+| 🟧 [cloudflare-email-service](skills/cloudflare-email-service/SKILL.md) | Implement or troubleshoot Email Sending and Email Routing, including deliverability setup. |
+| 🟧 [turnstile-spin](skills/turnstile-spin/SKILL.md) | Set up, repair, or migrate to Turnstile bot verification end to end, including server-side Siteverify. |
+| 🟧 [web-perf](skills/web-perf/SKILL.md) | Audit and optimize loading and interaction performance, Core Web Vitals, and Lighthouse scores. |
+| 🟧 [cloudflare-one](skills/cloudflare-one/SKILL.md) | Design, configure, troubleshoot, or review Cloudflare One Zero Trust / SASE deployments. |
+| 🟧 [cloudflare-one-migrations](skills/cloudflare-one-migrations/SKILL.md) | Plan migrations from VPN, SWG, or SASE platforms to Cloudflare One: policy mapping, parity gaps, rollout. |
+
 ## Vendor skills
 
 Vendor skills are third-party packs tracked as git submodules under `vendor/` and linked into `skills/` so agents discover them alongside your own.
@@ -127,6 +148,7 @@ Vendor skills are third-party packs tracked as git submodules under `vendor/` an
 | improve | [shadcn/improve](https://github.com/shadcn/improve) | v1.0.0 | `improve` |
 | Remotion | [remotion-dev/skills](https://github.com/remotion-dev/skills) | v4.0.526 (2026-09-17) | `remotion-best-practices` (router that bundles the 11 per-topic skills) |
 | Emil Kowalski | [emilkowalski/skill](https://github.com/emilkowalski/skill) | main (2026-09-15) | `review-animations`, `emil-design-eng`, `animation-vocabulary`, `apple-design` — upstream also ships `animate`, `animate-expo`, `improve-animations`, `find-animation-opportunities`, `prototype`, `pick-ui-library`, `mobile-native`, `ask-sonner`, `write-swift`; add any of them to the `emil` entry in `VENDOR_SKILLS` to link it |
+| Cloudflare | [cloudflare/skills](https://github.com/cloudflare/skills) | main (2026-09-07) | All 14 skills (see [☁️ Cloudflare](#️-cloudflare)) |
 
 **Update all vendors to their latest upstream:**
 

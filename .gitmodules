@@ -10,3 +10,6 @@
 [submodule "vendor/emil"]
 	path = vendor/emil
 	url = https://github.com/emilkowalski/skill
+[submodule "vendor/cloudflare"]
+	path = vendor/cloudflare
+	url = https://github.com/cloudflare/skills
