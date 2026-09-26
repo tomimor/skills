@@ -73,7 +73,7 @@ Options:
   --force            Overwrite existing skills without confirming
   --symlink          Symlink skills into the target instead of copying (live edits)
   --self             Wire this repo into your own ~/.cursor and ~/.claude (edit-once symlinks)
-  --check            Validate skill frontmatter and SKILLS-array sync, then exit
+  --check            Validate frontmatter, SKILLS-array sync, and README/index.html catalogs, then exit
   --update-vendor    Update vendor submodules to their latest versions
   -h, --help         Show this help message
 
@@ -215,9 +215,10 @@ in_array() {
   return 1
 }
 
-# Validate every own skill (directory with a SKILL.md) and that the SKILLS array
-# stays in sync with the directories on disk. Returns non-zero on any problem so
-# it can gate CI.
+# Validate every own skill (directory with a SKILL.md), that the SKILLS array
+# stays in sync with the directories on disk, and that README.md and index.html
+# catalog every skill (own and vendor). Returns non-zero on any problem so it
+# can gate CI.
 check_skills() {
   local src="$SCRIPT_DIR/skills"
   local errors=0
@@ -271,8 +272,52 @@ check_skills() {
     }
   done
 
+  # Every skill on disk (own directories and vendor symlinks alike) must be
+  # listed in the README catalog and in index.html, and the skill counts those
+  # two files advertise must match what is on disk. Vendor symlinks count even
+  # when their target is missing (CI checks out without submodules).
+  local readme="$SCRIPT_DIR/README.md" index="$SCRIPT_DIR/index.html"
+  local total=0 listed item
+  for item in "$src"/*; do
+    [[ -d "$item" || -L "$item" ]] || continue
+    skill_name="$(basename "$item")"
+    total=$((total + 1))
+    if ! grep -qF "](skills/$skill_name/SKILL.md)" "$readme"; then
+      echo "  ✗ $skill_name: not listed in the README.md skill catalog"
+      errors=$((errors + 1))
+    fi
+    if ! grep -qF "href=\"skills/$skill_name/SKILL.md\"" "$index"; then
+      echo "  ✗ $skill_name: not listed in index.html"
+      errors=$((errors + 1))
+    fi
+  done
+  while read -r listed; do
+    [[ -d "$src/$listed" || -L "$src/$listed" ]] || {
+      echo "  ✗ $listed: in README.md but no skills/$listed directory"
+      errors=$((errors + 1))
+    }
+  done < <(grep -o '](skills/[^/]*/SKILL.md)' "$readme" | sed 's#](skills/##;s#/SKILL.md)##')
+  while read -r listed; do
+    [[ -d "$src/$listed" || -L "$src/$listed" ]] || {
+      echo "  ✗ $listed: in index.html but no skills/$listed directory"
+      errors=$((errors + 1))
+    }
+  done < <(grep -o 'href="skills/[^/]*/SKILL.md"' "$index" | sed 's#href="skills/##;s#/SKILL.md"##')
+
+  local badge tagline
+  badge="$(grep -o 'badge/skills-[0-9]*-' "$readme" | head -1 | tr -dc '0-9')"
+  if [[ "$badge" != "$total" ]]; then
+    echo "  ✗ README.md skills badge says ${badge:-?} but skills/ has $total entries"
+    errors=$((errors + 1))
+  fi
+  tagline="$(grep -o '<p class="tagline">[0-9]*' "$index" | head -1 | tr -dc '0-9')"
+  if [[ "$tagline" != "$total" ]]; then
+    echo "  ✗ index.html tagline says ${tagline:-?} skills but skills/ has $total entries"
+    errors=$((errors + 1))
+  fi
+
   if [[ $errors -eq 0 ]]; then
-    echo "OK: ${#dir_skills[@]} own skills valid and in sync with the SKILLS array."
+    echo "OK: ${#dir_skills[@]} own skills valid and in sync with the SKILLS array; README.md and index.html list all $total skills."
     return 0
   fi
   echo ""

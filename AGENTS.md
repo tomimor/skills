@@ -12,8 +12,9 @@ skills/
 │   └── ...
 ├── vendor/                  # Third-party skill repos (git submodules)
 │   └── impeccable/          # pbakaus/impeccable
-├── install.sh               # Install script with vendor support
-├── README.md
+├── install.sh               # Install script with vendor support + `--check` validator
+├── README.md                # Public catalog: every skill, badge count, vendor version table
+├── index.html               # GitHub Pages landing page: mirrors the README catalog
 └── AGENTS.md                # This file
 ```
 
@@ -65,7 +66,11 @@ SKILLS=(
    step.** The README is the public catalog -- a skill missing from it is effectively undiscoverable. If the skill is
    adapted from a vendor (e.g. gstack), credit the source in the description with a link.
 
-5. Commit the new directory, the updated `install.sh`, and the updated `README.md` together in a single commit.
+5. **MANDATORY: Update the two skill counts and `index.html`.** See [Keeping the catalogs in sync](#keeping-the-catalogs-in-sync).
+
+6. Run `./install.sh --check` and fix anything it reports. CI runs the same check and fails on any drift.
+
+7. Commit the new directory, the updated `install.sh`, `README.md`, and `index.html` together in a single commit.
 
 ### Own skill conventions
 
@@ -109,10 +114,22 @@ done
 ```
 
 4. **MANDATORY: Add the vendor skill set to `README.md`**. Same rule as own skills -- every vendor skill exposed via
-   `skills/` must appear in the README catalog, with a link to the upstream repo. Do not skip this step.
+   `skills/` must appear in the README catalog, with a link to the upstream repo, **and** add a row to the
+   "Vendor skills" table (source, version or date, which skills are linked). Do not skip this step.
 
-5. Commit `.gitmodules`, the `vendor/<name>` submodule, the new symlinks, the updated `install.sh`, and the updated
-   `README.md` together.
+5. **MANDATORY: Update the two skill counts and `index.html`.** See [Keeping the catalogs in sync](#keeping-the-catalogs-in-sync).
+
+6. Run `./install.sh --check` and fix anything it reports.
+
+7. Commit `.gitmodules`, the `vendor/<name>` submodule, the new symlinks, the updated `install.sh`, `README.md`, and
+   `index.html` together.
+
+### Pinning a subset of a vendor's skills
+
+The `VENDOR_SKILLS` entry takes an optional 4th field listing which skills to link. Without it, `install.sh` links
+**every** directory under the vendor's skills path, so when upstream adds skills they silently appear in `skills/`
+(and then fail `--check` because they are not in the catalogs). Pin the subset explicitly whenever you do not want
+all of them, e.g. `"emil:emilkowalski/skill:skills:review-animations,emil-design-eng"`.
 
 ### Vendor skill rules
 
@@ -126,18 +143,42 @@ done
 ./install.sh --update-vendor
 ```
 
-This runs `git submodule update --remote --merge` and re-creates the symlinks. After updating, commit the changed submodule pointer:
+This runs `git submodule update --remote --merge` and re-creates the symlinks. After updating:
+
+1. **Stage the submodule pointers immediately** (`git add vendor/*`). Every other `install.sh` invocation runs
+   `git submodule update --init`, which resets each submodule to the pointer in the index -- an unstaged bump is
+   silently undone the next time you run the script.
+2. Check whether upstream renamed or split a skill directory (`ls -l skills/` shows dangling symlinks). Re-point the
+   symlink and update the `VENDOR_SKILLS` filter, the README row, and the `index.html` card to the new name.
+3. Refresh the "Vendor skills" table in `README.md` (version from the vendor's `plugin.json` or `SKILL.md`
+   frontmatter, or `main (<date>)` when there is none) and any version mentioned in that vendor's catalog rows.
+4. Run `./install.sh --check`, then commit:
 
 ```bash
-git add vendor/<name>
+git add vendor/<name> README.md index.html
 git commit -m "update <name> to v<new-version>"
 ```
+
+## Keeping the catalogs in sync
+
+Three places must agree with the contents of `skills/` (own directories **and** vendor symlinks). `./install.sh --check`
+verifies all of them and CI fails on any mismatch, so run it before every commit that touches `skills/`:
+
+| Place | What to update |
+|-------|----------------|
+| `README.md` catalog | One row per skill linking `skills/<name>/SKILL.md` (🟦 own, 🟧 vendor), under a `###` section |
+| `README.md` badge | `badge/skills-<N>-...` where N = number of entries in `skills/` |
+| `index.html` | One `<div class="skill">` card per skill (same sections and order as the README) and the `<p class="tagline">N agent skills ...` count |
+
+The check reports, per skill, which file is missing it, and flags catalog entries whose directory no longer exists.
 
 ## Key files
 
 | File | Purpose |
 |------|---------|
-| `install.sh` | Installs skills to `~/.cursor/skills` or `~/.claude/skills`. Contains the `SKILLS` and `VENDOR_SKILLS` registries. Pass `--symlink` to link skills instead of copying them, which is how `~/.claude/skills` is wired. |
+| `install.sh` | Installs skills to `~/.cursor/skills` or `~/.claude/skills`. Contains the `SKILLS` and `VENDOR_SKILLS` registries. Pass `--symlink` to link skills instead of copying them, which is how `~/.claude/skills` is wired. `--check` validates frontmatter, the `SKILLS` array, and both catalogs. |
+| `README.md` | Public catalog, skills badge, and vendor version table. Must list every skill in `skills/`. |
+| `index.html` | GitHub Pages landing page. Must list every skill in `skills/`, with the same count in its tagline. |
 | `.gitmodules` | Git submodule definitions for vendor skills |
 | `skills/` | The single directory both platforms read from |
 | `vendor/` | Git submodules for third-party skill repos |
