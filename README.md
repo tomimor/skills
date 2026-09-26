@@ -77,7 +77,7 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 |-------|--------------|
 | 🟦 [ui-review](skills/ui-review/SKILL.md) | Parallel frontend review across typography, layout, accessibility, responsiveness, copy, and polish. Prioritized small fixes, never rewrites. Polish pass includes a CSS-details checklist (concentric radius, tabular-nums, text-wrap, font smoothing, image outlines) adapted from [make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better). |
 | 🟦 [grid-review](skills/grid-review/SKILL.md) | Read-only audit of a page's layout grid: column adherence, baseline rhythm, optical alignment, then a critique. Adapted from [hyperagent-public-skills](https://github.com/alexmcdonnell-airtable/hyperagent-public-skills). |
-| 🟧 [impeccable](skills/impeccable/SKILL.md) | Design, critique, polish, and animate frontend interfaces. 24 internal commands (`shape`, `audit`, `critique`, `animate`, `polish`, `live`, `generate`, …; `craft` is now a deprecated alias). Its `impeccable context` launcher downloads a self-contained binary on first run, no Node required. v4.3.1, from [pbakaus/impeccable](https://github.com/pbakaus/impeccable). |
+| 🟧 [impeccable](skills/impeccable/SKILL.md) | Design, critique, polish, and animate frontend interfaces. 24 internal commands (`shape`, `audit`, `critique`, `animate`, `polish`, `live`, `generate`, …; `craft` is now a deprecated alias). Its `impeccable context` launcher downloads a self-contained binary on first run, no Node required. v4.4.0, from [pbakaus/impeccable](https://github.com/pbakaus/impeccable). |
 | 🟧 [review-animations](skills/review-animations/SKILL.md) | Review animation and motion code against a high craft bar: justified motion, responsive easing, sub-300ms UI, correct `transform-origin`, interruptibility, GPU-only props, reduced-motion. Emits a Before/After/Why table and a Block/Approve verdict. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
 | 🟦 [share-ready](skills/share-ready/SKILL.md) | Audit + fully configure how a site looks when shared (Open Graph, Twitter/X cards, per-platform quirks) and in the browser (title, favicons, theme-color, web manifest). Detects the framework, infers brand values from the repo, generates missing assets (favicon set, 1200×630 og:image), and verifies everything end-to-end with a local script. |
 | 🟦 [seo-geo-audit](skills/seo-geo-audit/SKILL.md) | Technical SEO/GEO audit + fixes for a site: crawlability, sitemaps, robots.txt + AI crawler policy (GPTBot, ClaudeBot, PerplexityBot…), canonicals, structured data, rendering strategy, hreflang, CWV basics, and search-engine verification. Ships a dependency-free live-site auditor script and a verified-vs-folklore GEO reference. |
@@ -144,11 +144,11 @@ Vendor skills are third-party packs tracked as git submodules under `vendor/` an
 
 | Vendor | Source | Version | Linked skills |
 |--------|--------|---------|---------------|
-| Impeccable | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | v4.3.1 | `impeccable` |
+| Impeccable | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | v4.4.0 (2026-09-24) | `impeccable` |
 | improve | [shadcn/improve](https://github.com/shadcn/improve) | v1.0.0 | `improve` |
-| Remotion | [remotion-dev/skills](https://github.com/remotion-dev/skills) | v4.0.526 (2026-09-17) | `remotion-best-practices` (router that bundles the 11 per-topic skills) |
-| Emil Kowalski | [emilkowalski/skill](https://github.com/emilkowalski/skill) | main (2026-09-15) | `review-animations`, `emil-design-eng`, `animation-vocabulary`, `apple-design` — upstream also ships `animate`, `animate-expo`, `improve-animations`, `find-animation-opportunities`, `prototype`, `pick-ui-library`, `mobile-native`, `ask-sonner`, `write-swift`; add any of them to the `emil` entry in `VENDOR_SKILLS` to link it |
-| Cloudflare | [cloudflare/skills](https://github.com/cloudflare/skills) | main (2026-09-07) | All 14 skills (see [☁️ Cloudflare](#️-cloudflare)) |
+| Remotion | [remotion-dev/skills](https://github.com/remotion-dev/skills) | v4.0.529 (2026-09-25) | `remotion-best-practices` (router that bundles the 11 per-topic skills) |
+| Emil Kowalski | [emilkowalski/skill](https://github.com/emilkowalski/skill) | main (2026-09-24) | `review-animations`, `emil-design-eng`, `animation-vocabulary`, `apple-design` — upstream also ships `animate`, `animate-expo`, `improve-animations`, `find-animation-opportunities`, `prototype`, `pick-ui-library`, `mobile-native`, `ask-sonner`, `write-swift`; add any of them to the `emil` entry in `VENDOR_SKILLS` to link it |
+| Cloudflare | [cloudflare/skills](https://github.com/cloudflare/skills) | v1.0.1 (2026-09-26) | All 14 skills (see [☁️ Cloudflare](#️-cloudflare)) |
 
 **Update all vendors to their latest upstream:**
 
@@ -210,7 +210,7 @@ cp -r skills/pr-dashboard ~/.claude/skills/     # Claude Code
 | `--force` | Overwrite existing skills without confirming |
 | `--symlink` | Symlink skills into the target instead of copying (live edits) |
 | `--self` | Wire this repo into your own `~/.cursor` and `~/.claude` with edit-once symlinks |
-| `--check` | Validate skill frontmatter and `SKILLS`-array sync, then exit (used in CI) |
+| `--check` | Validate frontmatter, `SKILLS`-array sync, and that `README.md` and `index.html` list every skill with the right count, then exit (used in CI) |
 | `--update-vendor` | Update vendor submodules to their latest versions |
 
 ## Platform compatibility
