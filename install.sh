@@ -39,6 +39,7 @@ SKILLS=(
   "share-ready:Audit + fully configure link previews (OG, Twitter cards) and browser presentation (favicons, manifest), generate assets, verify locally"
   "seo-geo-audit:Technical SEO/GEO audit + fixes (crawlability, sitemaps, robots + AI crawlers, canonicals, structured data, rendering) with a scripted live-site auditor"
   "writing-google-style:Write and review developer docs in Google style, with a fence-aware violation scanner"
+  "threejs-3d-models:Add, optimize, and review three.js 3D model embeds (GLB pipeline, lazy <three-model> component, perf, a11y)"
 )
 
 VENDOR_SKILLS=(

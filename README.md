@@ -2,7 +2,7 @@
 
 # 🧠 skills
 
-[![Skills](https://img.shields.io/badge/skills-55-1f6feb?style=flat-square)](#skills)
+[![Skills](https://img.shields.io/badge/skills-56-1f6feb?style=flat-square)](#skills)
 [![Install](https://img.shields.io/badge/install-one%20command-22c55e?style=flat-square)](#install)
 
 </div>
@@ -80,6 +80,7 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 | 🟧 [impeccable](skills/impeccable/SKILL.md) | Design, critique, polish, and animate frontend interfaces. 24 internal commands (`shape`, `audit`, `critique`, `animate`, `polish`, `live`, `generate`, …; `craft` is now a deprecated alias). Its `impeccable context` launcher downloads a self-contained binary on first run, no Node required. v4.3.1, from [pbakaus/impeccable](https://github.com/pbakaus/impeccable). |
 | 🟧 [review-animations](skills/review-animations/SKILL.md) | Review animation and motion code against a high craft bar: justified motion, responsive easing, sub-300ms UI, correct `transform-origin`, interruptibility, GPU-only props, reduced-motion. Emits a Before/After/Why table and a Block/Approve verdict. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
 | 🟦 [share-ready](skills/share-ready/SKILL.md) | Audit + fully configure how a site looks when shared (Open Graph, Twitter/X cards, per-platform quirks) and in the browser (title, favicons, theme-color, web manifest). Detects the framework, infers brand values from the repo, generates missing assets (favicon set, 1200×630 og:image), and verifies everything end-to-end with a local script. |
+| 🟦 [threejs-3d-models](skills/threejs-3d-models/SKILL.md) | Add, optimize, and review 3D models on web pages with three.js. Covers the gltf-transform pipeline (Meshopt, Draco, and KTX2, with measured trade-offs) and a browser-tested lazy `<three-model>` web component to reuse across pages: poster fallback, render-on-demand, pause offscreen, full disposal, keyboard and reduced-motion support. Also ships a poster-capture script and API/troubleshooting tables checked against three.js r186. |
 | 🟦 [seo-geo-audit](skills/seo-geo-audit/SKILL.md) | Technical SEO/GEO audit + fixes for a site: crawlability, sitemaps, robots.txt + AI crawler policy (GPTBot, ClaudeBot, PerplexityBot…), canonicals, structured data, rendering strategy, hreflang, CWV basics, and search-engine verification. Ships a dependency-free live-site auditor script and a verified-vs-folklore GEO reference. |
 | 🟧 [emil-design-eng](skills/emil-design-eng/SKILL.md) | Build-time companion to `review-animations`: Emil Kowalski's design-engineering playbook for crafting interfaces that feel right — animation decision framework, component building, transforms, gestures, performance, a11y. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
 | 🟧 [animation-vocabulary](skills/animation-vocabulary/SKILL.md) | Reverse-lookup glossary that turns a vague description of a motion effect into its exact term ("the bouncy thing when a popover opens" → Pop in; "the iOS rubber-band scroll" → Rubber-banding). For naming an effect, not designing or building one. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
