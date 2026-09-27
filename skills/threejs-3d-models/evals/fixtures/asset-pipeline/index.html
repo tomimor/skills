@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nook – The Lounge Chair</title>
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <section class="hero">
+    <div id="hero-model" class="stage"></div>
+    <h1>Made to be lived in</h1>
+  </section>
+
+  <section class="configurator">
+    <div id="chair-model" class="stage"></div>
+    <div class="options">
+      <h2>The Lounge Chair</h2>
+      <fieldset>
+        <legend>Upholstery</legend>
+        <button data-group="upholstery" data-finish="oat">Oat</button>
+        <button data-group="upholstery" data-finish="moss">Moss</button>
+        <button data-group="upholstery" data-finish="rust">Rust</button>
+      </fieldset>
+      <fieldset>
+        <legend>Frame</legend>
+        <button data-group="frame" data-finish="natural">Natural oak</button>
+        <button data-group="frame" data-finish="black">Black oak</button>
+      </fieldset>
+    </div>
+  </section>
+
+  <section class="mascot">
+    <div id="mascot-model" class="stage"></div>
+    <p>Say hi to Fennec, our workshop fox.</p>
+  </section>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

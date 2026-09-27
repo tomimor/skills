@@ -54,6 +54,14 @@ npx @gltf-transform/cli optimize in.glb out.glb --compress meshopt --texture-com
 # Parts addressed by name in code (configurators, clickable parts, per-part materials)
 npx @gltf-transform/cli optimize in.glb out.glb --compress meshopt --texture-compress webp \
   --join-named false --instance false --palette false          # + --flatten false to keep hierarchy
+                                                               # + --prune-attributes false to keep UVs on untextured parts
+
+# Skinned or animated characters: keep every deforming vertex
+npx @gltf-transform/cli optimize in.glb out.glb --compress meshopt --texture-compress webp --simplify false
+
+# Lossless normal map first, then everything else without re-encoding textures
+npx @gltf-transform/cli webp in.glb tmp.glb --slots "normalTexture" --lossless true
+npx @gltf-transform/cli optimize tmp.glb out.glb --compress meshopt --texture-compress false
 
 # GPU-compressed textures (requires KTX-Software 4.4+ `ktx` CLI on PATH)
 npx @gltf-transform/cli optimize in.glb out.glb --compress meshopt --texture-compress ktx2
@@ -76,6 +84,17 @@ With `--texture-compress ktx2`, `optimize` encodes normal, occlusion, and
 metallic-roughness maps as UASTC (higher quality) and the rest as ETC1S
 (smaller). Without the `ktx` binary installed, it fails with
 `Command "ktx" not found`.
+
+**Order of passes.** Make `optimize` the last command. Any CLI pass that
+rewrites a Meshopt-compressed file re-encodes it with the default, weaker
+settings. *Measured* on the Fox: `optimize` then a lossless-WebP pass gave
+84 KB, while the WebP pass first and then `optimize --texture-compress false`
+gave 57 KB.
+
+**Simplification on skinned meshes.** The default simplify step also runs on
+skinned meshes, where removed vertices change how the mesh deforms. On the
+Fox sample it removed 16% of the triangles and visibly shifted poses. Pass
+`--simplify false` for characters.
 
 ## Meshopt vs Draco
 
@@ -108,9 +127,14 @@ textures as RGBA8 with mipmaps would need 89 MB each.
 
 Use WebP for a single modest model: no transcoder download, smallest files.
 Use KTX2 when textures are large (≥ 2048), numerous, or on memory-constrained
-mobile pages, and when upload stutter matters. For normal maps, prefer
-UASTC or high-quality WebP, because aggressive lossy compression shows as
-lighting artifacts.
+mobile pages, and when upload stutter matters.
+
+- **Normal maps**: lossy WebP always subsamples chroma (4:2:0), and the
+  normal's X/Y live in color channels. Raising the quality doesn't remove the
+  lighting artifacts. Use lossless WebP (`--slots "normalTexture" --lossless
+  true`), KTX2 UASTC, or keep the original.
+- **Small or flat textures**: lossless WebP can beat lossy. The Fox's 27 KB
+  PNG became 18 KB lossless, but 34 KB with the default lossy setting.
 
 ## Serving
 
@@ -123,7 +147,11 @@ lighting artifacts.
 
 - **Caching**: fingerprinted file names (`chair.3f9a1c.glb`) with
   `Cache-Control: public, max-age=31536000, immutable`. Bundler-emitted
-  decoders are already hashed.
+  decoders are already hashed. Vite copies `public/` as is, so
+  `public/models/chair.glb` keeps its name. Either version the file names
+  yourself or use revalidation (ETag), or import the model so the bundler
+  hashes it: `import chairUrl from './models/chair.glb?url'` (verified with
+  Vite 8, which emits `assets/chair-<hash>.glb`).
 - **Progress bars**: with `Content-Encoding`, `Content-Length` is the
   compressed size but three.js counts decompressed bytes, so progress passes
   100%. Clamp it, or send the uncompressed size in an `X-File-Size` header;

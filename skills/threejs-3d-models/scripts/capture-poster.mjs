@@ -61,11 +61,8 @@ await page.waitForFunction(
 const type = output.endsWith('.png') ? 'image/png' : 'image/webp';
 const { dataUrl, width, height } = await page.evaluate(
   ([sel, type]) => {
-    const { renderer, scene, camera } = document.querySelector(sel).viewer;
-    // read back in the same task as the draw; the drawing buffer is not preserved
-    renderer.render(scene, camera);
-    const canvas = renderer.domElement;
-    return { dataUrl: canvas.toDataURL(type, 0.9), width: canvas.width, height: canvas.height };
+    const { snapshot, canvas } = document.querySelector(sel).viewer;
+    return { dataUrl: snapshot(type, 0.9), width: canvas.width, height: canvas.height };
   },
   [selector, type],
 );

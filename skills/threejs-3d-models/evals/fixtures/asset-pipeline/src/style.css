@@ -1,0 +1,6 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; background: #f3efe8; color: #222; }
+section { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; max-width: 1100px; margin: 0 auto; padding: 48px 24px; }
+.stage { width: 100%; aspect-ratio: 1; background: #e7e1d6; border-radius: 16px; overflow: hidden; }
+fieldset { border: 0; padding: 0; margin: 0 0 16px; }
+button { margin: 4px 4px 0 0; padding: 8px 14px; border-radius: 999px; border: 1px solid #222; background: #fff; cursor: pointer; }

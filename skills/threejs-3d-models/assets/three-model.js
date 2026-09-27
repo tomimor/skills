@@ -4,16 +4,26 @@
 //
 // Framework-agnostic custom element with no three.js in the initial bundle:
 // mount-model.js (and three.js with it) is imported only when the element
-// nears the viewport. The <img> child is the poster: LCP candidate, loading
-// placeholder, and the fallback if WebGL or the model fails.
+// nears the viewport and its poster has loaded. The <img> child is the poster:
+// LCP candidate, loading placeholder, and the fallback if WebGL or the model
+// fails.
 //
 // Required page CSS (the element must have a size before the model loads):
 //   three-model { display: block; aspect-ratio: 1; }
 //   three-model > img { display: block; width: 100%; height: 100%; object-fit: contain; }
 //
-// Attributes: src, alt, camera-controls, zoom, auto-rotate, autoplay, exposure.
+// Attributes: src, alt, camera-controls, zoom, auto-rotate, autoplay, animation, exposure.
 // Events: "load" (first frame is on screen), "error" (poster stays; detail = Error).
 const LOAD_MARGIN = '300px';
+
+function posterSettled(img, signal) {
+  if (!img || img.complete) return Promise.resolve();
+  return new Promise((resolve) => {
+    img.addEventListener('load', resolve, { once: true });
+    img.addEventListener('error', resolve, { once: true });
+    signal.addEventListener('abort', resolve, { once: true });
+  });
+}
 
 class ThreeModel extends HTMLElement {
   #viewer = null;
@@ -45,18 +55,25 @@ class ThreeModel extends HTMLElement {
     this.#observer?.disconnect();
     if (!this.isConnected) return;
     const abort = (this.#abort = new AbortController());
+    const poster = this.querySelector(':scope > img');
     this.setAttribute('aria-busy', 'true');
     try {
+      // The poster is usually the LCP image; on a slow connection, three.js and the
+      // model downloading alongside it would delay it.
+      await posterSettled(poster, abort.signal);
+      abort.signal.throwIfAborted();
       const { mountModel } = await import('./mount-model.js');
       abort.signal.throwIfAborted();
+      const exposure = Number.parseFloat(this.getAttribute('exposure'));
       const viewer = await mountModel(this, {
         src: this.getAttribute('src'),
-        poster: this.querySelector(':scope > img'),
+        poster,
         controls: this.hasAttribute('camera-controls'),
         zoom: this.hasAttribute('zoom'),
         autoRotate: this.hasAttribute('auto-rotate'),
         autoplay: this.hasAttribute('autoplay'),
-        exposure: Number(this.getAttribute('exposure') ?? 1),
+        animation: this.getAttribute('animation'),
+        exposure: Number.isFinite(exposure) ? exposure : 1,
         signal: abort.signal,
       });
       if (abort.signal.aborted) return viewer.dispose(); // removed as the first frame landed

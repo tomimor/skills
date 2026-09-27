@@ -1,0 +1,17 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; background: #101114; color: #f2f2f2; }
+.header { position: sticky; top: 0; z-index: 1; display: flex; justify-content: space-between; align-items: center; padding: 14px 24px; background: #101114ee; border-bottom: 1px solid #2a2c33; }
+.header nav { display: flex; gap: 18px; }
+.header a { color: inherit; text-decoration: none; }
+.header a[aria-current='page'] { text-decoration: underline; }
+.brand { font-weight: 700; }
+.home { max-width: 720px; margin: 80px auto; padding: 0 24px; }
+.home h1 { font-size: 44px; }
+.button { display: inline-block; background: #f2f2f2; color: #101114; padding: 12px 24px; border-radius: 999px; text-decoration: none; }
+.collection { max-width: 1200px; margin: 32px auto; padding: 0 24px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+.card { background: #1b1d22; border-radius: 16px; padding: 12px; }
+.card-media { background: #24262d; border-radius: 12px; overflow: hidden; }
+.card-media img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }
+.card h2 { font-size: 16px; margin: 12px 4px 4px; }
+.card .price { margin: 0 4px 4px; color: #b9bcc6; }

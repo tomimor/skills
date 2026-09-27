@@ -14,9 +14,14 @@ from headless Chromium with software GL.
   `rootMargin` (300 px in the component) starts the import and download
   before the element scrolls in. In tests, models below the fold were not
   requested at all until scrolled near.
-- **Above the fold**, preload the GLB so it downloads in parallel with the
-  JS, and give the poster `fetchpriority="high"`:
-  `<link rel="preload" href="/models/hero.glb" as="fetch" crossorigin>`.
+- **Above the fold, poster first.** Give the poster `fetchpriority="high"`;
+  the component waits for it to load before importing three.js and fetching
+  the model, so neither competes with the LCP image. *Measured* on a
+  throttled phone (1.6 Mbps, 150 ms RTT, 4× CPU, median of 5): a 53 KB
+  poster painted at 612 ms alone, and at 864 ms with a 545 KB GLB preloaded
+  (856 ms with `fetchpriority="low"` on the preload).
+- **Preload only without a poster**, when the 3D view is the page's main
+  content: `<link rel="preload" href="/models/hero.glb" as="fetch" crossorigin>`.
   Verified: three.js's fetch reuses the preload, with one network request
   and no warning. Without `crossorigin`, Chrome skips the preload ("not used
   because the request credentials mode does not match") and three.js makes a
@@ -30,8 +35,10 @@ from headless Chromium with software GL.
   the main thread, which is fast but can still be a long task for tens of
   MB.
 - **Content Security Policy**: the Draco, KTX2, and Meshopt workers are all
-  created from blob URLs, and the decoders are WASM. A strict CSP needs
-  `worker-src blob:` and `script-src 'wasm-unsafe-eval'`.
+  created from blob URLs, the decoders are WASM, and GLTFLoader reads a
+  GLB's embedded images through blob URLs. A strict CSP needs
+  `worker-src blob:`, `script-src 'wasm-unsafe-eval'`, and `blob:` in
+  `connect-src` and `img-src`.
 - **The same model many times**: load once and clone. `SkeletonUtils.clone()`
   (from `three/addons/utils/SkeletonUtils.js`) handles skinned meshes; a
   plain `.clone()` breaks their skeleton binding. Clones share geometry and
@@ -103,21 +110,48 @@ page. Creating a 17th logs `Too many active WebGL contexts. Oldest context
 will be lost.`, and the oldest canvas goes blank. *(measured with 20
 contexts: the first 4 were lost)*
 
-- **Up to about 4 models on a page**: use the component as-is. Each mounts
-  lazily, pauses offscreen, and releases its context on removal.
-- **Galleries and grids**: don't create a renderer per card. Show posters,
-  and mount a live viewer only for the card the user engages with; dispose
-  it when they leave. Alternatively, draw every item with one shared
-  renderer on a fixed full-page canvas, using `setScissor` and
-  `setViewport` per element rectangle (three.js's `webgl_multiple_elements`
-  example).
-- **SPAs**: unmounting without `dispose()` and `forceContextLoss()` leaks
-  one context per navigation until the browser starts evicting.
+The component avoids this the way Google's `<model-viewer>` does: all
+viewers share one renderer.
+
+- **One context, shared resources.** A page-level renderer renders each
+  visible view in turn into the top-left corner of its canvas. The view then
+  copies that region into its own 2D canvas with `drawImage`, in the same
+  task, so `preserveDrawingBuffer` isn't needed.
+- **No copy for the common case.** When exactly one view is visible, the
+  shared canvas moves into that element and renders directly.
+- **Each URL loads once.** Views get `SkeletonUtils.clone()`s that share
+  geometry, materials, and textures, so a gallery pays GPU memory once per
+  distinct model. *Measured*: 24 cards over 4 models used 1 context and
+  fetched each GLB once, and offscreen cards rendered nothing.
+- **Release on unmount.** When the last view unmounts, the renderer is
+  disposed and its context force-lost after about 1 s; a remount within that
+  window reuses it.
+
+Hand-rolled code has two other options. The first is the scissor pattern:
+one fixed full-page canvas with `setScissor`/`setViewport` per element
+rectangle (three.js's `webgl_multiple_elements` example); it needs
+transparent element backgrounds and re-renders on scroll. The second is
+posters in the grid, with a live viewer mounted only for the card the user
+engages with.
+
+## Full-viewport scenes
+
+A hero canvas that fills a phone screen is the most expensive case: every
+pixel shades every frame.
+
+- Cap the pixel ratio lower on touch devices (1.5 instead of 2); on a 3×
+  phone that is 4× fewer pixels than native, with little visible loss on a
+  moving scene.
+- High-refresh screens run `requestAnimationFrame` at 90–120 Hz. For
+  ambient animation, skip frames so the scene updates at most 60 times per
+  second.
+- Decorative scenes don't need OrbitControls at all. Rotate the model
+  yourself, so nothing captures wheel or touch input.
 
 ## Memory and disposal
 
-Removing a model means releasing everything it allocated. In the order the
-component does it:
+Removing a model means releasing everything it allocated. For a single
+viewer that owns its renderer:
 
 1. Stop the loop (`setAnimationLoop(null)`), disconnect the observers, and
    remove event listeners.
@@ -128,10 +162,15 @@ component does it:
    first when it is an `ImageBitmap`: GLTFLoader decodes to ImageBitmaps,
    which its docs warn are not garbage-collected automatically. Dispose
    `skeleton` for skinned meshes.
-4. Dispose the environment map, then call `renderer.dispose()` and
-   `renderer.forceContextLoss()`. `dispose()` alone keeps the context alive
-   until garbage collection.
+4. Dispose the environment map's render target, then call
+   `renderer.dispose()` and `renderer.forceContextLoss()`. `dispose()` alone
+   keeps the context alive until garbage collection.
 5. Remove the canvas.
+
+With a shared renderer (the component), a view releases only what it owns:
+its controls, mixer, cloned skeletons, and 2D canvas. Shared model resources
+are reference-counted per URL and disposed with the last view that uses
+them, and the renderer goes with the last view on the page.
 
 **Leak check**: mount and unmount 10 times, then take a heap snapshot in
 DevTools (Memory panel) and search for `WebGLRenderer` and `ImageBitmap`;
@@ -148,3 +187,7 @@ the counts must not grow with each cycle. On a shared renderer,
   and oversized textures.
 - `three/addons/libs/stats.module.js` gives an FPS overlay for development
   builds only.
+- In production, `renderer.debug.checkShaderErrors = false` skips the
+  synchronous shader-status queries after each compile; three.js recommends
+  disabling it in production and keeping it on during development.
+  `<model-viewer>` turns it off outside debug mode.

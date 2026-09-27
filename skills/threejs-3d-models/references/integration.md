@@ -57,10 +57,16 @@ control:
 ```js
 const { model, requestRender } = el.viewer; // after the element's load event
 const part = model.getObjectByName('Seat'); // requires the "parts" optimize flags
-part.material = part.material.clone(); // glTF materials are shared
+part.material = part.material.clone(); // shared across parts and across viewers of this URL
 part.material.color.set('#2e5e4e');
 requestRender();
 ```
+
+`model` is this viewer's own clone of the scene graph, so transforms and
+visibility changes stay local. Geometry, materials, and textures are shared
+with every other viewer of the same URL, which is why the material is cloned
+first. `el.viewer.renderer` is shared by every viewer on the page, so leave
+its settings alone.
 
 To swap models, replace the element or set up a new one; `src` isn't
 observed after mount.
@@ -97,10 +103,11 @@ idioms instead of mixing in the custom element:
   that starts automatically and lasts more than 5 seconds. With
   `auto-rotate`, add a visible pause toggle that sets
   `el.viewer.controls.autoRotate = false` and calls `requestRender()`.
-- **Scrolling**: zoom is opt-in because OrbitControls' wheel handler calls
-  `preventDefault()` and captures page scroll. Touch keeps
-  `touch-action: pan-y`, so a model filling a phone screen doesn't trap
-  the page.
+- **Scrolling and page zoom**: zoom is opt-in because OrbitControls' wheel
+  handler calls `preventDefault()` and captures page scroll. Without zoom,
+  touch uses `touch-action: pan-y pinch-zoom`, so a model filling a phone
+  screen doesn't trap scrolling, and low-vision users can still pinch-zoom
+  the page over it. OrbitControls' default `touch-action: none` blocks both.
 
 ## SEO and sharing
 

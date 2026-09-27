@@ -1,0 +1,90 @@
+{
+  "skill_name": "threejs-3d-models",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I'm working on our shop's product page (Vite + vanilla JS, see index.html and src/). Our 3D artist exported the helmet straight out of Blender to public/models/helmet.glb. I'd like a 3D view in the product gallery, where the main photo is now, so customers can drag to rotate the helmet. Most of our traffic is on phones, so it has to load fast and must not mess up scrolling. Please make it production-ready.",
+      "expected_output": "product-page",
+      "files": [
+        "fixtures/product-page"
+      ],
+      "assertions": [
+        "The project builds with `vite build`",
+        "The page builds and the 3D view renders the helmet with no console errors",
+        "No three.js deprecation warnings in the console",
+        "The helmet the page downloads is optimized (< 2 MB transferred; the source export is 3.8 MB)",
+        "three.js is code-split out of the entry bundle (loaded with a dynamic import)",
+        "Layout is stable while the 3D view loads (CLS < 0.05)",
+        "Dragging horizontally rotates the helmet",
+        "Keyboard users can reach the 3D view and rotate it with arrow keys",
+        "The 3D view has an accessible name (aria-label / labelled role=img on the canvas or its container)",
+        "Mouse-wheel over the 3D view scrolls the page (zoom does not hijack scrolling)",
+        "The 3D view stops rendering when scrolled out of view",
+        "With prefers-reduced-motion, an idle 3D view stops rendering (no continuous draw loop)",
+        "A vertical swipe over the 3D view scrolls the page on a phone",
+        "A pinch over the 3D view zooms the page on a phone, as over a photo",
+        "The canvas pixel ratio is capped at 2 on a 3× display",
+        "Without WebGL, the gallery still shows a product image and nothing throws"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Our React app (Vite) has a collection page, src/Collection.jsx, with 24 product cards that currently show flat thumbnail images. Marketing wants every card to show its actual 3D model slowly rotating instead. The models are in public/models/ (src/products.js maps each product to its model). Users bounce between the Home and Collection views a lot, so it needs to stay smooth. Can you implement this?",
+      "expected_output": "react-gallery",
+      "files": [
+        "fixtures/react-gallery"
+      ],
+      "assertions": [
+        "The project builds with `vite build`",
+        "The collection renders 3D models in the cards with no console errors",
+        "No card in view is blank once models load (each shows a render or its thumbnail)",
+        "Scrolling through all 24 cards never exceeds 16 live WebGL contexts or triggers context eviction",
+        "Five Home ↔ Collection round trips cause no context evictions, and Home ends with at most 1 live context",
+        "The Home view stops rendering after navigating away from the collection",
+        "three.js is code-split out of the entry bundle (Home does not download it)",
+        "With prefers-reduced-motion, the collection stops animating (no continuous draw loop)"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Our landing page has a 3D hero with an animated fox (src/hero3d.js). People complain their phones get hot on this page, scrolling past the hero feels stuck on mobile, and there are warnings in the browser console. Can you review hero3d.js and fix these problems? Keep the fox and the general look.",
+      "expected_output": "legacy-hero",
+      "files": [
+        "fixtures/legacy-hero"
+      ],
+      "assertions": [
+        "The project builds with `vite build`",
+        "The hero renders with no console errors",
+        "No three.js deprecation warnings (Clock, RGBELoader, PCFSoftShadowMap, ...) in the console",
+        "The fox is visible in the hero",
+        "The fox animation still plays while the hero is visible (motion allowed)",
+        "Mouse-wheel over the hero scrolls the page (no zoom hijack)",
+        "Rendering stops when the hero is scrolled out of view",
+        "With prefers-reduced-motion, the hero stops animating (no continuous draw loop)",
+        "A vertical swipe over the hero scrolls the page on a phone",
+        "A pinch over the hero zooms the page on a phone",
+        "The canvas pixel ratio is capped at 2 on a 3× display"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Before launch, can you optimize the 3D models in models/ for the web and put the optimized files in public/models/ (same file names) so the site serves them? chair.glb powers the product configurator (src/configurator.js swaps finishes on individual parts by name), helmet.glb is a static hero model, and fox.glb is our animated mascot. Tell me how much we saved per file.",
+      "expected_output": "asset-pipeline",
+      "files": [
+        "fixtures/asset-pipeline"
+      ],
+      "assertions": [
+        "The project builds with `vite build`",
+        "All three optimized models exist in public/models/ with the original file names and parse as valid glTF",
+        "Each model shrank substantially (helmet < 1.5 MB, chair < 1 MB, fox < 110 KB)",
+        "chair.glb keeps all 13 configurator parts as separately named nodes",
+        "fox.glb keeps its 3 animation clips (Survey, Walk, Run)",
+        "No texture larger than 2048 px remains (the chair ships a 4096² texture)",
+        "Geometry is compressed or quantized in the helmet and fox (Meshopt, Draco, or KHR_mesh_quantization)",
+        "The site still loads and renders all three optimized models with no console errors",
+        "The configurator still finds every part and a finish change recolors the chair",
+        "The summary reports the saving for each of the three files"
+      ]
+    }
+  ]
+}

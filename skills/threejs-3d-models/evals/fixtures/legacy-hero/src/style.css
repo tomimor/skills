@@ -1,0 +1,13 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Georgia, serif; color: #2b2118; background: #f7efe4; }
+.hero { position: relative; min-height: 100vh; overflow: hidden; }
+#hero-3d { position: absolute; inset: 0; }
+.hero-copy { position: relative; max-width: 560px; padding: 18vh 32px 0; }
+.hero-copy h1 { font-size: clamp(36px, 6vw, 64px); line-height: 1.05; margin: 0 0 16px; }
+.button { display: inline-block; background: #2b2118; color: #f7efe4; padding: 14px 26px; border-radius: 999px; text-decoration: none; }
+.features, .pricing, .quote { max-width: 1100px; margin: 80px auto; padding: 0 32px; }
+.feature-grid, .plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+.feature-grid article, .plans article { background: #fffaf2; border-radius: 14px; padding: 20px; }
+blockquote { font-size: 28px; margin: 0; }
+cite { display: block; font-size: 16px; margin-top: 12px; }
+footer { padding: 60px 32px; text-align: center; }
