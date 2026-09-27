@@ -51,8 +51,9 @@ for (let y = 0; y < size; y++) {
 const woodJpeg = await sharp(pixels, { raw: { width: size, height: size, channels: 3 } }).jpeg({ quality: 92 }).toBuffer();
 const wood = doc.createMaterial('Oak')
   .setBaseColorTexture(doc.createTexture('oak_basecolor').setImage(woodJpeg).setMimeType('image/jpeg'))
+  .setMetallicFactor(0)
   .setRoughnessFactor(0.6);
-const fabric = doc.createMaterial('Fabric').setBaseColorFactor([0.85, 0.8, 0.7, 1]).setRoughnessFactor(0.9);
+const fabric = doc.createMaterial('Fabric').setBaseColorFactor([0.85, 0.8, 0.7, 1]).setMetallicFactor(0).setRoughnessFactor(0.9);
 
 const scene = doc.createScene('Scene');
 const chair = doc.createNode('Chair');
