@@ -32,18 +32,34 @@ Read these columns:
 
 ## Budgets
 
-Starting points for one model that must work on mid-range phones. Tighten
-them when several models share a page, and relax them for desktop-only
-tools.
+Targets for one model that must work on mid-range phones; the ceilings are
+Khronos's 3D Commerce publishing targets (below). Tighten them when several
+models share a page, and relax them for desktop-only tools.
 
-| Metric | Target | Hard ceiling | Notes |
+| Metric | Target | Ceiling | Notes |
 |---|---|---|---|
-| GLB transfer size | ≤ 1 MB (hero ≤ 2 MB) | 5 MB | Measured after gzip/brotli. A 2 MB model is a full LCP-sized payload on 4G. |
+| GLB transfer size | ≤ 1 MB (hero ≤ 2 MB) | 3 MB | Measured after gzip/brotli. 3 MB takes about 15 s on Lighthouse's Slow 4G (1.6 Mbps). |
 | Texture resolution | 1024–2048 px | 2048 px (4096 only as KTX2) | 2048² RGBA with mipmaps is 22 MB of VRAM; 4096² is 89 MB |
 | Textures per model | ≤ 5–8 | — | One set: baseColor, normal, ORM, and optionally emissive |
-| Draw calls (primitives) | ≤ 50 | ~200 | Check `renderer.info.render.calls` in the page |
-| Triangles | ≤ 100k | ~500k | Mobile vertex cost; use `--simplify` or retopology |
+| Draw calls (primitives) | < 20 on mobile, < 100 on desktop | 500 mobile, 800 desktop | Check `renderer.info.render.calls` in the page |
+| Triangles | ≤ 100k | 150k mobile, 250k desktop | Mobile vertex cost; use `--simplify` or retopology |
 | Materials | ≤ 10 | — | Each unique material means another shader compile |
+
+Khronos's [3D Commerce publishing targets](https://github.com/KhronosGroup/3DC-Asset-Creation/blob/main/asset-creation-guidelines-1.0/full-version/sec99_PublishingTargets/PublishingTargets.md)
+(v1.0, 2020, still current) are upper limits, sized for loading in 3 s on a
+10 Mb/s connection:
+
+| Publishing target | File | Triangles | Draw calls: target (max) | Textures |
+|---|---|---|---|---|
+| Single item, mobile AR or 3D web view | 3 MB | 150,000 | < 20 (500) | 2K |
+| Single item, desktop 3D web view | 3 MB | 250,000 | < 100 (800) | 2K |
+| One of several items (a web-based planning tool) | 1 MB | 40,000 | < 5 (50) | 1K |
+| Banner ad | 500 KB | 30,000 | < 5 (100) | 512 |
+
+Pages that show many models at once, such as galleries, are closest to the
+"one of several items" row, so budget each model from it. For a tiny preview,
+drop texture maps in reverse order of importance: emissive, then normal,
+then ORM, and keep base color.
 
 ## gltf-transform recipes
 
@@ -101,7 +117,7 @@ Fox sample it removed 16% of the triangles and visibly shifted poses. Pass
 | | Meshopt (`--compress meshopt`) | Draco (`--compress draco`) |
 |---|---|---|
 | Compresses | Geometry, animation keyframes, morph targets | Geometry only |
-| Decoder cost | 29 KB JS module (WASM inlined), no extra requests | 192 KB WASM + 58 KB wrapper (glTF build), fetched on first use |
+| Decoder cost | 29 KB JS module, 8 KB gzip (WASM inlined), no extra requests | 192 KB WASM + 58 KB wrapper (glTF build), 75 KB gzip, fetched on first use |
 | *Measured*, static DamagedHelmet (geometry only) | 3.77 → 3.40 MB | 3.77 → 3.29 MB |
 | *Measured*, animated Fox (raw → gzip) | 163 → 73 → 50 KB | 163 → 88 → 66 KB |
 | three.js setup | `loader.setMeshoptDecoder(MeshoptDecoder)` | `loader.setDRACOLoader(new DRACOLoader().setDecoderPath(DRACO_GLTF_CONFIG))` |
@@ -111,6 +127,21 @@ be followed by HTTP compression, and on animated models it wins outright.
 Draco can be slightly smaller for static, geometry-heavy meshes on a host
 that can't compress responses, but the 250 KB decoder usually costs more
 than it saves. The component registers both, so either format loads.
+
+Compression shrinks the download, not the rendering cost. Both codecs decode
+on the CPU before upload, so the GPU draws exactly the same mesh. For frame
+rate, cut triangles and draw calls (`simplify`, `join`, `instance`).
+
+**gltfpack** (from meshoptimizer) is a fast alternative for geometry:
+`npx gltfpack@1.3 -i in.glb -o out.glb -cc` quantizes, merges meshes on
+non-animated nodes, resamples animation to 30 Hz, and applies Meshopt.
+*Measured*: the Fox went from 163 to 59 KB and kept all 576 triangles and 3
+clips. `-si 0.5` targets half the triangles, within the `-se` error limit
+(1% by default). `-kn` and `-km` keep named nodes and materials for
+configurators. The npm build can't encode textures: `-tw` (WebP) and `-tc`
+(KTX2) need a native release, so keep gltf-transform for textures.
+`-cz` and `-ce khr` write the newer `KHR_meshopt_compression`, which r186's
+GLTFLoader reads alongside `EXT_meshopt_compression`.
 
 ## Textures: WebP/AVIF vs KTX2
 

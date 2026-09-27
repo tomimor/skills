@@ -16,6 +16,10 @@ renderer.toneMappingExposure = 1;
 - **`antialias: true`** applies MSAA to the default framebuffer only. With
   `EffectComposer` post-processing, the passes render into render targets:
   give the composer's target `samples: 4`, or add an FXAA/SMAA pass.
+- **Post-processing output**: end an `EffectComposer` chain with
+  `OutputPass`, which applies the renderer's tone mapping and sRGB
+  conversion. Without it the scene looks too dark; with the conversion
+  applied twice, too light.
 - **Pixel ratio**: capping at 2 is the standard trade-off. On a 3× phone,
   uncapped rendering fills 2.25× the pixels of 2× for no visible gain. Drop
   to 1.5 when frame times are high.
@@ -34,6 +38,8 @@ three.js manages color by default: it works in linear sRGB and outputs sRGB.
   own textures with `flipY = false`.
 - **Colors set in code** (`material.color.set('#c0392b')`) are read as sRGB
   and converted for you.
+- **HDR and EXR maps** come from `HDRLoader` and `EXRLoader` already tagged
+  `LinearSRGBColorSpace`; leave them as they are.
 - **Per-part edits**: glTF meshes that reference the same material share
   one `Material` instance. Clone it first
   (`part.material = part.material.clone()`), then dispose the clone when
@@ -43,10 +49,17 @@ three.js manages color by default: it works in linear sRGB and outputs sRGB.
 
 | Mapping | Use when |
 |---|---|
-| `NeutralToneMapping` (Khronos PBR Neutral) | Products and e-commerce. It keeps base colors' hue and saturation under ordinary lighting, so the swatch on screen matches the product. The component's default. |
-| `AgXToneMapping` | Dramatic or high-contrast lighting with bright highlights; desaturates gracefully (Blender's default view transform since 4.0) |
-| `ACESFilmicToneMapping` | A filmic look. Shifts hues and adds contrast; common in older code, so be deliberate about keeping it. |
+| `NeutralToneMapping` (Khronos PBR Neutral) | Products and e-commerce. Below a highlight threshold it only subtracts a small offset, so hues and saturation hold; only near-white highlights are compressed. The component's default. |
+| `AgXToneMapping` | Dramatic or high-contrast lighting with bright highlights. It desaturates (Blender's default view transform since 4.0). |
+| `ACESFilmicToneMapping` | A filmic look: more contrast and saturation, and the largest hue shifts. Common in older code, so be deliberate about keeping it. |
 | `NoToneMapping` | Unlit or stylized content; values above 1 clip |
+
+*Measured* by running r186's tone-mapping shader code on 13 product-like
+sRGB swatches, treated as linear radiance at exposure 1 and at half that:
+Neutral shifted hue by about 1° on average (6° at most) and kept chroma
+within 6%. AgX shifted hue 3.3° on average and kept 76–94% of chroma. ACES
+shifted hue 3–4° on average, up to 10°, and raised chroma by 7–10%. Real
+renders add lighting on top, so check the result against product photos.
 
 Adjust overall brightness with `renderer.toneMappingExposure` (the
 component's `exposure` attribute), not by adding lights.
@@ -88,8 +101,9 @@ scene.environment = hdr; // three.js builds the PMREM internally
 
 ## Shadows
 
-A shadow map re-renders the scene from the light each frame. For a single
-object:
+Each shadow-casting light re-renders every `castShadow` mesh inside its
+shadow camera, every frame by default; a point light does it six times, once
+per cube face. For a single object:
 
 1. **Best**: bake a soft contact shadow into a transparent PNG on a plane
    under the model. It's free at runtime and usually looks better.

@@ -260,6 +260,9 @@ Then check by hand what it can't see:
 
 ## Current APIs (outdated tutorials get these wrong)
 
+Checked against r186. For other versions, read the three.js
+[Migration Guide](https://github.com/mrdoob/three.js/wiki/Migration-Guide).
+
 | Outdated | Current three.js |
 |---|---|
 | `renderer.outputEncoding = sRGBEncoding`, `texture.encoding` | Removed. `outputColorSpace` defaults to `SRGBColorSpace`; set `texture.colorSpace = SRGBColorSpace` only on color textures you load yourself. |

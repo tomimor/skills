@@ -193,7 +193,7 @@ try {
     report(deprecations.length ? 'FAIL' : 'PASS', 'three.js deprecation warnings', deprecations.slice(0, 3).join(' | ') || 'none');
     report(d.log.http.length ? 'FAIL' : 'PASS', 'HTTP errors', d.log.http.slice(0, 5).join(', ') || 'none');
     const mb = d.log.glbBytes / 1024 / 1024;
-    report(mb > 5 ? 'FAIL' : mb > 2 ? 'WARN' : 'PASS', 'GLB weight', `${mb.toFixed(2)} MB of .glb downloaded (budget: ≤ 2 MB, ceiling 5 MB)`);
+    report(mb > 3 ? 'FAIL' : mb > 2 ? 'WARN' : 'PASS', 'GLB weight', `${mb.toFixed(2)} MB of .glb downloaded (target ≤ 2 MB; Khronos ceiling 3 MB)`);
     const cls = await d.page.evaluate(() => __gl.cls);
     report(cls > 0.1 ? 'FAIL' : cls > 0.02 ? 'WARN' : 'PASS', 'Layout shift', `CLS ${cls.toFixed(3)}`);
     const name = await d.page.evaluate(() => {
