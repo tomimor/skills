@@ -55,7 +55,7 @@ sources with Blender's glTF exporter; never load them in the browser.
 ```bash
 npx @gltf-transform/cli inspect model.glb --format md    # sizes, textures, VRAM, draw calls
 npx @gltf-transform/cli optimize model.glb model.opt.glb \
-  --compress meshopt --texture-compress webp --texture-size 2048
+  --compress meshopt --texture-compress webp --texture-size 1024
 ```
 
 The package is `@gltf-transform/cli`; `npx gltf-transform` fails because no
@@ -70,10 +70,16 @@ and flatten, join, instance, palette, simplify, and dedup all enabled.
 | Large or many textures, or mobile memory limits | `--texture-compress ktx2` (needs the KTX-Software `ktx` CLI on `PATH`) |
 
 The default `optimize` merged a test model's 12 named parts into 2 unnamed
-nodes. The parts flags kept all 12. Textures dominate most files. In the
-DamagedHelmet sample, compressing geometry saved 0.4 MB of 3.8 MB, and WebP
-textures took the file to 1.4 MB. Compare the result visually against the
+nodes. The parts flags kept all 12. Compare the result visually against the
 source, because simplification and texture compression are lossy.
+
+Textures dominate most files, so size them to the screen: a model needs
+roughly as many texture pixels as device pixels it covers, which is its CSS
+width × 2 at the capped pixel ratio. 1024 px covers phone views and gallery
+cards. Use 2048 px only for desktop heroes wider than about 500 CSS px that
+people inspect closely. On the DamagedHelmet sample (3.8 MB), 1024 px WebP
+gave 545 KB and 28 MB of texture memory, and 2048 px gave 1.44 MB and
+112 MB.
 
 Normal maps are the one texture where lossy WebP visibly costs quality: its
 chroma subsampling bends the stored normals. On DamagedHelmet's 2048 px normal

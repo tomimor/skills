@@ -64,7 +64,10 @@ then ORM, and keep base color.
 ## gltf-transform recipes
 
 ```bash
-# Static product or hero: Meshopt geometry, WebP textures, max 2048 px
+# Default: Meshopt geometry, WebP textures sized for phone views and gallery cards
+npx @gltf-transform/cli optimize in.glb out.glb --compress meshopt --texture-compress webp --texture-size 1024
+
+# Large desktop hero that people inspect closely: 2048 px, the optimize default
 npx @gltf-transform/cli optimize in.glb out.glb --compress meshopt --texture-compress webp
 
 # Parts addressed by name in code (configurators, clickable parts, per-part materials)
@@ -81,10 +84,10 @@ npx @gltf-transform/cli optimize tmp.glb out.glb --compress meshopt --texture-co
 
 # GPU-compressed textures (requires KTX-Software 4.4+ `ktx` CLI on PATH)
 npx @gltf-transform/cli optimize in.glb out.glb --compress meshopt --texture-compress ktx2
-
-# Mobile-first or small embeds
-npx @gltf-transform/cli optimize in.glb out.glb --compress meshopt --texture-compress webp --texture-size 1024
 ```
+
+`--texture-size` works with every recipe: 1024 for phone views and cards,
+2048 (the default) for large desktop heroes.
 
 What `optimize` does by default (4.5): it prunes, dedups, and welds; it
 flattens the scene graph; it joins meshes, including named ones; it
