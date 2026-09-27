@@ -123,9 +123,12 @@ viewers share one renderer.
   geometry, materials, and textures, so a gallery pays GPU memory once per
   distinct model. *Measured*: 24 cards over 4 models used 1 context and
   fetched each GLB once, and offscreen cards rendered nothing.
-- **Release on unmount.** When the last view unmounts, the renderer is
-  disposed and its context force-lost after about 1 s; a remount within that
-  window reuses it.
+- **Cache, then release.** A model stays cached for 60 s after its last view
+  unmounts, so an SPA route that comes back draws on its first frame.
+  *Measured*: a viewer re-added after 3 s drew in 8 ms with no new request or
+  context, against 355 ms plus a refetch and a new context without the
+  cache. The renderer is disposed and its context force-lost about 1 s after
+  the cache empties.
 
 Hand-rolled code has two other options. The first is the scissor pattern:
 one fixed full-page canvas with `setScissor`/`setViewport` per element
@@ -156,7 +159,13 @@ viewer that owns its renderer:
 1. Stop the loop (`setAnimationLoop(null)`), disconnect the observers, and
    remove event listeners.
 2. `controls.dispose()` removes its listeners and restores `touch-action`.
-   Then call `timer.dispose()` and `mixer.stopAllAction()`.
+   Then call `timer.dispose()` and `mixer.stopAllAction()`. OrbitControls
+   adds capture key listeners to `domElement.getRootNode()` and removes them
+   from the same call. If you dispose after the element left the DOM (a
+   custom element's `disconnectedCallback`, or some framework unmount
+   orders), that call returns the detached subtree. The listeners then stay
+   on `document` and keep the controls, and the whole removed subtree, alive.
+   Dispose while still connected, or remove them from the original root.
 3. Traverse the model. Dispose every `geometry`, every material, and every
    texture found on the material's properties. Call `texture.image.close()`
    first when it is an `ImageBitmap`: GLTFLoader decodes to ImageBitmaps,
@@ -169,13 +178,14 @@ viewer that owns its renderer:
 
 With a shared renderer (the component), a view releases only what it owns:
 its controls, mixer, cloned skeletons, and 2D canvas. Shared model resources
-are reference-counted per URL and disposed with the last view that uses
-them, and the renderer goes with the last view on the page.
+are reference-counted per URL and disposed 60 s after the last view that
+uses them, and the renderer goes about 1 s after the last model.
 
 **Leak check**: mount and unmount 10 times, then take a heap snapshot in
-DevTools (Memory panel) and search for `WebGLRenderer` and `ImageBitmap`;
-the counts must not grow with each cycle. On a shared renderer,
-`renderer.info.memory` should return to its baseline.
+DevTools (Memory panel) and search for `WebGLRenderer`, `ImageBitmap`, and
+`Detached` elements; the counts must not grow with each cycle. On a shared
+renderer, `renderer.info.memory` should stay flat across cycles, and return
+to its baseline once the model cache expires.
 
 ## Profiling tools
 

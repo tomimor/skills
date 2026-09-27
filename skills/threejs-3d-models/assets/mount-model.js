@@ -5,9 +5,10 @@
 // renders directly. When several are visible, they take turns rendering into
 // the shared canvas and copy their frame into their own 2D canvas. Galleries
 // of any size stay under the browser's cap on live WebGL contexts, and each
-// distinct model is uploaded to the GPU once. Framework wrappers can call
-// mountModel() from their mount/unmount hooks. This module pulls in three.js,
-// so always load it with a dynamic import().
+// distinct model is uploaded to the GPU once, and stays cached for a minute
+// after its last viewer unmounts so SPA navigation back to it is instant.
+// Framework wrappers can call mountModel() from their mount/unmount hooks.
+// This module pulls in three.js, so always load it with a dynamic import().
 import {
   AnimationClip,
   AnimationMixer,
@@ -38,7 +39,12 @@ const KEY_MOVES = {
   ArrowUp: [0, KEY_STEP],
   ArrowDown: [0, -KEY_STEP],
 };
-// Route changes unmount and remount views; keep the context that long.
+// Route changes unmount every view, and users come back. A parsed model (with
+// its GPU textures, buffers, and compiled shaders) stays cached this long after
+// its last view goes, so returning within the window draws on the first frame
+// instead of re-fetching, re-parsing, and re-uploading. The shared context is
+// released HUB_LINGER_MS after the last view and the last cached model are gone.
+const MODEL_LINGER_MS = 60_000;
 const HUB_LINGER_MS = 1000;
 
 const _vertex = new Vector3();
@@ -46,7 +52,7 @@ const _box = new Box3();
 
 let hub = null;
 let loader = null;
-const models = new Map(); // url -> { refs, promise }
+const models = new Map(); // url -> { refs, promise, expiry }
 
 // Decoders download on first use, and their workers are shared. Since r185
 // the Draco/Basis decoder URLs resolve through new URL(..., import.meta.url),
@@ -104,8 +110,14 @@ function createHub() {
   return h;
 }
 
+function releaseHubWhenIdle(h) {
+  if (hub !== h || h.views.size || models.size) return;
+  clearTimeout(h.lingering);
+  h.lingering = setTimeout(() => disposeHub(h), HUB_LINGER_MS);
+}
+
 function disposeHub(h) {
-  if (hub !== h || h.views.size) return;
+  if (hub !== h || h.views.size || models.size) return;
   hub = null;
   h.renderer.setAnimationLoop(null);
   h.visibility.disconnect();
@@ -181,14 +193,16 @@ function renderView(h, view) {
 }
 
 // Each URL is fetched and parsed once; views get clones that share geometry,
-// materials, and textures. Resources are disposed when the last view lets go.
+// materials, and textures. Resources are disposed MODEL_LINGER_MS after the
+// last view lets go, unless a new view picks the model up again first.
 function acquireModel(url, onProgress) {
   let entry = models.get(url);
   if (!entry) {
-    entry = { refs: 0, promise: getLoader(hub.renderer).loadAsync(url, onProgress) };
+    entry = { refs: 0, expiry: 0, promise: getLoader(hub.renderer).loadAsync(url, onProgress) };
     models.set(url, entry);
     entry.promise.catch(() => models.get(url) === entry && models.delete(url));
   }
+  clearTimeout(entry.expiry);
   entry.refs++;
   return entry.promise;
 }
@@ -196,8 +210,14 @@ function acquireModel(url, onProgress) {
 function releaseModel(url) {
   const entry = models.get(url);
   if (!entry || --entry.refs > 0) return;
+  entry.expiry = setTimeout(() => evictModel(url, entry), MODEL_LINGER_MS);
+}
+
+function evictModel(url, entry) {
+  if (models.get(url) !== entry || entry.refs > 0) return;
   models.delete(url);
   entry.promise.then((gltf) => disposeResources(gltf.scene), () => {});
+  if (hub) releaseHubWhenIdle(hub);
 }
 
 function disposeResources(root) {
@@ -286,6 +306,7 @@ export async function mountModel(container, options) {
   let model = null;
   let mixer = null;
   let orbit = null;
+  let orbitRoot = null; // the document (or shadow root) OrbitControls added its key listeners to
   let acquired = false;
   let shown = false;
   let disposed = false;
@@ -359,13 +380,21 @@ export async function mountModel(container, options) {
     h.resizes.unobserve(container);
     updateLoop(h);
     container.removeEventListener('keydown', onKeyDown);
-    orbit?.dispose();
+    if (orbit) {
+      orbit.dispose();
+      // OrbitControls.disconnect() removes its capture key listeners from domElement.getRootNode(),
+      // but this runs from disconnectedCallback, after removal, when that is the detached subtree.
+      // Left on the document, they keep the controls and the entire removed subtree alive: a whole
+      // page of DOM per SPA navigation.
+      orbitRoot.removeEventListener('keydown', orbit._interceptControlDown, { capture: true });
+      orbitRoot.removeEventListener('keyup', orbit._interceptControlUp, { capture: true });
+    }
     mixer?.stopAllAction();
     model?.traverse((object) => object.skeleton?.dispose()); // clones own only their skeletons
     if (acquired) releaseModel(src);
     canvas.remove();
     if (poster) poster.style.visibility = '';
-    if (!h.views.size) h.lingering = setTimeout(() => disposeHub(h), HUB_LINGER_MS);
+    releaseHubWhenIdle(h);
   }
 
   try {
@@ -389,8 +418,11 @@ export async function mountModel(container, options) {
     if (controls || autoRotate) {
       // On the container, so input works whichever canvas is on top.
       orbit = new OrbitControls(camera, container);
+      orbitRoot = container.getRootNode();
       orbit.enabled = controls;
-      orbit.enableDamping = true;
+      // Damping smooths drags. Without user input it only adds a frame-counted ease-out after
+      // auto-rotate stops (up to ~3 s of redraws for models in large units), so pausing lags.
+      orbit.enableDamping = controls;
       orbit.enablePan = false;
       orbit.enableZoom = zoom;
       // The default two-finger mode (dolly-pan) does nothing with zoom and pan off, so a second

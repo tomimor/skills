@@ -158,9 +158,11 @@ What the component guarantees (each item is covered by a browser test):
   an element comes within 300 px of the viewport and its poster has loaded.
   The initial cost is the 2 KB element.
 - One WebGL context for every viewer: a 24-card gallery ran on one context,
-  and each model URL was fetched, parsed, and uploaded once. The context is
-  released about 1 s after the last viewer unmounts, so route changes reuse
-  it.
+  and each model URL was fetched, parsed, and uploaded once.
+- Models stay cached for 60 s after their last viewer unmounts
+  (`MODEL_LINGER_MS`), so an SPA route that comes back draws its first frame
+  in milliseconds without refetching. The context is released about 1 s after
+  the cache empties.
 - The poster stays until the first frame is drawn, and stays permanently if
   WebGL or the model fails. Without WebGL 2, three.js isn't downloaded at
   all.
@@ -173,8 +175,9 @@ What the component guarantees (each item is covered by a browser test):
   make the model jump.
 - Framing fits the model's real vertices, skinned poses included, and
   resizing keeps the user's orbit angle.
-- Removing an element releases its model, closing ImageBitmaps once no
-  viewer uses the URL.
+- Removing an element releases everything it holds, including the document
+  key listeners OrbitControls leaves behind when disposed after removal.
+  Cached models are disposed, and their ImageBitmaps closed, when they expire.
 
 Framework wrappers (React, Vue, Svelte, Astro, Next.js) and R3F equivalents
 are in [references/integration.md](references/integration.md).

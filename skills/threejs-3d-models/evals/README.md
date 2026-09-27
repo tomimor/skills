@@ -46,10 +46,17 @@ and assertions are in `evals.json`, in the skill-creator format.
 
 ## Known limits
 
-- **Saturated.** In iteration 1, every run in both configurations passed
-  every assertion. The skill's measurable effect was cost: with-skill runs
-  took longer, mostly in self-written verification. Compare time and tokens
-  as well as pass rates, and add assertions where runs actually differ.
+- **Saturated.** In iterations 1 and 2, runs with and without the skill
+  each passed 44 or 45 of the 45 assertions. What differed was cost and the
+  component bugs the runs surfaced. With v1 of the skill, runs took 9%
+  longer and used 14% more tokens than without it, mostly writing their own
+  verification. With v2, which bundles the page checker, they took 8% less
+  time and 4% fewer tokens. Compare time and tokens as well as pass rates,
+  and add assertions where runs actually differ.
+- **Read the run reports.** Eval agents found real bugs in the skill's
+  component, such as the OrbitControls listener leak and the missing model
+  cache, and a misleading rule about normal maps. Each report's "Things to
+  know" section is worth a read after every iteration.
 - **Software GL.** Headless Chromium renders WebGL with SwiftShader, so the
   grader counts frames drawn and canvas pixels instead of frame rates.
   Parallel agents on a small machine stall pages for seconds; the grader
