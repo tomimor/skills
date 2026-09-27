@@ -75,8 +75,8 @@ npx @gltf-transform/cli optimize in.glb out.glb --compress meshopt --texture-com
 # Skinned or animated characters: keep every deforming vertex
 npx @gltf-transform/cli optimize in.glb out.glb --compress meshopt --texture-compress webp --simplify false
 
-# Lossless normal map first, then everything else without re-encoding textures
-npx @gltf-transform/cli webp in.glb tmp.glb --slots "normalTexture" --lossless true
+# Close-up hero: WebP for every texture except the normal map, then optimize without re-encoding
+npx @gltf-transform/cli webp in.glb tmp.glb --slots "{baseColorTexture,emissiveTexture,occlusionTexture,metallicRoughnessTexture}"
 npx @gltf-transform/cli optimize tmp.glb out.glb --compress meshopt --texture-compress false
 
 # GPU-compressed textures (requires KTX-Software 4.4+ `ktx` CLI on PATH)
@@ -160,10 +160,23 @@ Use WebP for a single modest model: no transcoder download, smallest files.
 Use KTX2 when textures are large (≥ 2048), numerous, or on memory-constrained
 mobile pages, and when upload stutter matters.
 
-- **Normal maps**: lossy WebP always subsamples chroma (4:2:0), and the
-  normal's X/Y live in color channels. Raising the quality doesn't remove the
-  lighting artifacts. Use lossless WebP (`--slots "normalTexture" --lossless
-  true`), KTX2 UASTC, or keep the original.
+- **Normal maps**: lossy WebP subsamples chroma (4:2:0), and a normal's X
+  and Y live in color channels, so compression bends normals. *Measured* on
+  DamagedHelmet's 2048 px normal map (a 506 KB JPEG), comparing decoded
+  normals with the source:
+
+  | Encoding | Size | Mean error | 95th percentile |
+  |---|---|---|---|
+  | WebP, default quality (80) | 103 KB | 0.96° | 3.0° |
+  | WebP, quality 95 | 352 KB | 0.66° | 1.6° |
+  | JPEG q90 without chroma subsampling (4:4:4) | 445 KB | 0.23° | 1.0° |
+  | WebP lossless | 1,662 KB | 0° | 0° |
+  | WebP, default quality, at 1024 px | 27 KB | 1.45° | 5.3° |
+
+  Default WebP suits models shown at phone or card size. For close-ups,
+  keep the source normal map (the recipe above: this helmet came out at
+  1.86 MB instead of 1.44 MB) or use KTX2 UASTC. Avoid lossless WebP for
+  detailed normal maps; it was 3× the size of the source JPEG.
 - **Small or flat textures**: lossless WebP can beat lossy. The Fox's 27 KB
   PNG became 18 KB lossless, but 34 KB with the default lossy setting.
 

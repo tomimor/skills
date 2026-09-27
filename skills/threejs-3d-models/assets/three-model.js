@@ -25,6 +25,22 @@ function posterSettled(img, signal) {
   });
 }
 
+// Probed once per page, and the probe context is released at once, so browsers
+// without WebGL 2 keep the poster without downloading three.js.
+let webgl2;
+function hasWebGL2() {
+  if (webgl2 === undefined) {
+    try {
+      const gl = document.createElement('canvas').getContext('webgl2');
+      webgl2 = Boolean(gl);
+      gl?.getExtension('WEBGL_lose_context')?.loseContext();
+    } catch {
+      webgl2 = false;
+    }
+  }
+  return webgl2;
+}
+
 class ThreeModel extends HTMLElement {
   #viewer = null;
   #abort = null;
@@ -62,6 +78,7 @@ class ThreeModel extends HTMLElement {
       // model downloading alongside it would delay it.
       await posterSettled(poster, abort.signal);
       abort.signal.throwIfAborted();
+      if (!hasWebGL2()) throw new Error('WebGL 2 is not available');
       const { mountModel } = await import('./mount-model.js');
       abort.signal.throwIfAborted();
       const exposure = Number.parseFloat(this.getAttribute('exposure'));

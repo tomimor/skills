@@ -75,12 +75,15 @@ DamagedHelmet sample, compressing geometry saved 0.4 MB of 3.8 MB, and WebP
 textures took the file to 1.4 MB. Compare the result visually against the
 source, because simplification and texture compression are lossy.
 
-Run per-texture passes, such as `gltf-transform webp --slots "normalTexture"
---lossless true`, before `optimize`, then give `optimize`
-`--texture-compress false`. Any CLI pass after `optimize` re-encodes Meshopt
-with weaker defaults: the Fox came out at 84 KB instead of 57 KB. Lossy WebP
-always subsamples chroma, so raising its quality doesn't fix normal-map
-artifacts. Use lossless or KTX2 UASTC for normals.
+Normal maps are the one texture where lossy WebP visibly costs quality: its
+chroma subsampling bends the stored normals. On DamagedHelmet's 2048 px normal
+map, default WebP went from 506 to 103 KB with a 1° mean error (3° at the
+95th percentile), while lossless WebP grew to 1.66 MB. At phone and card
+sizes the default is fine. For close-up heroes, keep the source normal map
+(recipe in [references/asset-pipeline.md](references/asset-pipeline.md)) or
+use KTX2 UASTC. Per-texture passes go before `optimize`, which then gets
+`--texture-compress false`: any CLI pass after `optimize` re-encodes Meshopt
+with weaker defaults (the Fox came out at 84 KB instead of 57 KB).
 
 Choose compression with
 [references/asset-pipeline.md](references/asset-pipeline.md). In short:
@@ -153,7 +156,8 @@ What the component guarantees (each item is covered by a browser test):
   released about 1 s after the last viewer unmounts, so route changes reuse
   it.
 - The poster stays until the first frame is drawn, and stays permanently if
-  WebGL or the model fails.
+  WebGL or the model fails. Without WebGL 2, three.js isn't downloaded at
+  all.
 - Draco and Basis decoders download only when a model needs them, and only
   once.
 - It renders only while a model moves (damping, auto-rotate, animation), and
