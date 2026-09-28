@@ -162,7 +162,7 @@
 
     <header>
       <h1>skills</h1>
-      <p class="tagline">55 agent skills I use daily across Cursor and Claude Code.</p>
+      <p class="tagline">56 agent skills I use daily across Cursor and Claude Code.</p>
       <p>
         <a class="cta primary" href="#install">Install</a>
         <a class="cta" href="https://github.com/tomimor/skills">View on GitHub</a>
@@ -437,6 +437,13 @@
           </div>
           <p>Apple’s approach to interface design and fluid, physical motion, translated for the web: gesture-driven UI, spring animations, drag/swipe/sheet interactions, momentum and interruptible transitions, translucent materials and depth, typography, reduced-motion, and the design foundations behind Apple-style interfaces. From <a href="https://github.com/emilkowalski/skill">emilkowalski/skill</a>.</p>
         </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/blueprint-animation/SKILL.md">blueprint-animation</a>
+            <span class="badge vendor">vendor</span>
+          </div>
+          <p>Explain UX decisions as one continuous blueprint animation of a single screen, in 3–6 numbered steps. <strong>Redesign</strong> rebuilds only what changes from Before to After; <strong>Explain</strong> annotates each module of one screen with what it is and why. Reproduces the Figma design 1:1 and ships timing, overlap, performance, and QA rules. Built for Claude Design (its <code>animations_v3</code> starter). v1.3.1, CC BY-NC 4.0 (non-commercial use only), from <a href="https://github.com/moguzbulbul/blueprint-animation">moguzbulbul/blueprint-animation</a>.</p>
+        </div>
       </div>
 
       <h3>Product, thinking &amp; writing</h3>
@@ -696,7 +703,7 @@
           <tr><td>Claude Code</td><td><code>~/.claude/skills/&lt;skill-name&gt;/</code></td></tr>
         </tbody>
       </table>
-      <p>Most GitHub-related skills need the <a href="https://cli.github.com/">GitHub CLI</a> (<code>gh</code>). <code>writing-voice</code>, <code>writing-google-style</code>, <code>teach</code>, and <code>remotion-best-practices</code> have no extra requirements (<code>writing-google-style</code> ships a scanner script that needs only <code>bash</code> and <code>awk</code>). <code>impeccable</code> downloads its self-contained launcher binary once on first run.</p>
+      <p>Most GitHub-related skills need the <a href="https://cli.github.com/">GitHub CLI</a> (<code>gh</code>). <code>writing-voice</code>, <code>writing-google-style</code>, <code>teach</code>, and <code>remotion-best-practices</code> have no extra requirements (<code>writing-google-style</code> ships a scanner script that needs only <code>bash</code> and <code>awk</code>). <code>impeccable</code> downloads its self-contained launcher binary once on first run. <code>blueprint-animation</code> is written for Claude Design: it builds on Claude Design’s <code>animations_v3</code> starter and reads values from the source Figma file.</p>
     </section>
 
     <footer>

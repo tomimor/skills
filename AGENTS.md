@@ -131,6 +131,16 @@ The `VENDOR_SKILLS` entry takes an optional 4th field listing which skills to li
 (and then fail `--check` because they are not in the catalogs). Pin the subset explicitly whenever you do not want
 all of them, e.g. `"emil:emilkowalski/skill:skills:review-animations,emil-design-eng"`.
 
+### Single-skill vendor repos
+
+Some repos are one skill, with `SKILL.md` at the repo root. Use `.` as the skills path and name the vendor after the
+skill: when the skills path itself holds a `SKILL.md`, `install.sh` links it as `skills/<name>`. Step 3's loop does not
+apply; the symlink is `ln -s ../vendor/<name> skills/<name>`.
+
+```
+"blueprint-animation:moguzbulbul/blueprint-animation:."
+```
+
 ### Vendor skill rules
 
 - **Never edit files inside `vendor/`**. Those are managed by the upstream repo. To make changes, contribute upstream or override with an own skill of the same name (own skills take priority over vendor symlinks).
@@ -150,8 +160,9 @@ This runs `git submodule update --remote --merge` and re-creates the symlinks. A
    silently undone the next time you run the script.
 2. Check whether upstream renamed or split a skill directory (`ls -l skills/` shows dangling symlinks). Re-point the
    symlink and update the `VENDOR_SKILLS` filter, the README row, and the `index.html` card to the new name.
-3. Refresh the "Vendor skills" table in `README.md` (version from the vendor's `plugin.json` or `SKILL.md`
-   frontmatter, or `main (<date>)` when there is none) and any version mentioned in that vendor's catalog rows.
+3. Refresh the "Vendor skills" table in `README.md` (version from the vendor's `plugin.json`, `SKILL.md`
+   frontmatter, or release tag, or `main (<date>)` when there is none) and any version mentioned in that vendor's
+   catalog rows.
 4. Run `./install.sh --check`, then commit:
 
 ```bash

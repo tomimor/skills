@@ -47,6 +47,7 @@ VENDOR_SKILLS=(
   "improve:shadcn/improve:skills"
   "emil:emilkowalski/skill:skills:review-animations,emil-design-eng,animation-vocabulary,apple-design"
   "cloudflare:cloudflare/skills:skills"
+  "blueprint-animation:moguzbulbul/blueprint-animation:."
 )
 
 TARGET_DIR=""
@@ -151,6 +152,8 @@ link_vendor_skills() {
   for entry in "${VENDOR_SKILLS[@]}"; do
     # Format: name:owner/repo:skills_subdir[:skill1,skill2,...]
     # The optional 4th field pins which skills to link; omit it to link them all.
+    # If skills_subdir itself holds a SKILL.md (a repo that is one skill, e.g.
+    # "."), it is linked as skills/<name>.
     local vendor_name repo skills_subdir skills_filter
     IFS=':' read -r vendor_name repo skills_subdir skills_filter <<< "$entry"
     local vendor_skills_path="$SCRIPT_DIR/vendor/$vendor_name/$skills_subdir"
@@ -167,7 +170,9 @@ link_vendor_skills() {
     fi
 
     local skill_dirs=()
-    if [[ -n "${skills_filter:-}" ]]; then
+    if [[ -f "$vendor_skills_path/SKILL.md" ]]; then
+      skill_dirs=("$vendor_skills_path/")
+    elif [[ -n "${skills_filter:-}" ]]; then
       local wanted name
       IFS=',' read -ra wanted <<< "$skills_filter"
       for name in "${wanted[@]}"; do
@@ -180,10 +185,16 @@ link_vendor_skills() {
     echo "  Linking $vendor_name skills (v$version)..."
     for skill_dir in "${skill_dirs[@]}"; do
       [[ -d "$skill_dir" ]] || continue
-      local skill_name
-      skill_name=$(basename "$skill_dir")
+      local skill_name rel_target
+      if [[ "$skill_dir" == "$vendor_skills_path/" ]]; then
+        skill_name="$vendor_name"
+        rel_target="../vendor/$vendor_name/$skills_subdir"
+        rel_target="${rel_target%/.}"
+      else
+        skill_name=$(basename "$skill_dir")
+        rel_target="../vendor/$vendor_name/$skills_subdir/$skill_name"
+      fi
       local link_path="$skills_dir/$skill_name"
-      local rel_target="../vendor/$vendor_name/$skills_subdir/$skill_name"
 
       if [[ -e "$link_path" ]] && [[ ! -L "$link_path" ]]; then
         echo "    Skipped $skill_name (local skill takes priority)"

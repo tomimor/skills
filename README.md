@@ -2,7 +2,7 @@
 
 # 🧠 skills
 
-[![Skills](https://img.shields.io/badge/skills-55-1f6feb?style=flat-square)](#skills)
+[![Skills](https://img.shields.io/badge/skills-56-1f6feb?style=flat-square)](#skills)
 [![Install](https://img.shields.io/badge/install-one%20command-22c55e?style=flat-square)](#install)
 
 </div>
@@ -84,6 +84,7 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 | 🟧 [emil-design-eng](skills/emil-design-eng/SKILL.md) | Build-time companion to `review-animations`: Emil Kowalski's design-engineering playbook for crafting interfaces that feel right — animation decision framework, component building, transforms, gestures, performance, a11y. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
 | 🟧 [animation-vocabulary](skills/animation-vocabulary/SKILL.md) | Reverse-lookup glossary that turns a vague description of a motion effect into its exact term ("the bouncy thing when a popover opens" → Pop in; "the iOS rubber-band scroll" → Rubber-banding). For naming an effect, not designing or building one. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
 | 🟧 [apple-design](skills/apple-design/SKILL.md) | Apple's approach to interface design and fluid, physical motion, translated for the web: gesture-driven UI, spring animations, drag/swipe/sheet interactions, momentum and interruptible transitions, translucent materials and depth, typography, reduced-motion, and the design foundations behind Apple-style interfaces. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
+| 🟧 [blueprint-animation](skills/blueprint-animation/SKILL.md) | Explain UX decisions as one continuous blueprint animation of a single screen, in 3–6 numbered steps. **Redesign** rebuilds only what changes from Before to After; **Explain** annotates each module of one screen with what it is and why. Reproduces the Figma design 1:1 and ships timing, overlap, performance, and QA rules. Built for Claude Design (its `animations_v3` starter). v1.3.1, CC BY-NC 4.0 (non-commercial use only), from [moguzbulbul/blueprint-animation](https://github.com/moguzbulbul/blueprint-animation). |
 
 ### 💡 Product, thinking & writing
 
@@ -149,6 +150,7 @@ Vendor skills are third-party packs tracked as git submodules under `vendor/` an
 | Remotion | [remotion-dev/skills](https://github.com/remotion-dev/skills) | v4.0.529 (2026-09-25) | `remotion-best-practices` (router that bundles the 11 per-topic skills) |
 | Emil Kowalski | [emilkowalski/skill](https://github.com/emilkowalski/skill) | main (2026-09-24) | `review-animations`, `emil-design-eng`, `animation-vocabulary`, `apple-design` — upstream also ships `animate`, `animate-expo`, `improve-animations`, `find-animation-opportunities`, `prototype`, `pick-ui-library`, `mobile-native`, `ask-sonner`, `write-swift`; add any of them to the `emil` entry in `VENDOR_SKILLS` to link it |
 | Cloudflare | [cloudflare/skills](https://github.com/cloudflare/skills) | v1.0.1 (2026-09-26) | All 14 skills (see [☁️ Cloudflare](#️-cloudflare)) |
+| Blueprint animation | [moguzbulbul/blueprint-animation](https://github.com/moguzbulbul/blueprint-animation) | v1.3.1 (2026-09-28) | `blueprint-animation` (the repo is one skill). CC BY-NC 4.0: non-commercial use only |
 
 **Update all vendors to their latest upstream:**
 
@@ -170,6 +172,8 @@ Vendor skills are third-party packs tracked as git submodules under `vendor/` an
      "<name>:<owner>/<repo>:<path-to-skills-dir>"
      # Optional 4th field pins which skills to link (comma-separated; omit to link them all):
      "emil:emilkowalski/skill:skills:review-animations,emil-design-eng"
+     # A repo that is itself one skill (SKILL.md at its root): use "." and it links as skills/<name>:
+     "blueprint-animation:moguzbulbul/blueprint-animation:."
    )
    ```
 3. Create the symlinks:
@@ -178,6 +182,7 @@ Vendor skills are third-party packs tracked as git submodules under `vendor/` an
      ln -sf "../vendor/<name>/<path-to-skills>/$(basename "$skill_dir")" "skills/$(basename "$skill_dir")"
    done
    ```
+   For a one-skill repo: `ln -s ../vendor/<name> skills/<name>`.
 
 </details>
 
@@ -222,7 +227,7 @@ Skills use the same `SKILL.md` format everywhere. The only difference is where t
 | Cursor | `~/.cursor/skills/<skill-name>/` |
 | Claude Code | `~/.claude/skills/<skill-name>/` |
 
-Most GitHub-related skills need the [GitHub CLI](https://cli.github.com/) (`gh`). `writing-voice`, `writing-google-style`, `teach`, and `remotion-best-practices` have no extra requirements — `writing-google-style` ships a scanner script, but it needs only `bash` and `awk`. `impeccable` downloads its self-contained launcher binary once on first run (no Node or other runtime needed).
+Most GitHub-related skills need the [GitHub CLI](https://cli.github.com/) (`gh`). `writing-voice`, `writing-google-style`, `teach`, and `remotion-best-practices` have no extra requirements — `writing-google-style` ships a scanner script, but it needs only `bash` and `awk`. `impeccable` downloads its self-contained launcher binary once on first run (no Node or other runtime needed). `blueprint-animation` is written for Claude Design: it builds on Claude Design's `animations_v3` starter and reads values from the source Figma file.
 
 ## License
 

@@ -13,3 +13,6 @@
 [submodule "vendor/cloudflare"]
 	path = vendor/cloudflare
 	url = https://github.com/cloudflare/skills
+[submodule "vendor/blueprint-animation"]
+	path = vendor/blueprint-animation
+	url = https://github.com/moguzbulbul/blueprint-animation
