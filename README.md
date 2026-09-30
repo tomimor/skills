@@ -2,7 +2,7 @@
 
 # 🧠 skills
 
-[![Skills](https://img.shields.io/badge/skills-56-1f6feb?style=flat-square)](#skills)
+[![Skills](https://img.shields.io/badge/skills-57-1f6feb?style=flat-square)](#skills)
 [![Install](https://img.shields.io/badge/install-one%20command-22c55e?style=flat-square)](#install)
 
 </div>
@@ -85,6 +85,7 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 | 🟧 [animation-vocabulary](skills/animation-vocabulary/SKILL.md) | Reverse-lookup glossary that turns a vague description of a motion effect into its exact term ("the bouncy thing when a popover opens" → Pop in; "the iOS rubber-band scroll" → Rubber-banding). For naming an effect, not designing or building one. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
 | 🟧 [apple-design](skills/apple-design/SKILL.md) | Apple's approach to interface design and fluid, physical motion, translated for the web: gesture-driven UI, spring animations, drag/swipe/sheet interactions, momentum and interruptible transitions, translucent materials and depth, typography, reduced-motion, and the design foundations behind Apple-style interfaces. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
 | 🟧 [blueprint-animation](skills/blueprint-animation/SKILL.md) | Explain UX decisions as one continuous blueprint animation of a single screen, in 3–6 numbered steps. **Redesign** rebuilds only what changes from Before to After; **Explain** annotates each module of one screen with what it is and why. Reproduces the Figma design 1:1 and ships timing, overlap, performance, and QA rules. Built for Claude Design (its `animations_v3` starter). v1.3.1, CC BY-NC 4.0 (non-commercial use only), from [moguzbulbul/blueprint-animation](https://github.com/moguzbulbul/blueprint-animation). |
+| 🟦 [pr-blueprint-animation](skills/pr-blueprint-animation/SKILL.md) | `blueprint-animation` for pull requests: turns a PR's frontend change into the same step-by-step blueprint animation, with no Figma or Claude Design needed. Every UI frame is a real render of the PR's code (base, one state per step, head) captured with Playwright; the blueprint is drawn from the captured DOM, and the construct motion comes from matching elements between states. Ships scripts to resolve the PR (with or without `gh`), capture, diff states, build a self-contained HTML player and render MP4 + GIF with pixel checks on every rest frame. Adapted from [moguzbulbul/blueprint-animation](https://github.com/moguzbulbul/blueprint-animation); CC BY-NC 4.0, non-commercial use only. |
 
 ### 💡 Product, thinking & writing
 
@@ -227,8 +228,8 @@ Skills use the same `SKILL.md` format everywhere. The only difference is where t
 | Cursor | `~/.cursor/skills/<skill-name>/` |
 | Claude Code | `~/.claude/skills/<skill-name>/` |
 
-Most GitHub-related skills need the [GitHub CLI](https://cli.github.com/) (`gh`). `writing-voice`, `writing-google-style`, `teach`, and `remotion-best-practices` have no extra requirements — `writing-google-style` ships a scanner script, but it needs only `bash` and `awk`. `impeccable` downloads its self-contained launcher binary once on first run (no Node or other runtime needed). `blueprint-animation` is written for Claude Design: it builds on Claude Design's `animations_v3` starter and reads values from the source Figma file.
+Most GitHub-related skills need the [GitHub CLI](https://cli.github.com/) (`gh`). `writing-voice`, `writing-google-style`, `teach`, and `remotion-best-practices` have no extra requirements — `writing-google-style` ships a scanner script, but it needs only `bash` and `awk`. `impeccable` downloads its self-contained launcher binary once on first run (no Node or other runtime needed). `blueprint-animation` is written for Claude Design: it builds on Claude Design's `animations_v3` starter and works best from the source Figma file (it falls back to screenshots and asks for the values it can't read). `pr-blueprint-animation` needs Node, Playwright with Chromium, and ffmpeg for MP4 + GIF.
 
 ## License
 
-[MIT](LICENSE) · built by [@tomimor](https://github.com/tomimor)
+[MIT](LICENSE) · built by [@tomimor](https://github.com/tomimor). Exception: `skills/pr-blueprint-animation/` adapts CC BY-NC 4.0 material and is licensed [CC BY-NC 4.0](skills/pr-blueprint-animation/LICENSE) (non-commercial use only).

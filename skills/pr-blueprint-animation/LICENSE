@@ -1,0 +1,31 @@
+pr-blueprint-animation
+
+This skill is an adaptation of "Blueprint Before/After" (blueprint-animation)
+by Oğuz (@moguzbulbul, https://oguz.design):
+https://github.com/moguzbulbul/blueprint-animation
+Copyright (c) 2026 Oğuz. Licensed under the Creative Commons
+Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0).
+
+This adaptation is licensed under the same license, CC BY-NC 4.0:
+https://creativecommons.org/licenses/by-nc/4.0/legalcode
+
+Non-commercial use only. Commercial use needs written permission from the
+original author. The MIT license at the root of this repository does not
+apply to this directory.
+
+The material is provided as-is, with no warranties of any kind; see Section 5
+of the license, "Disclaimer of Warranties and Limitation of Liability".
+
+Changes from the original:
+- Works from a pull request's code instead of Figma files in Claude Design:
+  every UI frame is a Playwright screenshot of the app at the PR's base, after
+  each step, and at its head.
+- Adds scripts that resolve the PR, capture screenshots and DOM geometry, diff
+  states, build a self-contained HTML player, and render MP4/GIF with
+  rest-frame pixel checks.
+- Replaces Claude Design's animations_v3 engine with a standalone player, and
+  ports the example scene's blueprint kit from React/JSX to SVG strings.
+- Draws the blueprint from captured DOM geometry and derives the construct
+  motion by matching elements between consecutive states.
+- Rewrites the workflow (SKILL.md); references/blueprint-rules.md adapts the
+  original's sections 2-4 and 6-8.

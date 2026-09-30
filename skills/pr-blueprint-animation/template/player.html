@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blueprint animation</title>
+<style>
+  html, body { margin: 0; background: #F2F2F2; }
+  body { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Liberation Sans", sans-serif; color: #1F2328; -webkit-font-smoothing: antialiased; }
+  body:not(.render) { min-height: 100vh; box-sizing: border-box; padding: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  #bp-root { display: contents; }
+  #bp-wrap { position: relative; overflow: hidden; }
+  #bp-stage { position: relative; overflow: hidden; background: #F2F2F2; transform-origin: top left; }
+  #bp-app { position: absolute; transform-origin: 50% 50%; }
+  #bp-card { position: absolute; inset: 0; overflow: hidden; background: #fff; border-radius: 24px; box-shadow: 0 0 0 1px #E0E0E0; }
+  #bp-card .bp-state { position: absolute; left: 0; top: 0; display: block; }
+  #bp-svg { position: absolute; left: 0; top: 0; overflow: visible; }
+  #bp-band { position: absolute; }
+  #bp-bar { display: flex; align-items: center; gap: 12px; width: min(100%, 960px); margin-top: 16px; font-size: 13px; color: #57606A; }
+  #bp-bar button { font: inherit; border: 1px solid #D0D7DE; background: #fff; color: #1F2328; border-radius: 999px; height: 32px; min-width: 32px; padding: 0 10px; cursor: pointer; }
+  #bp-bar button:hover { border-color: #0B8FC2; color: #0B8FC2; }
+  #bp-play { width: 40px; }
+  #bp-time { font-variant-numeric: tabular-nums; min-width: 92px; }
+  #bp-seek { flex: 1; min-width: 80px; accent-color: #0B8FC2; }
+  #bp-steps { display: flex; gap: 6px; }
+  #bp-steps button { font: 600 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .bp-error { margin: 24px; padding: 16px; max-width: 900px; background: #fff; border: 1px solid #D1242F; border-radius: 8px; color: #D1242F; font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; white-space: pre-wrap; }
+  @media (max-width: 640px) { #bp-steps { display: none; } }
+</style>
+</head>
+<body>
+<div id="bp-root"></div>
+<!--BP:INLINE-->
+</body>
+</html>

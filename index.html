@@ -162,7 +162,7 @@
 
     <header>
       <h1>skills</h1>
-      <p class="tagline">56 agent skills I use daily across Cursor and Claude Code.</p>
+      <p class="tagline">57 agent skills I use daily across Cursor and Claude Code.</p>
       <p>
         <a class="cta primary" href="#install">Install</a>
         <a class="cta" href="https://github.com/tomimor/skills">View on GitHub</a>
@@ -444,6 +444,13 @@
           </div>
           <p>Explain UX decisions as one continuous blueprint animation of a single screen, in 3–6 numbered steps. <strong>Redesign</strong> rebuilds only what changes from Before to After; <strong>Explain</strong> annotates each module of one screen with what it is and why. Reproduces the Figma design 1:1 and ships timing, overlap, performance, and QA rules. Built for Claude Design (its <code>animations_v3</code> starter). v1.3.1, CC BY-NC 4.0 (non-commercial use only), from <a href="https://github.com/moguzbulbul/blueprint-animation">moguzbulbul/blueprint-animation</a>.</p>
         </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/pr-blueprint-animation/SKILL.md">pr-blueprint-animation</a>
+            <span class="badge own">own</span>
+          </div>
+          <p><code>blueprint-animation</code> for pull requests: turns a PR’s frontend change into the same step-by-step blueprint animation, with no Figma or Claude Design needed. Every UI frame is a real render of the PR’s code (base, one state per step, head) captured with Playwright; the blueprint is drawn from the captured DOM, and the construct motion comes from matching elements between states. Ships scripts to resolve the PR (with or without <code>gh</code>), capture, diff states, build a self-contained HTML player and render MP4 + GIF with pixel checks on every rest frame. Adapted from <a href="https://github.com/moguzbulbul/blueprint-animation">moguzbulbul/blueprint-animation</a>; CC BY-NC 4.0, non-commercial use only.</p>
+        </div>
       </div>
 
       <h3>Product, thinking &amp; writing</h3>
@@ -703,7 +710,7 @@
           <tr><td>Claude Code</td><td><code>~/.claude/skills/&lt;skill-name&gt;/</code></td></tr>
         </tbody>
       </table>
-      <p>Most GitHub-related skills need the <a href="https://cli.github.com/">GitHub CLI</a> (<code>gh</code>). <code>writing-voice</code>, <code>writing-google-style</code>, <code>teach</code>, and <code>remotion-best-practices</code> have no extra requirements (<code>writing-google-style</code> ships a scanner script that needs only <code>bash</code> and <code>awk</code>). <code>impeccable</code> downloads its self-contained launcher binary once on first run. <code>blueprint-animation</code> is written for Claude Design: it builds on Claude Design’s <code>animations_v3</code> starter and reads values from the source Figma file.</p>
+      <p>Most GitHub-related skills need the <a href="https://cli.github.com/">GitHub CLI</a> (<code>gh</code>). <code>writing-voice</code>, <code>writing-google-style</code>, <code>teach</code>, and <code>remotion-best-practices</code> have no extra requirements (<code>writing-google-style</code> ships a scanner script that needs only <code>bash</code> and <code>awk</code>). <code>impeccable</code> downloads its self-contained launcher binary once on first run. <code>blueprint-animation</code> is written for Claude Design: it builds on Claude Design’s <code>animations_v3</code> starter and works best from the source Figma file (it falls back to screenshots and asks for the values it can’t read). <code>pr-blueprint-animation</code> needs Node, Playwright with Chromium, and ffmpeg for MP4 + GIF.</p>
     </section>
 
     <footer>

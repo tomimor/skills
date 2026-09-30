@@ -39,6 +39,7 @@ SKILLS=(
   "share-ready:Audit + fully configure link previews (OG, Twitter cards) and browser presentation (favicons, manifest), generate assets, verify locally"
   "seo-geo-audit:Technical SEO/GEO audit + fixes (crawlability, sitemaps, robots + AI crawlers, canonicals, structured data, rendering) with a scripted live-site auditor"
   "writing-google-style:Write and review developer docs in Google style, with a fence-aware violation scanner"
+  "pr-blueprint-animation:Blueprint animation of a PR's UI change, from real renders of each step -> MP4/GIF + HTML player (CC BY-NC)"
 )
 
 VENDOR_SKILLS=(
