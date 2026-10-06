@@ -228,7 +228,7 @@ Skills use the same `SKILL.md` format everywhere. The only difference is where t
 | Cursor | `~/.cursor/skills/<skill-name>/` |
 | Claude Code | `~/.claude/skills/<skill-name>/` |
 
-Most GitHub-related skills need the [GitHub CLI](https://cli.github.com/) (`gh`). `writing-voice`, `writing-google-style`, `teach`, and `remotion-best-practices` have no extra requirements — `writing-google-style` ships a scanner script, but it needs only `bash` and `awk`. `impeccable` downloads its self-contained launcher binary once on first run (no Node or other runtime needed). `blueprint-animation` is written for Claude Design: it builds on Claude Design's `animations_v3` starter and works best from the source Figma file (it falls back to screenshots and asks for the values it can't read). `pr-blueprint-animation` needs Node, Playwright with Chromium, and ffmpeg for MP4 + GIF.
+Most GitHub-related skills need the [GitHub CLI](https://cli.github.com/) (`gh`). `writing-voice`, `writing-google-style`, `teach`, and `remotion-best-practices` have no extra requirements — `writing-google-style` ships a scanner script, but it needs only `bash` and `awk`. `impeccable` downloads its self-contained launcher binary once on first run (no Node or other runtime needed). `blueprint-animation` is written for Claude Design: it builds on Claude Design's `animations_v3` starter and works best from the source Figma file (it falls back to screenshots and asks for the values it can't read). `pr-blueprint-animation` needs Node, Playwright 1.45+ with Chromium, and ffmpeg for MP4 + GIF.
 
 ## License
 

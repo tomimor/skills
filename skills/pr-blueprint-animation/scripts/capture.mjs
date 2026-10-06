@@ -5,16 +5,18 @@
 //   node capture.mjs --url http://localhost:4400/settings/members --out work/states/s0
 //     [--viewport 1440x900]           the real UI is shown 1:1 at this size
 //     [--time 2026-01-01T12:00:00Z]   frozen Date.now(); "real" to keep the clock
-//     [--setup setup.mjs]             module whose default export(page) logs in, opens a menu...
+//     [--setup setup.mjs]             module whose default export (page, { advance }) logs in, opens a menu...
 //     [--wait "<selector>"]           wait until this is visible
 //     [--scroll "<selector>" | <y>]   scroll before capturing
 //     [--hide "<sel>,<sel>"]          visibility:hidden for dev badges, cookie banners...
 //     [--wait-until networkidle|load]  use load when the app long-polls
 //     [--settle 400] [--color-scheme light|dark] [--timeout 60000]
+// Waits for the dev server to answer (up to --timeout), so it can run right
+// after the server is started.
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { die, launch, loadPlaywright, parseArgs } from './lib.mjs';
+import { die, launch, parseArgs } from './lib.mjs';
 
 const args = parseArgs(process.argv.slice(2), {
   url: '', out: '', viewport: '1440x900', time: '2026-01-01T12:00:00Z', setup: '', wait: '', scroll: '',
@@ -24,20 +26,44 @@ if (!args.url || !args.out) die('usage: capture.mjs --url <url> --out <dir/name>
 const [vw, vh] = args.viewport.split('x').map(Number);
 if (!vw || !vh) die(`bad --viewport ${args.viewport} (expected WIDTHxHEIGHT)`);
 const timeout = +args.timeout;
+const frozen = args.time !== 'real';
+if (frozen && Number.isNaN(Date.parse(args.time))) die(`bad --time ${args.time} (an ISO date, or "real")`);
 
 // Runs in the page. Collects boxes (visible background, border or shadow),
-// controls, images, divider rules and text runs, in viewport coordinates.
+// controls, images, rules (dividers, one-sided borders) and text runs, in
+// viewport coordinates. Elements inside an overlay that covers other content
+// (an open menu, a dialog, a sticky bar) get z > 0; the overlay itself is a
+// box with oc: 1, and the kit hides lower layers under it.
 function extract() {
   const W = innerWidth, H = innerHeight;
   const rnd = v => Math.round(v * 2) / 2;
   const norm = s => (s || '').replace(/\s+/g, ' ').trim();
   const cache = new Map();
   const css = el => { let c = cache.get(el); if (!c) { c = getComputedStyle(el); cache.set(el, c); } return c; };
+
+  // Any CSS colour (rgb(), oklch(), color-mix(), color(display-p3 ...)) as
+  // sRGB, read back from a 1x1 canvas.
+  const cv = document.createElement('canvas');
+  cv.width = cv.height = 1;
+  const cx = cv.getContext('2d', { willReadFrequently: true });
+  const colors = new Map();
   const rgba = c => {
-    const m = /rgba?\(([^)]+)\)/.exec(c || '');
-    if (!m) return null;
-    const p = m[1].split(/[\s,/]+/).filter(Boolean).map(parseFloat);
-    return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 };
+    if (!c) return null;
+    if (colors.has(c)) return colors.get(c);
+    let p = null;
+    const m = /^rgba?\(([\d.\s,/]+)\)$/.exec(c);
+    if (m) {
+      const v = m[1].split(/[\s,/]+/).filter(Boolean).map(parseFloat);
+      p = { r: v[0], g: v[1], b: v[2], a: v.length > 3 ? v[3] : 1 };
+    } else if (CSS.supports('color', c)) {
+      cx.clearRect(0, 0, 1, 1);
+      cx.fillStyle = c;
+      cx.fillRect(0, 0, 1, 1);
+      const d = cx.getImageData(0, 0, 1, 1).data;
+      p = { r: d[0], g: d[1], b: d[2], a: d[3] / 255 };
+    }
+    colors.set(c, p);
+    return p;
   };
   const alpha = c => { const p = rgba(c); return p ? p.a : 0; };
   const ckey = c => { const p = rgba(c); return p && p.a > 0.02 ? `${Math.round(p.r)},${Math.round(p.g)},${Math.round(p.b)},${Math.round(p.a * 100) / 100}` : ''; };
@@ -49,9 +75,10 @@ function extract() {
     return '255,255,255,1';
   };
   // Intersect with clipping ancestors (from `from`, inclusive); drop what is
-  // off screen or visually hidden (sr-only, clip: rect(0 0 0 0)).
+  // off screen or visually hidden (sr-only, clip: rect(0 0 0 0)). Text must be
+  // at least 2 px both ways; other elements only one way, so 1 px dividers stay.
   const zeroClip = c => (/^rect\(0px,? 0px,? 0px,? 0px\)$/.test(c.clip) && c.position !== 'static') || /^inset\(50%/.test(c.clipPath);
-  const clip = (from, rc) => {
+  const clip = (from, rc, strict) => {
     let x1 = rc.left, y1 = rc.top, x2 = rc.right, y2 = rc.bottom;
     for (let p = from; p && p !== document.body && p !== document.documentElement; p = p.parentElement) {
       const c = css(p);
@@ -63,15 +90,101 @@ function extract() {
       }
       if (c.position === 'fixed') break;
     }
-    if (x2 - x1 < 2 || y2 - y1 < 2 || x2 <= 0 || y2 <= 0 || x1 >= W || y1 >= H) return null;
-    return { x: x1, y: y1, w: x2 - x1, h: y2 - y1 };
+    const w = x2 - x1, h = y2 - y1;
+    if (w <= 0 || h <= 0 || x2 <= 0 || y2 <= 0 || x1 >= W || y1 >= H) return null;
+    if (strict ? w < 2 || h < 2 : w < 2 && h < 2) return null;
+    return { x: x1, y: y1, w, h };
   };
 
   const CTL = 'button,input,select,textarea,[role=button],[role=tab],[role=menuitem],[role=checkbox],[role=radio],[role=switch],[role=combobox],[role=option],[role=slider]';
   const SKIP = new Set(['script', 'style', 'noscript', 'template', 'link', 'meta', 'title', 'br', 'wbr', 'option', 'source', 'track', 'datalist']);
   const isCtl = el => el.matches(CTL) && !(el.tagName === 'INPUT' && el.type === 'hidden');
+  const isImg = (el, c) => /^(img|svg|canvas|video|picture)$/i.test(el.tagName) || el.getAttribute('role') === 'img' || /url\(/.test(c.backgroundImage);
+
+  // Overlays: positioned layers with an opaque background that sit on top of
+  // content outside their own subtree (menus, popovers, dialogs, sticky bars).
+  const positioned = new Map();
+  const inLayer = el => {
+    if (!el || el === document.body) return false;
+    if (positioned.has(el)) return positioned.get(el);
+    const v = /^(fixed|absolute|sticky)$/.test(css(el).position) || inLayer(el.parentElement);
+    positioned.set(el, v);
+    return v;
+  };
+  const paints = el => {
+    const c = css(el);
+    if (alpha(c.backgroundColor) > 0.04 || isImg(el, c) || isCtl(el)) return true;
+    if (['Top', 'Right', 'Bottom', 'Left'].some(s => parseFloat(c[`border${s}Width`]) > 0 && alpha(c[`border${s}Color`]) > 0.08)) return true;
+    for (const t of el.childNodes) if (t.nodeType === 3 && /\S/.test(t.data)) return true;
+    return false;
+  };
+  const occ = new Set();
+  const inOcc = el => { for (let p = el.parentElement; p; p = p.parentElement) if (occ.has(p)) return true; return false; };
+  for (const el of document.body.querySelectorAll('*')) {
+    if (SKIP.has(el.tagName.toLowerCase()) || !inLayer(el) || alpha(css(el).backgroundColor) < 0.85 || inOcc(el)) continue;
+    const rc = el.getBoundingClientRect();
+    if (rc.width < 8 || rc.height < 8 || !visible(el)) continue;
+    const r = clip(el.parentElement, rc, true);
+    if (!r) continue;
+    let covers = false;
+    for (const [fx, fy] of [[0.5, 0.5], [0.15, 0.15], [0.85, 0.15], [0.15, 0.85], [0.85, 0.85]]) {
+      const stack = document.elementsFromPoint(r.x + r.w * fx, r.y + r.h * fy);
+      const i = stack.indexOf(el);
+      if (i < 0) continue;
+      if (stack.slice(i + 1).some(s => !s.contains(el) && !el.contains(s) && paints(s))) { covers = true; break; }
+    }
+    if (covers) occ.add(el);
+  }
+  const zs = new Map();
+  const zOf = el => {
+    if (!el || el === document.body) return 0;
+    if (zs.has(el)) return zs.get(el);
+    const z = zOf(el.parentElement) + (occ.has(el) ? 1 : 0);
+    zs.set(el, z);
+    return z;
+  };
+
+  // Groups: the row or list item an element belongs to. The kit uses them to
+  // keep repeated cells (a role pill, an Edit button) with their own row.
+  const ITEM = 'tr,li,[role=row],[role=listitem],[role=option],[role=treeitem],[role=menuitem],[role=menuitemcheckbox],[role=menuitemradio],[role=article]';
+  const reps = new Map();
+  const repeated = el => {
+    const p = el.parentElement;
+    if (!p || p.children.length < 3 || /^(TD|TH)$/.test(el.tagName)) return false;
+    let m = reps.get(p);
+    if (!m) {
+      const by = new Map();
+      for (const ch of p.children) { const k = `${ch.tagName}|${ch.getAttribute('class') || ''}`; if (!by.has(k)) by.set(k, []); by.get(k).push(ch); }
+      m = new Map();
+      // Stacked repeats only: cells side by side in one row are not rows.
+      for (const [k, list] of by) m.set(k, list.length >= 3 && new Set(list.slice(0, 40).map(ch => Math.round(ch.getBoundingClientRect().top))).size >= 2);
+      reps.set(p, m);
+    }
+    return m.get(`${el.tagName}|${el.getAttribute('class') || ''}`) || false;
+  };
+  const gids = new Map();
+  let gN = 0;
+  const groupOf = el => {
+    for (let p = el; p && p !== document.body; p = p.parentElement) {
+      if (p.matches(ITEM) || repeated(p)) {
+        if (!gids.has(p)) gids.set(p, ++gN);
+        return gids.get(p);
+      }
+    }
+    return 0;
+  };
+
+  // Keys: data-bp, data-testid, aria-label or a hand-written id, else the
+  // element's text. Framework-generated ids (:r1:, radix-:r1:, mui-12) are
+  // skipped. Elements with neither get a key from their tag and longest class
+  // and an: 1, so the kit pairs them by place, not by key.
+  const genId = id => /[:«»]|^_r_|\d/.test(id);
   const explicit = el => el.getAttribute('data-bp') || el.getAttribute('data-testid') || el.getAttribute('aria-label')
-    || (el.id && !/^:|^[0-9a-f-]{16,}$|[0-9]{4,}/i.test(el.id) ? el.id : '');
+    || (el.id && !genId(el.id) ? el.id : '');
+  const anon = el => {
+    const cls = (el.getAttribute('class') || '').split(/\s+/).filter(s => s && s.length <= 32).sort((p, q) => q.length - p.length)[0];
+    return el.tagName.toLowerCase() + (cls ? `.${cls}` : '');
+  };
   const counts = new Map();
   const keyed = base => { const k = (counts.get(base) || 0) + 1; counts.set(base, k); return k > 1 ? `${base}~${k}` : base; };
   const firstLine = el => norm((el.innerText || '').split('\n').find(s => s.trim()) || '').slice(0, 32);
@@ -80,6 +193,16 @@ function extract() {
     const x = parseFloat(v) || 0;
     return Math.min(v.endsWith('%') ? (x / 100) * Math.min(w, h) : x, h / 2, w / 2);
   };
+  // Shared fields; zero values are left out to keep the JSON small.
+  const tags = (rec, el, an) => {
+    const z = zOf(el), g = groupOf(el);
+    if (z) rec.z = z;
+    if (g) rec.g = g;
+    if (an) rec.an = 1;
+    return rec;
+  };
+  const NO_TEXT = /^(checkbox|radio|range|color|file|image)$/;
+  const masked = (el, c) => el.type === 'password' || (c.webkitTextSecurity && c.webkitTextSecurity !== 'none');
   const out = [];
 
   for (const el of document.body.querySelectorAll('*')) {
@@ -87,8 +210,8 @@ function extract() {
     if (SKIP.has(tag)) continue;
     if (el.parentElement && el.parentElement.closest('svg')) continue;   // svg internals: the svg is one image
     const rc = el.getBoundingClientRect();
-    if (rc.width < 1 || rc.height < 1 || !visible(el)) continue;
-    const r = zeroClip(css(el)) ? null : clip(el.parentElement, rc);
+    if (rc.width <= 0 || rc.height <= 0 || !visible(el)) continue;
+    const r = zeroClip(css(el)) ? null : clip(el.parentElement, rc, false);
     if (!r) continue;
     const inCtl = el.parentElement && el.parentElement.closest(CTL);
     if (inCtl) continue;                                                 // the control draws its own label
@@ -104,28 +227,44 @@ function extract() {
 
     if (isCtl(el)) {
       const field = tag === 'input' || tag === 'textarea' || tag === 'select';
-      const txt = norm(tag === 'select' ? (el.selectedOptions[0] || {}).text
-        : tag === 'input' || tag === 'textarea' ? el.value || el.placeholder : el.innerText).slice(0, 60);
-      out.push({
-        ...base, t: 'ctl', k: keyed(`ctl:${explicit(el) || txt.slice(0, 40) || tag}`), txt, r: rr,
+      let txt = '';
+      if (tag === 'select') txt = (el.selectedOptions[0] || {}).text || '';
+      else if (field) txt = NO_TEXT.test(el.type) ? '' : masked(el, c) ? (el.value ? '••••••••' : el.placeholder) : el.value || el.placeholder;
+      else txt = el.innerText;
+      txt = norm(txt).slice(0, 60);
+      const name = explicit(el) || (field ? el.placeholder || el.getAttribute('name') || (masked(el, c) ? '' : txt) : txt.slice(0, 40));
+      out.push(tags({
+        ...base, t: 'ctl', k: keyed(`ctl:${name || anon(el)}`), txt, r: rr,
         fs: parseFloat(c.fontSize), fw: +c.fontWeight || 400, al: field ? 'l' : 'c', pl: rnd(parseFloat(c.paddingLeft) || 0),
         bg: bgK, bc: sides.some(Boolean) ? ckey(c.borderTopColor) : '', c: ckey(c.color), sh: shadow ? 1 : 0,
-      });
+      }, el, !name));
       continue;
     }
-    if (tag === 'img' || tag === 'svg' || tag === 'canvas' || tag === 'video' || el.getAttribute('role') === 'img' || /url\(/.test(c.backgroundImage)) {
+    if (isImg(el, c)) {
       const src = (el.currentSrc || el.src || '').split(/[/?#]/).filter(Boolean).pop() || '';
-      out.push({ ...base, t: 'img', k: keyed(`img:${explicit(el) || el.getAttribute('alt') || src.slice(0, 40) || tag}`), r: rr });
+      const name = explicit(el) || el.getAttribute('alt') || src.slice(0, 40);
+      out.push(tags({ ...base, t: 'img', k: keyed(`img:${name || anon(el)}`), r: rr }, el, !name));
       continue;
     }
-    if (hasBg || allSides || shadow) {
-      out.push({ ...base, t: 'box', k: keyed(`box:${explicit(el) || firstLine(el) || tag}`), r: rr, bg: bgK, bc: allSides ? ckey(c.borderTopColor) : '', sh: shadow ? 1 : 0 });
+    const owner = explicit(el) || firstLine(el);
+    // A thin filled or outlined element (h-px separator, <hr>) is a rule.
+    if ((hasBg || allSides) && Math.min(r.w, r.h) <= 3 && !occ.has(el)) {
+      const hz = r.w >= r.h;
+      out.push(tags({
+        t: 'rule', k: keyed(`rule:${owner || anon(el)}:${hz ? 'h' : 'v'}`),
+        ...(hz ? { x: base.x, y: rnd(r.y + r.h / 2), w: base.w, h: 0 } : { x: rnd(r.x + r.w / 2), y: base.y, w: 0, h: base.h }),
+      }, el, !owner));
+      continue;
+    }
+    if (hasBg || allSides || shadow || occ.has(el)) {
+      const box = tags({ ...base, t: 'box', k: keyed(`box:${owner || anon(el)}`), r: rr, bg: bgK, bc: allSides ? ckey(c.borderTopColor) : '', sh: shadow ? 1 : 0 }, el, !owner);
+      if (occ.has(el)) box.oc = 1;
+      out.push(box);
     }
     if (!allSides && sides.some(Boolean)) {
-      const owner = explicit(el) || firstLine(el) || tag;
       const bw = s => parseFloat(c[`border${s}Width`]);
       const inY = y => y >= r.y - 1 && y <= r.y + r.h + 1, inX = x => x >= r.x - 1 && x <= r.x + r.w + 1;
-      const add = (side, rule) => out.push({ t: 'rule', k: keyed(`rule:${owner}:${side}`), ...rule });
+      const add = (side, rule) => out.push(tags({ t: 'rule', k: keyed(`rule:${owner || anon(el)}:${side}`), ...rule }, el, !owner));
       if (sides[0] && inY(rc.top)) add('t', { x: base.x, y: rnd(rc.top + bw('Top') / 2), w: base.w, h: 0 });
       if (sides[2] && inY(rc.bottom)) add('b', { x: base.x, y: rnd(rc.bottom - bw('Bottom') / 2), w: base.w, h: 0 });
       if (sides[3] && inX(rc.left)) add('l', { x: rnd(rc.left + bw('Left') / 2), y: base.y, w: 0, h: base.h });
@@ -174,10 +313,10 @@ function extract() {
     const blk = blockOf(p);
     for (const pc of pieces) {
       if (!/\S/.test(pc.text)) continue;
-      const cr = clip(p, pc.q);
+      const cr = clip(p, pc.q, true);
       if (!cr) continue;
       if (!frags.has(blk)) frags.set(blk, []);
-      frags.get(blk).push({ text: cased(pc.text, c.textTransform), x1: cr.x, y1: cr.y, x2: cr.x + cr.w, y2: cr.y + cr.h, fs: parseFloat(c.fontSize), fw: +c.fontWeight || 400, c: ckey(c.color), o: order++ });
+      frags.get(blk).push({ text: cased(pc.text, c.textTransform), x1: cr.x, y1: cr.y, x2: cr.x + cr.w, y2: cr.y + cr.h, fs: parseFloat(c.fontSize), fw: +c.fontWeight || 400, c: ckey(c.color), o: order++, el: p });
     }
   }
   for (const list of frags.values()) {
@@ -186,7 +325,7 @@ function extract() {
     const flush = () => {
       if (!run) return;
       const txt = norm(run.text);
-      if (txt) out.push({ t: 'text', k: keyed(`text:${txt.slice(0, 48)}`), x: rnd(run.x1), y: rnd(run.y1), w: rnd(run.x2 - run.x1), h: rnd(run.y2 - run.y1), txt: txt.slice(0, 160), fs: run.fs, fw: run.fw, c: run.c });
+      if (txt) out.push(tags({ t: 'text', k: keyed(`text:${txt.slice(0, 48)}`), x: rnd(run.x1), y: rnd(run.y1), w: rnd(run.x2 - run.x1), h: rnd(run.y2 - run.y1), txt: txt.slice(0, 160), fs: run.fs, fw: run.fw, c: run.c }, run.el, false));
       run = null;
     };
     for (const f of list) {
@@ -201,30 +340,56 @@ function extract() {
   return out;
 }
 
-const pw = loadPlaywright();
-const browser = await launch(pw);
+const STYLE = '*,*::before,*::after{transition:none!important;caret-color:transparent!important}'
+  + 'html{scrollbar-width:none!important}::-webkit-scrollbar{display:none!important}'
+  + (args.hide ? `${args.hide}{visibility:hidden!important}` : '');
+
+const browser = await launch();
 try {
   const context = await browser.newContext({
     viewport: { width: vw, height: vh }, deviceScaleFactor: 1, reducedMotion: 'reduce',
     colorScheme: args.colorScheme, locale: 'en-US', timezoneId: 'UTC',
   });
+  // An init script, so the style survives navigations (a login redirect in --setup).
+  await context.addInitScript(css => {
+    const add = () => {
+      if (document.querySelector('style[data-bp-capture]')) return;
+      const s = document.createElement('style');
+      s.setAttribute('data-bp-capture', '');
+      s.textContent = css;
+      (document.head || document.documentElement).append(s);
+    };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', add, { once: true });
+    else add();
+  }, STYLE);
   const page = await context.newPage();
-  if (args.time !== 'real') {
+  let now = Date.parse(args.time);
+  if (frozen) {
     if (!page.clock) die('--time needs Playwright 1.45 or newer (or pass --time real)');
-    await page.clock.setFixedTime(new Date(args.time));
+    await page.clock.setFixedTime(new Date(now));
   }
-  const res = await page.goto(args.url, { waitUntil: args.waitUntil, timeout });
+  // Moves the frozen clock forward, so code that waits for time to pass
+  // (a debounced search, a throttled handler) runs.
+  const advance = async ms => {
+    if (frozen) { now += ms; await page.clock.setFixedTime(new Date(now)); }
+    await page.waitForTimeout(ms + 50);
+  };
+
+  const deadline = Date.now() + timeout;
+  let res, waiting = false;
+  for (;;) {
+    try { res = await page.goto(args.url, { waitUntil: args.waitUntil, timeout }); break; } catch (e) {
+      if (!/ERR_CONNECTION_REFUSED|ERR_CONNECTION_RESET|ERR_EMPTY_RESPONSE|ECONNREFUSED/.test(e.message) || Date.now() > deadline) throw e;
+      if (!waiting) { console.log(`waiting for ${args.url} to answer...`); waiting = true; }
+      await new Promise(r => setTimeout(r, 500));
+    }
+  }
   if (res && res.status() >= 400) die(`${args.url} answered HTTP ${res.status()}`);
-  await page.addStyleTag({
-    content: '*,*::before,*::after{transition:none!important;caret-color:transparent!important}'
-      + 'html{scrollbar-width:none!important}::-webkit-scrollbar{display:none!important}'
-      + (args.hide ? `${args.hide}{visibility:hidden!important}` : ''),
-  });
   if (args.setup) {
     const mod = await import(pathToFileURL(resolve(args.setup)).href);
     const fn = mod.default || mod.setup;
-    if (typeof fn !== 'function') die(`${args.setup} must export a default function (page) => {}`);
-    await fn(page);
+    if (typeof fn !== 'function') die(`${args.setup} must export a default function (page, { advance }) => {}`);
+    await fn(page, { advance });
   }
   if (args.wait) await page.waitForSelector(args.wait, { state: 'visible', timeout });
   if (args.scroll) {
@@ -234,10 +399,22 @@ try {
       else { const el = document.querySelector(s); if (!el) throw new Error(`--scroll: no element matches ${s}`); el.scrollIntoView({ block: 'start' }); }
     }, args.scroll);
   }
-  await page.evaluate(async () => {
+  // Fonts, then the images on screen (lazy ones below the fold never load).
+  const stuck = await page.evaluate(async ({ css, ms }) => {
+    if (!document.querySelector('style[data-bp-capture]')) {
+      const s = document.createElement('style');
+      s.setAttribute('data-bp-capture', '');
+      s.textContent = css;
+      document.head.append(s);
+    }
     await document.fonts.ready;
-    await Promise.all([...document.images].map(i => (i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }))));
-  });
+    const onScreen = i => { const r = i.getBoundingClientRect(); return r.width > 0 && r.height > 0 && r.bottom > 0 && r.right > 0 && r.top < innerHeight && r.left < innerWidth; };
+    const pending = [...document.images].filter(i => !i.complete && onScreen(i));
+    const loaded = Promise.all(pending.map(i => new Promise(r => { i.addEventListener('load', r, { once: true }); i.addEventListener('error', r, { once: true }); })));
+    await Promise.race([loaded, new Promise(r => setTimeout(r, ms))]);
+    return pending.filter(i => !i.complete).map(i => i.currentSrc || i.src).slice(0, 3);
+  }, { css: STYLE, ms: 5000 });
+  if (stuck.length) console.warn(`warning: images still loading after 5 s: ${stuck.join(', ')}`);
   await page.waitForTimeout(+args.settle);
   const overlay = await page.evaluate(() => {
     const vite = document.querySelector('vite-error-overlay');
@@ -250,8 +427,9 @@ try {
   await page.screenshot({ path: `${args.out}.png`, animations: 'disabled' });
   const els = await page.evaluate(extract);
   const kinds = els.reduce((m, e) => ((m[e.t] = (m[e.t] || 0) + 1), m), {});
+  const layers = els.filter(e => e.oc).length;
   writeFileSync(`${args.out}.json`, JSON.stringify({ url: args.url, viewport: { w: vw, h: vh }, time: args.time, els }));
-  console.log(`${args.out}.png + .json: ${els.length} elements (${Object.entries(kinds).map(([k, v]) => `${v} ${k}`).join(', ')})`);
+  console.log(`${args.out}.png + .json: ${els.length} elements (${Object.entries(kinds).map(([k, v]) => `${v} ${k}`).join(', ')})${layers ? `, ${layers} overlay(s) on top` : ''}`);
 } finally {
   await browser.close();
 }

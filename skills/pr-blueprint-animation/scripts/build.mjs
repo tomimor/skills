@@ -6,6 +6,7 @@
 //   <workdir>/states/ holds s0.png + s0.json, s1.png + s1.json, ... from capture.mjs
 import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import vm from 'node:vm';
 import { die, parseArgs, SKILL_DIR } from './lib.mjs';
 
 const args = parseArgs(process.argv.slice(2), { scene: '', out: '' });
@@ -37,6 +38,9 @@ if (!existsSync(scenePath)) die(`${scenePath} not found (copy ${join(SKILL_DIR, 
 const script = (file, name) => {
   const code = readFileSync(file, 'utf8');
   if (/<\/script/i.test(code)) die(`${name} contains "</script", which would end the inline script`);
+  try { new vm.Script(code, { filename: file }); } catch (e) {
+    die(`${name} does not parse: ${e.message}\n${String(e.stack).split('\n').slice(0, 3).join('\n')}`);
+  }
   return `<script>\n${code}\n</script>`;
 };
 const inline = [

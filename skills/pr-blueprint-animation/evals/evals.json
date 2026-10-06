@@ -17,7 +17,11 @@
         "Shows real intermediate states: between steps the UI at rest has only the earlier steps applied (for example the header changed but the rows still in their original order)",
         "Shows the blueprint treatment the user asked for: the UI turns into a cyan line drawing (with a scan-line style transition) before the new UI is revealed",
         "Gives the user a PR-description snippet that lists the steps",
-        "Leaves the user's repo as it found it: same branch checked out, no uncommitted changes, no leftover git worktrees"
+        "Leaves the user's repo as it found it: same branch checked out, no uncommitted changes, no leftover git worktrees",
+        "Opens on the real base UI: the video's very first frame shows the base Members page at full opacity, not a blank, faded or title frame (GitHub shows the first frame as the video's preview)",
+        "Ends on the real PR-head UI: the video's final frame shows the head Members page at full opacity, matching the head screenshot",
+        "Claims only what the PR does: no caption or PR snippet says the new filter filters the list or that the Last active header can be clicked to change the sort (the PR adds neither behaviour)",
+        "Adds no refs to the user's repo: after the run it has only the refs it started with (no refs/pr-blueprint/*, refs/remotes/origin/pr/* or similar)"
       ]
     },
     {
@@ -34,7 +38,10 @@
         "Goes section by section: at least three modules of the page (plan card, usage meters, top members, header action) are explained one at a time",
         "Each section step gives a reason for the layout (why), not only the name of the section",
         "Shows the blueprint treatment: the page turns into a cyan line drawing (with a scan-line style transition) with annotations on the module being explained",
-        "Leaves the user's repo as it found it: same branch checked out, no uncommitted changes, no leftover git worktrees"
+        "Leaves the user's repo as it found it: same branch checked out, no uncommitted changes, no leftover git worktrees",
+        "Keeps the GIF watchable in one sitting: it is 45 seconds or shorter (a GIF can't be paused)",
+        "Opens on the real Usage page: the GIF's very first frame shows the page at full opacity, not a blank, faded or title frame",
+        "Adds no refs to the user's repo: after the run it has only the refs it started with (no refs/pr-blueprint/*, refs/remotes/origin/pr/* or similar)"
       ]
     },
     {
@@ -52,7 +59,12 @@
         "Ends on the real PR-head menu: Data and Access group labels, a separator, and 'Delete workspace…' in red, matching a screenshot of the running app",
         "Explains the two decisions as separate steps: grouping items into Data and Access, and setting the destructive action apart",
         "Shows the blueprint treatment: the UI turns into a cyan line drawing (with a scan-line style transition) before the new menu is revealed",
-        "Leaves the user's repo as it found it: same branch checked out, no uncommitted changes, no leftover git worktrees"
+        "Leaves the user's repo as it found it: same branch checked out, no uncommitted changes, no leftover git worktrees",
+        "Opens on the real base menu: the video's very first frame shows the Members page with the base menu open at full opacity, not a blank, faded or title frame (GitHub shows the first frame as the video's preview)",
+        "Keeps the menu readable at GitHub's inline width: scaled to 880 px wide, the video's menu item labels are at least 9 px tall",
+        "Hides what the open menu covers: while the menu is drawn as a blueprint, no table text or row lines from the page underneath show through the menu",
+        "Claims only what the PR does: no caption or PR snippet says Delete workspace… now asks for confirmation or opens a dialog (the PR adds no dialog)",
+        "Adds no refs to the user's repo: after the run it has only the refs it started with (no refs/pr-blueprint/*, refs/remotes/origin/pr/* or similar)"
       ]
     }
   ]

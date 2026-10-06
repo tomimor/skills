@@ -20,13 +20,14 @@
 
   let R;
   try { R = window.BPKit.makeRenderer(window.SCENE, window.BP_STATES); } catch (e) { fail(e); return; }
-  const { W, H, canvas: C, app: A } = R;
+  const { W, H, canvas: C, app: A, view: V, bandBox: BB } = R;
   document.title = (window.SCENE && window.SCENE.title) || 'Blueprint animation';
 
+  // The card shows the view (a part of the captured screen, or all of it) 1:1.
   root.innerHTML = `<div id="bp-wrap"><div id="bp-stage" style="width:${C.w}px;height:${C.h}px">`
-    + `<div id="bp-app" style="left:${A.x}px;top:${A.y}px;width:${W}px;height:${H}px">`
-    + `<div id="bp-card"><svg id="bp-svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"></svg></div></div>`
-    + `<div id="bp-band" style="left:${A.x}px;top:${A.y + H + 40}px;width:${W}px"></div></div></div>`
+    + `<div id="bp-app" style="left:${A.x}px;top:${A.y}px;width:${A.w}px;height:${A.h}px">`
+    + `<div id="bp-card"><svg id="bp-svg" width="${A.w}" height="${A.h}" viewBox="${V.x} ${V.y} ${V.w} ${V.h}"></svg></div></div>`
+    + `<div id="bp-band" style="left:${BB.x}px;top:${BB.y}px;width:${BB.w}px"></div></div></div>`
     + (RENDER ? '' : '<div id="bp-bar"><button id="bp-play" type="button" aria-label="Play">▶</button>'
       + '<span id="bp-time"></span><input id="bp-seek" type="range" min="0" step="0.01" aria-label="Playhead"><div id="bp-steps"></div></div>');
 
@@ -36,6 +37,8 @@
     const im = new Image(W, H);
     im.alt = '';
     im.className = 'bp-state';
+    im.style.left = `${-V.x}px`;
+    im.style.top = `${-V.y}px`;
     im.style.visibility = 'hidden';
     im.src = s.src;
     card.insertBefore(im, svg);
@@ -52,7 +55,6 @@
       if (imgs[i].style.visibility !== v) imgs[i].style.visibility = v;
     }
     appEl.style.opacity = String(fr.appOpacity);
-    appEl.style.transform = fr.zoom === 1 ? 'none' : `scale(${fr.zoom})`;
     if (svg._last !== fr.svg) { svg.innerHTML = fr.svg; svg._last = fr.svg; }
     if (bandEl._last !== fr.band) { bandEl.innerHTML = fr.band; bandEl._last = fr.band; }
   }
@@ -77,7 +79,7 @@
 
   function meta() {
     return {
-      title: document.title, total: R.total, K: R.K, W, H, canvas: C, app: A, explain: R.explain,
+      title: document.title, total: R.total, K: R.K, W, H, canvas: C, app: A, view: V, explain: R.explain,
       cues: R.CUES, states: imgs.length, keyframes: R.keyframes(), rest: R.rest(),
       steps: R.steps.map(s => ({ key: s.key, n: s.n, name: s.name })),
     };

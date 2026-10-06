@@ -1,21 +1,25 @@
 #!/usr/bin/env node
 // Render player.html frame by frame. First checks that every rest frame shows
-// its state screenshot pixel for pixel, then writes a filmstrip of each step's
-// key frames, then encodes the video (MP4 + GIF, or WebM with Playwright's own
-// ffmpeg). Exits 1 if a rest frame fails or the player throws.
+// its state screenshot (at most --max-diff of the pixels may differ by more
+// than 16 levels, which allows for anti-aliasing), then writes a filmstrip of
+// each step's key frames, then encodes the video: MP4 (H.264) + GIF with a full
+// ffmpeg, else WebM with Playwright's own ffmpeg. Exits 1 if a rest frame fails
+// or the player throws.
 //
 //   node render.mjs <player.html> [--out <dir>] [--fps 30] [--gif-fps 12] [--gif-width 800]
-//     [--no-video] [--no-gif] [--no-filmstrip] [--ffmpeg <path>] [--tolerance 0.0005]
+//     [--no-video] [--no-gif] [--no-filmstrip] [--ffmpeg <path>] [--max-diff 0.0005]
 //   node render.mjs <player.html> --at 4.8,12.4   only write those moments (out/at-<t>.png)
+//   node render.mjs <player.html> --gif-only      rebuild out/blueprint.gif from the video, e.g. smaller
 import { spawn } from 'node:child_process';
 import { once } from 'node:events';
-import { mkdirSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { comparePngs, die, findFfmpeg, launch, loadPlaywright, parseArgs } from './lib.mjs';
+import { comparePngs, die, findFfmpeg, launch, parseArgs } from './lib.mjs';
 
 const args = parseArgs(process.argv.slice(2), {
-  out: '', fps: '30', gifFps: '12', gifWidth: '800', video: true, gif: true, filmstrip: true, ffmpeg: '', tolerance: '0.0005', at: '',
+  out: '', fps: '30', gifFps: '12', gifWidth: '800', video: true, gif: true, gifOnly: false, filmstrip: true,
+  ffmpeg: '', maxDiff: '0.0005', at: '',
 });
 if (!args._[0]) die('usage: render.mjs <player.html> [--out dir] [--fps 30] [--no-video]');
 const player = resolve(args._[0]);
@@ -24,16 +28,47 @@ mkdirSync(out, { recursive: true });
 const fps = +args.fps;
 const mb = f => `${(statSync(f).size / 1e6).toFixed(1)} MB`;
 
-async function run(bin, argv, input) {
-  const proc = spawn(bin, argv, { stdio: [input ? 'pipe' : 'ignore', 'ignore', 'pipe'] });
-  let err = '';
+// Run ffmpeg; `feed(write)` streams frames into it. A crash mid-stream reports
+// ffmpeg's own error instead of hanging or failing with EPIPE.
+async function run(bin, argv, feed) {
+  const proc = spawn(bin, argv, { stdio: [feed ? 'pipe' : 'ignore', 'ignore', 'pipe'] });
+  let err = '', code = null;
   proc.stderr.on('data', d => { err += d; });
-  if (input) await input(proc.stdin);
-  const [code] = await once(proc, 'close');
-  if (code !== 0) die(`ffmpeg failed (${code}): ${err.trim().split('\n').slice(-3).join(' | ')}`);
+  const closed = once(proc, 'close').then(([c]) => { code = c; });
+  const fail = () => die(`ffmpeg failed (exit ${code}): ${err.trim().split('\n').slice(-4).join(' | ') || 'no output'}`);
+  if (feed) {
+    proc.stdin.on('error', () => {});
+    await feed(async buf => {
+      if (code !== null) { await closed; fail(); }
+      if (!proc.stdin.write(buf)) await Promise.race([once(proc.stdin, 'drain').catch(() => {}), closed]);
+      if (code !== null) { await closed; fail(); }
+    });
+    proc.stdin.end();
+  }
+  await closed;
+  if (code !== 0) fail();
 }
 
-const browser = await launch(loadPlaywright());
+// GIF from the encoded video: RGB before scaling, a palette from every pixel and
+// no dithering, so flat UI colours stay flat. Never upscales a narrow canvas.
+async function makeGif(ff, video) {
+  const gif = join(out, 'blueprint.gif');
+  await run(ff.bin, ['-y', '-loglevel', 'error', '-i', video, '-vf',
+    `fps=${args.gifFps},format=rgb24,scale=w=min(${args.gifWidth}\\,iw):h=-2:flags=lanczos,split[a][b];[a]palettegen=max_colors=128:stats_mode=full[p];[b][p]paletteuse=dither=none:diff_mode=rectangle`,
+    '-loop', '0', gif]);
+  console.log(`gif: ${gif} (${mb(gif)})`);
+}
+
+if (args.gifOnly) {
+  const ff = findFfmpeg(args.ffmpeg);
+  if (!ff || !ff.full) die('--gif-only needs a full ffmpeg (install it, or pip install imageio-ffmpeg, or pass --ffmpeg <path>)');
+  const video = ['blueprint.mp4', 'blueprint.webm'].map(f => join(out, f)).find(existsSync);
+  if (!video) die(`no ${join(out, 'blueprint.mp4')} to make the GIF from: render the video first`);
+  await makeGif(ff, video);
+  process.exit(0);
+}
+
+const browser = await launch();
 const errors = [];
 let failed = 0;
 try {
@@ -70,8 +105,8 @@ try {
       await seek(r.T);
       const shot = await page.screenshot({ clip });
       const src = await page.evaluate(i => window.BP.stateSrc(i), r.state);
-      const c = await comparePngs(helper, shot, src, { ignoreCorner: 24 });
-      const ok = !c.error && c.ratio <= +args.tolerance;
+      const c = await comparePngs(helper, shot, src, { ignoreCorner: 24, crop: meta.view });
+      const ok = !c.error && c.ratio <= +args.maxDiff;
       if (!ok) failed++;
       report.push(`${ok ? 'PASS' : 'FAIL'}  T=${r.T.toFixed(2)}s ${r.why}: matches s${r.state}? ${c.error || `${c.diff} px differ (${(c.ratio * 100).toFixed(3)}%)`}`);
     }
@@ -83,6 +118,7 @@ try {
     if (args.filmstrip) {
       mkdirSync(join(out, 'frames'), { recursive: true });
       const cw = 480, ch = Math.round((cw * meta.canvas.h) / meta.canvas.w);
+      const cols = Math.max(...meta.keyframes.map(k => k.frames.length));
       const rows = [];
       for (const k of meta.keyframes) {
         const cells = [];
@@ -97,7 +133,7 @@ try {
       }
       checkErrors();
       const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]);
-      await helper.setViewportSize({ width: 5 * (cw + 12) + 12, height: 400 });
+      await helper.setViewportSize({ width: cols * (cw + 12) + 12, height: 400 });
       await helper.setContent(`<body style="margin:0;padding:12px;background:#fff;font:13px/1.4 system-ui,sans-serif;color:#1F2328">${rows.map(r => `<div style="font-weight:600;margin:8px 0 6px">${esc(r.title)}</div><div style="display:flex;gap:12px">${r.cells.map(c => `<figure style="margin:0"><img src="${c.src}" width="${cw}" height="${ch}" style="display:block;border:1px solid #D0D7DE"><figcaption style="color:#57606A;margin-top:4px">${esc(c.cap)}</figcaption></figure>`).join('')}</div>`).join('')}</body>`);
       await helper.evaluate(() => Promise.all([...document.images].map(i => i.decode())));
       const file = join(out, 'filmstrip.png');
@@ -113,34 +149,41 @@ try {
         console.log('SKIP  video: no ffmpeg (install it, or pip install imageio-ffmpeg, or pass --ffmpeg <path>)');
       } else {
         const N = Math.floor(meta.total * fps);
-        const file = join(out, ff.full ? 'blueprint.mp4' : 'blueprint.webm');
-        const enc = ff.full
-          ? ['-f', 'image2pipe', '-framerate', String(fps), '-c:v', 'png', '-i', '-', '-vf', 'pad=ceil(iw/2)*2:ceil(ih/2)*2',
-            ...(ff.h264 ? ['-c:v', 'libx264', '-preset', 'medium', '-crf', '18', '-pix_fmt', 'yuv420p', '-movflags', '+faststart'] : ['-c:v', 'mpeg4', '-q:v', '2'])]
-          : ['-f', 'image2pipe', '-framerate', String(fps), '-c:v', 'mjpeg', '-i', '-', '-c:v', 'libvpx', '-b:v', '8M', '-crf', '6', '-qmin', '0', '-qmax', '40', '-deadline', 'good', '-cpu-used', '4'];
-        if (!ff.full) console.log('note: only Playwright\'s ffmpeg found, so the video is WebM (VP8) and there is no GIF');
+        const even = ['-vf', 'pad=ceil(iw/2)*2:ceil(ih/2)*2'];
+        const pipe = codec => ['-f', 'image2pipe', '-framerate', String(fps), '-c:v', codec, '-i', 'pipe:0'];
+        let file, enc, jpeg = false;
+        if (ff.full && ff.h264) {
+          file = 'blueprint.mp4';
+          enc = [...pipe('png'), ...even, '-c:v', 'libx264', '-preset', 'medium', '-crf', '18', '-pix_fmt', 'yuv420p', '-movflags', '+faststart'];
+        } else if (ff.full && (ff.vp9 || ff.vp8)) {
+          file = 'blueprint.webm';
+          enc = [...pipe('png'), ...even, '-c:v', ff.vp9 ? 'libvpx-vp9' : 'libvpx', '-b:v', '0', '-crf', '24', '-pix_fmt', 'yuv420p'];
+          console.log('note: this ffmpeg has no H.264 encoder (libx264), so the video is WebM');
+        } else if (ff.full) {
+          file = 'blueprint.mp4';
+          enc = [...pipe('png'), ...even, '-c:v', 'mpeg4', '-q:v', '2', '-pix_fmt', 'yuv420p'];
+          console.log('warning: this ffmpeg has no H.264 or VP8/VP9 encoder; the MPEG-4 video may not play in browsers or on GitHub');
+        } else {
+          file = 'blueprint.webm';
+          jpeg = true;
+          enc = [...pipe('mjpeg'), ...even, '-c:v', 'libvpx', '-b:v', '8M', '-crf', '6', '-qmin', '0', '-qmax', '40', '-deadline', 'good', '-cpu-used', '4', '-pix_fmt', 'yuv420p'];
+          console.log('note: only Playwright\'s ffmpeg found, so the video is WebM (VP8) and there is no GIF');
+        }
+        file = join(out, file);
         const t0 = Date.now();
-        await run(ff.bin, ['-y', '-loglevel', 'error', ...enc, file], async stdin => {
+        await run(ff.bin, ['-y', '-loglevel', 'error', ...enc, file], async write => {
           for (let f = 0; f <= N; f++) {
             await seek(f / fps);
-            const buf = await page.screenshot(ff.full ? { type: 'png' } : { type: 'jpeg', quality: 92 });
-            if (!stdin.write(buf)) await once(stdin, 'drain');
+            await write(await page.screenshot(jpeg ? { type: 'jpeg', quality: 92 } : { type: 'png' }));
             if (f % Math.max(1, Math.round(N / 10)) === 0) {
               if (process.stdout.isTTY) process.stdout.write(`\r  frames ${f}/${N}`);
               else console.log(`  frames ${f}/${N}`);
             }
           }
-          stdin.end();
         });
         checkErrors();
         console.log(`${process.stdout.isTTY ? '\r' : ''}video: ${file} (${N + 1} frames at ${fps} fps, ${mb(file)}, ${((Date.now() - t0) / 1000).toFixed(0)} s)`);
-        if (args.gif && ff.full) {
-          const gif = join(out, 'blueprint.gif');
-          await run(ff.bin, ['-y', '-loglevel', 'error', '-i', file, '-vf',
-            `fps=${args.gifFps},scale=${args.gifWidth}:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=128:stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle`,
-            '-loop', '0', gif]);
-          console.log(`gif: ${gif} (${mb(gif)})`);
-        }
+        if (args.gif && ff.full) await makeGif(ff, file);
       }
     }
   }

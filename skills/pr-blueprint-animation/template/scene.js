@@ -12,9 +12,10 @@
  */
 window.SCENE = {
   title: 'Members page cleanup (PR #7)',
-  // K: 1.4,          pace: authored seconds per local second (a step lasts dur × K)
-  // holdBefore: 1.5, holdAfter: 5,   seconds on the first and last state
-  // mode: 'explain', one state; each step annotates a module (see the API doc)
+  // view: { x, y, w, h },  show only this part of the screen (a small change, such as a menu)
+  // K: 1.4,                pace: authored seconds per local second (a step lasts dur × K)
+  // holdBefore: 1.5, holdAfter: 3,   seconds on the first and last state
+  // mode: 'explain',       one state; each step annotates a module (see the API doc)
   steps: [
     {
       key: 'actions',
@@ -27,8 +28,8 @@ window.SCENE = {
         const first = A.get('ctl:Export CSV'), inv = B.get('ctl:Invite member'), more = B.get('ctl:More actions');
         return K.label(first.x, first.y - 12, '4 ACTIONS · SAME WEIGHT', { op: ph.lines * (1 - ph.p) })
           + K.guide(inv.x + inv.w, 76, inv.x + inv.w, 152, ph.lines)
-          + K.guide(more.x, 76, more.x, 152, K.tw(ph.t, 2.6, 3.0))
-          + K.dimH(more.x, inv.x + inv.w, inv.y - 12, '1 PRIMARY + OVERFLOW', K.tw(ph.t, 2.6, 3.2, K.M.draw));
+          + K.guide(more.x, 76, more.x, 152, ph.done)
+          + K.dimH(more.x, inv.x + inv.w, inv.y - 12, '1 PRIMARY + OVERFLOW', ph.done);
       },
     },
     {
@@ -42,7 +43,7 @@ window.SCENE = {
         const banner = B.get('box:3 invitations are pending');
         // Shown only before the table is pushed into that band.
         return K.label(272, 890, '3 INVITES · BELOW THE FOLD ↓', { op: ph.lines * (1 - K.tw(ph.t, 1.8, 2.0)) })
-          + K.label(banner.x, banner.y - 8, 'PENDING · ABOVE THE TABLE', { op: K.tw(ph.t, 2.8, 3.2) });
+          + K.label(banner.x, banner.y - 8, 'PENDING · ABOVE THE TABLE', { op: ph.done });
       },
     },
     {
@@ -57,8 +58,8 @@ window.SCENE = {
         const x = menu.x + menu.w / 2;
         // Labels live in the empty band between the banner and the table.
         return K.label(1392, 228, '3 BUTTONS PER ROW', { anchor: 'end', op: ph.lines * (1 - ph.p) })
-          + K.label(1392, 228, '1 MENU PER ROW', { anchor: 'end', op: K.tw(ph.t, 2.8, 3.2) })
-          + K.guide(x, 280, x, 900, K.tw(ph.t, 2.7, 3.1));
+          + K.label(1392, 228, '1 MENU PER ROW', { anchor: 'end', op: ph.done })
+          + K.guide(x, 280, x, 900, ph.done);
       },
     },
     {
@@ -70,7 +71,7 @@ window.SCENE = {
       handles: ['box:Owner', 'box:Admin'],
       marks(ph, A, B, K) {
         return K.label(864, 228, 'ROLE · PLAIN TEXT', { op: ph.lines * (1 - ph.p) })
-          + K.label(864, 228, 'OWNER + ADMIN IN COLOR', { op: K.tw(ph.t, 2.8, 3.2) });
+          + K.label(864, 228, 'OWNER + ADMIN IN COLOR', { op: ph.done });
       },
     },
   ],

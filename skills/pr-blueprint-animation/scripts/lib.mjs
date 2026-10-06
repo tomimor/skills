@@ -34,31 +34,43 @@ export function die(msg) {
   process.exit(1);
 }
 
-// The project's Playwright first (its browsers are installed), then one next to
-// this skill, then a global install.
-export function loadPlaywright() {
-  for (const base of [process.cwd(), SKILL_DIR]) {
-    for (const mod of ['playwright', 'playwright-core']) {
-      try { return createRequire(join(base, 'noop.cjs'))(mod); } catch {}
+// Playwright 1.45+ (for page.clock): the project's own first (its browsers are
+// installed), then one next to this skill, then a global install. A candidate
+// whose Chromium is missing or won't start is skipped for the next one.
+function* playwrights() {
+  const seen = new Set();
+  const from = function* (req, ids) {
+    for (const id of ids) {
+      let pw, ver = '';
+      try { pw = req(id); } catch { continue; }
+      if (seen.has(pw)) continue;
+      seen.add(pw);
+      try { ver = req(`${id}/package.json`).version; } catch {}
+      yield { pw, name: `${id}${ver ? ` ${ver}` : ''}`, ver };
     }
-  }
+  };
+  for (const base of [process.cwd(), SKILL_DIR]) yield* from(createRequire(join(base, 'noop.cjs')), ['playwright', 'playwright-core']);
   try {
-    const root = execFileSync('npm', ['root', '-g'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
-    for (const mod of ['playwright', 'playwright-core']) {
-      if (existsSync(join(root, mod))) return createRequire(join(root, 'noop.cjs'))(join(root, mod));
-    }
+    const win = process.platform === 'win32';
+    const root = execFileSync(win ? 'npm.cmd' : 'npm', ['root', '-g'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], shell: win }).trim();
+    yield* from(createRequire(join(root, 'noop.cjs')), [join(root, 'playwright'), join(root, 'playwright-core')]);
   } catch {}
-  die('Playwright not found. Use the project\'s own (npm i -D playwright), or install it globally: npm i -g playwright && npx playwright install chromium');
 }
 
-export async function launch(pw) {
-  const tries = [{}, { channel: 'chrome' }];
-  if (process.env.CHROME_PATH) tries.unshift({ executablePath: process.env.CHROME_PATH });
-  let err;
-  for (const opts of tries) {
-    try { return await pw.chromium.launch({ headless: true, ...opts }); } catch (e) { err = e; }
+export async function launch() {
+  const notes = [];
+  for (const { pw, name, ver } of playwrights()) {
+    const [major, minor] = ver.split('.').map(Number);
+    if (major === 1 && minor < 45) { notes.push(`${name}: too old, needs 1.45+`); continue; }
+    const tries = [{}, { channel: 'chrome' }];
+    if (process.env.CHROME_PATH) tries.unshift({ executablePath: process.env.CHROME_PATH });
+    for (const opts of tries) {
+      try { return await pw.chromium.launch({ headless: true, ...opts }); } catch (e) {
+        notes.push(`${name}${opts.channel ? ' (Chrome)' : ''}: ${String(e.message).split('\n').find(l => l.trim()) || e}`);
+      }
+    }
   }
-  die(`could not launch Chromium (${String(err.message).split('\n')[0]}). Run npx playwright install chromium, or set CHROME_PATH.`);
+  die(`no usable Playwright + Chromium.${notes.length ? `\n  ${notes.join('\n  ')}` : ''}\nInstall it with npm i -g playwright && npx playwright install chromium (or set CHROME_PATH).`);
 }
 
 function runs(bin, args = ['-hide_banner', '-version']) {
@@ -82,7 +94,7 @@ export function findFfmpeg(explicit) {
     if (!runs(bin)) continue;
     const enc = runs(bin, ['-hide_banner', '-encoders']) || '';
     if (/\bpng\b/.test(runs(bin, ['-hide_banner', '-decoders']) || '')) {
-      return { bin, full: true, h264: /libx264/.test(enc) };
+      return { bin, full: true, h264: /libx264/.test(enc), vp9: /libvpx-vp9/.test(enc), vp8: /libvpx /.test(enc) };
     }
   }
   const dir = playwrightBrowsersDir();
@@ -90,7 +102,7 @@ export function findFfmpeg(explicit) {
     for (const d of readdirSync(dir).filter(n => n.startsWith('ffmpeg')).sort().reverse()) {
       for (const f of ['ffmpeg-linux', 'ffmpeg-mac', 'ffmpeg-win64.exe']) {
         const bin = join(dir, d, f);
-        if (existsSync(bin) && runs(bin)) return { bin, full: false, h264: false };
+        if (existsSync(bin) && runs(bin)) return { bin, full: false, h264: false, vp9: false, vp8: true };
       }
     }
   }
@@ -98,21 +110,23 @@ export function findFfmpeg(explicit) {
 }
 
 // Compare two PNGs (buffers or data URLs) in a blank Chromium page. Pixels whose
-// channels differ by more than `tol` count as changed. Returns the changed ratio,
-// merged bounding boxes of the changed areas and, if asked, a diff image.
-export async function comparePngs(page, a, b, { tol = 16, ignoreCorner = 0, cell = 8, merge = 24, diffImage = false } = {}) {
+// channels differ by more than `tol` (0-255) count as changed. `crop` compares
+// `a` with that part of `b`. Returns the changed ratio, merged bounding boxes of
+// the changed areas and, if asked, a diff image.
+export async function comparePngs(page, a, b, { tol = 16, ignoreCorner = 0, cell = 8, merge = 24, diffImage = false, crop = null } = {}) {
   const url = v => (typeof v === 'string' ? v : `data:image/png;base64,${v.toString('base64')}`);
-  return page.evaluate(async ({ a, b, tol, ignoreCorner, cell, merge, diffImage }) => {
+  return page.evaluate(async ({ a, b, tol, ignoreCorner, cell, merge, diffImage, crop }) => {
     const load = src => new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = () => rej(new Error('image failed to load')); im.src = src; });
     const [A, B] = await Promise.all([load(a), load(b)]);
-    if (A.naturalWidth !== B.naturalWidth || A.naturalHeight !== B.naturalHeight) {
-      return { error: `size differs: ${A.naturalWidth}x${A.naturalHeight} vs ${B.naturalWidth}x${B.naturalHeight}` };
+    const c = crop || { x: 0, y: 0, w: B.naturalWidth, h: B.naturalHeight };
+    if (A.naturalWidth !== c.w || A.naturalHeight !== c.h || c.x + c.w > B.naturalWidth || c.y + c.h > B.naturalHeight) {
+      return { error: `size differs: ${A.naturalWidth}x${A.naturalHeight} vs ${c.w}x${c.h}${crop ? ` at ${c.x},${c.y} of ${B.naturalWidth}x${B.naturalHeight}` : ''}` };
     }
-    const w = A.naturalWidth, h = A.naturalHeight;
+    const w = c.w, h = c.h;
     const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
     const cx = cv.getContext('2d', { willReadFrequently: true });
     cx.drawImage(A, 0, 0); const da = cx.getImageData(0, 0, w, h);
-    cx.clearRect(0, 0, w, h); cx.drawImage(B, 0, 0); const db = cx.getImageData(0, 0, w, h).data;
+    cx.clearRect(0, 0, w, h); cx.drawImage(B, c.x, c.y, w, h, 0, 0, w, h); const db = cx.getImageData(0, 0, w, h).data;
     const pa = da.data;
     const rad = ignoreCorner;
     const corner = (x, y) => {
@@ -182,5 +196,5 @@ export async function comparePngs(page, a, b, { tol = 16, ignoreCorner = 0, cell
       png = cv.toDataURL('image/png');
     }
     return { w, h, diff, total: counted, ratio: counted ? diff / counted : 0, boxes, png };
-  }, { a: url(a), b: url(b), tol, ignoreCorner, cell, merge, diffImage });
+  }, { a: url(a), b: url(b), tol, ignoreCorner, cell, merge, diffImage, crop });
 }
