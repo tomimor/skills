@@ -1,0 +1,59 @@
+{
+  "skill_name": "pr-blueprint-animation",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "We just opened PR #10 on our admin app (repo: <a clone of evals/files/acme-admin.bundle>). It makes the Members page faster to scan. Can you make one of those blueprint-style animations that walks reviewers through the UI changes step by step: the old UI turns into a blueprint, the changed parts rebuild, then the new UI is revealed? I want to drop a video or GIF into the PR description. It's a Vite + React app (`npm ci`, then `npm run dev`); the page is at `/`.",
+      "expected_output": "An MP4 and/or GIF that starts on the real base UI, walks through the PR's three UI decisions (filter moved into the page header, seat count with a meter instead of head count, rows sorted by last active) as separate steps with real renders of each intermediate state, ends on the real PR-head UI, plus a PR-description snippet.",
+      "files": [
+        "evals/files/acme-admin.bundle"
+      ],
+      "expectations": [
+        "Delivers an attachable animation in deliverables/: an MP4 or WebM video and/or a GIF that decodes and lasts at least 8 seconds",
+        "Fits GitHub's attachment limits: every delivered GIF and video is 10 MB or smaller",
+        "Starts on the real base UI: an early frame matches a screenshot of the running app at the PR's base (search box in the top bar, '12 people in Acme', rows in the original order), not a redrawn mockup",
+        "Ends on the real PR-head UI: a late frame matches the head screenshot (Filter members input in the header, '12 of 20 seats used' with a meter, rows sorted by last active starting with Hana Kim)",
+        "Walks through the three UI decisions as separate numbered steps: filter moved into the page header, seat count instead of head count, rows sorted by last active",
+        "Shows real intermediate states: between steps the UI at rest has only the earlier steps applied (for example the header changed but the rows still in their original order)",
+        "Shows the blueprint treatment the user asked for: the UI turns into a cyan line drawing (with a scan-line style transition) before the new UI is revealed",
+        "Gives the user a PR-description snippet that lists the steps",
+        "Leaves the user's repo as it found it: same branch checked out, no uncommitted changes, no leftover git worktrees"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "PR #8 in <a clone of evals/files/acme-admin.bundle> adds a brand-new Usage page to our admin app (it's at `/#usage` once the PR is checked out). I'd like a blueprint-style explainer animation of the new page for the PR description: go through it section by section and show why each part is laid out the way it is. A GIF I can paste into the PR is what I need. Vite + React app: `npm ci`, then `npm run dev`.",
+      "expected_output": "A GIF (under 10 MB) that shows the real Usage page from the PR head and annotates its modules one by one (plan card, usage meters, top members, header action) with what each is and why, without inventing a 'before' state for a page that did not exist.",
+      "files": [
+        "evals/files/acme-admin.bundle"
+      ],
+      "expectations": [
+        "Delivers a GIF in deliverables/ that decodes and is 10 MB or smaller",
+        "Shows the real Usage page from the PR head: a frame matches its screenshot (Pro plan card with seat meter, three usage meters, top-members table), not a mockup",
+        "Treats the PR as a new page: it does not invent a 'before' version of the Usage page or present another page as its before state",
+        "Goes section by section: at least three modules of the page (plan card, usage meters, top members, header action) are explained one at a time",
+        "Each section step gives a reason for the layout (why), not only the name of the section",
+        "Shows the blueprint treatment: the page turns into a cyan line drawing (with a scan-line style transition) with annotations on the module being explained",
+        "Leaves the user's repo as it found it: same branch checked out, no uncommitted changes, no leftover git worktrees"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "PR #9 in <a clone of evals/files/acme-admin.bundle> reorganizes the ⋯ actions menu on the Members page. Heads up: the menu only appears after you click the ⋯ button next to Invite member. Can you make a short blueprint-style before/after animation of that change for the PR description? An mp4 is fine. Vite + React app: `npm ci`, then `npm run dev`, page at `/`.",
+      "expected_output": "An MP4 whose every UI frame shows the menu open (captured after clicking ⋯), starting on the real base menu (flat list of five items) and ending on the real PR-head menu (Data and Access groups, Delete workspace… separated in red), with the two decisions as separate steps.",
+      "files": [
+        "evals/files/acme-admin.bundle"
+      ],
+      "expectations": [
+        "Delivers a video (MP4 or WebM) in deliverables/ that decodes",
+        "Keeps it short as asked: the video is 30 seconds or shorter",
+        "Every UI state shows the actions menu open (captured after clicking ⋯), in both the before and the after",
+        "Starts on the real base menu: a flat list of five items (Export CSV, Import CSV, Manage roles, Audit log, Delete workspace), matching a screenshot of the running app",
+        "Ends on the real PR-head menu: Data and Access group labels, a separator, and 'Delete workspace…' in red, matching a screenshot of the running app",
+        "Explains the two decisions as separate steps: grouping items into Data and Access, and setting the destructive action apart",
+        "Shows the blueprint treatment: the UI turns into a cyan line drawing (with a scan-line style transition) before the new menu is revealed",
+        "Leaves the user's repo as it found it: same branch checked out, no uncommitted changes, no leftover git worktrees"
+      ]
+    }
+  ]
+}
