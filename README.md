@@ -2,7 +2,7 @@
 
 # 🧠 skills
 
-[![Skills](https://img.shields.io/badge/skills-55-1f6feb?style=flat-square)](#skills)
+[![Skills](https://img.shields.io/badge/skills-54-1f6feb?style=flat-square)](#skills)
 [![Install](https://img.shields.io/badge/install-one%20command-22c55e?style=flat-square)](#install)
 
 </div>
@@ -112,7 +112,6 @@ Skills that run in iterations with explicit terminal states, designed to drive a
 |-------|--------------|
 | 🟦 [create-skill](skills/create-skill/SKILL.md) | Author or audit agent skills: gather requirements, write `SKILL.md`, structure supporting files, verify quality. |
 | 🟦 [improve-prompt](skills/improve-prompt/SKILL.md) | Critique and rewrite a prompt using best practices, returning a short critique plus a drop-in rewrite. |
-| 🟦 [goal-cursor](skills/goal-cursor/SKILL.md) | A per-workspace goal that keeps Cursor auto-iterating until an evaluator confirms it's met. Cursor's take on Claude Code's `/goal`. |
 | 🟦 [meta-ads-bulk-creator](skills/meta-ads-bulk-creator/SKILL.md) | Build Meta Ads Manager bulk-import files from a YAML brief, validated against Meta's enums and limits. |
 | 🟧 [improve](skills/improve/SKILL.md) | An advisor, never an implementer: audit a codebase, rank findings by leverage, and write executable plans for a cheaper model to run. v1.0.0, from [shadcn/improve](https://github.com/shadcn/improve). |
 | 🟧 [remotion-best-practices](skills/remotion-best-practices/SKILL.md) | Router for all [Remotion](https://github.com/remotion-dev/skills) skills (programmatic video creation in React): create, markup, maps, captions, render, studio, SaaS, interactivity, docs, upgrade, multimedia. Upstream split the old `remotion` skill into this router plus per-topic skills; only the router is linked here since it bundles the rest. |
