@@ -202,6 +202,16 @@ function extract() {
     return rec;
   };
   const NO_TEXT = /^(checkbox|radio|range|color|file|image)$/;
+  // Where a control's label sits: fields and menu items start on the left,
+  // buttons usually centre it (text-align, or justify-content in a flex box).
+  const alignOf = (c, field) => {
+    if (field) return 'l';
+    const flex = /flex/.test(c.display);
+    const v = flex ? c.justifyContent : c.textAlign;
+    if (/center/.test(v)) return 'c';
+    if (/right|end/.test(v) && !/space/.test(v)) return 'r';
+    return 'l';
+  };
   const masked = (el, c) => el.type === 'password' || (c.webkitTextSecurity && c.webkitTextSecurity !== 'none');
   const out = [];
 
@@ -235,7 +245,7 @@ function extract() {
       const name = explicit(el) || (field ? el.placeholder || el.getAttribute('name') || (masked(el, c) ? '' : txt) : txt.slice(0, 40));
       out.push(tags({
         ...base, t: 'ctl', k: keyed(`ctl:${name || anon(el)}`), txt, r: rr,
-        fs: parseFloat(c.fontSize), fw: +c.fontWeight || 400, al: field ? 'l' : 'c', pl: rnd(parseFloat(c.paddingLeft) || 0),
+        fs: parseFloat(c.fontSize), fw: +c.fontWeight || 400, al: alignOf(c, field), pl: rnd(parseFloat(c.paddingLeft) || 0), pr: rnd(parseFloat(c.paddingRight) || 0),
         bg: bgK, bc: sides.some(Boolean) ? ckey(c.borderTopColor) : '', c: ckey(c.color), sh: shadow ? 1 : 0,
       }, el, !name));
       continue;

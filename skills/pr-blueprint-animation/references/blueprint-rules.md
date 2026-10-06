@@ -19,10 +19,10 @@ Never skip a phase. Local step time `t` is authored seconds ÷ K (K = 1.4). With
 |---|---|---|
 | Problem | 0 → 0.9 | Everything except the focus rect fades toward white (≈ 78%). A thin grey outline draws around the focus. The text band shows number, name and problem. |
 | Blueprint in | 0.95 → 1.75 | A cyan scan line sweeps top → bottom. Above it, the WHOLE app is a blueprint drawing; below it, the real UI of the previous state. |
-| Construct | 1.9 → c1 − 0.6 | Only what the step changes moves. The static blueprint behind it dims 0.7 → 0.3. Guides, dimension lines and "before" labels draw. |
-| Finished | c1 − 1.0 → c1 | "After" marks draw in (`ph.done`) and hold, so they can be read before the reveal. |
+| Construct | 1.9 → c1 − 0.6 | Only what the step changes moves. The static blueprint behind it dims 0.7 → 0.3. Guides and "before" labels (`ph.before`) draw; the labels leave by c1 − 1.0. |
+| Finished | c1 − 1.0 → c1 | "After" marks draw in (`ph.done`) and hold, so they can be read before the reveal. The fix sentence fades in beside the problem. |
 | Reveal | c1 + 0.05 → c1 + 0.85 | The scan line sweeps again. Above it, the real UI of the new state; below it, the blueprint. |
-| Hold | → dur | The fix sentence fades in. Then the focus fades out. |
+| Hold | → dur | The fix sentence stays while the real UI holds. Then the focus fades out. |
 
 A step with many moving parts gets more room with a larger `dur` and `c1` (keep `dur − c1` ≥ 1.8 so the hold can be read).
 
@@ -51,7 +51,7 @@ The kit does these; marks must not fight them.
 
 Checked on every render (§6 of SKILL.md):
 
-- No text on a moving wire: wire text fades out when motion starts (q > 0.15) and back in when it settles (q > 0.85). Leaving wires never show their text again.
+- No text on a moving wire: wire text fades out within the first few pixels of a move and back in within the last few. Leaving wires never show their text again.
 - Wires that disappear collapse in place (height → 0) or fly into their merge target, never across other content.
 - Labels live in empty bands (above the focus, between sections), never on top of a row or a card. A band that a push fills during construct is empty only before the push: fade that label out by t = 2.0.
 - "After" marks use `ph.done`: the reveal wipes from the top, so a mark that is still drawing in at `c1` is gone before anyone reads it.
@@ -69,7 +69,7 @@ For a PR that adds a new screen: capture only `s0` (the head) and set `mode: 'ex
 | Blueprint in | 0.95 → 1.75 | As above. |
 | Annotate | 1.9 → c1 − 0.6 | Nothing moves. The module's wires stay in place with handles; the static blueprint dims. Marks draw in, staggered 0.08–0.12 s: guides → dimension line → labels, all complete by `c1` − 0.6 (`ph.done`). |
 | Reveal | c1 + 0.05 → c1 + 0.85 | The scan line brings back the SAME real UI. |
-| Hold | → dur | The **why** sentence fades in, then the focus fades out. |
+| Hold | → dur | The **why** sentence, in since the marks completed, stays; then the focus fades out. |
 
 Pick the marks from the reason, 1–3 per step plus one dimension line:
 

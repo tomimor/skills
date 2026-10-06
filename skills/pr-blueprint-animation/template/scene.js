@@ -26,7 +26,7 @@ window.SCENE = {
       into: 'nearest', // removed buttons fly into the new ⋯ instead of collapsing
       marks(ph, A, B, K) {
         const first = A.get('ctl:Export CSV'), inv = B.get('ctl:Invite member'), more = B.get('ctl:More actions');
-        return K.label(first.x, first.y - 12, '4 ACTIONS · SAME WEIGHT', { op: ph.lines * (1 - ph.p) })
+        return K.label(first.x, first.y - 12, '4 ACTIONS · SAME WEIGHT', { op: ph.before })
           + K.guide(inv.x + inv.w, 76, inv.x + inv.w, 152, ph.lines)
           + K.guide(more.x, 76, more.x, 152, ph.done)
           + K.dimH(more.x, inv.x + inv.w, inv.y - 12, '1 PRIMARY + OVERFLOW', ph.done);
@@ -57,7 +57,7 @@ window.SCENE = {
         const menu = B.get('ctl:Actions for Mia Chen');
         const x = menu.x + menu.w / 2;
         // Labels live in the empty band between the banner and the table.
-        return K.label(1392, 228, '3 BUTTONS PER ROW', { anchor: 'end', op: ph.lines * (1 - ph.p) })
+        return K.label(1392, 228, '3 BUTTONS PER ROW', { anchor: 'end', op: ph.before })
           + K.label(1392, 228, '1 MENU PER ROW', { anchor: 'end', op: ph.done })
           + K.guide(x, 280, x, 900, ph.done);
       },
@@ -70,7 +70,7 @@ window.SCENE = {
       focus: { x: 848, y: 234, w: 152, h: 700 },
       handles: ['box:Owner', 'box:Admin'],
       marks(ph, A, B, K) {
-        return K.label(864, 228, 'ROLE · PLAIN TEXT', { op: ph.lines * (1 - ph.p) })
+        return K.label(864, 228, 'ROLE · PLAIN TEXT', { op: ph.before })
           + K.label(864, 228, 'OWNER + ADMIN IN COLOR', { op: ph.done });
       },
     },

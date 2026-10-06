@@ -102,7 +102,7 @@ Copy `$SKILL/template/scene.js` to `$WORK/scene.js` and rewrite its `SCENE` for 
 - `focus`: the rect the step is about, from the compare regions padded by ~16 px. Keep its edges and corner ticks in empty bands, never through text. A rect that reaches the bottom edge can run past it, so its lower ticks fall outside the frame.
 - `into: 'nearest'` when removed controls merge into a new one (buttons into a ⋯ menu).
 - `handles`: the 1–3 elements that matter, as keys or texts. Default: merge targets and restyled elements.
-- `marks(ph, A, B, K)`: labels, guides and one dimension line that name the rule ("1 PRIMARY + OVERFLOW"), timed from `ph`. "After" marks use `ph.done`, so they are complete before the reveal wipes the blueprint away from the top down.
+- `marks(ph, A, B, K)`: labels, guides and one dimension line that name the rule ("1 PRIMARY + OVERFLOW"), timed from `ph`. "Before" labels use `ph.before` and "after" marks `ph.done`, so the two never overlap and the after marks are complete before the reveal wipes the blueprint away from the top down.
 
 Scene-wide, set `view` when the change is small (a menu, a dialog, one control): the video then shows only that part of the screen, still 1:1, and stays readable when GitHub shrinks it to the description's width (about 900 px). Use the whole screen when the change spans the page.
 

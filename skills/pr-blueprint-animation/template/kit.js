@@ -45,8 +45,9 @@
       cdim: tw(t, 1.75, 2.2, M.move) * (1 - tw(t, c1 - 0.4, c1 - 0.05, M.move)),
       lines: tw(t, 1.2, 2.0, M.draw),
       p: tw(t, 1.9, c1 - 0.6, M.move),
+      before: tw(t, 1.2, 2.0, M.draw) * (1 - tw(t, c1 - 1.4, c1 - 1.0, M.enter)),
       done: tw(t, c1 - 1.0, c1 - 0.6, M.enter),
-      fix: tw(t, c1 + 0.45, c1 + 1.05, M.enter),
+      fix: tw(t, c1 - 1.0, c1 - 0.4, M.enter),
     };
   }
 
@@ -85,7 +86,9 @@
   }
 
   // A wire: the element's exact rect, its real text, optional handles. `q` is
-  // the move progress: text hides while the wire moves (0.15 < q < 0.85).
+  // the move progress: text hides while the wire moves, within a few pixels of
+  // either end when `dist` (the length of the move) is known, so a long move
+  // (a row sorted eight places down) never drags its text over other rows.
   function wire(r, o = {}) {
     const op = o.op == null ? 1 : o.op;
     if (!r || r.w < 0.5 || r.h < 0.5 || op < 0.01) return '';
@@ -100,7 +103,7 @@
     } else if (o.icon === 'cross') {
       s += el('path', { d: `M${n(r.x)} ${n(r.y)}L${n(r.x + r.w)} ${n(r.y + r.h)}M${n(r.x + r.w)} ${n(r.y)}L${n(r.x)} ${n(r.y + r.h)}`, stroke: BP.line, 'stroke-width': 0.6, opacity: 0.6 });
     }
-    const tOp = o.q == null ? 1 : cl((Math.abs(o.q - 0.5) - 0.35) / 0.15);
+    const tOp = o.q == null ? 1 : o.dist ? 1 - cl((Math.min(o.q, 1 - o.q) * o.dist) / 6) : cl((Math.abs(o.q - 0.5) - 0.35) / 0.15);
     if (o.text && tOp > 0.01) {
       const fs = o.fs || 12, cy = r.y + r.h / 2;
       let t;
@@ -108,6 +111,9 @@
       else if (o.align === 'left') {
         const p = o.pad == null ? 8 : Math.max(4, o.pad);
         t = textAt(r.x + p, cy, o.text, { fs, fw: o.fw, fit: fitFor(o.text, fs, r.w - p - 4) });
+      } else if (o.align === 'right') {
+        const p = o.pad == null ? 8 : Math.max(4, o.pad);
+        t = textAt(r.x + r.w - p, cy, o.text, { fs, fw: o.fw, anchor: 'end', fit: fitFor(o.text, fs, r.w - p - 4) });
       } else t = textAt(r.x + r.w / 2, cy, o.text, { fs, fw: o.fw, anchor: 'middle', fit: fitFor(o.text, fs, r.w - 8) });
       s += tOp < 0.99 ? `<g opacity="${n(tOp)}">${t}</g>` : t;
     }
@@ -203,11 +209,11 @@
         return wire(r, { op, handles: o.handles, rx: e.r, icon: Math.max(e.w, e.h) <= 40 ? 'circle' : 'cross' });
       case 'ctl':
         return wire(r, {
-          op, q: o.q, handles: o.handles, rx: e.r, round: roundish(e), text: txt || null,
-          align: e.al === 'l' ? 'left' : 'center', pad: e.pl, fs: ctlFs(e.fs), fw: 500, icon: txt ? null : 'circle',
+          op, q: o.q, dist: o.dist, handles: o.handles, rx: e.r, round: roundish(e), text: txt || null,
+          align: e.al === 'l' ? 'left' : e.al === 'r' ? 'right' : 'center', pad: e.al === 'r' ? e.pr : e.pl, fs: ctlFs(e.fs), fw: 500, icon: txt ? null : 'circle',
         });
       case 'text':
-        return wire(pad(r, 3, 1.5), { op, q: o.q, handles: o.handles, rx: 2, text: txt, align: 'fit', tx: r.x, tw: r.w, fs: e.fs, fw: e.fw >= 600 ? 600 : 500 });
+        return wire(pad(r, 3, 1.5), { op, q: o.q, dist: o.dist, handles: o.handles, rx: 2, text: txt, align: 'fit', tx: r.x, tw: r.w, fs: e.fs, fw: e.fw >= 600 ? 600 : 500 });
       default:
         return '';
     }
@@ -278,12 +284,39 @@
       for (const [, a, b] of cands) if (!match.has(a) && !usedB.has(b)) take(a, b);
     }
 
-    const left = A.els.filter(a => !match.has(a) && a.t !== 'rule');
+    // Rules overlap along their line: same row (or column) within 2 px.
+    const span = (a, b) => {
+      const hz = a.h === 0 && b.h === 0, vt = a.w === 0 && b.w === 0;
+      if (!(hz && Math.abs(a.y - b.y) <= 2) && !(vt && Math.abs(a.x - b.x) <= 2)) return 0;
+      const [p1, p2, q1, q2] = hz ? [a.x, a.x + a.w, b.x, b.x + b.w] : [a.y, a.y + a.h, b.y, b.y + b.h];
+      return Math.max(0, Math.min(p2, q2) - Math.max(p1, q1)) / (Math.max(p2, q2) - Math.min(p1, q1) || 1);
+    };
+    const left = A.els.filter(a => !match.has(a));
     const fresh = B.els.filter(b => !usedB.has(b));
     const cands = [];
-    for (const a of left) for (const b of fresh) if (b.t === a.t) { const s = overlap(a, b); if (s >= 0.6) cands.push([s, a, b]); }
+    for (const a of left) for (const b of fresh) if (b.t === a.t) { const s = a.t === 'rule' ? span(a, b) : overlap(a, b); if (s >= 0.6) cands.push([s, a, b]); }
     cands.sort((p, q) => q[0] - p[0]);
     for (const [, a, b] of cands) if (!match.has(a) && !usedB.has(b)) take(a, b);
+
+    // 4. A control or label renamed by the step ("Delete" -> "Delete…",
+    //    "Last active" -> "Last active ↓") that also moved: same kind, one text
+    //    extends the other, close by and of similar size.
+    const bare = s => (s || '').toLowerCase().replace(/[\s.…:↓↑→←▾▴*]+$/u, '').trim();
+    const renamed = [];
+    for (const a of A.els) {
+      if (match.has(a) || (a.t !== 'ctl' && a.t !== 'text')) continue;
+      const ta = bare(a.txt);
+      if (ta.length < 3) continue;
+      for (const b of B.els) {
+        if (usedB.has(b) || b.t !== a.t || !similar(a, b)) continue;
+        const tb = bare(b.txt);
+        if (tb.length < 3 || !(ta.startsWith(tb) || tb.startsWith(ta))) continue;
+        const d = Math.hypot(b.x - a.x, b.y - a.y);
+        if (d <= Math.max(80, 4 * Math.max(a.h, b.h))) renamed.push([d, a, b]);
+      }
+    }
+    renamed.sort((p, q) => p[0] - q[0]);
+    for (const [, a, b] of renamed) if (!match.has(a) && !usedB.has(b)) take(a, b);
 
     for (const a of A.els) { const b = match.get(a); if (b) pair(a, b); else D.removed.push(a); }
     D.added = B.els.filter(b => !usedB.has(b));
@@ -401,8 +434,10 @@
     stagger(moves, it => rowOf(it.b), Ts + (pushes.length ? 0.45 : 0.1), Te, 0.7, 0.1);
     stagger(ins, it => rowOf(it.b), Ts + (pushes.length ? 0.65 : 0.25) + (outs.length ? 0.2 : 0), Te, 0.55, 0.08);
     for (const it of rest) { it.s = Ts; it.d = 0.01; }
-    // Overlays open before what moves inside them and close after it.
-    for (const it of [...pushes, ...moves]) if (it.b.oc) { it.s = Ts; it.d = 0.6; }
+    // Overlays and boxes that grow around pushed content move with it, so
+    // nothing pushed crosses their edge; overlays close after their content.
+    const holds = b => b.t === 'box' && pushes.some(p => inside(p.b, b, 0));
+    for (const it of [...pushes, ...moves]) if (it.b.oc || holds(it.b)) { it.s = Ts; it.d = 0.6; }
     for (const it of ins) if (it.b.oc) { it.s = Ts + 0.05; it.d = 0.45; }
     const emptied = outs.filter(o => !o.a.oc).reduce((m, o) => Math.max(m, o.s + o.d), Ts);
     for (const it of outs) if (it.a.oc) { it.s = Math.min(emptied, Te - 0.4); it.d = 0.4; }
@@ -456,7 +491,7 @@
         const { q, r } = at(it, t);
         if (!r) continue;
         let s;
-        if (it.kind === 'move') s = drawEl(it.b, { r, q, text: q < 0.5 ? it.a.txt : it.b.txt, handles: it.hd });
+        if (it.kind === 'move') s = drawEl(it.b, { r, q, dist: Math.hypot(it.b.x - it.a.x, it.b.y - it.a.y) + Math.abs(it.b.w - it.a.w), text: q < 0.5 ? it.a.txt : it.b.txt, handles: it.hd });
         // Leaving wires hide their text for good; it never fades back in.
         else if (it.kind === 'out') s = drawEl(it.a, { r, q: Math.min(q, 0.5), op: it.to ? 1 - q * 0.7 : 1 - q });
         // Arriving wires show their text only once settled.
@@ -533,8 +568,17 @@
     const view = SCENE.view ? clampRect(SCENE.view, W, H) : { x: 0, y: 0, w: W, h: H };
     if (!(view.w >= 200 && view.h >= 150)) throw new Error('view must lie on the captured screen and be at least 200 x 150');
     const wide = view.w >= 1000;
-    const AX = wide ? 80 : 48, AY = wide ? 100 : 56, gap = wide ? 40 : 28, bandH = wide ? 100 : 230;
-    const canvas = { w: view.w + 2 * AX, h: AY + view.h + gap + bandH + (wide ? 60 : 40) };
+    // The text band is as tall as the longest sentences need (an estimate:
+    // 0.55 em per character), so short pieces don't end on empty space.
+    const fsz = wide ? 24 : 19, lh = wide ? 32 : 26;
+    const colW = wide ? (view.w - 240 - 64) / 2 : view.w;
+    const lines = s => Math.max(1, Math.ceil((String(s || '').length * 0.55 * fsz) / colW));
+    const need = Math.max(...steps.map(st => {
+      const a = lines(st.prob != null ? st.prob : st.what) * lh, b = lines(st.fix != null ? st.fix : st.why) * lh;
+      return wide ? Math.max(28, a, b) : 28 + 10 + a + 10 + b;
+    }));
+    const AX = wide ? 80 : 48, AY = wide ? 100 : 56, gap = wide ? 40 : 28, bandH = Math.max(wide ? 100 : 120, need + 12);
+    const canvas = { w: view.w + 2 * AX, h: AY + view.h + gap + bandH + (wide ? 60 : 32) };
     const app = { x: AX, y: AY, w: view.w, h: view.h };
     const bandBox = { x: AX, y: AY + view.h + gap, w: view.w };
     const Y0 = view.y, VH = view.h;
@@ -572,7 +616,6 @@
         if (ph.call <= 0.001) continue;
         const st = steps[i];
         const a = st.prob != null ? st.prob : st.what || '', b = st.fix != null ? st.fix : st.why || '';
-        const fsz = wide ? 24 : 19, lh = wide ? 32 : 26;
         return `<div style="opacity:${n(ph.call * op)};transform:translateY(${n((1 - ph.call) * 12)}px);display:grid;grid-template-columns:${wide ? '240px minmax(0,1fr) minmax(0,1fr)' : '1fr'};gap:${wide ? 32 : 10}px;align-items:start">`
           + `<span style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;letter-spacing:.06em;color:${BP.mute};padding-top:4px"><span style="width:28px;height:28px;border-radius:999px;background:${BP.ink};color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:12px;flex:none">${esc(st.n)}</span>${esc(String(st.name || st.key).toUpperCase())}</span>`
           + `<span style="font-size:${fsz}px;line-height:${lh}px;color:${BP.ink}">${esc(a)}</span>`

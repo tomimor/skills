@@ -48,9 +48,10 @@
 | Key | Meaning |
 |---|---|
 | `t` | Local time in seconds (not 0–1): 0 at focus start, `c1` at the reveal. |
-| `lines` | Guides and "before" labels draw in (t 1.2 → 2.0). |
+| `lines` | Guides draw in (t 1.2 → 2.0). |
+| `before` | "Before" labels: in with the guides, out by c1 − 1.0, so they never overlap the "after" labels in the same spot. |
 | `p` | Construct progress (t 1.9 → c1 − 0.6). |
-| `done` | "After" marks draw in (t c1 − 1.0 → c1 − 0.6), so they are complete for the hold before the reveal. |
+| `done` | "After" marks draw in (t c1 − 1.0 → c1 − 0.6), so they are complete for the hold before the reveal. The fix (or why) sentence appears with them. |
 | `wipe`, `rev` | Scan line down (blueprint in), scan line down again (reveal). The reveal wipes the top of the screen first, so marks near the top disappear first. |
 | `focus`, `hl`, `call`, `fix` | Focus dim, outline draw, text band, fix sentence. |
 
@@ -73,8 +74,8 @@
 Common timings:
 
 ```js
-// "Before" label: in with the blueprint, out as the construct runs.
-K.label(x, y, '4 ACTIONS · SAME WEIGHT', { op: ph.lines * (1 - ph.p) })
+// "Before" label: in with the blueprint, out before the "after" marks come in.
+K.label(x, y, '4 ACTIONS · SAME WEIGHT', { op: ph.before })
 // "After" mark: complete before the reveal.
 K.dimH(x1, x2, y, '1 PRIMARY + OVERFLOW', ph.done)
 // A label in a band the construct will fill: gone before the push starts at t = 1.9.
@@ -92,7 +93,7 @@ Each state's `sN.json` holds the captured elements, in viewport pixels:
 | `t` | `box` (visible background, border or shadow), `ctl` (button, input, select, role=button/tab/...), `img` (img, svg, canvas, video, background image), `text` (one run per line, inline pieces merged), `rule` (a divider: a one-sided border, or a filled element at most 3 px thin). |
 | `x`, `y`, `w`, `h` | Rect, clipped by scrolling ancestors. Rules have `w` or `h` 0. |
 | `txt`, `fs`, `fw` | Text as rendered, font size and weight. Password fields read `••••••••`; checkboxes, radios and sliders have no text. |
-| `r`, `bg`, `bc`, `c`, `sh`, `al`, `pl` | Radius, background, border and text colour (as sRGB, whatever CSS colour syntax the app uses), shadow, control text alignment and padding. |
+| `r`, `bg`, `bc`, `c`, `sh`, `al`, `pl`, `pr` | Radius, background, border and text colour (as sRGB, whatever CSS colour syntax the app uses), shadow, control label alignment (`l`, `c`, `r`, from the computed style) and padding. |
 | `z`, `oc` | Overlay layer: elements inside an open menu, dialog or sticky bar that covers other content have `z` ≥ 1, and the overlay's own box has `oc: 1`. The kit hides the page under it. |
 | `g` | The row or list item the element belongs to (a number per state). Repeated cells pair within their own row. |
 
@@ -110,7 +111,7 @@ To name an element the app leaves anonymous, set `data-bp` on it in a setup scri
 
 For each Redesign step the kit compares state `A` (before) with `B` (after):
 
-1. A key (without its `~n`) that occurs once in each state pairs directly. Repeated keys (the cells of a list, icons, anonymous boxes) pair within the same row, following where that row's uniquely named members went, else by the smallest move between elements of similar size. Leftovers of one kind that overlap by ≥ 60% pair too (a container whose text-derived key changed, a label whose text changed).
+1. A key (without its `~n`) that occurs once in each state pairs directly. Repeated keys (the cells of a list, icons, anonymous boxes) pair within the same row, following where that row's uniquely named members went, else by the smallest move between elements of similar size. Leftovers of one kind that overlap by ≥ 60% pair too (a container whose text-derived key changed, a label whose text changed, a divider on the same line), and so do nearby controls and labels where one text extends the other ("Delete workspace" → "Delete workspace…").
 2. Pairs with the same rect, text and style form the static blueprint. Same rect, other colours or weight: **restyled** (handles in focus). A different rect or text: **moved**. Translated only, same size: a **push**, unless rows move both ways (a sort), which makes them moves.
 3. Unpaired `A` elements are **removed**, unpaired `B` elements **added**.
 4. Without `focus`, the step frames the area of its removals, additions and moves, padded by 16 px.
