@@ -2,7 +2,7 @@
 
 # 🧠 skills
 
-[![Skills](https://img.shields.io/badge/skills-54-1f6feb?style=flat-square)](#skills)
+[![Skills](https://img.shields.io/badge/skills-55-1f6feb?style=flat-square)](#skills)
 [![Install](https://img.shields.io/badge/install-one%20command-22c55e?style=flat-square)](#install)
 
 </div>
@@ -77,6 +77,7 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 |-------|--------------|
 | 🟦 [ui-review](skills/ui-review/SKILL.md) | Parallel frontend review across typography, layout, accessibility, responsiveness, copy, and polish. Prioritized small fixes, never rewrites. Polish pass includes a CSS-details checklist (concentric radius, tabular-nums, text-wrap, font smoothing, image outlines) adapted from [make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better). |
 | 🟦 [grid-review](skills/grid-review/SKILL.md) | Read-only audit of a page's layout grid: column adherence, baseline rhythm, optical alignment, then a critique. Adapted from [hyperagent-public-skills](https://github.com/alexmcdonnell-airtable/hyperagent-public-skills). |
+| 🟦 [design-md](skills/design-md/SKILL.md) | Library of reference `DESIGN.md` files, each capturing a real site's visual language (tokens, type, layout, components, motion) with screenshots and downloaded assets. `/design-md <slug>` builds a new project in that style; "add <url> to design-md" runs the bundled Playwright capture script and writes a new reference. |
 | 🟧 [impeccable](skills/impeccable/SKILL.md) | Design, critique, polish, and animate frontend interfaces. 24 internal commands (`shape`, `audit`, `critique`, `animate`, `polish`, `live`, `generate`, …; `craft` is now a deprecated alias). Its `impeccable context` launcher downloads a self-contained binary on first run, no Node required. v4.4.0, from [pbakaus/impeccable](https://github.com/pbakaus/impeccable). |
 | 🟧 [review-animations](skills/review-animations/SKILL.md) | Review animation and motion code against a high craft bar: justified motion, responsive easing, sub-300ms UI, correct `transform-origin`, interruptibility, GPU-only props, reduced-motion. Emits a Before/After/Why table and a Block/Approve verdict. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
 | 🟦 [share-ready](skills/share-ready/SKILL.md) | Audit + fully configure how a site looks when shared (Open Graph, Twitter/X cards, per-platform quirks) and in the browser (title, favicons, theme-color, web manifest). Detects the framework, infers brand values from the repo, generates missing assets (favicon set, 1200×630 og:image), and verifies everything end-to-end with a local script. |
