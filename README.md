@@ -2,7 +2,7 @@
 
 # 🧠 skills
 
-[![Skills](https://img.shields.io/badge/skills-54-1f6feb?style=flat-square)](#skills)
+[![Skills](https://img.shields.io/badge/skills-58-1f6feb?style=flat-square)](#skills)
 [![Install](https://img.shields.io/badge/install-one%20command-22c55e?style=flat-square)](#install)
 
 </div>
@@ -84,6 +84,10 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 | 🟧 [emil-design-eng](skills/emil-design-eng/SKILL.md) | Build-time companion to `review-animations`: Emil Kowalski's design-engineering playbook for crafting interfaces that feel right — animation decision framework, component building, transforms, gestures, performance, a11y. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
 | 🟧 [animation-vocabulary](skills/animation-vocabulary/SKILL.md) | Reverse-lookup glossary that turns a vague description of a motion effect into its exact term ("the bouncy thing when a popover opens" → Pop in; "the iOS rubber-band scroll" → Rubber-banding). For naming an effect, not designing or building one. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
 | 🟧 [apple-design](skills/apple-design/SKILL.md) | Apple's approach to interface design and fluid, physical motion, translated for the web: gesture-driven UI, spring animations, drag/swipe/sheet interactions, momentum and interruptible transitions, translucent materials and depth, typography, reduced-motion, and the design foundations behind Apple-style interfaces. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
+| 🟧 [state-machine](skills/state-machine/SKILL.md) | Workbench for one component: renders it in every state its code can reach (loading, empty, error, plan tier, role, flags…) on a throwaway route with realistic mock data and a keyboard-driven state switcher, without editing the component. User-invoked (`/state-machine`). From [jakubkrehel/skills](https://github.com/jakubkrehel/skills). |
+| 🟧 [break](skills/break/SKILL.md) | Stress-tests one component: renders it under every worst-case scenario that can reach it (long text, huge lists, narrow containers…) side by side on a temporary page and marks what visibly breaks. User-invoked (`/break`). From [jakubkrehel/skills](https://github.com/jakubkrehel/skills). |
+| 🟧 [variant](skills/variant/SKILL.md) | Builds three deliberately different versions of a component (structure, density, emphasis, type or voice) behind a picker in the real page so you can flip between them and choose. User-invoked (`/variant`). From [jakubkrehel/skills](https://github.com/jakubkrehel/skills). |
+| 🟧 [anatomy](skills/anatomy/SKILL.md) | Explains a technical idea as an invented physical machine, drawn as a detailed, interactive isometric SVG figure with optional WebGL shaders (fire, water, light) and a beta 3D mode. Heavy: a figure takes 30–90 min, a hero 2–4 h. Needs Node 20.10+ and Chrome. From [wheresryan22/anatomy](https://github.com/wheresryan22/anatomy). |
 
 ### 💡 Product, thinking & writing
 
@@ -148,6 +152,8 @@ Vendor skills are third-party packs tracked as git submodules under `vendor/` an
 | Remotion | [remotion-dev/skills](https://github.com/remotion-dev/skills) | v4.0.529 (2026-09-25) | `remotion-best-practices` (router that bundles the 11 per-topic skills) |
 | Emil Kowalski | [emilkowalski/skill](https://github.com/emilkowalski/skill) | main (2026-09-24) | `review-animations`, `emil-design-eng`, `animation-vocabulary`, `apple-design` — upstream also ships `animate`, `animate-expo`, `improve-animations`, `find-animation-opportunities`, `prototype`, `pick-ui-library`, `mobile-native`, `ask-sonner`, `write-swift`; add any of them to the `emil` entry in `VENDOR_SKILLS` to link it |
 | Cloudflare | [cloudflare/skills](https://github.com/cloudflare/skills) | v1.0.1 (2026-09-26) | All 14 skills (see [☁️ Cloudflare](#️-cloudflare)) |
+| Jakub Krehel | [jakubkrehel/skills](https://github.com/jakubkrehel/skills) | v1.10.3 (2026-10-10) | `state-machine`, `break`, `variant` — upstream also ships `better-interface`, `better-ui`, `better-typography`, `better-colors`, `better-accessibility`, `better-layout`, `better-writing`, `interface-review`, `explain-interface`, `build-design`; add any of them to the `jakubkrehel` entry in `VENDOR_SKILLS` to link it |
+| Anatomy | [wheresryan22/anatomy](https://github.com/wheresryan22/anatomy) | v1.0.0+ main (2026-10-12) | `anatomy` (the repo root is the skill, so its entry uses `.` as the skills path) |
 
 **Update all vendors to their latest upstream:**
 
