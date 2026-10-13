@@ -20,7 +20,7 @@ and by X when no twitter:* tags exist.
 |---|---|---|
 | `og:title` | ≤60 chars | Platforms truncate around 55–70 |
 | `og:description` | ≤110 chars for safety | Often hidden on mobile feeds |
-| `og:image` | **Absolute URL**, 1200×630 PNG/JPEG/WebP | #1 breakage: relative URLs and SVG are ignored by scrapers |
+| `og:image` | **Absolute URL**, 1200×630 PNG/JPEG (avoid WebP: LinkedIn) | #1 breakage: relative URLs and SVG are ignored by scrapers |
 | `og:image:width` / `og:image:height` | `1200` / `630` | Lets FB/WhatsApp render the image on first share, before the async scrape finishes |
 | `og:image:alt` | Short description | Accessibility in feeds |
 | `og:url` | Absolute canonical URL | Should match `rel=canonical` |
@@ -31,7 +31,8 @@ and by X when no twitter:* tags exist.
 **og:image constraints:** 1200×630 (1.91:1) is the universal size. Minimum
 200×200; Facebook recommends ≥600×315. Keep weight well under ~5MB (hard cap
 on several scrapers) and ideally **<300KB so WhatsApp doesn't silently drop
-it** (Meta documents 600KB; past ~300KB the large card often degrades to a thumbnail). Text on the image must survive downscaling to ~500px wide.
+it** (Meta documents 600KB; past ~300KB the large card often degrades to a
+thumbnail). Text on the image must survive downscaling to ~500px wide.
 
 ## Twitter / X cards
 

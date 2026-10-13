@@ -28,7 +28,8 @@ Universal facts first:
 - Uses the Facebook scraper but is the most fragile consumer:
   - `og:title`, `og:description`, `og:url` must be present and **non-empty**.
   - All meta tags must appear **within the first 300KB** of the HTML.
-  - Heavy og:images get silently dropped — keep **<300KB** (documented cap 600KB, but past ~300KB it often degrades to a thumbnail); small previews
+  - Heavy og:images get silently dropped — keep **<300KB** (documented cap
+    600KB, but past ~300KB it often degrades to a thumbnail); small previews
     may crop square from the center, so keep key content centered.
 - Shares Facebook's cache: bust via the Sharing Debugger too.
 

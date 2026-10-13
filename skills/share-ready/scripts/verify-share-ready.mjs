@@ -91,7 +91,7 @@ const checkOgImage = (label, r) => {
   if (label !== 'og:image') return;
   if (r.bytes > 5 * 1024 * 1024) add('FAIL', 'og:image weight', `${(r.bytes / 1048576).toFixed(1)}MB — several scrapers cap at ~5MB (WhatsApp far less)`);
   else if (r.bytes > 300 * 1024) add('WARN', 'og:image weight', `${(r.bytes / 1024).toFixed(0)}KB — WhatsApp may skip images this heavy; aim <300KB`);
-  if (/svg/.test(r.type)) add('FAIL', 'og:image format', 'SVG is not rendered by scrapers — use PNG/JPEG/WebP');
+  if (/svg/.test(r.type)) add('FAIL', 'og:image format', 'SVG is not rendered by scrapers — use PNG/JPEG');
 };
 
 const assets = new Map(); // href -> label
