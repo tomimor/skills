@@ -551,6 +551,18 @@ main() {
   echo "Linking vendor skills..."
   link_vendor_skills "$source_dir"
 
+  # The SKILLS array only lists own skills, so vendor skills (the symlinks just
+  # created in $source_dir) need their own pass to reach the target.
+  if [[ "$SYMLINK" = true && "$INSTALL_ALL" = true ]]; then
+    echo ""
+    echo "Linking vendor skills into $TARGET_DIR..."
+    local link
+    for link in "$source_dir"/*; do
+      [[ -L "$link" ]] || continue
+      install_skill "$source_dir" "$(basename "$link")" "$TARGET_DIR"
+    done
+  fi
+
   echo ""
   echo "Done."
 }

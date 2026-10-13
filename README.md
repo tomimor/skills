@@ -2,7 +2,7 @@
 
 # 🧠 skills
 
-[![Skills](https://img.shields.io/badge/skills-61-1f6feb?style=flat-square)](#skills)
+[![Skills](https://img.shields.io/badge/skills-65-1f6feb?style=flat-square)](#skills)
 [![Install](https://img.shields.io/badge/install-one%20command-22c55e?style=flat-square)](#install)
 
 </div>
@@ -131,7 +131,9 @@ All from [cloudflare/skills](https://github.com/cloudflare/skills). Most bias to
 |-------|--------------|
 | 🟧 [cloudflare](skills/cloudflare/SKILL.md) | Entry point: pick the right Cloudflare products for an app, API, agent, storage, networking, or security need, then route to the matching skill or docs. |
 | 🟧 [workers-best-practices](skills/workers-best-practices/SKILL.md) | Write, review, and configure Workers against production best practices. |
+| 🟧 [workers-profiling](skills/workers-profiling/SKILL.md) | Profile or debug CPU usage and memory allocation in deployed Workers and Durable Objects, then use the findings to optimize code. |
 | 🟧 [wrangler](skills/wrangler/SKILL.md) | Run or troubleshoot Wrangler commands and configure Worker projects for local dev, deploys, and resource management. |
+| 🟧 [cf-cli](skills/cf-cli/SKILL.md) | Find and run commands with Cloudflare's official `cf` CLI (beta): sign-in and profiles, deploys, DNS, D1, KV, R2, and choosing between `cf` and Wrangler. |
 | 🟧 [durable-objects](skills/durable-objects/SKILL.md) | Build, debug, or review Durable Objects for persistent state and coordination. |
 | 🟧 [agents-sdk](skills/agents-sdk/SKILL.md) | Build, debug, or review apps on the Cloudflare Agents SDK (`agents` package). |
 | 🟧 [sandbox-stable](skills/sandbox-stable/SKILL.md) | Build or maintain Sandbox apps on the stable `@cloudflare/sandbox`. |
@@ -139,6 +141,8 @@ All from [cloudflare/skills](https://github.com/cloudflare/skills). Most bias to
 | 🟧 [sandbox-migrate-to-next](skills/sandbox-migrate-to-next/SKILL.md) | Migrate a Sandbox app from stable to `@cloudflare/sandbox@next`. |
 | 🟧 [nextjs-on-cloudflare](skills/nextjs-on-cloudflare/SKILL.md) | Build, migrate, and deploy Next.js apps on Workers with vinext, or choose between vinext and OpenNext. |
 | 🟧 [cloudflare-email-service](skills/cloudflare-email-service/SKILL.md) | Implement or troubleshoot Email Sending and Email Routing, including deliverability setup. |
+| 🟧 [basin](skills/basin/SKILL.md) | Build and troubleshoot Basin analytics workflows: stream data into R2 Iceberg tables with Basin Pipelines, manage Basin Catalog, and query with Basin SQL. |
+| 🟧 [k2](skills/k2/SKILL.md) | Build and troubleshoot K2 Streams durable logs: stream setup, producing from Workers or HTTP, retention, and consuming through subscriptions. |
 | 🟧 [turnstile-spin](skills/turnstile-spin/SKILL.md) | Set up, repair, or migrate to Turnstile bot verification end to end, including server-side Siteverify. |
 | 🟧 [web-perf](skills/web-perf/SKILL.md) | Audit and optimize loading and interaction performance, Core Web Vitals, and Lighthouse scores. |
 | 🟧 [cloudflare-one](skills/cloudflare-one/SKILL.md) | Design, configure, troubleshoot, or review Cloudflare One Zero Trust / SASE deployments. |
@@ -154,7 +158,7 @@ Vendor skills are third-party packs tracked as git submodules under `vendor/` an
 | improve | [shadcn/improve](https://github.com/shadcn/improve) | v1.0.0 | `improve` |
 | Remotion | [remotion-dev/skills](https://github.com/remotion-dev/skills) | v4.0.529 (2026-09-25) | `remotion-best-practices` (router that bundles the 11 per-topic skills) |
 | Emil Kowalski | [emilkowalski/skill](https://github.com/emilkowalski/skill) | main (2026-09-24) | `review-animations`, `emil-design-eng`, `animation-vocabulary`, `apple-design` — upstream also ships `animate`, `animate-expo`, `improve-animations`, `find-animation-opportunities`, `prototype`, `pick-ui-library`, `mobile-native`, `ask-sonner`, `write-swift`; add any of them to the `emil` entry in `VENDOR_SKILLS` to link it |
-| Cloudflare | [cloudflare/skills](https://github.com/cloudflare/skills) | v1.0.1 (2026-09-26) | All 14 skills (see [☁️ Cloudflare](#️-cloudflare)) |
+| Cloudflare | [cloudflare/skills](https://github.com/cloudflare/skills) | v1.0.2 (2026-10-12) | All 18 skills (see [☁️ Cloudflare](#️-cloudflare)) |
 | Jakub Krehel | [jakubkrehel/skills](https://github.com/jakubkrehel/skills) | v1.10.3 (2026-10-10) | `state-machine`, `break`, `variant` — upstream also ships `better-interface`, `better-ui`, `better-typography`, `better-colors`, `better-accessibility`, `better-layout`, `better-writing`, `interface-review`, `explain-interface`, `build-design`; add any of them to the `jakubkrehel` entry in `VENDOR_SKILLS` to link it |
 | Anatomy | [wheresryan22/anatomy](https://github.com/wheresryan22/anatomy) | v1.0.0+ main (2026-10-12) | `anatomy` (the repo root is the skill, so its entry uses `.` as the skills path) |
 | snapcn | [snapcndev/snapcn](https://github.com/snapcndev/snapcn) | main (2026-10-13) | `snapcn`, `remotion-product-demo`, `remotion-launch-video` — upstream also ships `remotion-motion-graphics`, `remotion-logo-animation`, `remotion-explainer-video`, `remotion-kinetic-typography`; add any of them to the `snapcn` entry in `VENDOR_SKILLS` to link it |
