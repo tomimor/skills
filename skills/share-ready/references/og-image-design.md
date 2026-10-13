@@ -1,7 +1,7 @@
 # Designing the og:image
 
 What goes on the 1200×630 card, what stays off, and three real cards to
-calibrate against. Read before filling `assets/og-template*.html` or writing an
+calibrate against. Read before filling `assets/og-template.html` or writing an
 `opengraph-image.tsx`. Platform layouts change without notice and none
 publishes a layout spec — the numbers below are observed, not guaranteed.
 
