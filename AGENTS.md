@@ -131,6 +131,9 @@ The `VENDOR_SKILLS` entry takes an optional 4th field listing which skills to li
 (and then fail `--check` because they are not in the catalogs). Pin the subset explicitly whenever you do not want
 all of them, e.g. `"emil:emilkowalski/skill:skills:review-animations,emil-design-eng"`.
 
+When the vendor repo *is* one skill (its `SKILL.md` sits at the repo root), use `.` as the skills path. It is
+linked under the vendor name, e.g. `"anatomy:wheresryan22/anatomy:."` → `skills/anatomy -> ../vendor/anatomy`.
+
 ### Vendor skill rules
 
 - **Never edit files inside `vendor/`**. Those are managed by the upstream repo. To make changes, contribute upstream or override with an own skill of the same name (own skills take priority over vendor symlinks).

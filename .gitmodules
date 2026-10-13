@@ -13,3 +13,9 @@
 [submodule "vendor/cloudflare"]
 	path = vendor/cloudflare
 	url = https://github.com/cloudflare/skills
+[submodule "vendor/jakubkrehel"]
+	path = vendor/jakubkrehel
+	url = https://github.com/jakubkrehel/skills
+[submodule "vendor/anatomy"]
+	path = vendor/anatomy
+	url = https://github.com/wheresryan22/anatomy
