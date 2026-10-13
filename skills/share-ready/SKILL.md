@@ -90,9 +90,19 @@ regardless of framework:
   `scripts/generate-favicons.sh <logo> <public-dir> --pad-maskable`
   (ImageMagick, falls back to npx sharp-cli). If the logo is an SVG, also
   ship it directly as `<link rel="icon" type="image/svg+xml">`.
-- og:image 1200×630: copy `assets/og-template.html` into the project (keep
-  the filled copy committed so the card is regenerable), fill brand
-  colors/copy, render with `scripts/render-og-image.mjs <template> <out.png>`.
+- og:image 1200×630: read
+  [references/og-image-design.md](references/og-image-design.md) first — it
+  has the content rules (**never print the URL/domain on the image**; a
+  5–7 word hook instead of the full og:title; safe zone; ≤300KB) and three
+  reference cards to calibrate against. The layout is
+  `assets/og-template.html`: logo + centered headline on a solid background
+  (the logo, never the site name). Copy it and the logo file into the
+  project (keep the filled copy committed so the card is regenerable), fill
+  colors/font/copy, render with
+  `scripts/render-og-image.mjs <template> <out.png>` (warns over 300KB;
+  pass `.jpg` for gradient/photo-heavy cards). Open the PNG and check it
+  against the rules before wiring it up. For content collections, generate
+  one card per page from the same template with the page title.
   The script imports `playwright` from the project — `npm i -D playwright`
   if absent (browser download can be skipped when a system Chromium exists;
   the script falls back to it automatically). In Next.js App Router prefer
@@ -120,7 +130,10 @@ regardless of framework:
    - Facebook Sharing Debugger — also the way to bust FB/WhatsApp's cache
      ("Scrape Again")
    - LinkedIn Post Inspector — busts LinkedIn's ~7-day cache
-   - X/Twitter: paste the URL in a draft post to preview
+   - X/Twitter: paste the URL in a draft post to preview — check X's
+     headline overlay doesn't cover anything important
+   - WhatsApp: send the link to yourself — confirm the large card (not a
+     thumbnail) appears
    - Discord/Slack/Telegram: paste in a private channel/saved messages
    - Remind the user: scrapers cache aggressively — after changing an
      og:image, either bust caches via the debuggers or version the image
