@@ -1,32 +1,46 @@
 <!doctype html>
 <!-- 1200x630 og:image template. Replace the CSS variables and copy with the
      project's brand before rendering with scripts/render-og-image.mjs.
-     Keep total text short: the card renders at ~500px wide in most feeds. -->
+     Design rules (see references/og-image-design.md):
+     - Never print the URL/domain: every platform already shows it next to the
+       card, and X overlays its own text on the bottom of the image.
+     - Headline: 5-7 words, <=60 chars, a short hook rather than og:title verbatim.
+     - Nothing below ~32px; keep the bottom ~100px empty. -->
 <html>
 <head>
 <meta charset="utf-8" />
 <style>
+  /* Headless Chromium on Linux resolves system-ui to DejaVu: point this at
+     the brand font (local file next to the template) when there is one. */
+  /* @font-face { font-family: Brand; src: url(./brand.woff2); font-weight: 400 800; } */
   :root {
-    --bg: #0b1220;            /* brand background */
-    --fg: #f8fafc;            /* headline color */
+    --bg: #0b1220;            /* brand background (full-bleed, never transparent) */
+    --fg: #f8fafc;            /* headline color, >=4.5:1 against --bg */
     --muted: #94a3b8;         /* secondary text */
     --accent: #3b82f6;        /* brand accent */
+    --font: Brand, Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
   }
   * { margin: 0; box-sizing: border-box; }
   body {
     width: 1200px; height: 630px; overflow: hidden;
-    display: flex; flex-direction: column; justify-content: space-between;
-    padding: 72px 80px;
+    display: flex; flex-direction: column;
+    padding: 72px 80px 120px;
     background: var(--bg);
-    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-family: var(--font);
     color: var(--fg);
   }
   .logo { display: flex; align-items: center; gap: 20px; }
   .logo img { width: 64px; height: 64px; border-radius: 14px; }
-  .logo span { font-size: 32px; font-weight: 600; color: var(--muted); }
-  h1 { font-size: 76px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; max-width: 20ch; }
-  .footer { display: flex; align-items: center; justify-content: space-between; }
-  .url { font-size: 28px; color: var(--muted); }
+  .logo span { font-size: 36px; font-weight: 600; color: var(--muted); }
+  .main { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .eyebrow { font-size: 30px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+  h1 {
+    font-size: 88px; font-weight: 700; line-height: 1.08; letter-spacing: -0.02em; max-width: 20ch;
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;
+  }
+  /* shrink long headlines instead of letting them overflow; never below 56px */
+  h1.long { font-size: 72px; }
+  h1.xlong { font-size: 56px; }
   .accent-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 14px; background: var(--accent); }
 </style>
 </head>
@@ -36,9 +50,16 @@
     <!-- <img src="logo.png" alt="" /> -->
     <span>SITE NAME</span>
   </div>
-  <h1>Headline that sells the site in one line</h1>
-  <div class="footer">
-    <div class="url">example.com</div>
+  <div class="main">
+    <!-- optional, for per-page cards (blog, docs): <=3 words -->
+    <!-- <div class="eyebrow">Guide</div> -->
+    <h1>Headline that sells the site in one line</h1>
   </div>
+  <script>
+    const h1 = document.querySelector('h1');
+    const n = h1.textContent.trim().length;
+    if (n > 50) h1.classList.add('xlong');
+    else if (n > 30) h1.classList.add('long');
+  </script>
 </body>
 </html>

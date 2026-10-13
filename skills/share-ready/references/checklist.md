@@ -30,8 +30,8 @@ and by X when no twitter:* tags exist.
 
 **og:image constraints:** 1200×630 (1.91:1) is the universal size. Minimum
 200×200; Facebook recommends ≥600×315. Keep weight well under ~5MB (hard cap
-on several scrapers) and ideally **<600KB so WhatsApp doesn't silently drop
-it**. Text on the image must survive downscaling to ~500px wide.
+on several scrapers) and ideally **<300KB so WhatsApp doesn't silently drop
+it** (Meta documents 600KB; past ~300KB the large card often degrades to a thumbnail). Text on the image must survive downscaling to ~500px wide.
 
 ## Twitter / X cards
 

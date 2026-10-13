@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Render an HTML template to a 1200x630 og-image PNG via Playwright.
-// Usage: node render-og-image.mjs <template.html> <output.png>
+// Usage: node render-og-image.mjs <template.html> <output.png|output.jpg>
 // Requires playwright (npx playwright, or a project devDependency). If the
 // environment pre-installs Chromium, PLAYWRIGHT_BROWSERS_PATH already points
 // at it; otherwise `npx playwright install chromium` once.
@@ -8,7 +8,7 @@
 import { pathToFileURL } from 'node:url';
 import { resolve, join } from 'node:path';
 import { createRequire } from 'node:module';
-import { existsSync } from 'node:fs';
+import { existsSync, statSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 
 // resolve playwright from the project being worked on (cwd), not from this
@@ -45,6 +45,17 @@ const browser = await chromium.launch().catch((e) => {
 });
 const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
 await page.goto(pathToFileURL(resolve(template)).href, { waitUntil: 'networkidle' });
-await page.screenshot({ path: output, type: 'png' });
+// networkidle can fire before web fonts and images finish decoding
+await page.evaluate(async () => {
+  await document.fonts.ready;
+  await Promise.all([...document.images].map((img) => img.decode().catch(() => {})));
+});
+const jpeg = /\.jpe?g$/i.test(output);
+await page.screenshot({ path: output, type: jpeg ? 'jpeg' : 'png', ...(jpeg && { quality: 85 }) });
 await browser.close();
-console.log(`Rendered ${output} (1200x630)`);
+
+const kb = Math.round(statSync(output).size / 1024);
+console.log(`Rendered ${output} (1200x630, ${kb}KB)`);
+if (kb > 300) {
+  console.warn(`WARN: ${kb}KB > 300KB — WhatsApp may drop the large preview. Flatten gradients/photos or render to .jpg.`);
+}
