@@ -2,7 +2,7 @@
 
 # 🧠 skills
 
-[![Skills](https://img.shields.io/badge/skills-58-1f6feb?style=flat-square)](#skills)
+[![Skills](https://img.shields.io/badge/skills-61-1f6feb?style=flat-square)](#skills)
 [![Install](https://img.shields.io/badge/install-one%20command-22c55e?style=flat-square)](#install)
 
 </div>
@@ -119,6 +119,9 @@ Skills that run in iterations with explicit terminal states, designed to drive a
 | 🟦 [meta-ads-bulk-creator](skills/meta-ads-bulk-creator/SKILL.md) | Build Meta Ads Manager bulk-import files from a YAML brief, validated against Meta's enums and limits. |
 | 🟧 [improve](skills/improve/SKILL.md) | An advisor, never an implementer: audit a codebase, rank findings by leverage, and write executable plans for a cheaper model to run. v1.0.0, from [shadcn/improve](https://github.com/shadcn/improve). |
 | 🟧 [remotion-best-practices](skills/remotion-best-practices/SKILL.md) | Router for all [Remotion](https://github.com/remotion-dev/skills) skills (programmatic video creation in React): create, markup, maps, captions, render, studio, SaaS, interactivity, docs, upgrade, multimedia. Upstream split the old `remotion` skill into this router plus per-topic skills; only the router is linked here since it bundles the rest. |
+| 🟧 [snapcn](skills/snapcn/SKILL.md) | Build Remotion videos from [snapcn](https://snapcn.dev): 100+ shadcn-registry components (text reveals, captions, device mockups, AI-chat sequences, logo stings, full scenes) installed as code you own. Catalog, props, durations, and motion rules. Needs a Remotion project with `components.json`. From [snapcndev/snapcn](https://github.com/snapcndev/snapcn). |
+| 🟧 [remotion-product-demo](skills/remotion-product-demo/SKILL.md) | Turn a screen recording or screenshots into a 20–45s product demo in Remotion, using snapcn's camera push-ins, cursor clicks, device frames, and typing terminals. From [snapcndev/snapcn](https://github.com/snapcndev/snapcn). |
+| 🟧 [remotion-launch-video](skills/remotion-launch-video/SKILL.md) | Turn a launch brief into a 15–30s launch film in Remotion: storyboard, install snapcn scenes, compose, render-audit, ship. From [snapcndev/snapcn](https://github.com/snapcndev/snapcn). |
 
 ### ☁️ Cloudflare
 
@@ -154,6 +157,7 @@ Vendor skills are third-party packs tracked as git submodules under `vendor/` an
 | Cloudflare | [cloudflare/skills](https://github.com/cloudflare/skills) | v1.0.1 (2026-09-26) | All 14 skills (see [☁️ Cloudflare](#️-cloudflare)) |
 | Jakub Krehel | [jakubkrehel/skills](https://github.com/jakubkrehel/skills) | v1.10.3 (2026-10-10) | `state-machine`, `break`, `variant` — upstream also ships `better-interface`, `better-ui`, `better-typography`, `better-colors`, `better-accessibility`, `better-layout`, `better-writing`, `interface-review`, `explain-interface`, `build-design`; add any of them to the `jakubkrehel` entry in `VENDOR_SKILLS` to link it |
 | Anatomy | [wheresryan22/anatomy](https://github.com/wheresryan22/anatomy) | v1.0.0+ main (2026-10-12) | `anatomy` (the repo root is the skill, so its entry uses `.` as the skills path) |
+| snapcn | [snapcndev/snapcn](https://github.com/snapcndev/snapcn) | main (2026-10-13) | `snapcn`, `remotion-product-demo`, `remotion-launch-video` — upstream also ships `remotion-motion-graphics`, `remotion-logo-animation`, `remotion-explainer-video`, `remotion-kinetic-typography`; add any of them to the `snapcn` entry in `VENDOR_SKILLS` to link it |
 
 **Update all vendors to their latest upstream:**
 

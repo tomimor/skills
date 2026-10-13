@@ -19,3 +19,6 @@
 [submodule "vendor/anatomy"]
 	path = vendor/anatomy
 	url = https://github.com/wheresryan22/anatomy
+[submodule "vendor/snapcn"]
+	path = vendor/snapcn
+	url = https://github.com/snapcndev/snapcn
