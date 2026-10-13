@@ -48,6 +48,7 @@ VENDOR_SKILLS=(
   "cloudflare:cloudflare/skills:skills"
   "jakubkrehel:jakubkrehel/skills:skills:state-machine,break,variant"
   "anatomy:wheresryan22/anatomy:."
+  "snapcn:snapcndev/snapcn:skills:snapcn,remotion-product-demo,remotion-launch-video"
 )
 
 TARGET_DIR=""
