@@ -1,11 +1,10 @@
 <!doctype html>
-<!-- 1200x630 og:image template. Replace the CSS variables and copy with the
-     project's brand before rendering with scripts/render-og-image.mjs.
-     Design rules (see references/og-image-design.md):
-     - Never print the URL/domain: every platform already shows it next to the
-       card, and X overlays its own text on the bottom of the image.
-     - Headline: 5-7 words, <=60 chars, a short hook rather than og:title verbatim.
-     - Nothing below ~32px; keep the bottom ~100px empty. -->
+<!-- 1200x630 og:image template — default layout: logo + centered headline.
+     Works with any logo and brand color and survives square center crops.
+     Fill the CSS variables, point the <img> at the project's logo (SVG or
+     PNG next to this file), and render with scripts/render-og-image.mjs.
+     Rules (references/og-image-design.md): never print the URL/domain or the
+     site name — the logo is the brand; headline 5-7 words, <=60 chars. -->
 <html>
 <head>
 <meta charset="utf-8" />
@@ -14,47 +13,30 @@
      the brand font (local file next to the template) when there is one. */
   /* @font-face { font-family: Brand; src: url(./brand.woff2); font-weight: 400 800; } */
   :root {
-    --bg: #0b1220;            /* brand background (full-bleed, never transparent) */
-    --fg: #f8fafc;            /* headline color, >=4.5:1 against --bg */
-    --muted: #94a3b8;         /* secondary text */
-    --accent: #3b82f6;        /* brand accent */
+    --bg: #0b1220;            /* full-bleed, never transparent */
+    --fg: #f8fafc;            /* headline, >=4.5:1 against --bg */
     --font: Brand, Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
   }
   * { margin: 0; box-sizing: border-box; }
   body {
     width: 1200px; height: 630px; overflow: hidden;
-    display: flex; flex-direction: column;
-    padding: 72px 80px 120px;
-    background: var(--bg);
-    font-family: var(--font);
-    color: var(--fg);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 48px;
+    padding: 80px 120px 130px;   /* extra bottom: X overlays text there */
+    background: var(--bg); color: var(--fg); font-family: var(--font); text-align: center;
   }
-  .logo { display: flex; align-items: center; gap: 20px; }
-  .logo img { width: 64px; height: 64px; border-radius: 14px; }
-  .logo span { font-size: 36px; font-weight: 600; color: var(--muted); }
-  .main { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-  .eyebrow { font-size: 30px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+  .logo { height: 96px; width: auto; max-width: 480px; }
   h1 {
-    font-size: 88px; font-weight: 700; line-height: 1.08; letter-spacing: -0.02em; max-width: 20ch;
+    font-size: 80px; font-weight: 700; line-height: 1.08; letter-spacing: -0.03em; max-width: 18ch;
     display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;
   }
-  /* shrink long headlines instead of letting them overflow; never below 56px */
-  h1.long { font-size: 72px; }
+  /* shrink long headlines instead of overflowing; never below 56px */
+  h1.long { font-size: 68px; }
   h1.xlong { font-size: 56px; }
-  .accent-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 14px; background: var(--accent); }
 </style>
 </head>
 <body>
-  <div class="accent-bar"></div>
-  <div class="logo">
-    <!-- <img src="logo.png" alt="" /> -->
-    <span>SITE NAME</span>
-  </div>
-  <div class="main">
-    <!-- optional, for per-page cards (blog, docs): <=3 words -->
-    <!-- <div class="eyebrow">Guide</div> -->
-    <h1>Headline that sells the site in one line</h1>
-  </div>
+  <img class="logo" src="logo.svg" alt="" />
+  <h1>Headline that sells the site in one line</h1>
   <script>
     const h1 = document.querySelector('h1');
     const n = h1.textContent.trim().length;

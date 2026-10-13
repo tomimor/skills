@@ -1,7 +1,7 @@
 # Designing the og:image
 
 What goes on the 1200×630 card, what stays off, and three real cards to
-calibrate against. Read before filling `assets/og-template.html` or writing an
+calibrate against. Read before filling `assets/og-template*.html` or writing an
 `opengraph-image.tsx`. Platform layouts change without notice and none
 publishes a layout spec — the numbers below are observed, not guaranteed.
 
@@ -33,12 +33,13 @@ the image doesn't need:
    rewrite the copy rather than go smaller), nothing below ~32px, contrast
    ≥4.5:1 on a solid or simple background.
 4. **Safe zone.** 60–80px margins, keep the bottom ~100px and the corners
-   free of anything critical (X overlays). Logo top-left. Optional stress
+   free of anything critical (X overlays). Optional stress
    test: the key content should still read when center-cropped to 630×630
    (small WhatsApp/iMessage previews).
-5. **One focal point.** Logo + headline (+ optional eyebrow/category ≤3
-   words). No description paragraph, date, author, stock photos or full-page
-   screenshots; at most one zoomed-in UI fragment.
+5. **One focal point.** Logo + headline. Use the logo, not the site name in
+   text — the platform already prints the name. No decorative side bars or
+   accent stripes (generic, template-looking). No description paragraph,
+   date, author, stock photos or full-page screenshots.
 6. **Full-bleed opaque background.** Transparent PNGs render on whatever the
    feed is (black on Discord/X dark mode). Light cards need enough contrast
    at the edges to not dissolve into a white feed.
@@ -47,7 +48,7 @@ the image doesn't need:
    JPEG.
 8. **Static vs per-page.** One static card for the homepage and generic
    pages. Collections (blog, docs, products, ~10+ pages) get a card per page
-   from the *same* template, parametrized by title (+ eyebrow). Missing data
+   from the *same* template, parametrized by title. Missing data
    falls back to the static brand card. A hand-designed image always wins
    over a generated one.
 9. **Version the URL** (`og.png?v=2`) whenever the design changes.

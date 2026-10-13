@@ -94,13 +94,20 @@ regardless of framework:
   [references/og-image-design.md](references/og-image-design.md) first — it
   has the content rules (**never print the URL/domain on the image**; a
   5–7 word hook instead of the full og:title; safe zone; ≤300KB) and three
-  reference cards to calibrate against. Copy `assets/og-template.html` into
-  the project (keep the filled copy committed so the card is regenerable),
-  fill brand colors/font/copy, render with
-  `scripts/render-og-image.mjs <template> <out.png>` (warns over 300KB; pass
-  `.jpg` for gradient/photo-heavy cards). Open the PNG and check it against
-  the rules before wiring it up. For content collections, generate one card
-  per page from the same template with the page title (+ eyebrow).
+  reference cards to calibrate against. Pick a layout — both use the logo,
+  never the site name:
+  - `assets/og-template.html` (**default**): logo + centered headline on a
+    solid background. Works with any logo and color.
+  - `assets/og-template-brand.html`: full-bleed brand color, big
+    left-aligned headline, the logo mark oversized off the right edge. Only
+    when the brand has a strong primary color and a simple icon mark.
+
+  Copy the template and the logo file into the project (keep the filled
+  copy committed so the card is regenerable), fill colors/font/copy, render
+  with `scripts/render-og-image.mjs <template> <out.png>` (warns over 300KB;
+  pass `.jpg` for gradient/photo-heavy cards). Open the PNG and check it
+  against the rules before wiring it up. For content collections, generate
+  one card per page from the same template with the page title.
   The script imports `playwright` from the project — `npm i -D playwright`
   if absent (browser download can be skipped when a system Chromium exists;
   the script falls back to it automatically). In Next.js App Router prefer
