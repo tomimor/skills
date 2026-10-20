@@ -1,15 +1,15 @@
 ---
 name: blazing-fast-web
 description: >-
-  Makes a web app measurably faster across five fronts: unnecessary
-  re-renders, bundle size (lazy loading / code splitting), requests and
-  caching, slow database queries and N+1 problems, and images, fonts and
-  third-party scripts. Every optimization is measured before and after
-  (Chrome DevTools MCP for traces and Lighthouse, Playwright MCP for real
-  user flows, Sentry MCP for production data) and kept only if the numbers
-  improve. Use when the user asks to make an app faster, speed up a page,
-  fix slow loads or janky interactions, cut bundle size, reduce re-renders,
-  fix N+1 queries, or improve Core Web Vitals / performance overall.
+  Makes a web app measurably faster across five fronts (unnecessary
+  re-renders, bundle size and lazy loading, requests and caching, slow
+  queries and N+1, images/fonts/scripts), measuring every change before
+  and after with Chrome DevTools, Playwright, and Sentry MCPs and keeping
+  only what the numbers prove. Use when the user says an app, page,
+  endpoint, or interaction is slow or janky, or asks to speed it up, cut
+  bundle size, reduce re-renders, fix N+1 queries, add caching, or improve
+  Core Web Vitals or Lighthouse scores, even if they don't say
+  "performance".
 ---
 
 # Blazing Fast Web
@@ -37,7 +37,7 @@ Prefer these MCPs when connected; fall back to CLIs when not.
 
 | Tool | Use it for | Fallback |
 |---|---|---|
-| **Chrome DevTools MCP** | Performance traces (LCP, INP, CLS, long tasks), Lighthouse, network waterfall, coverage (unused JS/CSS), React Profiler via the page | `npx lighthouse <url> --preset=desktop`, `npx unlighthouse`, browser DevTools by hand |
+| **Chrome DevTools MCP** | Performance traces (LCP, INP, CLS, long tasks), Lighthouse, network waterfall, coverage (unused JS/CSS), React Profiler via the page | `npx lighthouse <url> --output=json` (mobile by default) or a Playwright + CDP trace |
 | **Playwright MCP** | Driving real user flows (login → search → checkout) repeatably, timing them, counting requests per flow | `npx playwright test` with a timing script |
 | **Sentry MCP** | Production truth: slowest transactions, p75/p95, N+1 query and slow-DB-query issues, Web Vitals by route, regressions after deploys | APM/logs the project already has; DB slow-query log |
 
@@ -52,8 +52,12 @@ fallbacks; never skip measuring because a tool is missing.
    main logged-in screen, the heaviest interaction. Ask the user if unclear.
    If Sentry is connected, let it pick: the routes with the worst p75 and
    the most traffic.
-3. **Build for production** and run it locally (or use a staging URL).
-   Never measure the dev server.
+3. **Set the goals** for each flow and confirm them with the user. Default:
+   Core Web Vitals "good" (LCP < 2.5 s, INP < 200 ms, CLS < 0.1) and API
+   p95 < 200 ms. Goals tell you when to stop.
+4. **Build for production** and run it locally (or use a staging URL).
+   The dev server ships unminified code and extra checks, so its numbers
+   don't reflect what users get.
 
 ## Phase 1 — Baseline
 
@@ -146,9 +150,8 @@ For each candidate fix, in impact order:
 5. Keep it if it beats noise (rule of thumb: >5% or clearly outside the
    spread of the 3 runs); otherwise revert. Log either way.
 
-Stop when the target flows hit the goals agreed in Phase 0 (default:
-LCP < 2.5 s, INP < 200 ms, CLS < 0.1 at p75), or when the remaining fixes
-cost more than they buy. Say which.
+Stop when the target flows hit the goals set in Phase 0, or when the
+remaining fixes cost more than they buy. Say which.
 
 ## Report
 

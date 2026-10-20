@@ -35,7 +35,7 @@ section for the front you're working on.
 | Keystroke triggers heavy work | `useDeferredValue` / `startTransition`, or debounce |
 | Index as `key` in reorderable lists | Stable ids |
 
-React Compiler (React 19+) auto-memoizes; if the project uses it, don't
+React Compiler auto-memoizes; if the project uses it, don't
 hand-add `memo`/`useMemo`, look for the patterns it can't fix (state too
 high, context shape, list size).
 
