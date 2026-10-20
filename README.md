@@ -2,7 +2,7 @@
 
 # 🧠 skills
 
-[![Skills](https://img.shields.io/badge/skills-65-1f6feb?style=flat-square)](#skills)
+[![Skills](https://img.shields.io/badge/skills-66-1f6feb?style=flat-square)](#skills)
 [![Install](https://img.shields.io/badge/install-one%20command-22c55e?style=flat-square)](#install)
 
 </div>
@@ -69,6 +69,7 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 | 🟦 [qa-manual](skills/qa-manual/SKILL.md) | Drive a web feature through Chrome MCP across the happy path + 2–3 edge cases, capturing screenshots, console errors, and network failures. |
 | 🟦 [investigate](skills/investigate/SKILL.md) | Root-cause debugging under the Iron Law: no fix without a confirmed cause. Five phases, 3-strike escalation. Adapted from [gstack](https://github.com/garrytan/gstack). |
 | 🟦 [benchmark](skills/benchmark/SKILL.md) | Performance-regression detection for web pages: capture baselines, compare runs, flag regressions. Adapted from [gstack](https://github.com/garrytan/gstack). |
+| 🟦 [blazing-fast-web](skills/blazing-fast-web/SKILL.md) | Make a web app measurably faster on five fronts: unnecessary re-renders, bundle size (lazy loading), requests and caching, slow queries and N+1, and images/fonts/scripts. Measures before and after every change with Chrome DevTools, Playwright, and Sentry MCPs, and keeps only what the numbers prove. |
 | 🟦 [agent-guide-bootstrap](skills/agent-guide-bootstrap/SKILL.md) | Bootstrap a full `AGENTS.md` + `.agents/` guide system using progressive disclosure. |
 
 ### 🎨 Frontend & design
