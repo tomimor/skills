@@ -166,20 +166,19 @@ non-blocking (`CREATE INDEX CONCURRENTLY` in Postgres).
 4. Network: count requests, transfer size, slowest request.
 5. Repeat 3 times, take the median.
 
-**Flow timing (Playwright MCP or script)**
+**Without MCPs: bundled scripts**
+- `scripts/measure-page.mjs <url> --ready "<selector>" [--type "<selector>" "<text>"]`:
+  load metrics and bytes by type under mobile throttling (`--net desktop|none`,
+  `--cpu 1` to change), median of 3. Add `--type` for an input-latency (INP)
+  measurement. Needs `playwright` in the project or installed globally.
+- `scripts/measure-endpoint.mjs <url> --runs 10`: first-request vs p50/p95,
+  wire vs decoded bytes, `content-encoding`, `cache-control`, ETag/304.
+- For a multi-step flow, write a short Playwright script that times from the
+  first action to the result being visible, and run it under the same CDP
+  throttling (`Emulation.setCPUThrottlingRate`, `Network.emulateNetworkConditions`).
 
-```ts
-const t0 = Date.now();
-await page.goto(url);
-await page.getByRole('button', { name: 'Search' }).click();
-await page.getByTestId('results').waitFor();
-console.log('flow ms', Date.now() - t0);
-const vitals = await page.evaluate(() => performance.getEntriesByType('navigation')[0].toJSON());
-```
-
-Count requests in the flow with `page.on('request', ...)`. Run with the same
-CPU/network throttling each time (CDP `Emulation.setCPUThrottlingRate`,
-`Network.emulateNetworkConditions`).
+**Counting queries per request**: turn on the ORM's query log (section 4),
+hit the endpoint once, count lines. This is the clearest N+1 metric.
 
 **Production (Sentry MCP)**
 - Web Vitals by route (p75), slowest transactions, endpoint p95.

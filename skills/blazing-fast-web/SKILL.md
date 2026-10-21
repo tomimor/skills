@@ -22,8 +22,10 @@ numbers. Five fronts, one rule.
 No optimization ships without a before number and an after number for the
 same metric, taken the same way. If you can't measure it, you can't claim it.
 
-- **One change per measurement.** Bundle two fixes and you can't tell which
-  one helped (or which one hurt).
+- **One idea per measurement.** Bundle two different fixes and you can't
+  tell which one helped (or which one hurt). The same mechanical fix applied
+  across many files (convert every image, drop one dependency everywhere)
+  is one idea: measure it once.
 - **Same conditions both times.** Same build mode (production, never dev),
   same URL and data, same throttling, same machine. Run each measurement
   3 times and use the median.
@@ -42,7 +44,23 @@ Prefer these MCPs when connected; fall back to CLIs when not.
 | **Sentry MCP** | Production truth: slowest transactions, p75/p95, N+1 query and slow-DB-query issues, Web Vitals by route, regressions after deploys | APM/logs the project already has; DB slow-query log |
 
 Before starting, check which are available. If none are, say so and use the
-fallbacks; never skip measuring because a tool is missing.
+bundled scripts below; never skip measuring because a tool is missing.
+
+**Bundled scripts** (Node + Playwright; use them instead of writing your own
+harness, which is where most of the time goes otherwise):
+
+```bash
+# page load + optional typing interaction, mobile throttling, median of 3
+node scripts/measure-page.mjs http://localhost:4173/ --ready "main" \
+  --type "input[type=search]" "lamp" --out before.json
+# endpoint latency, payload on the wire, compression, cache headers
+node scripts/measure-endpoint.mjs http://localhost:3000/api/orders --runs 10
+```
+
+`measure-page.mjs` reports FCP, LCP, CLS, TBT, bytes by resource type, and,
+with `--type`, INP and long-task time while typing. Run Lighthouse once at
+the start and once at the end if the user cares about the score; it is too
+slow and noisy to use as the per-step yardstick.
 
 ## Phase 0 — Scope
 
@@ -74,7 +92,12 @@ For each target flow capture, 3 runs, median:
 - **Production** (if Sentry): p75 per route, top slow transactions, open
   N+1 / slow-query issues.
 
-Write the baseline into the ledger before touching code.
+Collect only what the target flows need: a slow endpoint doesn't need Web
+Vitals, a janky input doesn't need image bytes.
+
+Write the baseline into the ledger before touching code, and keep a pristine
+copy of the original (a copy of the production build, a git worktree, or the
+original server on a second port) for the final A/B.
 
 ## Phase 2 — Find and fix, five fronts
 
@@ -150,8 +173,27 @@ For each candidate fix, in impact order:
 5. Keep it if it beats noise (rule of thumb: >5% or clearly outside the
    spread of the 3 runs); otherwise revert. Log either way.
 
-Stop when the target flows hit the goals set in Phase 0, or when the
-remaining fixes cost more than they buy. Say which.
+### Budget: know when to stop
+
+The point is a faster app, not an exhaustive search. Long sessions spent on
+2% wins cost the user more than they gain.
+
+- **Stop at the goals** set in Phase 0. Remaining ideas go under "Next".
+- **Stop on diminishing returns**: when the last two kept changes each moved
+  the goal metric by less than ~5%, stop.
+- **Don't experiment on what you don't own.** If what's left is a vendor
+  script, the host/CDN config, or a product decision, measure its cost once
+  (e.g. block the script and re-measure) and report it instead of trying
+  workarounds.
+- **Skip changes whose expected gain is below your measured noise.**
+- Explore with 1 quick run; use the full 3 runs only to decide keep/revert.
+
+## Phase 4 — Final A/B
+
+Machines drift over a long session (other processes, thermal throttling), so
+step-by-step numbers taken an hour apart aren't directly comparable. End by
+measuring the original and the final version back to back, same script,
+same conditions, 3+ runs each. That comparison is the headline result.
 
 ## Report
 
@@ -169,7 +211,7 @@ Conditions: production build, Chrome mobile throttling, median of 3 runs.
 | 2 | Fix N+1 in /api/orders (include items) | Queries/request | 51 | 2 | −96% | ✅ |
 | 3 | memo on <Row> | Commit time on type | 18 ms | 17 ms | noise | ❌ reverted |
 
-**Overall** (target flows): LCP 3.1 → 2.2 s · INP 340 → 150 ms · JS 412 → 231 KB · /api/orders p95 900 → 120 ms
+**Final A/B** (original vs final, back to back): LCP 3.1 → 2.2 s · INP 340 → 150 ms · JS 412 → 231 KB · /api/orders p95 900 → 120 ms
 
 **Next** (not done, ranked): …
 ```
@@ -181,6 +223,12 @@ touched routes a few days after deploy.
 
 - Never trade correctness for speed: caching must respect auth and
   invalidation; lazy-loaded UI needs a loading state; no removed features.
+- Keep public contracts: API response shapes, URLs, and component props stay
+  the same. Callers you can't see may depend on them. If trimming a payload
+  or paginating would help, measure the potential gain and propose it under
+  "Next" instead of shipping it.
+- Stay inside what the user asked about. Other slow things you notice go
+  under "Next" with a rough size, not into this change.
 - No premature `memo` everywhere. Only memoize what the profiler flagged.
 - Don't change many things at once to "save time". It costs the proof.
 - Related skills: `benchmark` (regression baselines over time),
