@@ -51,7 +51,8 @@ async function once(browser) {
   const page = await ctx.newPage();
   const cdp = await ctx.newCDPSession(page);
   await cdp.send('Network.enable');
-  await cdp.send('Network.setCacheDisabled', { cacheDisabled: true });
+  // Each run uses a fresh context, so the HTTP cache starts empty (a cold load)
+  // without disabling it; disabling it makes preloaded resources download twice.
   if (NETS[net]) await cdp.send('Network.emulateNetworkConditions', { offline: false, ...NETS[net] });
   if (cpu > 1) await cdp.send('Emulation.setCPUThrottlingRate', { rate: cpu });
 
