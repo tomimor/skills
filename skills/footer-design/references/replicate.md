@@ -39,8 +39,9 @@ Name the pattern when you shortlist so the user compares structures, not just co
 ## Anatomy checklist
 
 Write these down for the chosen footer before building. Values come from `inspect_footer.mjs`
-output where it still matches the screenshot, otherwise estimated from the screenshot (the
-desktop screenshots are ~2100px wide for a ~1440px layout, so divide measurements by ~1.46).
+output where it still matches the screenshot, otherwise estimated from the screenshot. Desktop
+screenshots are ~2100px wide for a 1440px layout (divide measurements by ~1.46); mobile ones are
+~786px wide for a ~390px viewport (divide by ~2).
 
 - **Container**: max width, side padding, top/bottom padding, background (color, gradient, image)
 - **Grid**: columns per breakpoint (`grid-template-columns`), gaps, alignment, what spans full width

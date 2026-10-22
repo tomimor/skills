@@ -13,6 +13,10 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 const pw = await import('playwright').catch(() => {
   const req = createRequire(join(process.cwd(), 'noop.js'));
   return import(pathToFileURL(req.resolve('playwright')).href);
+}).catch(() => {
+  console.error('playwright not found. Run from a project that has it, or `npm i -D playwright` first.\n'
+    + 'Without it, estimate measurements from the footer.design screenshots instead.');
+  process.exit(1);
 });
 const { chromium } = pw.chromium ? pw : pw.default;
 
@@ -32,19 +36,24 @@ const VIEWPORTS = [
   { name: 'mobile', width: 390, height: 844 },
 ];
 
-// Runs in the page. Finds the footer, then walks it into a trimmed outline.
+// Runs in the page. Finds the footer, marks it for the screenshot, and walks it into a trimmed outline.
 function outline(sel) {
-  const pick = () => {
-    if (sel) return document.querySelector(sel);
-    const cands = [...document.querySelectorAll('footer, [role="contentinfo"], [class*="footer" i], [id*="footer" i]')]
-      .filter((el) => el.getBoundingClientRect().height > 40);
-    // outermost, lowest on the page
-    return cands.sort((a, b) =>
-      (b.getBoundingClientRect().bottom + scrollY) - (a.getBoundingClientRect().bottom + scrollY)
+  const lowest = (els) => els
+    .filter((el) => el.getBoundingClientRect().height > 40)
+    // lowest on the page; on a tie, the outermost
+    .sort((a, b) => b.getBoundingClientRect().bottom - a.getBoundingClientRect().bottom
       || b.getBoundingClientRect().height - a.getBoundingClientRect().height)[0] || null;
+  const pick = () => {
+    if (sel) { try { return document.querySelector(sel); } catch { return null; } }
+    // semantic markup first; class/id matches can hit wrappers like "has-footer" that hold the whole page
+    return lowest([...document.querySelectorAll('footer, [role="contentinfo"]')])
+      || lowest([...document.querySelectorAll('[class*="footer" i], [id*="footer" i]')]
+        .filter((el) => !el.querySelector('main, h1, footer')));
   };
   const root = pick();
   if (!root) return null;
+  document.querySelectorAll('[data-footer-inspect]').forEach((el) => el.removeAttribute('data-footer-inspect'));
+  root.setAttribute('data-footer-inspect', '');
   const KEYS = ['display', 'position', 'gridTemplateColumns', 'flexDirection', 'justifyContent', 'alignItems', 'gap',
     'padding', 'margin', 'width', 'maxWidth', 'height', 'color', 'backgroundColor', 'backgroundImage', 'border',
     'borderRadius', 'fontFamily', 'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing', 'textTransform',
@@ -56,9 +65,10 @@ function outline(sel) {
     mixBlendMode: 'normal', overflow: 'visible' };
   const INHERITED = ['color', 'fontFamily', 'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing', 'textTransform'];
   const parentStyle = new WeakMap();
+  const MAX_NODES = 400;
   let count = 0;
   const walk = (el, depth) => {
-    if (count++ > 400 || depth > 12) return null;
+    if (count++ > MAX_NODES || depth > 12) return null;
     const cs = getComputedStyle(el);
     if (cs.display === 'none' || cs.visibility === 'hidden') return null;
     const r = el.getBoundingClientRect();
@@ -95,6 +105,7 @@ function outline(sel) {
     box: { top: Math.round(r.top + scrollY), height: Math.round(r.height), width: Math.round(r.width) },
     fonts: [...new Set([...root.querySelectorAll('*')].map((e) => getComputedStyle(e).fontFamily))].slice(0, 6),
     tree: walk(root, 0),
+    ...(count > MAX_NODES && { truncated: `outline stops after ${MAX_NODES} nodes; screenshot shows the rest` }),
   };
 }
 
@@ -107,11 +118,17 @@ const report = { url, viewports: {} };
 try {
   for (const vp of VIEWPORTS) {
     const page = await browser.newPage({ viewport: { width: vp.width, height: vp.height }, reducedMotion: 'no-preference' });
-    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
+    try {
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
+    } catch (e) {
+      console.error(`could not load ${url}: ${e.message.split('\n')[0]}`);
+      process.exitCode = 1;
+      break;
+    }
     await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {});
-    // scroll in steps so lazy content and scroll-triggered footers render
+    // scroll in steps so lazy content and scroll-triggered footers render; capped for infinite feeds
     await page.evaluate(async () => {
-      for (let y = 0; y < document.documentElement.scrollHeight; y += innerHeight * 0.8) {
+      for (let y = 0, i = 0; y < document.documentElement.scrollHeight && i < 80; y += innerHeight * 0.8, i++) {
         scrollTo(0, y);
         await new Promise((r) => setTimeout(r, 120));
       }
@@ -121,19 +138,22 @@ try {
     const data = await page.evaluate(outline, selector);
     report.viewports[vp.name] = data;
     const shot = join(out, `footer-${vp.name}.png`);
-    if (data) {
-      const el = await page.$(data.selector).catch(() => null);
-      if (el) await el.screenshot({ path: shot }).catch(() => page.screenshot({ path: shot }));
-      else await page.screenshot({ path: shot });
-    } else {
+    const miss = selector ? `--selector "${selector}" matched nothing or is invalid` : 'no footer found, pass --selector';
+    let note = data ? `${data.selector} ${data.box.width}x${data.box.height}` : miss;
+    const shotOk = data && await page.locator('[data-footer-inspect]').screenshot({ path: shot, timeout: 15000 })
+      .then(() => true, () => false);
+    if (!shotOk) {
       await page.screenshot({ path: shot });
+      if (data) note += ' (element screenshot failed, saved the viewport instead)';
     }
-    console.log(`${vp.name}: ${data ? `${data.selector} ${data.box.width}x${data.box.height}` : 'no footer found (pass --selector)'} -> ${shot}`);
+    console.log(`${vp.name}: ${note} -> ${shot}`);
     await page.close();
   }
 } finally {
   await browser.close();
 }
-const file = join(out, 'footer-outline.json');
-writeFileSync(file, JSON.stringify(report, null, 2));
-console.log(`outline -> ${file}`);
+if (!process.exitCode) {
+  const file = join(out, 'footer-outline.json');
+  writeFileSync(file, JSON.stringify(report, null, 2));
+  console.log(`outline -> ${file}`);
+}

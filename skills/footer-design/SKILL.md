@@ -13,15 +13,16 @@ description: >-
 # Footer Design
 
 Pick a footer from [footer.design](https://www.footer.design) and replicate it. Three phases:
-**brief → shortlist → rebuild**. The user picks; you do the legwork and the looking.
+**brief → shortlist → rebuild**. The user picks; you do the legwork and the looking. If the user
+already names a footer.design entry or a footer they want, skip straight to Phase 3.
 
-Scripts (run with the skill directory as `$SKILL`):
+Scripts (`$SKILL` is the directory containing this SKILL.md):
 
 | Script | What it does |
 |--------|--------------|
 | `python3 $SKILL/scripts/footer_design.py taxonomy` | All style and type filters, plus the site count |
 | `... search --style dark --style minimal --type saas` | Candidates, best match first, then newest. `--all` = every filter must match. `--limit N` |
-| `... site <slug>...` | Name, live URL, designer, tags, desktop + mobile screenshot URLs |
+| `... site <slug>...` | Name, live URL, designer, tags, desktop + mobile screenshot URLs. Slugs or full footer.design URLs |
 | `... download <slug>... --out DIR` | Saves desktop + mobile screenshots (AVIF converted to PNG so you can view them) |
 | `... gallery <slug>... --out FILE.html` | Numbered contact sheet the user can open to compare options |
 | `node $SKILL/scripts/inspect_footer.mjs <live-url> DIR` | Screenshots the live footer at 1440 and 390 px and dumps its structure + computed styles (needs Playwright) |
@@ -74,6 +75,8 @@ into the same ones.
    live URL to get the real grid, spacing, type scale, and colors. Live sites get redesigned:
    if the live footer no longer matches the footer.design screenshot, the screenshot wins.
    Use the outline only for what still matches, and estimate the rest from the screenshot.
+   If Playwright isn't available or the site blocks headless browsers, work from the screenshots
+   alone (scale factors in the reference).
 2. **Write a short spec before coding**: layout per breakpoint, type scale, spacing, color roles,
    interactions. Use the anatomy checklist in
    [references/replicate.md](references/replicate.md#anatomy-checklist). Map every value onto

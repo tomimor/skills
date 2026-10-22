@@ -11,10 +11,11 @@ Usage:
   footer_design.py download <slug>... [--out DIR]
   footer_design.py gallery <slug>... [--out FILE]
 
-Slugs are the last path segment of https://www.footer.design/sites/<slug>.
+A slug is the last path segment of https://www.footer.design/sites/<slug>; full URLs work too.
 """
 
 import argparse
+import difflib
 import hashlib
 import html
 import json
@@ -52,7 +53,9 @@ def fetch(url, binary=False):
                     raise
                 time.sleep(2 ** attempt)
         CACHE.mkdir(parents=True, exist_ok=True)
-        path.write_bytes(data)
+        tmp = path.with_suffix(f".{os.getpid()}.tmp")
+        tmp.write_bytes(data)
+        os.replace(tmp, path)
     return data if binary else data.decode("utf-8", "replace")
 
 
@@ -109,7 +112,22 @@ def listing(path, max_pages=None):
     return unique
 
 
+class UserError(Exception):
+    pass
+
+
+def check_filters(styles, types):
+    t = taxonomy()
+    for kind, given in (("styles", styles), ("types", types)):
+        for name in given:
+            if name not in t[kind]:
+                close = difflib.get_close_matches(name, t[kind], n=3)
+                hint = f" Did you mean: {', '.join(close)}?" if close else " Run `taxonomy` for the list."
+                raise UserError(f"unknown {kind[:-1]} '{name}'.{hint}")
+
+
 def search(styles, types, require_all, limit, max_pages):
+    check_filters(styles, types)
     filters = [f"/styles/{s}" for s in styles] + [f"/types/{t}" for t in types]
     if not filters:
         return listing("/", max_pages=max_pages or 2)[:limit]
@@ -124,8 +142,17 @@ def search(styles, types, require_all, limit, max_pages):
     return [dict(order[s][1], matched=matched[s], score=f"{scores[s]}/{len(filters)}") for s in slugs[:limit]]
 
 
+def normalize_slug(s):
+    return s.strip().rstrip("/").rsplit("/sites/", 1)[-1].split("?")[0].split("#")[0]
+
+
 def site(slug):
-    page = fetch(f"{BASE}/sites/{slug}")
+    slug = normalize_slug(slug)
+    try:
+        page = fetch(f"{BASE}/sites/{slug}")
+    except Exception as e:  # noqa: BLE001
+        reason = "not found on footer.design" if getattr(e, "code", None) == 404 else str(e)
+        return {"slug": slug, "error": reason}
     data = {"slug": slug, "page": f"{BASE}/sites/{slug}"}
     for raw in re.findall(r'<script type="application/ld\+json">(.*?)</script>', page, re.S):
         try:
@@ -158,9 +185,14 @@ def site(slug):
     return data
 
 
-def sites(slugs):
+def sites(slugs, warn=True):
     with ThreadPoolExecutor(WORKERS) as pool:
-        return list(pool.map(site, slugs))
+        found = list(pool.map(site, slugs))
+    if warn:
+        for d in found:
+            if "error" in d:
+                print(f"warning: skipped '{d['slug']}': {d['error']}", file=sys.stderr)
+    return [d for d in found if "error" not in d]
 
 
 def download(slugs, out):
@@ -187,9 +219,10 @@ def to_png(src):
     tools = [
         ["sips", "-s", "format", "png", str(src), "--out", str(dst)],
         ["magick", str(src), str(dst)],
-        ["convert", str(src), str(dst)],
         ["ffmpeg", "-y", "-loglevel", "error", "-i", str(src), str(dst)],
     ]
+    if os.name != "nt":  # on Windows, convert.exe is the FAT-to-NTFS disk tool
+        tools.insert(2, ["convert", str(src), str(dst)])
     for cmd in tools:
         if shutil.which(cmd[0]):
             if subprocess.run(cmd, capture_output=True).returncode == 0 and dst.exists():
@@ -300,10 +333,15 @@ def main():
         print("\n".join(download(a.slugs, a.out)))
     elif a.cmd == "gallery":
         print(gallery(a.slugs, a.out))
+    if a.cmd in ("site", "download", "gallery") and not sites(a.slugs, warn=False):
+        sys.exit(1)
 
 
 if __name__ == "__main__":
     try:
         main()
+    except UserError as e:
+        print(f"error: {e}", file=sys.stderr)
+        sys.exit(2)
     except KeyboardInterrupt:
         sys.exit(130)
