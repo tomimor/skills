@@ -1,0 +1,84 @@
+{
+ "note": "Layout descriptions written from footer.design screenshots. Vocabulary: scripts/footer_design.py (PATTERNS, FEATURES).",
+ "layouts": {
+  "aperios-design": {
+   "pattern": "giant-wordmark",
+   "features": [
+    "back-to-top",
+    "contact-details",
+    "dividers",
+    "giant-type",
+    "illustration",
+    "legal-row",
+    "marquee",
+    "social-links"
+   ],
+   "theme": "dark",
+   "bg": "#101010",
+   "links": "some",
+   "groups": 3,
+   "typeface": "sans",
+   "height_px": 801,
+   "effort": "medium",
+   "summary": "Three small-labelled link groups (links, connect, contact) above a dotted rule; huge gray wordmark running edge to edge as a marquee; centered care-label badge; location, copyright, back-to-top row.",
+   "mobile": "Groups stack in one column; wordmark cropped to a few letters."
+  },
+  "hellohello": {
+   "pattern": "cta-first",
+   "features": [
+    "3d",
+    "contact-details",
+    "cta-button",
+    "giant-type",
+    "legal-row"
+   ],
+   "theme": "dark",
+   "bg": "#000000",
+   "links": "few",
+   "groups": 0,
+   "typeface": "sans",
+   "height_px": 1028,
+   "effort": "medium",
+   "summary": "Huge red 'Let's make it happen.' top left and '©26' top right over a dim 3D render; full-width red 'Let's Talk' bar; tiny row of links, address, copyright.",
+   "mobile": "Headline and ©26 side by side, bar full width, address stacked; small links dropped."
+  },
+  "mother-design": {
+   "pattern": "giant-wordmark",
+   "features": [
+    "clock-or-status",
+    "contact-details",
+    "dividers",
+    "giant-type",
+    "legal-row",
+    "newsletter",
+    "social-links"
+   ],
+   "theme": "light",
+   "bg": "#f8f8f8",
+   "links": "few",
+   "groups": 0,
+   "typeface": "mixed",
+   "height_px": 946,
+   "effort": "low",
+   "summary": "Black wordmark spanning the full width on white; ruled grid below: two office columns with live local time and address, newsletter panel right, socials and legal at the bottom.",
+   "mobile": "No mobile screenshot."
+  },
+  "northeast-tomato": {
+   "pattern": "single-row",
+   "features": [
+    "contact-details",
+    "illustration",
+    "logo"
+   ],
+   "theme": "light",
+   "bg": "#f8f0f0",
+   "links": "few",
+   "groups": 0,
+   "typeface": "display",
+   "height_px": 197,
+   "effort": "low",
+   "summary": "One short cream band: address left, arched illustrated tomato logo centered, phone, email and credit right, all in a spaced-out display face.",
+   "mobile": "Centered stack: address, contact, then logo at the bottom."
+  }
+ }
+}

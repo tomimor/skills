@@ -2,39 +2,50 @@
 
 ## Brief to filters
 
-Run `footer_design.py taxonomy` for the current list. Styles describe the look, types the kind of
-site. Common mappings:
+Layout filters (`--pattern`, `--feature`, `--theme`, `--links`) describe structure and are the
+sharpest. footer.design's tags (`--style`, `--type`) add vibe. Run `vocab` for counts.
 
-| The user says… | Styles | Type |
-|----------------|--------|------|
-| clean, simple, quiet, "like Linear/Vercel" | `minimal`, `small-type`, `calm` | `saas`, `startup` |
-| dark mode, techy | `dark`, `monochromatic`, `grid` | `saas`, `ai`, `development` |
-| big, loud, brand moment, giant wordmark | `large-type`, `bold`, `typographic` | `agency`, `studio` |
-| playful, friendly | `fun`, `colorful`, `illustrative`, `pastel` | `ecommerce`, `d2c-direct-to-consumer` |
-| premium, editorial, luxury | `elegant`, `typographic`, `photographic` | `fashion`, `magazine`, `editorial` |
-| lots of links, sitemap | `grid`, `cards`, `bento-box` | `business`, `saas`, `ecommerce` |
-| wow factor, interactive | `interactive`, `animated`, `webgl`, `gsap`, `3d` | `agency`, `portfolio` |
-| raw, experimental | `brutalist`, `unusual`, `retro` | `portfolio`, `design` |
-| personal site | `minimal`, `typographic` | `portfolio`, `personal` |
+| The user says… | Layout filters | Tags |
+|----------------|----------------|------|
+| clean, simple, quiet, "like Linear/Vercel" | `--pattern link-columns --theme light` or `--theme dark` | `--style minimal --style small-type` |
+| we have a big sitemap | `--links many --pattern sitemap --pattern link-columns` | `--type saas` |
+| just a few links | `--links few --pattern single-row --pattern centered-stack --pattern big-links` | |
+| big brand moment, giant wordmark | `--pattern giant-wordmark --feature giant-type` | `--style large-type` |
+| grow the list, capture leads | `--pattern cta-first --feature newsletter` | |
+| agency, "let's talk" | `--pattern cta-first --feature cta-button --feature contact-details` | `--type agency` |
+| playful, friendly | `--pattern illustrated --theme colorful` | `--style fun --style colorful` |
+| premium, editorial, luxury | `--typeface serif --typeface mixed` | `--style elegant` |
+| modular, app-like | `--pattern bento --feature cards --feature inset-panel` | `--style bento-box` |
+| wow factor, interactive | `--feature 3d --pattern illustrated` | `--style interactive --style webgl` |
+| ship it this afternoon | `--max-effort low` | |
+| it can't take over the page | `--max-height 500` | |
 
-Prefer 2 styles plus 1 type. A single filter returns hundreds of results; four filters rarely match
-anything.
+Two or three filters is the sweet spot. Searches rank partial matches below full ones, so an extra
+filter narrows the top of the list without emptying it; use `--all` only when every filter is a
+hard requirement.
 
 ## Footer patterns
 
-Name the pattern when you shortlist so the user compares structures, not just colors.
+Name the pattern when you shortlist so the user compares structures, not just colors. These are the
+`--pattern` values.
 
-| Pattern | Shape | Holds | Effort |
-|---------|-------|-------|--------|
-| **Single row** | logo · a few links · © on one line | ≤ 8 links | low |
-| **Link columns** | brand block + 3–5 labelled columns, legal bar below | 10–40 links | low |
-| **Giant wordmark** | links up top, brand name set edge to edge at the bottom | 5–20 links | low–medium |
-| **CTA-first** | big headline + button or newsletter, links secondary | 5–20 links | low |
-| **Big links** | few links at 32px+, often stacked | ≤ 10 links | low |
-| **Bento / cards** | links, newsletter, socials, status in a grid of tiles | 10–30 links | medium |
-| **Illustrated** | a scene, artwork, or pattern carries the mood | any | medium (needs an asset) |
-| **Reveal** | footer pinned under the page, uncovered on scroll (`position: sticky` + z-index) | any | medium |
-| **Interactive** | cursor-reactive type, physics, canvas or WebGL | few | high |
+| Pattern | Shape | Holds | Typical effort |
+|---------|-------|-------|----------------|
+| `single-row` | logo · a few links · © in one short band | ≤ 8 links | low |
+| `centered-stack` | logo, links, socials, legal stacked in one centered column | ≤ 12 links | low |
+| `link-columns` | brand block + 2–4 labelled groups, legal bar below | 10–30 links | low |
+| `sitemap` | 5+ groups, dense mega footer | 20–80 links | low |
+| `giant-wordmark` | brand name set edge to edge, links above or below | 5–20 links | low–medium |
+| `cta-first` | big headline + button or newsletter, links secondary | 5–20 links | low |
+| `big-links` | a few links at 28px+, often stacked | ≤ 10 links | low |
+| `bento` | links, newsletter, socials, status in a grid of tiles | 10–30 links | medium |
+| `split` | two contrasting halves or panels | any | low–medium |
+| `illustrated` | a scene, artwork, or pattern carries the mood | any | medium–high (needs an asset) |
+| `image-led` | a photo or video fills the footer | few | medium (needs an asset) |
+
+Two behaviors that a screenshot can't show but are worth offering: a **reveal** footer (pinned under
+the page and uncovered on scroll, `position: sticky` plus z-index) and an **interactive** one
+(cursor-reactive type, physics, canvas or WebGL; high effort).
 
 ## Anatomy checklist
 
