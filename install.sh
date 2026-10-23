@@ -22,6 +22,7 @@ SKILLS=(
   "review-pr:Review a teammate's PR and emit copy-paste-ready, senior-level comments"
   "investigate:Systematic root-cause debugging with the Iron Law (no fix without root cause) -- adapted from gstack"
   "benchmark:Performance regression detection for web pages (Core Web Vitals, bundles, baselines) -- adapted from gstack"
+  "blazing-fast-web:Make a web app measurably faster (re-renders, bundle, caching, N+1, assets), measuring before/after each fix"
   "office-hours:YC-style premise interrogation and design partner. No code -- ends with an assignment -- adapted from gstack"
   "verification-before-completion:Gate that forces fresh proof before any 'done' claim -- adapted from obra/superpowers"
   "qa-manual:Drive a web feature in Chrome MCP through happy path + edges, produce evidence"
