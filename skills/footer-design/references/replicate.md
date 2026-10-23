@@ -25,6 +25,7 @@ alternatives (`--links some --links many`). **Soft filters** only rank: `--patte
 | ship it this afternoon | `--max-effort low` | |
 | it can't take over the page | `--max-height 500` | |
 | no gimmicks | `--not feature:3d --not feature:marquee --not pattern:other` | |
+| the user's industry | | `--type food-drink`, `--type finance`, `--type fashion`… (`vocab` lists them; often the most relevant single signal) |
 
 **Named reference sites.** Try `search --text <name>` first. If the site isn't in the catalog (most
 big brands aren't), say so plainly, name the traits you're matching instead (e.g. "dark, quiet type,
@@ -85,6 +86,13 @@ screenshots are ~2100px wide for a 1440px layout (divide measurements by ~1.46);
 - Link columns: use a semantic `<nav aria-label="Footer">` with a heading and `<ul>` per group.
 - Illustrations and 3D: substitute the user's own asset, a CSS/SVG pattern, or leave a clearly marked
   placeholder. Never ship the source's artwork.
+- Physics piles and canvas toys (often Matter.js): a staggered CSS drop of SVG shapes gets most of the
+  look at a fraction of the cost; offer real physics as an upgrade, and keep it off under
+  `prefers-reduced-motion`.
+- Slogans or wordmarks shipped as an image: rebuild them as live text so they stay crisp and
+  translatable; match the width of the source face, or the composition falls apart.
+- Cards that overlap the section above (negative top margin): give the band above enough bottom
+  padding, and check the overlap on mobile, where it's usually smaller.
 
 ## Accessibility checks
 

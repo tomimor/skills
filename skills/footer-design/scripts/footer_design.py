@@ -457,6 +457,45 @@ def download(records, out, views=("desktop", "mobile"), warn=False):
     return [str(p) for p in saved if p]
 
 
+def compare(record, mine_dir, out, shot_dir):
+    """Source footer (footer.design screenshots) next to the rebuild (inspect_footer.mjs output)."""
+    try:
+        from PIL import Image, ImageDraw
+    except ImportError:
+        raise UserError("compare needs Pillow (pip install pillow)")
+    mine_dir, shot_dir = Path(mine_dir), Path(shot_dir)
+    download([record], shot_dir)
+    made = []
+    for view, width in (("desktop", 1200), ("mobile", 390)):
+        src = next(iter(sorted(shot_dir.glob(f"{record['slug']}-{view}.*"))), None)
+        mine = mine_dir / f"footer-{view}.png"
+        if not src or not mine.exists():
+            print(f"note: skipped {view}: {'no source screenshot' if not src else f'no {mine}'}", file=sys.stderr)
+            continue
+        ims = []
+        for label, path in (("source: footer.design", src), ("rebuild", mine)):
+            im = Image.open(path).convert("RGB")
+            im = im.resize((width, round(im.height * width / im.width)))
+            ims.append((label, im))
+        gap, head = 24, 22
+        if view == "desktop":  # stacked
+            canvas = Image.new("RGB", (width, sum(i.height + head for _, i in ims) + gap), "#dddddd")
+            y = 0
+            for label, im in ims:
+                ImageDraw.Draw(canvas).text((4, y + 5), label, fill="black")
+                canvas.paste(im, (0, y + head))
+                y += im.height + head + gap
+        else:  # side by side
+            canvas = Image.new("RGB", (width * 2 + gap, max(i.height for _, i in ims) + head), "#dddddd")
+            for k, (label, im) in enumerate(ims):
+                ImageDraw.Draw(canvas).text((k * (width + gap) + 4, 5), label, fill="black")
+                canvas.paste(im, (k * (width + gap), head))
+        dest = Path(f"{out}-{view}.png")
+        canvas.save(dest)
+        made.append(str(dest))
+    return made
+
+
 def contact_sheet(records, shot_dir, out, per_sheet=5, width=1100):
     """Numbered sheets, one footer per row (desktop + mobile), so finalists can be compared in a
     few image reads. Needs Pillow; returns [] with a note when it's missing."""
@@ -811,6 +850,12 @@ def main():
     g.add_argument("--title", default="Footer shortlist")
     g.add_argument("--brief", help="one line restating the user's brief, shown under the title")
     g.add_argument("--images", metavar="DIR", help="use screenshots saved by `download` instead of hotlinking")
+    cp = sub.add_parser("compare", help="source footer next to your rebuild, desktop and mobile (needs Pillow)")
+    cp.add_argument("slug")
+    cp.add_argument("--mine", required=True, metavar="DIR",
+                    help="output dir of inspect_footer.mjs run on your own page (footer-desktop.png, footer-mobile.png)")
+    cp.add_argument("--out", default="footer-compare", metavar="PREFIX", help="writes PREFIX-desktop.png, PREFIX-mobile.png")
+    cp.add_argument("--shots", default="footer-design-shots", metavar="DIR", help="where source screenshots are saved")
     r = sub.add_parser("refresh-index", help="[maintainer] sync data/index.json with the live sitemap")
     r.add_argument("--full", action="store_true", help="re-fetch every site, not just new ones")
     sub.add_parser("layouts-todo", help="[maintainer] slugs in the index without a layout description")
@@ -886,6 +931,14 @@ def main():
         notes = load_json(Path(a.notes), {}) if a.notes else None
         print(gallery(recs, a.out, notes=notes, pick=a.pick and normalize_slug(a.pick), title=a.title,
                       brief=a.brief, images=a.images))
+    elif a.cmd == "compare":
+        recs = lookup([a.slug])
+        if not recs:
+            sys.exit(1)
+        made = compare(recs[0], a.mine, a.out, a.shots)
+        print("\n".join(made))
+        if not made:
+            sys.exit(1)
     elif a.cmd == "refresh-index":
         refresh_index(a.full)
     elif a.cmd == "layouts-todo":

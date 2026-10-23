@@ -27,7 +27,8 @@ already names a footer.design entry or a footer they want, skip to Phase 3.
 | `site <slug>...` | Everything known about a footer: links, tags, screenshot URLs, full layout description |
 | `download <slug>... --out DIR [--sheet FILE.png]` | Desktop + mobile screenshots as PNG/JPG; `--sheet` adds numbered contact sheets, 5 footers each (needs Pillow) |
 | `gallery <slug>... --out FILE.html [--notes notes.json] [--pick slug] [--brief "..."] [--images DIR]` | Numbered HTML contact sheet for the user, with your fit notes and the recommendation marked |
-| `node $SKILL/scripts/inspect_footer.mjs <live-url> DIR` | Live footer at 1440 and 390 px: screenshots + structure with computed styles (needs Playwright) |
+| `compare <slug> --mine DIR` | Source footer next to your rebuild, desktop and mobile (needs Pillow) |
+| `node $SKILL/scripts/inspect_footer.mjs <url> DIR` | A footer at 1440 and 390 px: screenshots, `footer-summary.txt`, full styles in JSON (needs Playwright). Works on live sites and on your own build |
 
 Search has **hard filters**, which must match (repeat one to allow alternatives), and **soft
 filters**, which rank results by how many match (ties: newest first; `--all` makes them required):
@@ -98,20 +99,27 @@ favorite, rather than going further down the same list.
 ## Phase 3: Rebuild
 
 1. **Study the pick.** `site <slug>` for the full description; download its screenshots if you
-   haven't. Run `inspect_footer.mjs` on the live URL for the real grid, spacing, type scale, and
-   colors (`CHROME_PATH` reuses an installed Chrome; `--selector "css"` when it misses the footer).
+   haven't. Run `inspect_footer.mjs` on the live URL (`CHROME_PATH` reuses an installed Chrome;
+   `--selector "css"` when it misses the footer; `--wait 4000` for physics or scroll animations).
+   Read `footer-summary.txt` first: regions, type sizes and families, colors, artwork, shadows,
+   and parts that overlap the section above. Open `footer-outline.json` only for exact values.
    Live sites get redesigned: if the live footer no longer matches the footer.design screenshot,
-   the screenshot wins, so use the outline only for what still matches. Without Playwright, or if
-   the site blocks headless browsers, measure from the screenshots (scale factors in the reference).
+   the screenshot wins. Without Playwright, or if the site blocks headless browsers, measure from
+   the screenshots (scale factors in the reference).
 2. **Write a short spec before coding**: layout per breakpoint, type scale, spacing, color roles,
-   interactions. Use the anatomy checklist in
-   [references/replicate.md](references/replicate.md#anatomy-checklist). Map every value onto
-   the user's tokens (their colors, fonts, spacing scale), not the source's.
+   interactions, and a plan for every piece of artwork the summary lists (`img`, `svg`, `canvas`,
+   `video`): rebuild it in CSS/SVG, swap in the user's asset, or approximate it. Use the anatomy
+   checklist in [references/replicate.md](references/replicate.md#anatomy-checklist). Map every
+   value onto the user's tokens (their colors, fonts, spacing scale), not the source's.
 3. **Build it** in the user's stack with **their content**. Rebuild the structure, proportions,
-   and interaction. Don't paste the source's code.
-4. **Verify**: screenshot your footer at 1440 and 390 px and compare it side by side with the
-   source screenshots. Fix the biggest differences first (proportions, spacing, type size), then
-   details. Run the a11y checks in the reference.
+   and interaction. Don't paste the source's code. If the user's fonts are named in CSS but never
+   loaded, load them (or say so). For the source's paid fonts, pick a free one with a similar
+   **width** as well as weight: giant type depends on it.
+4. **Verify against the source.** Run `inspect_footer.mjs` on your own page (`http://localhost:…`
+   or `file:///…/index.html`) into a folder, then `compare <slug> --mine <that folder>` for
+   side-by-side desktop and mobile images. Fix the biggest differences first (proportions,
+   spacing, type size), then details, and re-run. Finish with the a11y checks in the reference.
+   Report what you assumed (copy you wrote, placeholder URLs, endpoints to wire up).
 
 ## Rules
 
