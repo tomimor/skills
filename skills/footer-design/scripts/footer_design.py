@@ -557,9 +557,12 @@ def validate_layout(slug, lay):
             errs.append(f"{key} {lay.get(key)!r}")
     if not isinstance(lay.get("groups"), int):
         errs.append(f"groups {lay.get('groups')!r}")
-    for key in ("summary", "mobile"):
-        if not isinstance(lay.get(key), str) or not lay[key].strip():
+    for key, limit in (("summary", 30), ("mobile", 15)):
+        text = lay.get(key)
+        if not isinstance(text, str) or not text.strip():
             errs.append(f"{key} missing")
+        elif len(text.split()) > limit:
+            errs.append(f"{key} is {len(text.split())} words (max {limit})")
     return [f"{slug}: {e}" for e in errs]
 
 
