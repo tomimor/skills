@@ -1,16 +1,17 @@
 ---
 name: footer-design
 description: >-
-  Finds a website footer to replicate from footer.design (Footr Design, ~780 curated footers) and
-  rebuilds it. Searches a bundled index where every footer has a layout description (pattern such
-  as giant-wordmark or link-columns, theme, black-and-white or color palette, link count and groups,
-  height, rebuild effort), its content (newsletter, opening hours, address, booking link, payment
-  icons, language switcher…) and its link labels, so it matches a brief to concrete footers before
-  opening any screenshot. Presents a numbered shortlist with contact sheets and an HTML gallery,
-  then measures the chosen live footer, rebuilds it in the user's stack with their content, and
-  compares the result side by side with the source. Use when the user mentions footer.design, footr,
-  footer inspiration, picking or choosing a footer, "make my footer look like X", or redesigning or
-  building a site footer.
+  Picks a website footer to replicate from footer.design (Footr Design) and rebuilds it in the
+  user's code. Use it for any request to design, redesign, restyle or copy a site footer, or for
+  footer ideas and real examples: a footer.design entry or another site's footer they like, a
+  footer with too many links to tidy, a new footer for a Next, Astro, Shopify or plain HTML site,
+  or a footer that must hold specific content (newsletter, opening hours, address, booking,
+  payment icons, language switcher). Bundles a catalog of ~780 real footers, each described
+  and screenshotted, that can't be reached otherwise; filters by layout, theme, palette, link
+  capacity and effort; shows a visual shortlist; then measures the chosen footer, rebuilds it
+  with the user's brand and compares it with the source. Consult it before designing a footer from memory.
+  Not for small fixes to an existing footer (copyright year, overlap bugs, accessibility
+  audits), email footers, checkout payment badges or legal disclaimer copy.
 ---
 
 # Footer Design
