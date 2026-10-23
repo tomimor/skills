@@ -98,7 +98,9 @@ Get just enough to filter. Infer first, ask second.
    columns), so keep the same hard filters and run one quick search per alternative pattern
    (`--need pattern:giant-wordmark`, `--need pattern:cta-first`, `--need pattern:bento`…), then keep
    the best of each family that can hold the content.
-   Include one that stretches the brief (e.g. the light inversion of a dark brief) when it's strong.
+   Include one that stretches the brief when it's strong, but only on something the user left
+   open (a bolder structure, a mood they didn't rule out); never break what they asked for
+   outright ("keep it dark" means every option is dark).
    For giant-wordmark footers, **check the name fits**: at the same width, a 9-letter name sets about
    half as tall as a 5-letter one. Say so in the fit note and how you'd handle it
    ([wordmark fit](references/replicate.md#wordmark-fit)).
