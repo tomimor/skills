@@ -251,9 +251,11 @@ try {
     try {
       await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
     } catch (e) {
-      console.error(`could not load ${url}: ${e.message.split('\n')[0]}`);
-      process.exitCode = 1;
-      break;
+      const msg = e.message.split('\n')[0];
+      console.error(`${vp.name}: could not load ${url}: ${msg}`);
+      report.viewports[vp.name] = { error: msg };
+      await page.close();
+      continue;
     }
     await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {});
     // scroll in steps so lazy content and scroll-triggered footers render; capped for infinite feeds
@@ -309,12 +311,15 @@ try {
 } finally {
   await browser.close();
 }
-if (!process.exitCode) {
+const loaded = Object.values(report.viewports).filter((v) => v && !v.error);
+if (!loaded.length) process.exitCode = 1;
+if (loaded.length) {
   const file = join(out, 'footer-outline.json');
   writeFileSync(file, JSON.stringify(report, null, 2));
   const lines = [`Footer inspection of ${url}`, ''];
   for (const [name, d] of Object.entries(report.viewports)) {
     if (!d) { lines.push(`${name}: no footer found`, ''); continue; }
+    if (d.error) { lines.push(`${name}: could not load (${d.error})`, ''); continue; }
     const s = d.summary;
     lines.push(`${name.toUpperCase()} ${d.box.width}x${d.box.height} (${d.selector}), background ${s.background}`);
     if (d.note) lines.push(`  ${d.note}`);

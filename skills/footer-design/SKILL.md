@@ -28,14 +28,16 @@ already names a footer.design entry or a footer they want, skip to Phase 3.
 | `similar <slug> [hard filters]` | Footers sharing the most layout traits with one footer ("more like #2"), still within e.g. `--min-groups 3` |
 | `site <slug>...` | Everything known about a footer: links, tags, screenshot URLs, full layout description |
 | `download <slug>... --out DIR [--sheet FILE.png]` | Desktop + mobile screenshots as PNG/JPG; `--sheet` adds numbered contact sheets, 5 footers each (needs Pillow) |
-| `gallery <slug>... --out FILE.html [--notes notes.json] [--pick slug] [--brief "..."] [--images DIR]` | Numbered HTML contact sheet for the user, with your fit notes and the recommendation marked |
+| `gallery <slug>... --out FILE.html [--notes notes.json] [--pick slug] [--stretch slug] [--brief "..."] [--title "..."] [--images DIR]` | Numbered HTML contact sheet for the user, with your fit notes and the recommendation marked |
 | `compare <slug> --mine DIR` | Source footer next to your rebuild, desktop and mobile, plus height differences; writes into DIR (needs Pillow) |
 | `node $SKILL/scripts/inspect_footer.mjs <url> DIR` | A footer at 1440 and 390 px: screenshots, `footer-summary.txt`, full styles in JSON (needs Playwright). Works on live sites and on your own build |
 
 Search has **hard filters**, which must match (repeat one to allow alternatives), and **soft
 filters**, which rank results (pattern, feature, type and text count 2, style and typeface 1; ties:
-newest first). `--all` makes soft filters required: every feature and text word, one value per
-other kind. When a hard filter hides a strong match, search lists it under **near misses**.
+newest first). A result must match at least one soft filter, so many vibe filters can narrow too;
+the header shows how many passed the hard filters alone. `--all` makes soft filters required: every
+feature and text word, one value per other kind. When a hard filter hides a strong match, search
+lists it under **near misses**; an empty search lists what each filter matches on its own.
 
 | Hard | Values |
 |------|--------|
@@ -52,7 +54,7 @@ other kind. When a hard filter hides a strong match, search lists it under **nea
 | `--feature` | layout: `newsletter` `giant-type` `cta-button` `clock-or-status` `cards` `inset-panel` `marquee` `social-icons` `back-to-top` …; content: `hours` `booking-cta` `address` `email-or-phone` `payment-icons` `app-badges` `awards` `locale-switcher` `theme-toggle` `perks` `mobile-accordion` |
 | `--typeface` | `sans` `serif` `mono` `mixed` `display` (cheap to change, so never a hard requirement) |
 | `--style` · `--type` | footer.design's own tags, e.g. `minimal`, `web-app` (`vocab` shows which are common) |
-| `--text` | a word in the name, description, layout summary or **link labels** (e.g. `--text reservations`, `--text pricing`) |
+| `--text` | a word start in the name, description, layout summary, mobile note or **link labels** (e.g. `--text reserv`, `--text pricing`) |
 
 ## Phase 1: Brief
 
@@ -61,7 +63,10 @@ Get just enough to filter. Infer first, ask second.
 1. **Read the project** if there is one: framework and styling (Tailwind, CSS modules…), brand
    colors and fonts, the current footer and the links it must carry (nav, legal, socials,
    newsletter, contact). **Count every link, legal included, and the groups**: this decides
-   `--links` and `--min-groups` and rules out half the gallery on its own.
+   `--links` and `--min-groups` and rules out half the gallery on its own. Count what the catalog
+   counts: every clickable nav, legal and social link, and CTA buttons; not app badges or
+   email addresses. A footer's count includes its socials and legal, so its room for nav links is
+   smaller (`site <slug>` shows its labels).
 2. **Ask only what you can't infer**, at most 3 questions in one go: the feel (calm vs bold, light
    vs dark, color or black and white), whether a newsletter or contact CTA belongs in the footer,
    and how much effort or motion is welcome. If the user already named a vibe or a reference
@@ -90,7 +95,8 @@ Get just enough to filter. Infer first, ask second.
 3. **Pick 4–6 that differ in structure**, not five variations of "logo left, four link columns".
    Include one that stretches the brief (e.g. the light inversion of a dark brief) when it's strong.
    For giant-wordmark footers, **check the name fits**: at the same width, a 9-letter name sets about
-   half as tall as a 5-letter one. Say so in the fit note and how you'd handle it (see the reference).
+   half as tall as a 5-letter one. Say so in the fit note and how you'd handle it
+   ([wordmark fit](references/replicate.md#wordmark-fit)).
 4. **Show them.** Write a notes file `{"slug": "one line on why it fits this brief"}` and run
    `gallery` with `--notes`, `--pick` (your recommendation), `--brief`, and `--stretch` for the
    option that stretches the brief. If you can publish an
@@ -117,7 +123,7 @@ favorite, rather than going further down the same list.
    and parts that overlap the section above. Open `footer-outline.json` only for exact values.
    Live sites get redesigned: if the live footer no longer matches the footer.design screenshot,
    the screenshot wins. Without Playwright, or if the site blocks headless browsers, measure from
-   the screenshots (scale factors in the reference).
+   the screenshots ([scale factors](references/replicate.md#anatomy-checklist)).
 2. **Write a short spec before coding**: layout per breakpoint, type scale, spacing, color roles,
    interactions, and a plan for every piece of artwork the summary lists (`img`, `svg`, `canvas`,
    `video`): rebuild it in CSS/SVG, swap in the user's asset, or approximate it. Use the anatomy
@@ -131,7 +137,7 @@ favorite, rather than going further down the same list.
    or `file:///…/index.html`) into a folder, then `compare <slug> --mine <that folder>` for
    side-by-side images and height differences. Fix the biggest differences first (proportions,
    spacing, type size), then details, and re-run. If the summary warns that text is invisible,
-   the capture caught an animation midway: check the screenshot before trusting the numbers. Finish with the a11y checks in the reference.
+   the capture caught an animation midway: check the screenshot before trusting the numbers. Finish with the [a11y checks](references/replicate.md#accessibility-checks).
    Report what you assumed (copy you wrote, placeholder URLs, endpoints to wire up).
 
 ## Rules

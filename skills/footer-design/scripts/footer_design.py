@@ -9,16 +9,18 @@ stdlib); honors HTTPS_PROXY; network responses are cached for a day in
 
 Choosing:
   footer_design.py vocab
-  footer_design.py search [filters...] [--text WORDS] [--all] [--limit N] [--json]
+  footer_design.py search [hard filters] [soft filters] [--all] [--compact] [--limit N] [--json]
+  footer_design.py similar <slug> [hard filters] [--compact]
   footer_design.py site <slug>... [--json]
-  footer_design.py download <slug>... [--out DIR]
-  footer_design.py gallery <slug>... [--out FILE]
+  footer_design.py download <slug>... [--out DIR] [--sheet FILE.png]
+  footer_design.py gallery <slug>... [--out FILE] [--notes JSON] [--pick SLUG] [--stretch SLUG] [--brief TEXT] [--images DIR]
+  footer_design.py compare <slug> --mine DIR [--out PREFIX]
 
 Maintaining the data (see references/maintaining.md):
   footer_design.py refresh-index [--full]
   footer_design.py layouts-todo
   footer_design.py composite <slug>... --out DIR
-  footer_design.py merge-layouts FILE...
+  footer_design.py merge-layouts [--check] FILE...
 
 A slug is the last path segment of https://www.footer.design/sites/<slug>; full URLs work too.
 """
@@ -101,8 +103,6 @@ PALETTES = ["bw", "mono-color", "multicolor"]  # measured: grays only / one hue 
 LINKS = ["few", "some", "many"]  # <=8, 9-20, 21+
 TYPEFACES = ["sans", "serif", "mono", "mixed", "display"]
 EFFORTS = ["low", "medium", "high"]
-# desktop screenshots are ~2106px wide for a 1440px layout
-DESKTOP_SCALE = 1440 / 2106
 
 
 class UserError(Exception):
@@ -295,8 +295,7 @@ def has_word(blob, word):
 def text_blob(d):
     lay = lay_of(d)
     return " ".join(str(x) for x in (d.get("name"), d.get("description"), lay.get("summary"),
-                                     lay.get("mobile"), lay.get("labels"),
-                                     " ".join(lay.get("features") or []))).lower()
+                                     lay.get("mobile"), lay.get("labels"))).lower()
 
 
 # kind -> (allowed values or None for free text, how to read it from a record)
@@ -353,7 +352,7 @@ def hard_filters(a, counts):
         hard.append((f"need {kind}:{'|'.join(vs)}", pred))
     for spec in getattr(a, "exclude", []):
         kind, _, v = spec.partition(":")
-        if kind == "text":
+        if kind == "text" and v:
             hard.append((f"not text:{v}", lambda d, v=v: not has_word(text_blob(d), v)))
             continue
         if kind not in FIELDS or not v:
@@ -365,9 +364,9 @@ def hard_filters(a, counts):
 
 
 def search(catalog, a):
-    """Hard filters (theme, palette, links, typeface, effort, height, groups, --not) must match;
-    values given twice for the same hard filter are alternatives. Soft filters (pattern, feature,
-    style, type, text) each add a point; results rank by points, then newest."""
+    """Hard filters (theme, palette, links, effort, height, groups, --need, --not) must match;
+    repeated values of one filter are alternatives. Soft filters (pattern, feature, type, text: 2
+    points; style, typeface: 1) rank results, and a result must match at least one of them."""
     counts = vocab_counts(catalog)
     hard = hard_filters(a, counts)
     soft = []  # (label, predicate, weight): structure and content outweigh vibe tags
@@ -408,6 +407,10 @@ def search(catalog, a):
     near.sort(key=lambda d: -d["score"])
     best = rows[0]["score"] if rows else 0
     near = [d for d in near if d["score"] >= max(1, best)][:3]  # only ones that would rank at the top
+    passed_hard = sum(1 for d in catalog.values() if all(pred(d) for _, pred in hard))
+    alone = {label: sum(1 for d in catalog.values() if pred(d)) for label, pred in hard}
+    alone.update({label: sum(1 for d in catalog.values() if pred(d)) for label, pred, _ in soft})
+    a._diag = (passed_hard, alone, bool(soft))
     return rows, sum(w for _, _, w in soft), [label for label, _ in hard], near
 
 
@@ -602,13 +605,14 @@ def contact_sheet(records, shot_dir, out, per_sheet=5, width=1100):
             big = small = ImageFont.load_default()
         draw.rectangle((0, 0, 140, row.height), fill="#ff00ff")
         draw.text((12, 10), str(i), fill="white", font=big)
-        slug, y = d["slug"], 52
-        while slug and y < row.height - 20:  # wrap the slug inside the strip
-            n = len(slug)
-            while n > 1 and draw.textlength(slug[:n], font=small) > 120:
-                n -= 1
-            draw.text((12, y), slug[:n], fill="white", font=small)
-            slug, y = slug[n:], y + 20
+        line, y = "", 52
+        for part in re.split(r"(?<=-)", d["slug"]):  # wrap at hyphens inside the strip
+            if line and draw.textlength(line + part, font=small) > 120:
+                draw.text((12, y), line, fill="white", font=small)
+                line, y = "", y + 20
+            line += part
+        if line:
+            draw.text((12, y), line, fill="white", font=small)
         rows.append(row)
     made = []
     out = Path(out)
@@ -902,17 +906,18 @@ def main():
     sub.add_parser("vocab", help="every filter value with how many footers have it")
     s = sub.add_parser("search", help="filter the local index: hard filters must match, soft ones rank",
                        description="Hard filters must match (repeat one to allow alternatives): --theme "
-                                   "--palette --links --max-effort --max-height --min-groups --not. "
+                                   "--palette --links --max-effort --max-height --min-groups --need --not. "
                                    "Soft filters rank results (pattern, feature, type, text count 2; style, "
                                    "typeface 1): --pattern --feature --type --text --style --typeface. "
-                                   "--all makes soft filters required too.")
+                                   "A result must match at least one soft filter; --all requires every --feature and "
+                                   "--text and one value per other soft kind.")
     s.add_argument("--style", action="append", default=[], help="footer.design style tag, e.g. dark")
-    s.add_argument("--type", action="append", default=[], help="footer.design site type, e.g. saas")
+    s.add_argument("--type", action="append", default=[], help="footer.design site type, e.g. web-app, agency, food-drink")
     s.add_argument("--pattern", action="append", default=[], help="layout pattern, e.g. giant-wordmark")
     s.add_argument("--feature", action="append", default=[], help="layout feature, e.g. newsletter")
     s.add_argument("--typeface", action="append", default=[], help=" | ".join(TYPEFACES))
     add_hard_args(s)
-    s.add_argument("--text", action="append", default=[], help="word in the name, description or summary")
+    s.add_argument("--text", action="append", default=[], help="word start in the name, description, layout summary, mobile note or link labels")
     s.add_argument("--all", action="store_true",
                    help="require soft filters too: every --feature and --text, and one value per other kind")
     s.add_argument("--limit", type=int, default=30)
@@ -980,14 +985,19 @@ def main():
             print(json.dumps(shown, indent=1, ensure_ascii=False))
         else:
             req = f" (all match: {', '.join(hard)})" if hard else ""
+            passed_hard, alone, has_soft = a._diag
             if rows:
-                print(f"{len(rows)} footers{req}; showing {len(shown)}, best first (score = weighted soft matches)")
-            elif hard:
-                print(f"no matches for {', '.join(hard)}: drop one, or allow alternatives "
-                      "(e.g. --links some --links many)")
+                extra = (f" ({passed_hard} pass the hard filters; {len(rows)} of those match a soft filter)"
+                         if has_soft and hard and passed_hard != len(rows) else "")
+                print(f"{len(rows)} footers{req}; showing {len(shown)}, best first "
+                      f"(score = weighted soft matches){extra}")
             else:
-                print("no matches: try fewer or broader soft filters")
-            print("\n".join(fmt_row(d, total, a.compact) for d in shown))
+                print(f"no matches ({passed_hard} pass the hard filters). Footers matching each filter alone: "
+                      + ", ".join(f"{k} {v}" for k, v in alone.items())
+                      + ". Drop or relax the one with the smallest count"
+                      + ("; with --all, every --feature and --text must match." if a.all else "."))
+            if shown:
+                print("\n".join(fmt_row(d, total, a.compact) for d in shown))
             if near and not a.json:
                 print("\nnear misses (would rank at the top; excluded by one hard filter):")
                 for d in near:
@@ -1031,7 +1041,14 @@ def main():
         recs = lookup(a.slugs)
         if not recs:
             sys.exit(1)
+        if a.notes and not Path(a.notes).exists():
+            raise UserError(f"notes file not found: {a.notes}")
         notes = load_json(Path(a.notes), {}) if a.notes else None
+        shown = {d["slug"] for d in recs}
+        for flag, vals in (("--pick", [a.pick] if a.pick else []), ("--stretch", a.stretch)):
+            for v in vals:
+                if normalize_slug(v) not in shown:
+                    print(f"warning: {flag} {v} is not one of the gallery's footers", file=sys.stderr)
         print(gallery(recs, a.out, notes=notes, pick=a.pick and normalize_slug(a.pick), title=a.title,
                       brief=a.brief, images=a.images, stretch={normalize_slug(x) for x in a.stretch}))
     elif a.cmd == "compare":

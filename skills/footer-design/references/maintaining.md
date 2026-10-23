@@ -24,7 +24,8 @@ between) and prints `{"slug", "image", "height_px", "bg", "palette"}` per line. 
 one JSON line per entry as specified below, then:
 
 ```bash
-python3 $S merge-layouts described.jsonl   # validates against the vocabulary, reports errors
+python3 $S merge-layouts --check described.jsonl   # validate only
+python3 $S merge-layouts described.jsonl           # validate and write data/layouts.json
 ```
 
 Fix any reported errors and merge again. Commit `data/` with a message like

@@ -7,7 +7,8 @@
 (`--links some --links many`, `--need type:art --need type:museum`). **Soft filters** only rank:
 `--pattern`, `--feature`, `--type` and `--text` count double; `--style` and `--typeface` count once.
 Content needs (hours, payment icons, an address) are `--feature`s; `--text` matches word starts in
-names, descriptions, summaries and link labels. Run `vocab` for counts; tags with a handful of
+names, descriptions, summaries, mobile notes and link labels (not feature names). A result must
+match at least one soft filter. Run `vocab` for counts; tags with a handful of
 footers barely help. When a hard filter hides a strong match, search lists it under **near misses**:
 read them, since a pastel or dark footer often repaints fine.
 
@@ -26,8 +27,9 @@ read them, since a pastel or dark footer often repaints fine.
 | agency, "let's talk" | | `--pattern cta-first --feature cta-button --feature email-or-phone --type agency` |
 | warm, playful, friendly | `--palette mono-color --palette multicolor` | `--pattern illustrated --style fun --style colorful --typeface display` |
 | premium, editorial, luxury | | `--typeface serif --typeface mixed --style elegant --style typographic` |
+| confident type, institutional, "not corporate" | | `--pattern giant-wordmark --feature giant-type --style typographic --style large-type --typeface serif --typeface display` |
 | restaurant, café, venue | `--need feature:hours` if hours are a must (19 footers have them) | `--feature hours --feature address --feature booking-cta --text reserve --text menu --type food-drink` |
-| studio, gym, spa, clinic (classes, appointments) | | `--feature booking-cta --feature hours --feature address --feature app-badges --text class --text book --type health --type fitness --type beauty` |
+| studio, gym, spa, clinic (classes, appointments) | | `--feature booking-cta --feature hours --feature address --feature app-badges --text class --text appointment --type health --type fitness --type beauty` |
 | museum, gallery, nonprofit | `--links some --links many` for big sitemaps | `--feature hours --feature address --feature newsletter --feature locale-switcher --text donate --text member --text visit --type art --type museum --type community` |
 | online store | `--links some --links many --min-groups 3` | `--feature payment-icons --feature app-badges --feature locale-switcher --feature perks --feature newsletter --feature mobile-accordion --type ecommerce` |
 | SaaS / app | | `--feature theme-toggle --feature clock-or-status --feature app-badges --type web-app --type ai` |
@@ -41,7 +43,7 @@ read them, since a pastel or dark footer often repaints fine.
 **The catalog is design-led.** Agencies, studios and startups dominate. Store furniture is rare
 (2 footers show payment icons, 3 a perks row, 6 app badges), and venue, museum and nonprofit
 footers are few and mostly small. `booking-cta` includes "book a call/demo", so add `--text` words
-for the booking you mean (`class`, `table`, `reserve`). When the right kind of site lacks the
+for the booking you mean (`class`, `table`, `reserv`, `appointment`) and read the labels. When the right kind of site lacks the
 capacity, shortlist both: an on-domain footer to adapt ("its structure, plus a link row") and an
 off-domain one that already holds the content. Say which is which.
 
@@ -113,14 +115,21 @@ screenshots are ~2100px wide for a 1440px layout (divide measurements by ~1.46);
   translatable; match the width of the source face, or the composition falls apart.
 - Cards that overlap the section above (negative top margin): give the band above enough bottom
   padding, and check the overlap on mobile, where it's usually smaller.
-- Wordmark length: a giant wordmark is sized to its word. Compare the source's letter count with the
-  user's name: at the same width, height scales roughly with 1 / letters. For a much longer name,
-  stack it on two lines, let it span more columns, give the row less height, or use a condensed
-  face; for a much shorter one, add tracking or a symbol (® ©) rather than letting it grow taller
-  than the row. Decide on mobile separately, where stacking is usually right.
 - `inspect_footer.mjs` captures footers taller than the viewport in a taller window (it says so in
   the summary), because scroll-revealed footers hide whatever is out of view. Heights set in `vh`
   may read slightly larger there.
+
+## Wordmark fit
+
+A giant wordmark is sized to its word: at the same width, its height scales roughly with
+1 / letters. Compare the source's word with the user's name before recommending it.
+
+- **Name unknown:** ask, or assume about 8 letters and say so in the fit note.
+- **Much longer name** (half again or more): stack it on two lines, let it span more columns, give
+  its row less height, or use a condensed face. An acronym or monogram is another option.
+- **Much shorter name:** add tracking or a symbol (® ©), or set a short slogan instead of the name,
+  rather than letting it grow taller than its row.
+- **Mobile:** decide separately; stacking or cropping at the edge is usually right.
 
 ## Accessibility checks
 
