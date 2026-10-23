@@ -3,3 +3,4 @@
 
 # skill-creator eval workspaces
 *-workspace/
+__pycache__/
