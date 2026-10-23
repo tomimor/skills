@@ -299,6 +299,9 @@ def search(catalog, a):
         cap = EFFORTS.index(a.max_effort)
         criteria.append((f"effort<={a.max_effort}",
                          lambda d: (d["layout"] or {}).get("effort") in EFFORTS[:cap + 1]))
+    if a.min_groups:
+        criteria.append((f"groups>={a.min_groups}",
+                         lambda d: ((d["layout"] or {}).get("groups") or 0) >= a.min_groups))
     if a.max_height:
         criteria.append((f"height<={a.max_height}",
                          lambda d: 0 < ((d["layout"] or {}).get("height_px") or 0) <= a.max_height))
@@ -331,7 +334,8 @@ def fmt_row(d, total=None):
         head += f"  [{d['score']}/{total}: {', '.join(d['matched'])}]"
     lines = [head]
     if lay:
-        meta = ", ".join(x for x in (lay.get("pattern"), lay.get("theme"), f"{lay.get('links')} links",
+        groups = f"{lay['groups']} link groups" if lay.get("groups") else None
+        meta = ", ".join(x for x in (lay.get("pattern"), lay.get("theme"), f"{lay.get('links')} links", groups,
                                      f"{lay.get('height_px')}px tall" if lay.get("height_px") else None,
                                      f"effort {lay.get('effort')}") if x)
         lines.append(f"    {meta}")
@@ -622,6 +626,7 @@ def main():
     s.add_argument("--typeface", action="append", default=[], help=" | ".join(TYPEFACES))
     s.add_argument("--max-effort", help="low | medium | high")
     s.add_argument("--max-height", type=int, help="max footer height in px at 1440 wide")
+    s.add_argument("--min-groups", type=int, help="at least N link groups/columns, whatever the pattern")
     s.add_argument("--text", action="append", default=[], help="word in the name, description or summary")
     s.add_argument("--all", action="store_true", help="require every filter to match")
     s.add_argument("--limit", type=int, default=30)

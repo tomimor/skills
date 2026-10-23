@@ -8,7 +8,8 @@ sharpest. footer.design's tags (`--style`, `--type`) add vibe. Run `vocab` for c
 | The user says… | Layout filters | Tags |
 |----------------|----------------|------|
 | clean, simple, quiet, "like Linear/Vercel" | `--pattern link-columns --theme light` or `--theme dark` | `--style minimal --style small-type` |
-| we have a big sitemap | `--links many --pattern sitemap --pattern link-columns` | `--type saas` |
+| we have a big sitemap | `--links many --min-groups 4` (any pattern) | `--type saas` |
+| clear columns of links | `--min-groups 3` plus a vibe filter | |
 | just a few links | `--links few --pattern single-row --pattern centered-stack --pattern big-links` | |
 | big brand moment, giant wordmark | `--pattern giant-wordmark --feature giant-type` | `--style large-type` |
 | grow the list, capture leads | `--pattern cta-first --feature newsletter` | |

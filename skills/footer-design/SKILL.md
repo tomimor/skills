@@ -37,6 +37,7 @@ Search filters, all repeatable and combinable:
 | `--theme` | `light` `dark` `colorful` `gradient` `image` | layout |
 | `--links` | `few` (≤8) `some` (9–20) `many` (21+) | layout |
 | `--typeface` | `sans` `serif` `mono` `mixed` `display` | layout |
+| `--min-groups` | N link groups or more, whatever the pattern (a giant-wordmark footer can still have 4 columns) | layout |
 | `--max-effort` / `--max-height` | `low`/`medium`/`high` · px at 1440 wide | layout |
 | `--style` / `--type` | footer.design's own tags, e.g. `minimal`, `saas` | site tags |
 | `--text` | any word in the name, description or layout summary | all |
@@ -49,8 +50,8 @@ Get just enough to filter. Infer first, ask second.
 
 1. **Read the project** if there is one: framework and styling (Tailwind, CSS modules…), brand
    colors and fonts, the current footer and the links it must carry (nav, legal, socials,
-   newsletter, contact). **Count the links**: this decides `--links` and rules out half the
-   gallery on its own.
+   newsletter, contact). **Count the links and groups**: this decides `--links` and `--min-groups`
+   and rules out half the gallery on its own.
 2. **Ask only what you can't infer**, at most 3 questions in one go: the feel (calm vs bold, light
    vs dark), whether a newsletter or contact CTA belongs in the footer, and how much effort or
    motion is welcome. If the user already named a vibe or a reference site, skip this.
