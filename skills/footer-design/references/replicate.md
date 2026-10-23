@@ -3,9 +3,10 @@
 ## Brief to filters
 
 **Hard filters** must match, so use them only for real requirements: `--theme`, `--palette`, `--links`,
-`--min-groups`, `--max-effort`, `--max-height`, `--typeface`, `--not`. Repeat one to allow
-alternatives (`--links some --links many`). **Soft filters** only rank: `--pattern`, `--feature`,
-`--style`, `--type`, `--text`. Run `vocab` for counts; tags with a handful of footers barely help.
+`--min-groups`, `--max-effort`, `--max-height`, `--not`. Repeat one to allow alternatives
+(`--links some --links many`). **Soft filters** only rank: `--pattern`, `--feature`, `--type` and
+`--text` count double; `--style` and `--typeface` count once. Content needs (hours, payment icons,
+an address) are `--feature`s; `--text` also searches each footer's link labels. Run `vocab` for counts; tags with a handful of footers barely help.
 
 | The user says… | Hard | Soft |
 |----------------|------|------|
@@ -17,9 +18,12 @@ alternatives (`--links some --links many`). **Soft filters** only rank: `--patte
 | premium dev tool, "like Linear/Vercel/Stripe" | `--theme dark` or `--palette bw` | `--style minimal --style small-type --type web-app --type ai --type development --feature clock-or-status` |
 | big brand moment | | `--pattern giant-wordmark --feature giant-type --style large-type` |
 | grow the list, capture leads | | `--pattern cta-first --feature newsletter` |
-| agency, "let's talk" | | `--pattern cta-first --feature cta-button --feature contact-details --type agency` |
+| agency, "let's talk" | | `--pattern cta-first --feature cta-button --feature email-or-phone --type agency` |
 | warm, playful, friendly | `--palette mono-color --palette multicolor` | `--pattern illustrated --style fun --style colorful --typeface display` |
-| premium, editorial, luxury | `--typeface serif --typeface mixed` | `--style elegant --style typographic` |
+| premium, editorial, luxury | | `--typeface serif --typeface mixed --style elegant --style typographic` |
+| restaurant, café, venue, clinic | | `--feature hours --feature address --feature booking-cta --text hours --type food-drink` |
+| online store | `--links some --links many --min-groups 3` | `--feature payment-icons --feature app-badges --feature locale-switcher --feature perks --feature newsletter --feature mobile-accordion --type ecommerce` |
+| SaaS / app | | `--feature theme-toggle --feature clock-or-status --feature app-badges --type web-app --type ai` |
 | modular, app-like | | `--pattern bento --feature cards --feature inset-panel` |
 | wow factor, interactive | | `--feature 3d --pattern illustrated --style interactive --style webgl` |
 | ship it this afternoon | `--max-effort low` | |

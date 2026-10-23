@@ -39,7 +39,7 @@ with what you see (a big gray wordmark, a split two-tone footer), set `theme` fr
 | Key | Values | How to judge |
 |-----|--------|--------------|
 | `pattern` | one of the patterns below | The **main** structural idea. What would you call it in one breath? |
-| `features` | list from the features below | Everything visibly present. Omit what you can't see. |
+| `features` | list from the features below | Everything visibly present, layout and content. Omit what you can't see. |
 | `palette` | copied | Measured from pixels: `bw` (grays only), `mono-color` (one hue family + neutrals), `multicolor`. |
 | `theme` | `light` `dark` `colorful` `gradient` `image` | The background. `colorful` = a saturated flat color (red, orange, blue…). `image` = photo or video fills it. A dark footer with a 3D render behind it is still `dark` (add the `3d` feature). |
 | `links` | `few` (≤8) `some` (9–20) `many` (21+) | Count clickable nav, legal and social links on desktop. Estimate when dense. |
@@ -48,6 +48,7 @@ with what you see (a big gray wordmark, a split two-tone footer), set `theme` fr
 | `effort` | `low` `medium` `high` | Rebuild effort. low = HTML/CSS layout. medium = needs a custom asset, gradient/texture, marquee or careful type fitting. high = 3D/WebGL, physics, heavy illustration or interaction that a screenshot hints at. |
 | `summary` | ≤ 30 words | Concrete layout, left to right, top to bottom. Name what's big. No adjectives like "stunning", "clean", "modern". |
 | `mobile` | ≤ 15 words | How the mobile view differs: what stacks, what's hidden, what changes order or size. `No mobile screenshot.` when the image has no right-hand panel. |
+| `labels` | string | Visible link and group-heading text, comma-separated (see below). Empty if there are no links. |
 
 ### Patterns
 
@@ -72,15 +73,24 @@ A headline + button that dominates beats link structure → `cta-first`.
 
 ### Features
 
-`giant-type` huge display type somewhere · `logo` logo or logomark (not huge) · `newsletter`
-email signup field · `cta-button` prominent button or CTA headline · `contact-details` email, phone
-or address shown · `social-icons` · `social-links` (as text) · `legal-row` copyright/legal on its
-own bottom line · `switcher` language/currency/theme · `clock-or-status` local time, weather,
-status or other live info · `back-to-top` · `photo` · `illustration` drawing, pattern or ASCII
-art · `3d` 3D render or WebGL look · `cards` content in rounded cards/tiles · `dividers` visible
-rules between regions · `inset-panel` footer is a rounded panel inset from the page edges ·
-`badges` awards, certifications, partner or app-store badges · `map` · `marquee` a row of
-repeated or cut-off scrolling text
+Layout: `giant-type` huge display type somewhere · `logo` logo or logomark (not huge) ·
+`newsletter` email signup field · `cta-button` prominent button or CTA headline · `social-icons` ·
+`social-links` (as text) · `legal-row` copyright/legal on its own bottom line · `clock-or-status`
+local time, weather, status or other live info · `back-to-top` · `photo` · `illustration` drawing,
+pattern or ASCII art · `3d` 3D render or WebGL look · `cards` content in rounded cards/tiles ·
+`dividers` visible rules between regions · `inset-panel` footer is a rounded panel inset from the
+page edges · `map` · `marquee` a row of repeated or cut-off scrolling text
+
+Content: `hours` opening hours or days/times · `booking-cta` book/reserve/schedule/tickets link ·
+`address` a street or postal address (not just a city) · `email-or-phone` written out ·
+`payment-icons` card/payment logos · `app-badges` App Store/Google Play · `awards` award badges,
+certifications, press or partner logos · `locale-switcher` language/currency/country selector ·
+`theme-toggle` light/dark toggle · `perks` store promises (shipping, returns, warranty) ·
+`mobile-accordion` mobile link groups collapse into expandable rows
+
+`labels` (string): the visible link and group-heading text, comma-separated, in reading order,
+Title Case, up to 40 items; no body copy, addresses, emails or the brand name. Search matches it
+with `--text`.
 
 ## Calibration examples
 

@@ -23,7 +23,7 @@ already names a footer.design entry or a footer they want, skip to Phase 3.
 |--------|--------------|
 | `vocab` | Every filter value with how many footers have it. Run once per session |
 | `search [filters] [--compact] [--limit N]` | Matches with pattern, theme/palette, links, height, effort and a layout summary |
-| `similar <slug>` | Footers sharing the most layout traits with one footer ("more like #2") |
+| `similar <slug> [hard filters]` | Footers sharing the most layout traits with one footer ("more like #2"), still within e.g. `--min-groups 3` |
 | `site <slug>...` | Everything known about a footer: links, tags, screenshot URLs, full layout description |
 | `download <slug>... --out DIR [--sheet FILE.png]` | Desktop + mobile screenshots as PNG/JPG; `--sheet` adds numbered contact sheets, 5 footers each (needs Pillow) |
 | `gallery <slug>... --out FILE.html [--notes notes.json] [--pick slug] [--brief "..."] [--images DIR]` | Numbered HTML contact sheet for the user, with your fit notes and the recommendation marked |
@@ -31,7 +31,8 @@ already names a footer.design entry or a footer they want, skip to Phase 3.
 | `node $SKILL/scripts/inspect_footer.mjs <url> DIR` | A footer at 1440 and 390 px: screenshots, `footer-summary.txt`, full styles in JSON (needs Playwright). Works on live sites and on your own build |
 
 Search has **hard filters**, which must match (repeat one to allow alternatives), and **soft
-filters**, which rank results by how many match (ties: newest first; `--all` makes them required):
+filters**, which rank results (pattern, feature, type and text count 2, style and typeface 1; ties:
+newest first; `--all` makes them required):
 
 | Hard | Values |
 |------|--------|
@@ -39,15 +40,16 @@ filters**, which rank results by how many match (ties: newest first; `--all` mak
 | `--palette` | `bw` (grays only) `mono-color` (one hue + neutrals) `multicolor` (measured from pixels) |
 | `--links` | `few` (≤8) `some` (9–20) `many` (21+), estimated. Near a boundary, pass both buckets |
 | `--min-groups` | N+ link groups, whatever the pattern (a giant-wordmark footer can still have 4 columns) |
-| `--max-effort` · `--max-height` · `--typeface` | `low`/`medium`/`high` · px at 1440 wide · `sans` `serif` `mono` `mixed` `display` |
+| `--max-effort` · `--max-height` | `low`/`medium`/`high` · px at 1440 wide |
 | `--not KIND:VALUE` | exclude, e.g. `--not feature:3d --not pattern:other --not text:game` |
 
 | Soft | Values |
 |------|--------|
 | `--pattern` | `giant-wordmark` `link-columns` `cta-first` `big-links` `sitemap` `bento` `split` `centered-stack` `single-row` `illustrated` `image-led` |
-| `--feature` | `newsletter` `giant-type` `clock-or-status` `cards` `inset-panel` `marquee` `social-icons` `contact-details` `back-to-top` … |
+| `--feature` | layout: `newsletter` `giant-type` `cta-button` `clock-or-status` `cards` `inset-panel` `marquee` `social-icons` `back-to-top` …; content: `hours` `booking-cta` `address` `email-or-phone` `payment-icons` `app-badges` `awards` `locale-switcher` `theme-toggle` `perks` `mobile-accordion` |
+| `--typeface` | `sans` `serif` `mono` `mixed` `display` (cheap to change, so never a hard requirement) |
 | `--style` · `--type` | footer.design's own tags, e.g. `minimal`, `web-app` (`vocab` shows which are common) |
-| `--text` | a word in the name, description or layout summary |
+| `--text` | a word in the name, description, layout summary or **link labels** (e.g. `--text reservations`, `--text pricing`) |
 
 ## Phase 1: Brief
 
@@ -55,15 +57,18 @@ Get just enough to filter. Infer first, ask second.
 
 1. **Read the project** if there is one: framework and styling (Tailwind, CSS modules…), brand
    colors and fonts, the current footer and the links it must carry (nav, legal, socials,
-   newsletter, contact). **Count the links and groups**: this decides `--links` and `--min-groups`
-   and rules out half the gallery on its own.
+   newsletter, contact). **Count every link, legal included, and the groups**: this decides
+   `--links` and `--min-groups` and rules out half the gallery on its own.
 2. **Ask only what you can't infer**, at most 3 questions in one go: the feel (calm vs bold, light
    vs dark, color or black and white), whether a newsletter or contact CTA belongs in the footer,
    and how much effort or motion is welcome. If the user already named a vibe or a reference
    site, skip this. If you can't ask, choose sensible defaults and state them as assumptions
    at the top of the shortlist.
 3. **Map the brief to filters.** Only real requirements become hard filters; everything about
-   vibe goes in soft filters. [references/replicate.md](references/replicate.md#brief-to-filters)
+   vibe goes in soft filters. Capacity (links, groups) and effort are real requirements. Colors
+   usually aren't: the rebuild repaints in the user's brand anyway, so hard-filter `--theme` or
+   `--palette` only when the user wants that look (e.g. "black and white", "keep it dark"), not
+   just because they have a brand color. [references/replicate.md](references/replicate.md#brief-to-filters)
    maps common briefs (black and white, "like Linear", big sitemap, playful…) and covers named
    reference sites that aren't in the catalog.
 
