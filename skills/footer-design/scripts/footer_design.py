@@ -330,6 +330,15 @@ def hard_filters(a, counts):
     if getattr(a, "max_height", None):
         hard.append((f"height<={a.max_height}",
                      lambda d: 0 < (lay_of(d).get("height_px") or 0) <= a.max_height))
+    for spec in getattr(a, "need", []):
+        kind, _, v = spec.partition(":")
+        if kind == "text":
+            hard.append((f"need text:{v}", lambda d, v=v.lower(): v in text_blob(d)))
+            continue
+        if kind not in FIELDS or not v:
+            raise UserError(f"--need takes KIND:VALUE with KIND in {', '.join(list(FIELDS) + ['text'])}; got '{spec}'")
+        check_value(kind, v, allowed_for(kind, counts))
+        hard.append((f"need {spec}", lambda d, k=kind, v=v: v in FIELDS[k][1](d)))
     for spec in getattr(a, "exclude", []):
         kind, _, v = spec.partition(":")
         if kind == "text":
@@ -404,9 +413,9 @@ def fmt_row(d, total=None, compact=False):
     if compact:
         if not lay:
             return f"{d['slug']} | (no layout description) | {', '.join(d.get('styles') or [])}"
-        groups = f"{lay.get('groups')}g" if lay.get("groups") else "0g"
         return (f"{d['slug']} | {lay.get('pattern')} | {lay.get('theme')}/{lay.get('palette', '?')} | "
-                f"{lay.get('links')} {groups} | {lay.get('height_px')}px | {lay.get('effort')} | {lay.get('summary')}")
+                f"{lay.get('links')} links, {lay.get('groups') or 0} groups | {lay.get('height_px')}px tall | "
+                f"effort {lay.get('effort')} | {lay.get('summary')}")
     head = f"{d['slug']}  ({d.get('name')}, {d.get('date_added') or '?'})"
     if total:
         head += f"  [{d['score']}/{total}: {', '.join(d['matched'])}]"
@@ -512,6 +521,13 @@ def compare(record, mine_dir, out, shot_dir):
         dest = Path(f"{out}-{view}.png")
         canvas.save(dest)
         made.append(str(dest))
+        # heights in CSS px at the layout width (source screenshots are ~1.46x at desktop, ~2x on mobile)
+        css_w = 1440 if view == "desktop" else 390
+        src_h = round(Image.open(src).height * css_w / Image.open(src).width)
+        mine_h = round(Image.open(mine).height * css_w / Image.open(mine).width)
+        diff = mine_h - src_h
+        print(f"{view}: source ~{src_h}px tall, rebuild {mine_h}px ({'+' if diff >= 0 else ''}{diff}px, "
+              f"{round(100 * diff / max(1, src_h))}%) at {css_w}px wide", file=sys.stderr)
     return made
 
 
@@ -536,10 +552,10 @@ def contact_sheet(records, shot_dir, out, per_sheet=5, width=1100):
         desk = desk.resize((round(desk.width * h / desk.height), h))
         parts = [desk] + ([mob.resize((round(mob.width * h / mob.height), h))] if mob else [])
         row_w = sum(p.width for p in parts) + 12 * (len(parts) - 1)
-        scale = min(1, (width - 60) / row_w)
+        scale = min(1, (width - 150) / row_w)
         parts = [p.resize((max(1, round(p.width * scale)), max(1, round(p.height * scale)))) for p in parts]
         row = Image.new("RGB", (width, parts[0].height + 16), "white")
-        x = 60
+        x = 150
         for p in parts:
             row.paste(p, (x, 8))
             x += p.width + 12
@@ -548,11 +564,15 @@ def contact_sheet(records, shot_dir, out, per_sheet=5, width=1100):
             big, small = ImageFont.load_default(size=30), ImageFont.load_default(size=15)
         except TypeError:  # Pillow < 10.1
             big = small = ImageFont.load_default()
-        draw.rectangle((0, 0, 50, row.height), fill="#ff00ff")
+        draw.rectangle((0, 0, 140, row.height), fill="#ff00ff")
         draw.text((12, 10), str(i), fill="white", font=big)
-        box = draw.textbbox((66, 12), d["slug"], font=small)
-        draw.rectangle((box[0] - 5, box[1] - 4, box[2] + 5, box[3] + 4), fill="white", outline="black")
-        draw.text((66, 12), d["slug"], fill="black", font=small)
+        slug, y = d["slug"], 52
+        while slug and y < row.height - 20:  # wrap the slug inside the strip
+            n = len(slug)
+            while n > 1 and draw.textlength(slug[:n], font=small) > 120:
+                n -= 1
+            draw.text((12, y), slug[:n], fill="white", font=small)
+            slug, y = slug[n:], y + 20
         rows.append(row)
     made = []
     out = Path(out)
@@ -833,6 +853,8 @@ def add_hard_args(p):
     p.add_argument("--max-effort", help="low | medium | high")
     p.add_argument("--max-height", type=int, help="max footer height in px at 1440 wide")
     p.add_argument("--min-groups", type=int, help="at least N link groups/columns, whatever the pattern")
+    p.add_argument("--need", action="append", default=[], metavar="KIND:VALUE",
+                   help="require any soft value, e.g. --need pattern:giant-wordmark --need feature:hours")
     p.add_argument("--not", dest="exclude", action="append", default=[], metavar="KIND:VALUE",
                    help="exclude, e.g. --not feature:3d --not theme:colorful --not text:game")
 
@@ -883,7 +905,8 @@ def main():
     cp.add_argument("slug")
     cp.add_argument("--mine", required=True, metavar="DIR",
                     help="output dir of inspect_footer.mjs run on your own page (footer-desktop.png, footer-mobile.png)")
-    cp.add_argument("--out", default="footer-compare", metavar="PREFIX", help="writes PREFIX-desktop.png, PREFIX-mobile.png")
+    cp.add_argument("--out", metavar="PREFIX",
+                    help="writes PREFIX-desktop.png, PREFIX-mobile.png (default: <mine>/compare-*)")
     cp.add_argument("--shots", default="footer-design-shots", metavar="DIR", help="where source screenshots are saved")
     r = sub.add_parser("refresh-index", help="[maintainer] sync data/index.json with the live sitemap")
     r.add_argument("--full", action="store_true", help="re-fetch every site, not just new ones")
@@ -969,7 +992,7 @@ def main():
         recs = lookup([a.slug])
         if not recs:
             sys.exit(1)
-        made = compare(recs[0], a.mine, a.out, a.shots)
+        made = compare(recs[0], a.mine, a.out or str(Path(a.mine) / "compare"), a.shots)
         print("\n".join(made))
         if not made:
             sys.exit(1)

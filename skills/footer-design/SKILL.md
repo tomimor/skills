@@ -3,12 +3,14 @@ name: footer-design
 description: >-
   Finds a website footer to replicate from footer.design (Footr Design, ~780 curated footers) and
   rebuilds it. Searches a bundled index where every footer has a layout description (pattern such
-  as giant-wordmark or link-columns, features such as newsletter or clock, theme, link count,
-  height, rebuild effort), so it can match a brief to concrete layouts before looking at any
-  screenshot. Presents a numbered shortlist with a visual contact sheet, then measures the chosen
-  live footer and rebuilds it in the user's stack with their content. Use when the user mentions
-  footer.design, footr, footer inspiration, picking or choosing a footer, "make my footer look like
-  X", redesigning or building a site footer, or wants footer ideas to copy.
+  as giant-wordmark or link-columns, theme, black-and-white or color palette, link count and groups,
+  height, rebuild effort), its content (newsletter, opening hours, address, booking link, payment
+  icons, language switcher…) and its link labels, so it matches a brief to concrete footers before
+  opening any screenshot. Presents a numbered shortlist with contact sheets and an HTML gallery,
+  then measures the chosen live footer, rebuilds it in the user's stack with their content, and
+  compares the result side by side with the source. Use when the user mentions footer.design, footr,
+  footer inspiration, picking or choosing a footer, "make my footer look like X", or redesigning or
+  building a site footer.
 ---
 
 # Footer Design
@@ -27,7 +29,7 @@ already names a footer.design entry or a footer they want, skip to Phase 3.
 | `site <slug>...` | Everything known about a footer: links, tags, screenshot URLs, full layout description |
 | `download <slug>... --out DIR [--sheet FILE.png]` | Desktop + mobile screenshots as PNG/JPG; `--sheet` adds numbered contact sheets, 5 footers each (needs Pillow) |
 | `gallery <slug>... --out FILE.html [--notes notes.json] [--pick slug] [--brief "..."] [--images DIR]` | Numbered HTML contact sheet for the user, with your fit notes and the recommendation marked |
-| `compare <slug> --mine DIR` | Source footer next to your rebuild, desktop and mobile (needs Pillow) |
+| `compare <slug> --mine DIR` | Source footer next to your rebuild, desktop and mobile, plus height differences; writes into DIR (needs Pillow) |
 | `node $SKILL/scripts/inspect_footer.mjs <url> DIR` | A footer at 1440 and 390 px: screenshots, `footer-summary.txt`, full styles in JSON (needs Playwright). Works on live sites and on your own build |
 
 Search has **hard filters**, which must match (repeat one to allow alternatives), and **soft
@@ -41,7 +43,7 @@ newest first; `--all` makes them required):
 | `--links` | `few` (≤8) `some` (9–20) `many` (21+), estimated. Near a boundary, pass both buckets |
 | `--min-groups` | N+ link groups, whatever the pattern (a giant-wordmark footer can still have 4 columns) |
 | `--max-effort` · `--max-height` | `low`/`medium`/`high` · px at 1440 wide |
-| `--not KIND:VALUE` | exclude, e.g. `--not feature:3d --not pattern:other --not text:game` |
+| `--need KIND:VALUE` / `--not KIND:VALUE` | require or exclude any value, e.g. `--need pattern:giant-wordmark --need feature:hours --not feature:3d --not text:game` |
 
 | Soft | Values |
 |------|--------|
@@ -85,6 +87,8 @@ Get just enough to filter. Infer first, ask second.
    itself is usable (some are cropped oddly or include non-footer content).
 3. **Pick 4–6 that differ in structure**, not five variations of "logo left, four link columns".
    Include one that stretches the brief (e.g. the light inversion of a dark brief) when it's strong.
+   For giant-wordmark footers, **check the name fits**: at the same width, a 9-letter name sets about
+   half as tall as a 5-letter one. Say so in the fit note and how you'd handle it (see the reference).
 4. **Show them.** Write a notes file `{"slug": "one line on why it fits this brief"}` and run
    `gallery` with `--notes`, `--pick` (your recommendation) and `--brief`. If you can publish an
    artifact, publish the gallery (the default hotlinked images work there) and give the link;
@@ -122,8 +126,9 @@ favorite, rather than going further down the same list.
    **width** as well as weight: giant type depends on it.
 4. **Verify against the source.** Run `inspect_footer.mjs` on your own page (`http://localhost:…`
    or `file:///…/index.html`) into a folder, then `compare <slug> --mine <that folder>` for
-   side-by-side desktop and mobile images. Fix the biggest differences first (proportions,
-   spacing, type size), then details, and re-run. Finish with the a11y checks in the reference.
+   side-by-side images and height differences. Fix the biggest differences first (proportions,
+   spacing, type size), then details, and re-run. If the summary warns that text is invisible,
+   the capture caught an animation midway: check the screenshot before trusting the numbers. Finish with the a11y checks in the reference.
    Report what you assumed (copy you wrote, placeholder URLs, endpoints to wire up).
 
 ## Rules

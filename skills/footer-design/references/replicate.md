@@ -16,13 +16,17 @@ an address) are `--feature`s; `--text` also searches each footer's link labels. 
 | we have a big sitemap (20+ links) | `--min-groups 4 --links some --links many` | `--pattern link-columns --pattern sitemap` |
 | just a few links | `--links few` | `--pattern single-row --pattern centered-stack --pattern big-links` |
 | premium dev tool, "like Linear/Vercel/Stripe" | `--theme dark` or `--palette bw` | `--style minimal --style small-type --type web-app --type ai --type development --feature clock-or-status` |
-| big brand moment | | `--pattern giant-wordmark --feature giant-type --style large-type` |
+| big brand moment | `--need pattern:giant-wordmark` (37% of the catalog, so add more filters) | `--feature giant-type --style large-type` |
 | grow the list, capture leads | | `--pattern cta-first --feature newsletter` |
 | agency, "let's talk" | | `--pattern cta-first --feature cta-button --feature email-or-phone --type agency` |
 | warm, playful, friendly | `--palette mono-color --palette multicolor` | `--pattern illustrated --style fun --style colorful --typeface display` |
 | premium, editorial, luxury | | `--typeface serif --typeface mixed --style elegant --style typographic` |
-| restaurant, café, venue, clinic | | `--feature hours --feature address --feature booking-cta --text hours --type food-drink` |
+| restaurant, café, venue, clinic | `--need feature:hours` if hours are a must (19 footers have them) | `--feature hours --feature address --feature booking-cta --text hours --type food-drink` |
 | online store | `--links some --links many --min-groups 3` | `--feature payment-icons --feature app-badges --feature locale-switcher --feature perks --feature newsletter --feature mobile-accordion --type ecommerce` |
+
+footer.design is design-led: store furniture is rare (2 footers show payment icons, 3 a perks row,
+6 app badges). For a store, match **structure and capacity** first, then add the furniture to the
+rebuild yourself; don't hard-filter on it.
 | SaaS / app | | `--feature theme-toggle --feature clock-or-status --feature app-badges --type web-app --type ai` |
 | modular, app-like | | `--pattern bento --feature cards --feature inset-panel` |
 | wow factor, interactive | | `--feature 3d --pattern illustrated --style interactive --style webgl` |
@@ -97,6 +101,14 @@ screenshots are ~2100px wide for a 1440px layout (divide measurements by ~1.46);
   translatable; match the width of the source face, or the composition falls apart.
 - Cards that overlap the section above (negative top margin): give the band above enough bottom
   padding, and check the overlap on mobile, where it's usually smaller.
+- Wordmark length: a giant wordmark is sized to its word. Compare the source's letter count with the
+  user's name: at the same width, height scales roughly with 1 / letters. For a much longer name,
+  stack it on two lines, let it span more columns, give the row less height, or use a condensed
+  face; for a much shorter one, add tracking or a symbol (® ©) rather than letting it grow taller
+  than the row. Decide on mobile separately, where stacking is usually right.
+- `inspect_footer.mjs` captures footers taller than the viewport in a taller window (it says so in
+  the summary), because scroll-revealed footers hide whatever is out of view. Heights set in `vh`
+  may read slightly larger there.
 
 ## Accessibility checks
 

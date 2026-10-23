@@ -81,7 +81,8 @@ function outline(sel) {
     return out;
   };
   const media = [];
-  const stats = { fonts: {}, colors: {}, backgrounds: {}, shadows: 0, moving: 0, negativeMargins: [] };
+  const stats = { fonts: {}, colors: {}, backgrounds: {}, rules: {}, layouts: [], hidden: [], largest: null,
+    shadows: 0, moving: 0, negativeMargins: [] };
   const bump = (o, k) => { o[k] = (o[k] || 0) + 1; };
   const INHERITED = ['color', 'fontFamily', 'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing', 'textTransform'];
   const parentStyle = new WeakMap();
@@ -113,10 +114,43 @@ function outline(sel) {
     const ownText = ownTextOf(el);
     if (ownText) {
       node.text = ownText.slice(0, 120);
-      bump(stats.fonts, `${cs.fontFamily.split(',')[0].replace(/["']/g, '')} ${cs.fontWeight} ${cs.fontSize}${cs.fontStyle === 'italic' ? ' italic' : ''}`);
+      bump(stats.fonts, `${cs.fontFamily.split(',')[0].replace(/["']/g, '')} ${cs.fontWeight} ${cs.fontSize}`
+        + `/${cs.lineHeight}${cs.letterSpacing !== 'normal' ? ' tracking ' + cs.letterSpacing : ''}`
+        + `${cs.textTransform !== 'none' ? ' ' + cs.textTransform : ''}${cs.fontStyle === 'italic' ? ' italic' : ''}`);
+      // effective opacity / zero scale up to the footer root: catches captures taken mid-animation
+      let op = 1, zero = false;
+      for (let e = el; e && e !== root.parentElement; e = e.parentElement) {
+        const ecs = getComputedStyle(e);
+        op *= parseFloat(ecs.opacity);
+        if (/^matrix\(0, 0, 0, 0|^matrix\(0, 0, 0, 0|scale\(0\)/.test(ecs.transform)) zero = true;
+      }
+      if (op < 0.05 || zero) stats.hidden.push(ownTextOf(el).slice(0, 30));
       bump(stats.colors, cs.color);
     }
-    if (cs.backgroundColor !== 'rgba(0, 0, 0, 0)') bump(stats.backgrounds, cs.backgroundColor);
+    const thin = (r.height <= 2 && r.width >= 40) || (r.width <= 2 && r.height >= 40);
+    if (thin && cs.backgroundColor !== 'rgba(0, 0, 0, 0)') {
+      bump(stats.rules, `${r.height <= 2 ? 'horizontal' : 'vertical'} ${Math.round(Math.min(r.width, r.height)) || 1}px ${cs.backgroundColor}`);
+    } else if (cs.backgroundColor !== 'rgba(0, 0, 0, 0)') bump(stats.backgrounds, cs.backgroundColor);
+    for (const side of ['Top', 'Right', 'Bottom', 'Left']) {
+      const w = parseFloat(cs[`border${side}Width`]);
+      if (w >= 1 && cs[`border${side}Style`] !== 'none' && !/rgba\(.*, 0\)$/.test(cs[`border${side}Color`])) {
+        bump(stats.rules, `${side === 'Top' || side === 'Bottom' ? 'horizontal' : 'vertical'} ${cs[`border${side}Width`]} ${cs[`border${side}Style`]} ${cs[`border${side}Color`]} (border)`);
+      }
+    }
+    const kids = el.children.length;
+    if ((cs.display.includes('grid') || (cs.display.includes('flex') && cs.flexDirection.startsWith('row'))) && kids >= 2
+        && r.width > 200 && stats.layouts.length < 12) {
+      const cols = cs.display.includes('grid') ? `grid cols "${cs.gridTemplateColumns}"` : 'flex row';
+      stats.layouts.push(`${el.tagName.toLowerCase()}.${String(el.className).split(' ')[0]} ${Math.round(r.width)}x${Math.round(r.height)} `
+        + `${cols}, gap ${cs.gap}, padding ${cs.padding}, ${kids} children`);
+    }
+    const big = parseFloat(cs.fontSize) >= 64 && ownTextOf(el);
+    const art = ['svg', 'img'].includes(el.tagName.toLowerCase()); // canvases are usually full-footer overlays
+    if ((big || art) && r.width * r.height > (stats.largest?.area || 0)) {
+      stats.largest = { area: r.width * r.height, desc: big
+        ? `text "${ownTextOf(el).slice(0, 24)}" ${cs.fontSize} ${cs.fontFamily.split(',')[0].replace(/["']/g, '')} ${Math.round(r.width)}x${Math.round(r.height)}`
+        : `${el.tagName.toLowerCase()} ${Math.round(r.width)}x${Math.round(r.height)}` };
+    }
     if (cs.boxShadow !== 'none' || cs.textShadow !== 'none') stats.shadows++;
     if ((cs.animationName && cs.animationName !== 'none') || !/^all 0s|^none/.test(cs.transition)) stats.moving++;
     if (parseFloat(cs.marginTop) < -20) stats.negativeMargins.push(`${el.tagName.toLowerCase()}.${String(el.className).split(' ')[0]} margin-top ${cs.marginTop}`);
@@ -169,6 +203,10 @@ function outline(sel) {
     text_colors: top8(stats.colors),
     backgrounds: top8(stats.backgrounds),
     media,
+    layouts: stats.layouts,
+    rules: top8(stats.rules),
+    largest: stats.largest && r.width > 0 ? `${stats.largest.desc} (${Math.round(100 * Math.sqrt(stats.largest.area) / Math.sqrt(r.width * r.height))}% of footer by side)` : null,
+    hidden_text: stats.hidden.slice(0, 10),
     shadows: stats.shadows,
     animated_or_transitioned: stats.moving,
     negative_margins: stats.negativeMargins.slice(0, 5),
@@ -183,6 +221,22 @@ function outline(sel) {
     tree,
     ...(count > MAX_NODES && { truncated: `outline stops after ${MAX_NODES} nodes; screenshot shows the rest` }),
   };
+}
+
+// Scroll the marked footer through the viewport and wait for finite animations to finish.
+async function settleFooter(page) {
+  await page.evaluate(async () => {
+    const root = document.querySelector('[data-footer-inspect]');
+    if (!root) return;
+    root.scrollIntoView({ block: 'start' });
+    await new Promise((r) => setTimeout(r, 400));
+    root.scrollIntoView({ block: 'end' });
+    const finite = () => document.getAnimations().filter((a) => a.playState === 'running'
+      && Number.isFinite(a.effect?.getComputedTiming?.().endTime));
+    await Promise.race([Promise.all(finite().map((a) => a.finished.catch(() => {}))),
+      new Promise((r) => setTimeout(r, 6000))]);
+  });
+  await page.waitForTimeout(800);
 }
 
 const proxy = process.env.HTTPS_PROXY || process.env.https_proxy;
@@ -211,7 +265,18 @@ try {
       scrollTo(0, document.documentElement.scrollHeight);
     });
     await page.waitForTimeout(settle); // let scroll-triggered animations and physics settle
-    const data = await page.evaluate(outline, selector);
+    await page.evaluate(outline, selector); // marks the footer
+    await settleFooter(page);
+    let data = await page.evaluate(outline, selector);
+    let tall = null;
+    if (data && data.clip.height + 40 > vp.height) {
+      // scroll-revealed footers hide whatever is out of view, so make the whole footer fit at once
+      tall = data.clip.height + 80;
+      await page.setViewportSize({ width: vp.width, height: tall });
+      await settleFooter(page);
+      data = await page.evaluate(outline, selector);
+    }
+    if (data && tall) data.note = `captured in a ${vp.width}x${tall} viewport so the whole footer was in view at once`;
     report.viewports[vp.name] = data;
     const shot = join(out, `footer-${vp.name}.png`);
     const miss = selector ? `--selector "${selector}" matched nothing or is invalid` : 'no footer found, pass --selector';
@@ -226,8 +291,14 @@ try {
         }
       });
     }
-    const shotOk = data && await page.screenshot({ path: shot, fullPage: true, clip: data.clip, timeout: 30000 })
-      .then(() => true, () => false);
+    let shotOk = false;
+    if (data) {
+      const top = await page.evaluate((y) => y - window.scrollY, data.clip.y);
+      const fits = top >= 0 && top + data.clip.height <= (tall || vp.height) + 1;
+      shotOk = await page.screenshot({ path: shot, timeout: 30000,
+        ...(fits ? { clip: { ...data.clip, y: top } } : { fullPage: true, clip: data.clip }) })
+        .then(() => true, () => false);
+    }
     if (!shotOk) {
       await page.screenshot({ path: shot });
       if (data) note += ' (element screenshot failed, saved the viewport instead)';
@@ -246,8 +317,17 @@ if (!process.exitCode) {
     if (!d) { lines.push(`${name}: no footer found`, ''); continue; }
     const s = d.summary;
     lines.push(`${name.toUpperCase()} ${d.box.width}x${d.box.height} (${d.selector}), background ${s.background}`);
+    if (d.note) lines.push(`  ${d.note}`);
     if (s.overlap_above_px > 0) lines.push(`  extends ${s.overlap_above_px}px into the section above (included in the screenshot)`);
+    if (s.hidden_text.length) {
+      lines.push(`  WARNING: ${s.hidden_text.length}+ text elements are invisible (opacity 0 or scaled to 0), e.g. `
+        + `"${s.hidden_text.slice(0, 3).join('", "')}". The capture may be mid-animation: check the screenshot, `
+        + 'rerun with a longer --wait, or trust the footer.design screenshot.');
+    }
     lines.push('  regions:', ...s.regions.map((x) => `    ${x}`));
+    if (s.layouts.length) lines.push('  layout containers:', ...s.layouts.map((x) => `    ${x}`));
+    if (s.rules.length) lines.push(`  rules/dividers: ${s.rules.join(', ')}`);
+    if (s.largest) lines.push(`  largest element (often the wordmark): ${s.largest}`);
     lines.push('  type (family weight size, by count):', ...s.type.map((x) => `    ${x}`));
     lines.push(`  text colors: ${s.text_colors.join(', ')}`);
     if (s.backgrounds.length) lines.push(`  backgrounds: ${s.backgrounds.join(', ')}`);
