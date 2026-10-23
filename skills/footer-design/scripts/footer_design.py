@@ -399,7 +399,8 @@ def search(catalog, a):
         if a.all and not all_ok({label for label, _ in hits}):
             continue
         if failed:
-            if len(failed) == 1 and soft:
+            # explicit --need/--not choices aren't "near" misses
+            if len(failed) == 1 and soft and not failed[0].startswith(("need ", "not ")):
                 near.append(dict(d, matched=[label for label, _ in hits], score=score, excluded_by=failed[0]))
             continue
         rows.append(dict(d, matched=[label for label, _ in hits], score=score))

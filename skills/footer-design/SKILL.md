@@ -92,7 +92,12 @@ Get just enough to filter. Infer first, ask second.
    image per 5 footers), then open individual screenshots only for close calls. The summary tells
    you the structure; only the image tells you whether it's good, and whether the screenshot
    itself is usable (some are cropped oddly or include non-footer content).
-3. **Pick 4–6 that differ in structure**, not five variations of "logo left, four link columns".
+3. **Pick 4–6 that differ in structure**, not five variations of "logo left, four link columns":
+   the user is choosing a direction, and near-duplicates hide the real choice. Aim for at least
+   three patterns. Capacity filters often leave mostly one family (link-heavy briefs land on
+   columns), so keep the same hard filters and run one quick search per alternative pattern
+   (`--need pattern:giant-wordmark`, `--need pattern:cta-first`, `--need pattern:bento`…), then keep
+   the best of each family that can hold the content.
    Include one that stretches the brief (e.g. the light inversion of a dark brief) when it's strong.
    For giant-wordmark footers, **check the name fits**: at the same width, a 9-letter name sets about
    half as tall as a 5-letter one. Say so in the fit note and how you'd handle it
