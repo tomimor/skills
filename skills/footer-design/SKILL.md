@@ -34,7 +34,8 @@ already names a footer.design entry or a footer they want, skip to Phase 3.
 
 Search has **hard filters**, which must match (repeat one to allow alternatives), and **soft
 filters**, which rank results (pattern, feature, type and text count 2, style and typeface 1; ties:
-newest first; `--all` makes them required):
+newest first). `--all` makes soft filters required: every feature and text word, one value per
+other kind. When a hard filter hides a strong match, search lists it under **near misses**.
 
 | Hard | Values |
 |------|--------|
@@ -79,7 +80,8 @@ Get just enough to filter. Infer first, ask second.
 1. **Search wide, read first.** Run 2–3 searches that each take a different structural angle
    (e.g. `--pattern giant-wordmark`, then `--min-groups 3 --pattern link-columns`), with
    `--compact` to scan. Cut anything that can't hold the user's content before downloading any
-   image. Over ~50 matches, add a hard filter; under 5, relax one. When one result is spot on,
+   image. Over ~50 matches, add a hard filter; under 5, relax one. Read the near misses: a pastel
+   or dark footer that's perfect otherwise usually repaints fine. When one result is spot on,
    `similar <slug>` finds its neighbors.
 2. **Look at the finalists.** `download` the best 8–10 with `--sheet` and view the sheets (one
    image per 5 footers), then open individual screenshots only for close calls. The summary tells
@@ -90,7 +92,8 @@ Get just enough to filter. Infer first, ask second.
    For giant-wordmark footers, **check the name fits**: at the same width, a 9-letter name sets about
    half as tall as a 5-letter one. Say so in the fit note and how you'd handle it (see the reference).
 4. **Show them.** Write a notes file `{"slug": "one line on why it fits this brief"}` and run
-   `gallery` with `--notes`, `--pick` (your recommendation) and `--brief`. If you can publish an
+   `gallery` with `--notes`, `--pick` (your recommendation), `--brief`, and `--stretch` for the
+   option that stretches the brief. If you can publish an
    artifact, publish the gallery (the default hotlinked images work there) and give the link;
    otherwise give the file path and pass `--images DIR` so it works offline. Then list:
 

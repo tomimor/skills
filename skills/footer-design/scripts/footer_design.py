@@ -94,6 +94,8 @@ FEATURES = {
     "perks": "store promises: free shipping, returns, warranty",
     "mobile-accordion": "mobile view collapses link groups into expandable rows",
 }
+CONTENT = {"hours", "booking-cta", "address", "email-or-phone", "payment-icons", "app-badges", "awards",
+           "locale-switcher", "theme-toggle", "perks", "mobile-accordion", "newsletter"}
 THEMES = ["light", "dark", "colorful", "gradient", "image"]
 PALETTES = ["bw", "mono-color", "multicolor"]  # measured: grays only / one hue + neutrals / several hues
 LINKS = ["few", "some", "many"]  # <=8, 9-20, 21+
@@ -285,6 +287,11 @@ def lay_of(d):
     return d.get("layout") or {}
 
 
+def has_word(blob, word):
+    """Word-start match, so 'visit' finds 'Visit us' and 'visitors' but not 'revisit'."""
+    return re.search(r"(?<![a-z0-9])" + re.escape(word.lower()), blob) is not None
+
+
 def text_blob(d):
     lay = lay_of(d)
     return " ".join(str(x) for x in (d.get("name"), d.get("description"), lay.get("summary"),
@@ -330,19 +337,24 @@ def hard_filters(a, counts):
     if getattr(a, "max_height", None):
         hard.append((f"height<={a.max_height}",
                      lambda d: 0 < (lay_of(d).get("height_px") or 0) <= a.max_height))
+    needs = {}  # kind -> values; values of one kind are alternatives, kinds are all required
     for spec in getattr(a, "need", []):
         kind, _, v = spec.partition(":")
-        if kind == "text":
-            hard.append((f"need text:{v}", lambda d, v=v.lower(): v in text_blob(d)))
-            continue
-        if kind not in FIELDS or not v:
+        if kind not in list(FIELDS) + ["text"] or not v:
             raise UserError(f"--need takes KIND:VALUE with KIND in {', '.join(list(FIELDS) + ['text'])}; got '{spec}'")
-        check_value(kind, v, allowed_for(kind, counts))
-        hard.append((f"need {spec}", lambda d, k=kind, v=v: v in FIELDS[k][1](d)))
+        if kind != "text":
+            check_value(kind, v, allowed_for(kind, counts))
+        needs.setdefault(kind, []).append(v)
+    for kind, vs in needs.items():
+        if kind == "text":
+            pred = lambda d, vs=vs: any(has_word(text_blob(d), v) for v in vs)
+        else:
+            pred = lambda d, k=kind, vs=set(vs): bool(vs & set(FIELDS[k][1](d)))
+        hard.append((f"need {kind}:{'|'.join(vs)}", pred))
     for spec in getattr(a, "exclude", []):
         kind, _, v = spec.partition(":")
         if kind == "text":
-            hard.append((f"not text:{v}", lambda d, v=v.lower(): v not in text_blob(d)))
+            hard.append((f"not text:{v}", lambda d, v=v: not has_word(text_blob(d), v)))
             continue
         if kind not in FIELDS or not v:
             raise UserError(f"--not takes KIND:VALUE with KIND in {', '.join(list(FIELDS) + ['text'])}; got '{spec}'")
@@ -362,22 +374,41 @@ def search(catalog, a):
     for kind, weight in (("pattern", 2), ("feature", 2), ("type", 2), ("style", 1), ("typeface", 1)):
         for v in getattr(a, kind):
             check_value(kind, v, allowed_for(kind, counts))
-            soft.append((f"{kind}:{v}", lambda d, k=kind, v=v: v in FIELDS[k][1](d), weight))
+            soft.append((f"{kind}:{v}", lambda d, k=kind, v=v: v in FIELDS[k][1](d), weight))  # label starts with kind
     for word in a.text:
-        soft.append((f"text:{word}", lambda d, w=word.lower(): w in text_blob(d), 2))
+        soft.append((f"text:{word}", lambda d, w=word: has_word(text_blob(d), w), 2))
 
-    rows = []
+    def all_ok(hit_labels):
+        # --all: features and text words are each required; pattern/type/style/typeface values are
+        # alternatives, so one match per kind is enough
+        for label, _, _ in soft:
+            kind = label.split(":", 1)[0]
+            if kind in ("feature", "text"):
+                if label not in hit_labels:
+                    return False
+            elif not any(h.split(":", 1)[0] == kind for h in hit_labels):
+                return False
+        return True
+
+    rows, near = [], []
     for d in catalog.values():  # catalog is newest first
-        if not all(pred(d) for _, pred in hard):
-            continue
+        failed = [label for label, pred in hard if not pred(d)]
         hits = [(label, w) for label, pred, w in soft if pred(d)]
+        score = sum(w for _, w in hits)
         if soft and not hits:
             continue
-        if a.all and len(hits) < len(soft):
+        if a.all and not all_ok({label for label, _ in hits}):
             continue
-        rows.append(dict(d, matched=[label for label, _ in hits], score=sum(w for _, w in hits)))
+        if failed:
+            if len(failed) == 1 and soft:
+                near.append(dict(d, matched=[label for label, _ in hits], score=score, excluded_by=failed[0]))
+            continue
+        rows.append(dict(d, matched=[label for label, _ in hits], score=score))
     rows.sort(key=lambda d: -d["score"])  # stable: ties stay newest first
-    return rows, sum(w for _, _, w in soft), [label for label, _ in hard]
+    near.sort(key=lambda d: -d["score"])
+    best = rows[0]["score"] if rows else 0
+    near = [d for d in near if d["score"] >= max(1, best)][:3]  # only ones that would rank at the top
+    return rows, sum(w for _, _, w in soft), [label for label, _ in hard], near
 
 
 def similar(catalog, slug, limit, a=None):
@@ -389,6 +420,7 @@ def similar(catalog, slug, limit, a=None):
     ref = lay_of(catalog[slug])
     rfeat = set(ref.get("features") or [])
     rstyle = set(catalog[slug].get("styles") or [])
+    rtype = set(catalog[slug].get("types") or [])
     rows = []
     for s, d in catalog.items():
         lay = lay_of(d)
@@ -401,7 +433,11 @@ def similar(catalog, slug, limit, a=None):
         feat = set(lay.get("features") or [])
         score += 4 * len(feat & rfeat) / max(1, len(feat | rfeat))
         score += 0.5 * len(set(d.get("styles") or []) & rstyle)
-        rows.append(dict(d, score=round(score, 1), matched=[]))
+        score += 1.0 * len(set(d.get("types") or []) & rtype)  # same kind of site
+        score += 0.5 * len((feat & rfeat) & CONTENT)  # shared content needs (hours, address…)
+        shared = [k for k in ("pattern", "theme", "palette", "links", "typeface") if lay.get(k) == ref.get(k)]
+        shared += sorted(feat & rfeat) + [f"type:{t}" for t in sorted(set(d.get("types") or []) & rtype)]
+        rows.append(dict(d, score=round(score, 1), matched=shared))
     rows.sort(key=lambda d: -d["score"])
     return rows[:limit]
 
@@ -601,7 +637,7 @@ article.pick{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
 header{display:flex;gap:10px 14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
 .n{font-weight:700;font-size:1.5rem;font-variant-numeric:tabular-nums}.name{font-weight:600;font-size:1.1rem}
 .badge{font-size:.75rem;font-weight:600;color:var(--accent);border:1px solid currentColor;border-radius:99px;padding:1px 8px}
-.meta{color:var(--muted);font-size:.85rem}.links{margin-left:auto;display:flex;gap:12px;font-size:.9rem}
+.badge.stretch{color:var(--muted)}.meta{color:var(--muted);font-size:.85rem}.links{margin-left:auto;display:flex;gap:12px;font-size:.9rem}
 .why{margin:0 0 12px}.why b{font-weight:600}
 .views{display:grid;grid-template-columns:3fr 1fr;gap:12px;align-items:start}.views.solo{grid-template-columns:1fr}
 .summary{color:var(--muted);font-size:.9rem;margin:-8px 0 12px}
@@ -611,7 +647,7 @@ a{color:inherit;text-underline-offset:2px}a:hover{color:var(--accent)}
 """
 
 
-def gallery(records, out, notes=None, pick=None, title="Footer shortlist", brief=None, images=None):
+def gallery(records, out, notes=None, pick=None, title="Footer shortlist", brief=None, images=None, stretch=()):
     """notes: optional {slug: "why it fits"}; pick: slug to highlight as the recommendation."""
     e = html.escape
     notes = notes or {}
@@ -643,6 +679,7 @@ def gallery(records, out, notes=None, pick=None, title="Footer shortlist", brief
             f'<article id="{e(d["slug"])}" class="{"pick" if d["slug"] == pick else ""}"><header>'
             f'<span class="n">{i}</span><span class="name">{e(d.get("name") or d["slug"])}</span>'
             + ('<span class="badge">Recommended</span>' if d["slug"] == pick else "")
+            + ('<span class="badge stretch">Stretches the brief</span>' if d["slug"] in stretch else "")
             + f'<span class="meta">{e(meta)}</span><span class="links">'
             f'<a href="{e(d["page"])}">footer.design</a>'
             + (f'<a href="{e(d["live"])}">live site</a>' if d.get("live") else "")
@@ -876,7 +913,8 @@ def main():
     s.add_argument("--typeface", action="append", default=[], help=" | ".join(TYPEFACES))
     add_hard_args(s)
     s.add_argument("--text", action="append", default=[], help="word in the name, description or summary")
-    s.add_argument("--all", action="store_true", help="require every soft filter to match too")
+    s.add_argument("--all", action="store_true",
+                   help="require soft filters too: every --feature and --text, and one value per other kind")
     s.add_argument("--limit", type=int, default=30)
     s.add_argument("--compact", action="store_true", help="one line per footer")
     s.add_argument("--json", action="store_true")
@@ -901,6 +939,7 @@ def main():
     g.add_argument("--title", default="Footer shortlist")
     g.add_argument("--brief", help="one line restating the user's brief, shown under the title")
     g.add_argument("--images", metavar="DIR", help="use screenshots saved by `download` instead of hotlinking")
+    g.add_argument("--stretch", action="append", default=[], metavar="SLUG", help="mark as stretching the brief")
     cp = sub.add_parser("compare", help="source footer next to your rebuild, desktop and mobile (needs Pillow)")
     cp.add_argument("slug")
     cp.add_argument("--mine", required=True, metavar="DIR",
@@ -935,7 +974,7 @@ def main():
             print(f"\n--{flag} (footer.design tags): "
                   + ", ".join(f"{k} ({v})" for k, v in sorted(counts[key].items(), key=lambda x: -x[1])))
     elif a.cmd == "search":
-        rows, total, hard = search(load_catalog(), a)
+        rows, total, hard, near = search(load_catalog(), a)
         shown = rows[: a.limit]
         if a.json:
             print(json.dumps(shown, indent=1, ensure_ascii=False))
@@ -949,9 +988,16 @@ def main():
             else:
                 print("no matches: try fewer or broader soft filters")
             print("\n".join(fmt_row(d, total, a.compact) for d in shown))
+            if near and not a.json:
+                print("\nnear misses (would rank at the top; excluded by one hard filter):")
+                for d in near:
+                    lay = lay_of(d)
+                    print(f"  {d['slug']}: {d['score']}/{total}, excluded by {d['excluded_by']} "
+                          f"({lay.get('theme')}/{lay.get('palette')}, {lay.get('links')} links, effort {lay.get('effort')})")
     elif a.cmd == "similar":
         rows = similar(load_catalog(), a.slug, a.limit, a)
-        print("\n".join(fmt_row(d, None, a.compact) + ("" if a.compact else f"\n    similarity {d['score']}")
+        print("\n".join(fmt_row(d, None, a.compact)
+                        + (" | " if a.compact else "\n    ") + f"similarity {d['score']}, shares: {', '.join(d['matched'])}"
                         for d in rows))
     elif a.cmd == "site":
         data = lookup(a.slugs)
@@ -987,7 +1033,7 @@ def main():
             sys.exit(1)
         notes = load_json(Path(a.notes), {}) if a.notes else None
         print(gallery(recs, a.out, notes=notes, pick=a.pick and normalize_slug(a.pick), title=a.title,
-                      brief=a.brief, images=a.images))
+                      brief=a.brief, images=a.images, stretch={normalize_slug(x) for x in a.stretch}))
     elif a.cmd == "compare":
         recs = lookup([a.slug])
         if not recs:

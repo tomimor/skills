@@ -3,45 +3,57 @@
 ## Brief to filters
 
 **Hard filters** must match, so use them only for real requirements: `--theme`, `--palette`, `--links`,
-`--min-groups`, `--max-effort`, `--max-height`, `--not`. Repeat one to allow alternatives
-(`--links some --links many`). **Soft filters** only rank: `--pattern`, `--feature`, `--type` and
-`--text` count double; `--style` and `--typeface` count once. Content needs (hours, payment icons,
-an address) are `--feature`s; `--text` also searches each footer's link labels. Run `vocab` for counts; tags with a handful of footers barely help.
+`--min-groups`, `--max-effort`, `--max-height`, `--need`, `--not`. Repeating one gives alternatives
+(`--links some --links many`, `--need type:art --need type:museum`). **Soft filters** only rank:
+`--pattern`, `--feature`, `--type` and `--text` count double; `--style` and `--typeface` count once.
+Content needs (hours, payment icons, an address) are `--feature`s; `--text` matches word starts in
+names, descriptions, summaries and link labels. Run `vocab` for counts; tags with a handful of
+footers barely help. When a hard filter hides a strong match, search lists it under **near misses**:
+read them, since a pastel or dark footer often repaints fine.
 
 | The user says… | Hard | Soft |
 |----------------|------|------|
 | black and white | `--palette bw` (not `--style monochromatic`, which means one hue) | |
 | dark / "keep it dark" | `--theme dark` (add `--palette bw` if no color at all) | |
+| light, calm, warm | `--theme light --theme colorful` (pastels repaint to light) | `--style calm --typeface serif --typeface mixed` |
 | one brand color | `--palette mono-color` | `--theme colorful` if the color should fill the footer |
 | we have a big sitemap (20+ links) | `--min-groups 4 --links some --links many` | `--pattern link-columns --pattern sitemap` |
 | just a few links | `--links few` | `--pattern single-row --pattern centered-stack --pattern big-links` |
-| premium dev tool, "like Linear/Vercel/Stripe" | `--theme dark` or `--palette bw` | `--style minimal --style small-type --type web-app --type ai --type development --feature clock-or-status` |
+| premium dev tool, "like Linear/Vercel/Stripe" | `--theme dark --not feature:3d --not feature:marquee --not pattern:illustrated` | `--style minimal --style small-type --type web-app --type ai --type development --feature clock-or-status --feature giant-type` |
 | big brand moment | `--need pattern:giant-wordmark` (37% of the catalog, so add more filters) | `--feature giant-type --style large-type` |
+| faint wordmark behind the links | | `--feature giant-type` (these are usually tagged link-columns or sitemap, not giant-wordmark) |
 | grow the list, capture leads | | `--pattern cta-first --feature newsletter` |
 | agency, "let's talk" | | `--pattern cta-first --feature cta-button --feature email-or-phone --type agency` |
 | warm, playful, friendly | `--palette mono-color --palette multicolor` | `--pattern illustrated --style fun --style colorful --typeface display` |
 | premium, editorial, luxury | | `--typeface serif --typeface mixed --style elegant --style typographic` |
-| restaurant, café, venue, clinic | `--need feature:hours` if hours are a must (19 footers have them) | `--feature hours --feature address --feature booking-cta --text hours --type food-drink` |
+| restaurant, café, venue | `--need feature:hours` if hours are a must (19 footers have them) | `--feature hours --feature address --feature booking-cta --text reserve --text menu --type food-drink` |
+| studio, gym, spa, clinic (classes, appointments) | | `--feature booking-cta --feature hours --feature address --feature app-badges --text class --text book --type health --type fitness --type beauty` |
+| museum, gallery, nonprofit | `--links some --links many` for big sitemaps | `--feature hours --feature address --feature newsletter --feature locale-switcher --text donate --text member --text visit --type art --type museum --type community` |
 | online store | `--links some --links many --min-groups 3` | `--feature payment-icons --feature app-badges --feature locale-switcher --feature perks --feature newsletter --feature mobile-accordion --type ecommerce` |
-
-footer.design is design-led: store furniture is rare (2 footers show payment icons, 3 a perks row,
-6 app badges). For a store, match **structure and capacity** first, then add the furniture to the
-rebuild yourself; don't hard-filter on it.
 | SaaS / app | | `--feature theme-toggle --feature clock-or-status --feature app-badges --type web-app --type ai` |
 | modular, app-like | | `--pattern bento --feature cards --feature inset-panel` |
 | wow factor, interactive | | `--feature 3d --pattern illustrated --style interactive --style webgl` |
 | ship it this afternoon | `--max-effort low` | |
 | it can't take over the page | `--max-height 500` | |
 | no gimmicks | `--not feature:3d --not feature:marquee --not pattern:other` | |
-| the user's industry | | `--type food-drink`, `--type finance`, `--type fashion`… (`vocab` lists them; often the most relevant single signal) |
+| the user's industry | | `--type food-drink`, `--type finance`, `--type fashion`… (`vocab` lists them) |
 
-**Named reference sites.** Try `search --text <name>` first. If the site isn't in the catalog (most
+**The catalog is design-led.** Agencies, studios and startups dominate. Store furniture is rare
+(2 footers show payment icons, 3 a perks row, 6 app badges), and venue, museum and nonprofit
+footers are few and mostly small. `booking-cta` includes "book a call/demo", so add `--text` words
+for the booking you mean (`class`, `table`, `reserve`). When the right kind of site lacks the
+capacity, shortlist both: an on-domain footer to adapt ("its structure, plus a link row") and an
+off-domain one that already holds the content. Say which is which.
+
+**Named reference sites.** Try `search --text <name>` first, and check that a hit is really that
+brand (a slug containing the word may be something else). If the site isn't in the catalog (most
 big brands aren't), say so plainly, name the traits you're matching instead (e.g. "dark, quiet type,
 four columns, a status pill"), and search for those. Once you have one good match, `similar <slug>`
-finds its neighbors.
+finds its neighbors and lists the traits they share.
 
 **Too many results** (50+): add a hard filter (`--palette`, `--max-effort`, `--not ...`) rather than
-reading further down. **Too few** (under 5): allow alternatives on a hard filter or drop it.
+reading further down. **Too few** (under 5): allow alternatives on a hard filter or drop it. `--all`
+makes soft filters required: every `--feature` and `--text`, and one value per other kind.
 
 ## Footer patterns
 
