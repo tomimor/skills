@@ -2,28 +2,37 @@
 
 ## Brief to filters
 
-Layout filters (`--pattern`, `--feature`, `--theme`, `--links`) describe structure and are the
-sharpest. footer.design's tags (`--style`, `--type`) add vibe. Run `vocab` for counts.
+**Hard filters** must match, so use them only for real requirements: `--theme`, `--palette`, `--links`,
+`--min-groups`, `--max-effort`, `--max-height`, `--typeface`, `--not`. Repeat one to allow
+alternatives (`--links some --links many`). **Soft filters** only rank: `--pattern`, `--feature`,
+`--style`, `--type`, `--text`. Run `vocab` for counts; tags with a handful of footers barely help.
 
-| The user says… | Layout filters | Tags |
-|----------------|----------------|------|
-| clean, simple, quiet, "like Linear/Vercel" | `--pattern link-columns --theme light` or `--theme dark` | `--style minimal --style small-type` |
-| we have a big sitemap | `--links many --min-groups 4` (any pattern) | `--type saas` |
-| clear columns of links | `--min-groups 3` plus a vibe filter | |
-| just a few links | `--links few --pattern single-row --pattern centered-stack --pattern big-links` | |
-| big brand moment, giant wordmark | `--pattern giant-wordmark --feature giant-type` | `--style large-type` |
-| grow the list, capture leads | `--pattern cta-first --feature newsletter` | |
-| agency, "let's talk" | `--pattern cta-first --feature cta-button --feature contact-details` | `--type agency` |
-| playful, friendly | `--pattern illustrated --theme colorful` | `--style fun --style colorful` |
-| premium, editorial, luxury | `--typeface serif --typeface mixed` | `--style elegant` |
-| modular, app-like | `--pattern bento --feature cards --feature inset-panel` | `--style bento-box` |
-| wow factor, interactive | `--feature 3d --pattern illustrated` | `--style interactive --style webgl` |
+| The user says… | Hard | Soft |
+|----------------|------|------|
+| black and white | `--palette bw` (not `--style monochromatic`, which means one hue) | |
+| dark / "keep it dark" | `--theme dark` (add `--palette bw` if no color at all) | |
+| one brand color | `--palette mono-color` | `--theme colorful` if the color should fill the footer |
+| we have a big sitemap (20+ links) | `--min-groups 4 --links some --links many` | `--pattern link-columns --pattern sitemap` |
+| just a few links | `--links few` | `--pattern single-row --pattern centered-stack --pattern big-links` |
+| premium dev tool, "like Linear/Vercel/Stripe" | `--theme dark` or `--palette bw` | `--style minimal --style small-type --type web-app --type ai --type development --feature clock-or-status` |
+| big brand moment | | `--pattern giant-wordmark --feature giant-type --style large-type` |
+| grow the list, capture leads | | `--pattern cta-first --feature newsletter` |
+| agency, "let's talk" | | `--pattern cta-first --feature cta-button --feature contact-details --type agency` |
+| warm, playful, friendly | `--palette mono-color --palette multicolor` | `--pattern illustrated --style fun --style colorful --typeface display` |
+| premium, editorial, luxury | `--typeface serif --typeface mixed` | `--style elegant --style typographic` |
+| modular, app-like | | `--pattern bento --feature cards --feature inset-panel` |
+| wow factor, interactive | | `--feature 3d --pattern illustrated --style interactive --style webgl` |
 | ship it this afternoon | `--max-effort low` | |
 | it can't take over the page | `--max-height 500` | |
+| no gimmicks | `--not feature:3d --not feature:marquee --not pattern:other` | |
 
-Two or three filters is the sweet spot. Searches rank partial matches below full ones, so an extra
-filter narrows the top of the list without emptying it; use `--all` only when every filter is a
-hard requirement.
+**Named reference sites.** Try `search --text <name>` first. If the site isn't in the catalog (most
+big brands aren't), say so plainly, name the traits you're matching instead (e.g. "dark, quiet type,
+four columns, a status pill"), and search for those. Once you have one good match, `similar <slug>`
+finds its neighbors.
+
+**Too many results** (50+): add a hard filter (`--palette`, `--max-effort`, `--not ...`) rather than
+reading further down. **Too few** (under 5): allow alternatives on a hard filter or drop it.
 
 ## Footer patterns
 

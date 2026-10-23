@@ -20,7 +20,7 @@ python3 $S composite $(cat todo.txt) --out /tmp/fd-comp > /tmp/fd-comp.jsonl   #
 ```
 
 `composite` writes one image per entry (desktop on the left, mobile on the right, magenta gutter
-between) and prints `{"slug", "image", "height_px", "bg"}` per line. Look at each image, write
+between) and prints `{"slug", "image", "height_px", "bg", "palette"}` per line. Look at each image, write
 one JSON line per entry as specified below, then:
 
 ```bash
@@ -32,7 +32,7 @@ Fix any reported errors and merge again. Commit `data/` with a message like
 
 ## Describing a footer
 
-One JSON object per line. Copy `slug`, `height_px` and `bg` from the composite output; judge the rest
+One JSON object per line. Copy `slug`, `height_px`, `bg` and `palette` from the composite output; judge the rest
 from the image. `bg` is the most common color in the screenshot, a rough hint only: when it disagrees
 with what you see (a big gray wordmark, a split two-tone footer), set `theme` from what you see.
 
@@ -40,6 +40,7 @@ with what you see (a big gray wordmark, a split two-tone footer), set `theme` fr
 |-----|--------|--------------|
 | `pattern` | one of the patterns below | The **main** structural idea. What would you call it in one breath? |
 | `features` | list from the features below | Everything visibly present. Omit what you can't see. |
+| `palette` | copied | Measured from pixels: `bw` (grays only), `mono-color` (one hue family + neutrals), `multicolor`. |
 | `theme` | `light` `dark` `colorful` `gradient` `image` | The background. `colorful` = a saturated flat color (red, orange, blue…). `image` = photo or video fills it. A dark footer with a 3D render behind it is still `dark` (add the `3d` feature). |
 | `links` | `few` (≤8) `some` (9–20) `many` (21+) | Count clickable nav, legal and social links on desktop. Estimate when dense. |
 | `groups` | integer | Labelled or clearly separate link groups. 0 if links are just a row. |
@@ -84,8 +85,8 @@ repeated or cut-off scrolling text
 ## Calibration examples
 
 ```jsonl
-{"slug": "hellohello", "pattern": "cta-first", "features": ["3d", "contact-details", "cta-button", "giant-type", "legal-row"], "theme": "dark", "bg": "#080808", "links": "few", "groups": 0, "typeface": "sans", "height_px": 1028, "effort": "medium", "summary": "Huge red 'Let's make it happen.' top left and '©26' top right over a dim 3D render; full-width red 'Let's Talk' bar; tiny row of links, address, copyright.", "mobile": "Headline and ©26 side by side, bar full width, address stacked; small links dropped."}
-{"slug": "northeast-tomato", "pattern": "single-row", "features": ["contact-details", "illustration", "logo"], "theme": "light", "bg": "#f8f8f8", "links": "few", "groups": 0, "typeface": "display", "height_px": 197, "effort": "low", "summary": "One short cream band: address left, arched illustrated tomato logo centered, phone, email and credit right, all in a spaced-out display face.", "mobile": "Centered stack: address, contact, then logo at the bottom."}
-{"slug": "aperios-design", "pattern": "giant-wordmark", "features": ["back-to-top", "contact-details", "dividers", "giant-type", "illustration", "legal-row", "marquee", "social-links"], "theme": "dark", "bg": "#181818", "links": "some", "groups": 3, "typeface": "sans", "height_px": 801, "effort": "medium", "summary": "Three small-labelled link groups (links, connect, contact) above a dotted rule; huge gray wordmark running edge to edge as a marquee; centered care-label badge; location, copyright, back-to-top row.", "mobile": "Groups stack in one column; wordmark cropped to a few letters."}
-{"slug": "mother-design", "pattern": "giant-wordmark", "features": ["clock-or-status", "contact-details", "dividers", "giant-type", "legal-row", "newsletter", "social-links"], "theme": "light", "bg": "#f8f8f8", "links": "few", "groups": 0, "typeface": "mixed", "height_px": 946, "effort": "low", "summary": "Black wordmark spanning the full width on white; ruled grid below: two office columns with live local time and address, newsletter panel right, socials and legal at the bottom.", "mobile": "No mobile screenshot."}
+{"slug": "hellohello", "pattern": "cta-first", "features": ["3d", "contact-details", "cta-button", "giant-type", "legal-row"], "theme": "dark", "palette": "mono-color", "bg": "#080808", "links": "few", "groups": 0, "typeface": "sans", "height_px": 1028, "effort": "medium", "summary": "Huge red 'Let's make it happen.' top left and '©26' top right over a dim 3D render; full-width red 'Let's Talk' bar; tiny row of links, address, copyright.", "mobile": "Headline and ©26 side by side, bar full width, address stacked; small links dropped."}
+{"slug": "northeast-tomato", "pattern": "single-row", "features": ["contact-details", "illustration", "logo"], "theme": "light", "palette": "mono-color", "bg": "#f8f8f8", "links": "few", "groups": 0, "typeface": "display", "height_px": 197, "effort": "low", "summary": "One short cream band: address left, arched illustrated tomato logo centered, phone, email and credit right, all in a spaced-out display face.", "mobile": "Centered stack: address, contact, then logo at the bottom."}
+{"slug": "aperios-design", "pattern": "giant-wordmark", "features": ["back-to-top", "contact-details", "dividers", "giant-type", "illustration", "legal-row", "marquee", "social-links"], "theme": "dark", "palette": "bw", "bg": "#181818", "links": "some", "groups": 3, "typeface": "sans", "height_px": 801, "effort": "medium", "summary": "Three small-labelled link groups (links, connect, contact) above a dotted rule; huge gray wordmark running edge to edge as a marquee; centered care-label badge; location, copyright, back-to-top row.", "mobile": "Groups stack in one column; wordmark cropped to a few letters."}
+{"slug": "mother-design", "pattern": "giant-wordmark", "features": ["clock-or-status", "contact-details", "dividers", "giant-type", "legal-row", "newsletter", "social-links"], "theme": "light", "palette": "bw", "bg": "#f8f8f8", "links": "few", "groups": 0, "typeface": "mixed", "height_px": 946, "effort": "low", "summary": "Black wordmark spanning the full width on white; ruled grid below: two office columns with live local time and address, newsletter panel right, socials and legal at the bottom.", "mobile": "No mobile screenshot."}
 ```

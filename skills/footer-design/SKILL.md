@@ -22,27 +22,31 @@ already names a footer.design entry or a footer they want, skip to Phase 3.
 | Command (`python3 $SKILL/scripts/footer_design.py …`) | What it does |
 |--------|--------------|
 | `vocab` | Every filter value with how many footers have it. Run once per session |
-| `search [filters] [--all] [--limit N]` | Ranked matches with each footer's pattern, theme, height and a one-line layout summary |
+| `search [filters] [--compact] [--limit N]` | Matches with pattern, theme/palette, links, height, effort and a layout summary |
+| `similar <slug>` | Footers sharing the most layout traits with one footer ("more like #2") |
 | `site <slug>...` | Everything known about a footer: links, tags, screenshot URLs, full layout description |
-| `download <slug>... --out DIR` | Desktop + mobile screenshots as viewable PNG/JPG |
-| `gallery <slug>... --out FILE.html [--notes notes.json] [--pick slug]` | Numbered contact sheet with your fit notes and the recommendation marked |
+| `download <slug>... --out DIR [--sheet FILE.png]` | Desktop + mobile screenshots as PNG/JPG; `--sheet` adds numbered contact sheets, 5 footers each (needs Pillow) |
+| `gallery <slug>... --out FILE.html [--notes notes.json] [--pick slug] [--brief "..."] [--images DIR]` | Numbered HTML contact sheet for the user, with your fit notes and the recommendation marked |
 | `node $SKILL/scripts/inspect_footer.mjs <live-url> DIR` | Live footer at 1440 and 390 px: screenshots + structure with computed styles (needs Playwright) |
 
-Search filters, all repeatable and combinable:
+Search has **hard filters**, which must match (repeat one to allow alternatives), and **soft
+filters**, which rank results by how many match (ties: newest first; `--all` makes them required):
 
-| Filter | Values | From |
-|--------|--------|------|
-| `--pattern` | `giant-wordmark` `link-columns` `cta-first` `big-links` `sitemap` `bento` `split` `centered-stack` `single-row` `illustrated` `image-led` | layout |
-| `--feature` | `newsletter` `giant-type` `clock-or-status` `cards` `inset-panel` `marquee` `social-icons` `contact-details` `back-to-top` … (`vocab` lists all) | layout |
-| `--theme` | `light` `dark` `colorful` `gradient` `image` | layout |
-| `--links` | `few` (≤8) `some` (9–20) `many` (21+) | layout |
-| `--typeface` | `sans` `serif` `mono` `mixed` `display` | layout |
-| `--min-groups` | N link groups or more, whatever the pattern (a giant-wordmark footer can still have 4 columns) | layout |
-| `--max-effort` / `--max-height` | `low`/`medium`/`high` · px at 1440 wide | layout |
-| `--style` / `--type` | footer.design's own tags, e.g. `minimal`, `saas` | site tags |
-| `--text` | any word in the name, description or layout summary | all |
+| Hard | Values |
+|------|--------|
+| `--theme` | `light` `dark` `colorful` `gradient` `image` (judged by eye) |
+| `--palette` | `bw` (grays only) `mono-color` (one hue + neutrals) `multicolor` (measured from pixels) |
+| `--links` | `few` (≤8) `some` (9–20) `many` (21+), estimated. Near a boundary, pass both buckets |
+| `--min-groups` | N+ link groups, whatever the pattern (a giant-wordmark footer can still have 4 columns) |
+| `--max-effort` · `--max-height` · `--typeface` | `low`/`medium`/`high` · px at 1440 wide · `sans` `serif` `mono` `mixed` `display` |
+| `--not KIND:VALUE` | exclude, e.g. `--not feature:3d --not pattern:other --not text:game` |
 
-Results rank by how many filters match, then newest. `--all` drops partial matches.
+| Soft | Values |
+|------|--------|
+| `--pattern` | `giant-wordmark` `link-columns` `cta-first` `big-links` `sitemap` `bento` `split` `centered-stack` `single-row` `illustrated` `image-led` |
+| `--feature` | `newsletter` `giant-type` `clock-or-status` `cards` `inset-panel` `marquee` `social-icons` `contact-details` `back-to-top` … |
+| `--style` · `--type` | footer.design's own tags, e.g. `minimal`, `web-app` (`vocab` shows which are common) |
+| `--text` | a word in the name, description or layout summary |
 
 ## Phase 1: Brief
 
@@ -53,24 +57,32 @@ Get just enough to filter. Infer first, ask second.
    newsletter, contact). **Count the links and groups**: this decides `--links` and `--min-groups`
    and rules out half the gallery on its own.
 2. **Ask only what you can't infer**, at most 3 questions in one go: the feel (calm vs bold, light
-   vs dark), whether a newsletter or contact CTA belongs in the footer, and how much effort or
-   motion is welcome. If the user already named a vibe or a reference site, skip this.
-3. **Map the brief to filters**: one `--links` value, 1–2 `--pattern`s if the brief implies a
-   structure, a `--theme`, any must-have `--feature`s, then a style or type tag for vibe. See
-   [references/replicate.md](references/replicate.md#brief-to-filters) for common mappings.
+   vs dark, color or black and white), whether a newsletter or contact CTA belongs in the footer,
+   and how much effort or motion is welcome. If the user already named a vibe or a reference
+   site, skip this. If you can't ask, choose sensible defaults and state them as assumptions
+   at the top of the shortlist.
+3. **Map the brief to filters.** Only real requirements become hard filters; everything about
+   vibe goes in soft filters. [references/replicate.md](references/replicate.md#brief-to-filters)
+   maps common briefs (black and white, "like Linear", big sitemap, playful…) and covers named
+   reference sites that aren't in the catalog.
 
 ## Phase 2: Shortlist
 
 1. **Search wide, read first.** Run 2–3 searches that each take a different structural angle
-   (e.g. `--pattern giant-wordmark`, then `--pattern link-columns --feature giant-type`). Read the
-   summaries and cut anything that can't hold the user's content, before downloading a single
-   image. If a search returns fewer than 5, drop the least important filter.
-2. **Look at the finalists.** `download` the best 8–10 and **view every screenshot**, desktop and
-   mobile. The summary tells you the structure; only the image tells you whether it's good.
+   (e.g. `--pattern giant-wordmark`, then `--min-groups 3 --pattern link-columns`), with
+   `--compact` to scan. Cut anything that can't hold the user's content before downloading any
+   image. Over ~50 matches, add a hard filter; under 5, relax one. When one result is spot on,
+   `similar <slug>` finds its neighbors.
+2. **Look at the finalists.** `download` the best 8–10 with `--sheet` and view the sheets (one
+   image per 5 footers), then open individual screenshots only for close calls. The summary tells
+   you the structure; only the image tells you whether it's good, and whether the screenshot
+   itself is usable (some are cropped oddly or include non-footer content).
 3. **Pick 4–6 that differ in structure**, not five variations of "logo left, four link columns".
+   Include one that stretches the brief (e.g. the light inversion of a dark brief) when it's strong.
 4. **Show them.** Write a notes file `{"slug": "one line on why it fits this brief"}` and run
-   `gallery` with `--notes` and `--pick` (your recommendation). Share the HTML however this
-   environment allows (open it, send it as a file, or publish it as an artifact). Then list:
+   `gallery` with `--notes`, `--pick` (your recommendation) and `--brief`. If you can publish an
+   artifact, publish the gallery (the default hotlinked images work there) and give the link;
+   otherwise give the file path and pass `--images DIR` so it works offline. Then list:
 
    ```
    1. Mother Design (giant-wordmark, light, effort low)
@@ -80,8 +92,8 @@ Get just enough to filter. Infer first, ask second.
 
    Recommend one in a sentence. Ask the user to pick a number, or to combine ("2's layout, 4's type").
 
-If the user wants more options, search again from a different angle rather than going further
-down the same list.
+If the user wants more options, search again from a different angle, or run `similar` on their
+favorite, rather than going further down the same list.
 
 ## Phase 3: Rebuild
 

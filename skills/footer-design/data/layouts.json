@@ -10,6 +10,7 @@
     "social-links"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 2,
@@ -28,6 +29,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 4,
@@ -46,6 +48,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -67,6 +70,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 2,
@@ -87,6 +91,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#281828",
    "links": "few",
    "groups": 0,
@@ -104,6 +109,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080818",
    "links": "few",
    "groups": 0,
@@ -126,6 +132,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#d8a888",
    "links": "few",
    "groups": 3,
@@ -146,6 +153,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 4,
@@ -164,6 +172,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 2,
@@ -184,6 +193,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#886868",
    "links": "some",
    "groups": 3,
@@ -204,6 +214,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 4,
@@ -222,6 +233,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -239,6 +251,7 @@
     "newsletter"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -256,6 +269,7 @@
     "newsletter"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -274,6 +288,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f81808",
    "links": "some",
    "groups": 3,
@@ -291,6 +306,7 @@
     "social-links"
    ],
    "theme": "image",
+   "palette": "bw",
    "bg": "#080818",
    "links": "many",
    "groups": 5,
@@ -306,6 +322,7 @@
     "illustration"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -322,6 +339,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -339,6 +357,7 @@
     "logo"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f85858",
    "links": "some",
    "groups": 2,
@@ -358,6 +377,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -377,6 +397,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#282828",
    "links": "many",
    "groups": 6,
@@ -399,6 +420,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#a8a8a8",
    "links": "many",
    "groups": 4,
@@ -419,6 +441,7 @@
     "switcher"
    ],
    "theme": "image",
+   "palette": "multicolor",
    "bg": "#b8b8b8",
    "links": "some",
    "groups": 3,
@@ -438,6 +461,7 @@
     "legal-row"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#181818",
    "links": "some",
    "groups": 3,
@@ -457,6 +481,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#481828",
    "links": "some",
    "groups": 0,
@@ -476,6 +501,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -495,6 +521,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#081828",
    "links": "few",
    "groups": 3,
@@ -513,6 +540,7 @@
     "photo"
    ],
    "theme": "image",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -531,6 +559,7 @@
     "social-icons"
    ],
    "theme": "image",
+   "palette": "multicolor",
    "bg": "#085808",
    "links": "some",
    "groups": 0,
@@ -550,6 +579,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 3,
@@ -568,6 +598,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 3,
@@ -586,6 +617,7 @@
     "logo"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 2,
@@ -606,6 +638,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -627,6 +660,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -647,6 +681,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#282828",
    "links": "few",
    "groups": 0,
@@ -665,6 +700,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#3868f8",
    "links": "few",
    "groups": 3,
@@ -685,6 +721,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 1,
@@ -705,6 +742,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -721,6 +759,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#381858",
    "links": "many",
    "groups": 4,
@@ -742,6 +781,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 2,
@@ -759,6 +799,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 2,
@@ -779,6 +820,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 2,
@@ -798,6 +840,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 3,
@@ -817,6 +860,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#e8d8d8",
    "links": "many",
    "groups": 6,
@@ -834,6 +878,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#e8e8e8",
    "links": "few",
    "groups": 0,
@@ -856,6 +901,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 3,
@@ -875,6 +921,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -892,6 +939,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#e8e8e8",
    "links": "many",
    "groups": 3,
@@ -909,6 +957,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 4,
@@ -928,6 +977,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -947,6 +997,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -966,6 +1017,7 @@
     "switcher"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -984,6 +1036,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -1001,6 +1054,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#0878f8",
    "links": "few",
    "groups": 0,
@@ -1019,6 +1073,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 2,
@@ -1037,6 +1092,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#e85828",
    "links": "few",
    "groups": 0,
@@ -1058,6 +1114,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 4,
@@ -1074,6 +1131,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -1091,6 +1149,7 @@
     "legal-row"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -1111,6 +1170,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f89898",
    "links": "some",
    "groups": 3,
@@ -1131,6 +1191,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 3,
@@ -1148,6 +1209,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#081818",
    "links": "some",
    "groups": 2,
@@ -1165,6 +1227,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "multicolor",
    "bg": "#085838",
    "links": "some",
    "groups": 3,
@@ -1182,6 +1245,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -1200,6 +1264,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#282828",
    "links": "few",
    "groups": 0,
@@ -1218,6 +1283,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080818",
    "links": "few",
    "groups": 0,
@@ -1236,6 +1302,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -1253,6 +1320,7 @@
     "legal-row"
    ],
    "theme": "colorful",
+   "palette": "multicolor",
    "bg": "#c8b8c8",
    "links": "few",
    "groups": 0,
@@ -1272,6 +1340,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8e8",
    "links": "some",
    "groups": 3,
@@ -1290,6 +1359,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#282828",
    "links": "few",
    "groups": 0,
@@ -1307,6 +1377,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 0,
@@ -1325,6 +1396,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#e85828",
    "links": "few",
    "groups": 0,
@@ -1340,6 +1412,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 5,
@@ -1360,6 +1433,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -1378,6 +1452,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 2,
@@ -1396,6 +1471,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#180818",
    "links": "some",
    "groups": 3,
@@ -1413,6 +1489,7 @@
     "legal-row"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#d83828",
    "links": "few",
    "groups": 0,
@@ -1432,6 +1509,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "some",
    "groups": 2,
@@ -1451,6 +1529,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#e86838",
    "links": "some",
    "groups": 2,
@@ -1468,6 +1547,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -1486,6 +1566,7 @@
     "map"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#d85848",
    "links": "few",
    "groups": 0,
@@ -1504,6 +1585,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#a8b868",
    "links": "few",
    "groups": 2,
@@ -1523,6 +1605,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -1542,6 +1625,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#081818",
    "links": "few",
    "groups": 0,
@@ -1560,6 +1644,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -1579,6 +1664,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -1597,6 +1683,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 2,
@@ -1613,6 +1700,7 @@
     "logo"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#28c8b8",
    "links": "few",
    "groups": 0,
@@ -1632,6 +1720,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -1648,6 +1737,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#e86828",
    "links": "few",
    "groups": 0,
@@ -1665,6 +1755,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 4,
@@ -1682,6 +1773,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -1700,6 +1792,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -1719,6 +1812,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#080808",
    "links": "few",
    "groups": 2,
@@ -1735,6 +1829,7 @@
     "photo"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -1751,6 +1846,7 @@
     "illustration"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8e8",
    "links": "few",
    "groups": 2,
@@ -1769,6 +1865,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -1789,6 +1886,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8e858",
    "links": "many",
    "groups": 4,
@@ -1808,6 +1906,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#3868e8",
    "links": "some",
    "groups": 0,
@@ -1828,6 +1927,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -1846,6 +1946,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#e86838",
    "links": "some",
    "groups": 1,
@@ -1866,6 +1967,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#280808",
    "links": "some",
    "groups": 3,
@@ -1886,6 +1988,7 @@
     "photo"
    ],
    "theme": "image",
+   "palette": "bw",
    "bg": "#180808",
    "links": "few",
    "groups": 0,
@@ -1904,6 +2007,7 @@
     "social-links"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 2,
@@ -1925,6 +2029,7 @@
     "social-icons"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#082828",
    "links": "few",
    "groups": 0,
@@ -1942,6 +2047,7 @@
     "giant-type"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#d83808",
    "links": "some",
    "groups": 3,
@@ -1958,6 +2064,7 @@
     "photo"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#e8f8e8",
    "links": "few",
    "groups": 0,
@@ -1977,6 +2084,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 0,
@@ -1995,6 +2103,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -2012,6 +2121,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -2029,6 +2139,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8e8",
    "links": "few",
    "groups": 0,
@@ -2047,6 +2158,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -2065,6 +2177,7 @@
     "legal-row"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#d8d858",
    "links": "few",
    "groups": 0,
@@ -2084,6 +2197,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -2102,6 +2216,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#a8b8a8",
    "links": "few",
    "groups": 2,
@@ -2122,6 +2237,7 @@
     "social-links"
    ],
    "theme": "image",
+   "palette": "mono-color",
    "bg": "#485858",
    "links": "some",
    "groups": 4,
@@ -2140,6 +2256,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "some",
    "groups": 0,
@@ -2160,6 +2277,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#181818",
    "links": "some",
    "groups": 0,
@@ -2178,6 +2296,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#e8e8e8",
    "links": "some",
    "groups": 3,
@@ -2198,6 +2317,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 2,
@@ -2218,6 +2338,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#e8e8e8",
    "links": "some",
    "groups": 4,
@@ -2238,6 +2359,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -2254,6 +2376,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f83808",
    "links": "some",
    "groups": 3,
@@ -2273,6 +2396,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -2291,6 +2415,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#a82858",
    "links": "some",
    "groups": 0,
@@ -2309,6 +2434,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 2,
@@ -2326,6 +2452,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -2344,6 +2471,7 @@
     "legal-row"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -2363,6 +2491,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -2383,6 +2512,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 4,
@@ -2403,6 +2533,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "many",
    "groups": 3,
@@ -2421,6 +2552,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -2440,6 +2572,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8e8",
    "links": "few",
    "groups": 0,
@@ -2460,6 +2593,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#e8e8c8",
    "links": "few",
    "groups": 0,
@@ -2479,6 +2613,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#e85858",
    "links": "few",
    "groups": 3,
@@ -2497,6 +2632,7 @@
     "switcher"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#d8f878",
    "links": "some",
    "groups": 3,
@@ -2516,6 +2652,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#182828",
    "links": "some",
    "groups": 3,
@@ -2533,6 +2670,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 2,
@@ -2552,6 +2690,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#282828",
    "links": "many",
    "groups": 5,
@@ -2571,6 +2710,7 @@
     "social-icons"
    ],
    "theme": "gradient",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -2588,6 +2728,7 @@
     "giant-type"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 0,
@@ -2607,6 +2748,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -2627,6 +2769,7 @@
     "switcher"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 0,
@@ -2647,6 +2790,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#c8f818",
    "links": "some",
    "groups": 2,
@@ -2665,6 +2809,7 @@
     "photo"
    ],
    "theme": "image",
+   "palette": "mono-color",
    "bg": "#e8e8e8",
    "links": "some",
    "groups": 3,
@@ -2685,6 +2830,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 1,
@@ -2702,6 +2848,7 @@
     "switcher"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 3,
@@ -2722,6 +2869,7 @@
     "social-icons"
    ],
    "theme": "image",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 2,
@@ -2740,6 +2888,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -2757,6 +2906,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 4,
@@ -2776,6 +2926,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 3,
@@ -2795,6 +2946,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#181818",
    "links": "some",
    "groups": 4,
@@ -2813,6 +2965,7 @@
     "social-links"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "some",
    "groups": 3,
@@ -2830,6 +2983,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#080808",
    "links": "few",
    "groups": 2,
@@ -2850,6 +3004,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 3,
@@ -2868,6 +3023,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#282828",
    "links": "few",
    "groups": 0,
@@ -2888,6 +3044,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -2908,6 +3065,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f82838",
    "links": "few",
    "groups": 2,
@@ -2924,6 +3082,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -2943,6 +3102,7 @@
     "photo"
    ],
    "theme": "image",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -2964,6 +3124,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#080808",
    "links": "few",
    "groups": 2,
@@ -2983,6 +3144,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "some",
    "groups": 4,
@@ -3002,6 +3164,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#98b8e8",
    "links": "few",
    "groups": 0,
@@ -3019,6 +3182,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8d818",
    "links": "few",
    "groups": 0,
@@ -3034,6 +3198,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 2,
@@ -3053,6 +3218,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 4,
@@ -3071,6 +3237,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 3,
@@ -3086,6 +3253,7 @@
     "giant-type"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#484838",
    "links": "few",
    "groups": 0,
@@ -3107,6 +3275,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f84838",
    "links": "few",
    "groups": 0,
@@ -3125,6 +3294,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#e8e8e8",
    "links": "some",
    "groups": 2,
@@ -3143,6 +3313,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -3160,6 +3331,7 @@
     "giant-type"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -3177,6 +3349,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -3198,6 +3371,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181828",
    "links": "few",
    "groups": 1,
@@ -3214,6 +3388,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#282828",
    "links": "few",
    "groups": 0,
@@ -3233,6 +3408,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#184828",
    "links": "some",
    "groups": 0,
@@ -3248,6 +3424,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 5,
@@ -3268,6 +3445,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#282828",
    "links": "some",
    "groups": 2,
@@ -3285,6 +3463,7 @@
     "photo"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -3303,6 +3482,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -3320,6 +3500,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#9868f8",
    "links": "some",
    "groups": 3,
@@ -3339,6 +3520,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#e8b858",
    "links": "many",
    "groups": 3,
@@ -3355,6 +3537,7 @@
     "social-links"
    ],
    "theme": "gradient",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -3374,6 +3557,7 @@
     "social-links"
    ],
    "theme": "gradient",
+   "palette": "multicolor",
    "bg": "#78b898",
    "links": "some",
    "groups": 3,
@@ -3392,6 +3576,7 @@
     "newsletter"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#3858c8",
    "links": "few",
    "groups": 5,
@@ -3411,6 +3596,7 @@
     "illustration"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#08a888",
    "links": "few",
    "groups": 0,
@@ -3429,6 +3615,7 @@
     "legal-row"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#181828",
    "links": "few",
    "groups": 0,
@@ -3446,6 +3633,7 @@
     "legal-row"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -3464,6 +3652,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 3,
@@ -3481,6 +3670,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#e8e8e8",
    "links": "many",
    "groups": 6,
@@ -3498,6 +3688,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#084828",
    "links": "few",
    "groups": 2,
@@ -3518,6 +3709,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -3536,6 +3728,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#381808",
    "links": "few",
    "groups": 0,
@@ -3553,6 +3746,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8e8",
    "links": "few",
    "groups": 0,
@@ -3571,6 +3765,7 @@
     "newsletter"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -3590,6 +3785,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "many",
    "groups": 5,
@@ -3612,6 +3808,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "some",
    "groups": 0,
@@ -3630,6 +3827,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -3647,6 +3845,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8e8e8",
    "links": "some",
    "groups": 3,
@@ -3665,6 +3864,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 2,
@@ -3682,6 +3882,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -3699,6 +3900,7 @@
     "photo"
    ],
    "theme": "image",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -3719,6 +3921,7 @@
     "social-links"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#081818",
    "links": "some",
    "groups": 0,
@@ -3737,6 +3940,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -3758,6 +3962,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -3777,6 +3982,7 @@
     "switcher"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -3796,6 +4002,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8e8e8",
    "links": "few",
    "groups": 0,
@@ -3812,6 +4019,7 @@
     "legal-row"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -3832,6 +4040,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8e8",
    "links": "some",
    "groups": 3,
@@ -3851,6 +4060,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8d878",
    "links": "some",
    "groups": 6,
@@ -3870,6 +4080,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#c8c8c8",
    "links": "few",
    "groups": 2,
@@ -3886,6 +4097,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 2,
@@ -3903,6 +4115,7 @@
     "photo"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -3921,6 +4134,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 3,
@@ -3940,6 +4154,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#1878b8",
    "links": "few",
    "groups": 0,
@@ -3958,6 +4173,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -3974,6 +4190,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 4,
@@ -3993,6 +4210,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 1,
@@ -4011,6 +4229,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -4029,6 +4248,7 @@
     "illustration"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#e8e8e8",
    "links": "few",
    "groups": 0,
@@ -4045,6 +4265,7 @@
     "illustration"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#58d8e8",
    "links": "few",
    "groups": 0,
@@ -4062,6 +4283,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -4078,6 +4300,7 @@
     "legal-row"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8f838",
    "links": "few",
    "groups": 2,
@@ -4098,6 +4321,7 @@
     "switcher"
    ],
    "theme": "image",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 4,
@@ -4115,6 +4339,7 @@
     "social-links"
    ],
    "theme": "gradient",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -4132,6 +4357,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -4150,6 +4376,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 2,
@@ -4168,6 +4395,7 @@
     "newsletter"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 2,
@@ -4188,6 +4416,7 @@
     "photo"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -4204,6 +4433,7 @@
     "illustration"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -4221,6 +4451,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -4240,6 +4471,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 0,
@@ -4259,6 +4491,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 0,
@@ -4280,6 +4513,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 4,
@@ -4301,6 +4535,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 4,
@@ -4323,6 +4558,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "many",
    "groups": 6,
@@ -4342,6 +4578,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 2,
@@ -4363,6 +4600,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#183818",
    "links": "few",
    "groups": 0,
@@ -4381,6 +4619,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8e8",
    "links": "some",
    "groups": 3,
@@ -4400,6 +4639,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 2,
@@ -4417,6 +4657,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -4438,6 +4679,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#681818",
    "links": "some",
    "groups": 3,
@@ -4459,6 +4701,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080818",
    "links": "some",
    "groups": 0,
@@ -4475,6 +4718,7 @@
     "illustration"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 0,
@@ -4493,6 +4737,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -4513,6 +4758,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#180808",
    "links": "few",
    "groups": 0,
@@ -4529,6 +4775,7 @@
     "legal-row"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -4547,6 +4794,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#c8c8c8",
    "links": "few",
    "groups": 3,
@@ -4566,6 +4814,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#282828",
    "links": "some",
    "groups": 2,
@@ -4585,6 +4834,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8f888",
    "links": "few",
    "groups": 1,
@@ -4603,6 +4853,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 3,
@@ -4621,6 +4872,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -4638,6 +4890,7 @@
     "newsletter"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 4,
@@ -4656,6 +4909,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f80808",
    "links": "some",
    "groups": 2,
@@ -4674,6 +4928,7 @@
     "social-icons"
    ],
    "theme": "gradient",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "many",
    "groups": 4,
@@ -4692,6 +4947,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 2,
@@ -4713,6 +4969,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#5848f8",
    "links": "few",
    "groups": 0,
@@ -4732,6 +4989,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -4752,6 +5010,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 2,
@@ -4769,6 +5028,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#e8f858",
    "links": "few",
    "groups": 0,
@@ -4789,6 +5049,7 @@
     "legal-row"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -4811,6 +5072,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 4,
@@ -4828,6 +5090,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 4,
@@ -4846,6 +5109,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#081818",
    "links": "some",
    "groups": 0,
@@ -4865,6 +5129,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#b8c8d8",
    "links": "some",
    "groups": 3,
@@ -4882,6 +5147,7 @@
     "photo"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#e8e8f8",
    "links": "few",
    "groups": 0,
@@ -4901,6 +5167,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 3,
@@ -4918,6 +5185,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#283828",
    "links": "some",
    "groups": 4,
@@ -4935,6 +5203,7 @@
     "legal-row"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8e8d8",
    "links": "few",
    "groups": 1,
@@ -4952,6 +5221,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#281818",
    "links": "few",
    "groups": 3,
@@ -4971,6 +5241,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#183838",
    "links": "few",
    "groups": 2,
@@ -4989,6 +5260,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 0,
@@ -5007,6 +5279,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#b8b8b8",
    "links": "some",
    "groups": 0,
@@ -5027,6 +5300,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 3,
@@ -5048,6 +5322,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 2,
@@ -5068,6 +5343,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -5087,6 +5363,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8e8d8",
    "links": "many",
    "groups": 3,
@@ -5106,6 +5383,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#282828",
    "links": "some",
    "groups": 3,
@@ -5127,6 +5405,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -5148,6 +5427,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#282838",
    "links": "few",
    "groups": 1,
@@ -5166,6 +5446,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#585848",
    "links": "few",
    "groups": 0,
@@ -5184,6 +5465,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f85808",
    "links": "some",
    "groups": 0,
@@ -5202,6 +5484,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8e8",
    "links": "some",
    "groups": 2,
@@ -5221,6 +5504,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8f858",
    "links": "some",
    "groups": 2,
@@ -5240,6 +5524,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 2,
@@ -5257,6 +5542,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#282828",
    "links": "few",
    "groups": 0,
@@ -5277,6 +5563,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 2,
@@ -5295,6 +5582,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -5312,6 +5600,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#183838",
    "links": "some",
    "groups": 0,
@@ -5329,6 +5618,7 @@
     "social-icons"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#281808",
    "links": "few",
    "groups": 0,
@@ -5347,6 +5637,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 4,
@@ -5365,6 +5656,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 2,
@@ -5384,6 +5676,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8e8",
    "links": "few",
    "groups": 0,
@@ -5403,6 +5696,7 @@
     "legal-row"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -5421,6 +5715,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f84808",
    "links": "few",
    "groups": 0,
@@ -5437,6 +5732,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 2,
@@ -5455,6 +5751,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#282828",
    "links": "some",
    "groups": 4,
@@ -5475,6 +5772,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -5496,6 +5794,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8e8",
    "links": "many",
    "groups": 7,
@@ -5517,6 +5816,7 @@
     "marquee"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -5537,6 +5837,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080818",
    "links": "many",
    "groups": 4,
@@ -5557,6 +5858,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 1,
@@ -5576,6 +5878,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#181818",
    "links": "some",
    "groups": 0,
@@ -5593,6 +5896,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -5612,6 +5916,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 3,
@@ -5632,6 +5937,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8e8",
    "links": "many",
    "groups": 5,
@@ -5650,6 +5956,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8e8",
    "links": "some",
    "groups": 3,
@@ -5671,6 +5978,7 @@
     "social-icons"
    ],
    "theme": "gradient",
+   "palette": "multicolor",
    "bg": "#281828",
    "links": "some",
    "groups": 2,
@@ -5690,6 +5998,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -5708,6 +6017,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8d8",
    "links": "some",
    "groups": 2,
@@ -5724,6 +6034,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#380808",
    "links": "some",
    "groups": 2,
@@ -5743,6 +6054,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -5761,6 +6073,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#d8e8f8",
    "links": "few",
    "groups": 2,
@@ -5779,6 +6092,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -5802,6 +6116,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#0848f8",
    "links": "some",
    "groups": 0,
@@ -5823,6 +6138,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#e8e8e8",
    "links": "some",
    "groups": 3,
@@ -5842,6 +6158,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -5860,6 +6177,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "many",
    "groups": 4,
@@ -5878,6 +6196,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -5898,6 +6217,7 @@
     "photo"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -5919,6 +6239,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#283838",
    "links": "few",
    "groups": 2,
@@ -5939,6 +6260,7 @@
     "social-links"
    ],
    "theme": "image",
+   "palette": "mono-color",
    "bg": "#f8d8b8",
    "links": "some",
    "groups": 3,
@@ -5958,6 +6280,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#181818",
    "links": "some",
    "groups": 3,
@@ -5978,6 +6301,7 @@
     "social-links"
    ],
    "theme": "image",
+   "palette": "multicolor",
    "bg": "#e8e8e8",
    "links": "few",
    "groups": 0,
@@ -5998,6 +6322,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#181808",
    "links": "few",
    "groups": 3,
@@ -6016,6 +6341,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#e8e8d8",
    "links": "few",
    "groups": 0,
@@ -6036,6 +6362,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -6054,6 +6381,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -6069,6 +6397,7 @@
     "illustration"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#d8d8d8",
    "links": "few",
    "groups": 0,
@@ -6088,6 +6417,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8d858",
    "links": "few",
    "groups": 0,
@@ -6107,6 +6437,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -6126,6 +6457,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 5,
@@ -6143,6 +6475,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -6160,6 +6493,7 @@
     "legal-row"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#d8f898",
    "links": "few",
    "groups": 0,
@@ -6178,6 +6512,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#282828",
    "links": "few",
    "groups": 0,
@@ -6197,6 +6532,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080818",
    "links": "few",
    "groups": 0,
@@ -6218,6 +6554,7 @@
     "social-icons"
    ],
    "theme": "image",
+   "palette": "mono-color",
    "bg": "#78b8e8",
    "links": "few",
    "groups": 2,
@@ -6240,6 +6577,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 2,
@@ -6259,6 +6597,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -6279,6 +6618,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -6295,6 +6635,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 2,
@@ -6312,6 +6653,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 3,
@@ -6328,6 +6670,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#e8e8e8",
    "links": "few",
    "groups": 0,
@@ -6348,6 +6691,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#5888f8",
    "links": "some",
    "groups": 3,
@@ -6367,6 +6711,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 4,
@@ -6383,6 +6728,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#d8d8d8",
    "links": "few",
    "groups": 0,
@@ -6401,6 +6747,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#b81838",
    "links": "few",
    "groups": 0,
@@ -6417,6 +6764,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -6435,6 +6783,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8f8e8",
    "links": "some",
    "groups": 3,
@@ -6453,6 +6802,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8e8",
    "links": "few",
    "groups": 1,
@@ -6472,6 +6822,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8e8f8",
    "links": "some",
    "groups": 0,
@@ -6491,6 +6842,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 4,
@@ -6508,6 +6860,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#b89858",
    "links": "some",
    "groups": 0,
@@ -6528,6 +6881,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 2,
@@ -6547,6 +6901,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 2,
@@ -6571,6 +6926,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#181838",
    "links": "some",
    "groups": 1,
@@ -6591,6 +6947,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 2,
@@ -6611,6 +6968,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8c8b8",
    "links": "few",
    "groups": 0,
@@ -6632,6 +6990,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#282818",
    "links": "some",
    "groups": 2,
@@ -6650,6 +7009,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#282828",
    "links": "few",
    "groups": 0,
@@ -6670,6 +7030,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080818",
    "links": "many",
    "groups": 3,
@@ -6691,6 +7052,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8e8f8",
    "links": "few",
    "groups": 0,
@@ -6708,6 +7070,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -6729,6 +7092,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080828",
    "links": "some",
    "groups": 1,
@@ -6748,6 +7112,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -6769,6 +7134,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#282828",
    "links": "some",
    "groups": 3,
@@ -6787,6 +7153,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#2828b8",
    "links": "few",
    "groups": 0,
@@ -6807,6 +7174,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 3,
@@ -6827,6 +7195,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#e8d8d8",
    "links": "some",
    "groups": 4,
@@ -6843,6 +7212,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#e8e8d8",
    "links": "few",
    "groups": 0,
@@ -6859,6 +7229,7 @@
     "illustration"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -6880,6 +7251,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 4,
@@ -6901,6 +7273,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8e8e8",
    "links": "some",
    "groups": 2,
@@ -6921,6 +7294,7 @@
     "switcher"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "many",
    "groups": 3,
@@ -6938,6 +7312,7 @@
     "legal-row"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -6955,6 +7330,7 @@
     "logo"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f83818",
    "links": "few",
    "groups": 0,
@@ -6974,6 +7350,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#a8a8a8",
    "links": "some",
    "groups": 3,
@@ -6993,6 +7370,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#981818",
    "links": "some",
    "groups": 0,
@@ -7012,6 +7390,7 @@
     "logo"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8a8f8",
    "links": "some",
    "groups": 2,
@@ -7029,6 +7408,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#e8e8f8",
    "links": "some",
    "groups": 3,
@@ -7049,6 +7429,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#e8e8d8",
    "links": "few",
    "groups": 0,
@@ -7068,6 +7449,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "some",
    "groups": 2,
@@ -7089,6 +7471,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#e82828",
    "links": "few",
    "groups": 0,
@@ -7108,6 +7491,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -7125,6 +7509,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 3,
@@ -7147,6 +7532,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 2,
@@ -7167,6 +7553,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 3,
@@ -7186,6 +7573,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#e85838",
    "links": "few",
    "groups": 0,
@@ -7206,6 +7594,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "multicolor",
    "bg": "#e878d8",
    "links": "many",
    "groups": 4,
@@ -7226,6 +7615,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8f898",
    "links": "few",
    "groups": 0,
@@ -7247,6 +7637,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#d8d8d8",
    "links": "few",
    "groups": 0,
@@ -7269,6 +7660,7 @@
     "social-links"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "some",
    "groups": 2,
@@ -7286,6 +7678,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -7301,6 +7694,7 @@
     "illustration"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -7320,6 +7714,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 6,
@@ -7340,6 +7735,7 @@
     "photo"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#181828",
    "links": "few",
    "groups": 0,
@@ -7357,6 +7753,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8e8",
    "links": "few",
    "groups": 0,
@@ -7374,6 +7771,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080838",
    "links": "some",
    "groups": 4,
@@ -7395,6 +7793,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#081828",
    "links": "few",
    "groups": 3,
@@ -7413,6 +7812,7 @@
     "newsletter"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8d838",
    "links": "few",
    "groups": 2,
@@ -7430,6 +7830,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -7451,6 +7852,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#181818",
    "links": "some",
    "groups": 3,
@@ -7469,6 +7871,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#d84838",
    "links": "few",
    "groups": 0,
@@ -7487,6 +7890,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#1868f8",
    "links": "few",
    "groups": 1,
@@ -7507,6 +7911,7 @@
     "switcher"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#e8e8d8",
    "links": "few",
    "groups": 4,
@@ -7524,6 +7929,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f85828",
    "links": "few",
    "groups": 2,
@@ -7542,6 +7948,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -7560,6 +7967,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 4,
@@ -7576,6 +7984,7 @@
     "illustration"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -7594,6 +8003,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#e8e8d8",
    "links": "some",
    "groups": 3,
@@ -7612,6 +8022,7 @@
     "photo"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#281838",
    "links": "some",
    "groups": 4,
@@ -7631,6 +8042,7 @@
     "social-icons"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#f8f8e8",
    "links": "few",
    "groups": 0,
@@ -7650,6 +8062,7 @@
     "social-links"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#b83838",
    "links": "few",
    "groups": 2,
@@ -7670,6 +8083,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#0818f8",
    "links": "few",
    "groups": 0,
@@ -7687,6 +8101,7 @@
     "newsletter"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -7706,6 +8121,7 @@
     "photo"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#282828",
    "links": "many",
    "groups": 2,
@@ -7725,6 +8141,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "many",
    "groups": 3,
@@ -7741,6 +8158,7 @@
     "social-links"
    ],
    "theme": "image",
+   "palette": "mono-color",
    "bg": "#f84808",
    "links": "few",
    "groups": 2,
@@ -7760,6 +8178,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 2,
@@ -7779,6 +8198,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#a8c8f8",
    "links": "some",
    "groups": 4,
@@ -7797,6 +8217,7 @@
     "inset-panel"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#e8e8e8",
    "links": "few",
    "groups": 0,
@@ -7816,6 +8237,7 @@
     "switcher"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "some",
    "groups": 2,
@@ -7836,6 +8258,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -7855,6 +8278,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#b8e8f8",
    "links": "some",
    "groups": 2,
@@ -7875,6 +8299,7 @@
     "social-links"
    ],
    "theme": "image",
+   "palette": "mono-color",
    "bg": "#080818",
    "links": "some",
    "groups": 3,
@@ -7896,6 +8321,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 4,
@@ -7913,6 +8339,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8e8d8",
    "links": "some",
    "groups": 4,
@@ -7933,6 +8360,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#081818",
    "links": "few",
    "groups": 0,
@@ -7954,6 +8382,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#e8f858",
    "links": "few",
    "groups": 0,
@@ -7973,6 +8402,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8e8e8",
    "links": "some",
    "groups": 2,
@@ -7991,6 +8421,7 @@
     "logo"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#a8f8c8",
    "links": "some",
    "groups": 0,
@@ -8010,6 +8441,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#081818",
    "links": "few",
    "groups": 0,
@@ -8032,6 +8464,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 2,
@@ -8055,6 +8488,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 2,
@@ -8073,6 +8507,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -8091,6 +8526,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#e83838",
    "links": "few",
    "groups": 0,
@@ -8111,6 +8547,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 0,
@@ -8130,6 +8567,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -8149,6 +8587,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 2,
@@ -8170,6 +8609,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -8188,6 +8628,7 @@
     "legal-row"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#181808",
    "links": "few",
    "groups": 0,
@@ -8208,6 +8649,7 @@
     "social-icons"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -8225,6 +8667,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -8246,6 +8689,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 0,
@@ -8263,6 +8707,7 @@
     "photo"
    ],
    "theme": "image",
+   "palette": "mono-color",
    "bg": "#e8d8c8",
    "links": "few",
    "groups": 0,
@@ -8283,6 +8728,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 4,
@@ -8302,6 +8748,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 0,
@@ -8321,6 +8768,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -8342,6 +8790,7 @@
     "social-links"
    ],
    "theme": "gradient",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 4,
@@ -8360,6 +8809,7 @@
     "newsletter"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#08f868",
    "links": "few",
    "groups": 0,
@@ -8377,6 +8827,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#0838a8",
    "links": "few",
    "groups": 0,
@@ -8392,6 +8843,7 @@
     "illustration"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -8415,6 +8867,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 3,
@@ -8435,6 +8888,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 2,
@@ -8454,6 +8908,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "many",
    "groups": 3,
@@ -8471,6 +8926,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 2,
@@ -8488,6 +8944,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 1,
@@ -8506,6 +8963,7 @@
     "social-links"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#e87848",
    "links": "few",
    "groups": 0,
@@ -8525,6 +8983,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "some",
    "groups": 5,
@@ -8544,6 +9003,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#0808f8",
    "links": "some",
    "groups": 3,
@@ -8564,6 +9024,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#282818",
    "links": "some",
    "groups": 3,
@@ -8581,6 +9042,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -8600,6 +9062,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 0,
@@ -8618,6 +9081,7 @@
     "giant-type"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -8637,6 +9101,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -8658,6 +9123,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#b8b8b8",
    "links": "some",
    "groups": 0,
@@ -8680,6 +9146,7 @@
     "social-links"
    ],
    "theme": "image",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 3,
@@ -8700,6 +9167,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -8719,6 +9187,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8e8e8",
    "links": "many",
    "groups": 4,
@@ -8736,6 +9205,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#681808",
    "links": "few",
    "groups": 0,
@@ -8754,6 +9224,7 @@
     "photo"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -8774,6 +9245,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 0,
@@ -8792,6 +9264,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 3,
@@ -8813,6 +9286,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -8831,6 +9305,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 2,
@@ -8849,6 +9324,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -8867,6 +9343,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#d81818",
    "links": "some",
    "groups": 0,
@@ -8884,6 +9361,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -8903,6 +9381,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -8921,6 +9400,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 0,
@@ -8939,6 +9419,7 @@
     "switcher"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#1818b8",
    "links": "few",
    "groups": 0,
@@ -8957,6 +9438,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 5,
@@ -8973,6 +9455,7 @@
     "illustration"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -8989,6 +9472,7 @@
     "giant-type"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#484868",
    "links": "few",
    "groups": 0,
@@ -9009,6 +9493,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8e8e8",
    "links": "few",
    "groups": 2,
@@ -9029,6 +9514,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8e8b8",
    "links": "few",
    "groups": 0,
@@ -9046,6 +9532,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f84808",
    "links": "some",
    "groups": 3,
@@ -9064,6 +9551,7 @@
     "photo"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -9085,6 +9573,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -9104,6 +9593,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 3,
@@ -9121,6 +9611,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -9143,6 +9634,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 3,
@@ -9163,6 +9655,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -9183,6 +9676,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8f858",
    "links": "some",
    "groups": 0,
@@ -9201,6 +9695,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "many",
    "groups": 4,
@@ -9220,6 +9715,7 @@
     "social-icons"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#180828",
    "links": "few",
    "groups": 0,
@@ -9237,6 +9733,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#285838",
    "links": "few",
    "groups": 0,
@@ -9257,6 +9754,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -9278,6 +9776,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#e83848",
    "links": "some",
    "groups": 0,
@@ -9298,6 +9797,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 4,
@@ -9317,6 +9817,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "many",
    "groups": 4,
@@ -9336,6 +9837,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080818",
    "links": "few",
    "groups": 0,
@@ -9356,6 +9858,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 3,
@@ -9376,6 +9879,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 3,
@@ -9391,6 +9895,7 @@
     "giant-type"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -9411,6 +9916,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 3,
@@ -9431,6 +9937,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -9447,6 +9954,7 @@
     "switcher"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#e85838",
    "links": "some",
    "groups": 3,
@@ -9467,6 +9975,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "some",
    "groups": 2,
@@ -9486,6 +9995,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -9504,6 +10014,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "many",
    "groups": 5,
@@ -9523,6 +10034,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#e8e8e8",
    "links": "few",
    "groups": 2,
@@ -9540,6 +10052,7 @@
     "switcher"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#08a858",
    "links": "some",
    "groups": 3,
@@ -9560,6 +10073,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#e8e8e8",
    "links": "some",
    "groups": 2,
@@ -9579,6 +10093,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "many",
    "groups": 4,
@@ -9599,6 +10114,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#d8d8c8",
    "links": "many",
    "groups": 6,
@@ -9617,6 +10133,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#a89888",
    "links": "some",
    "groups": 0,
@@ -9635,6 +10152,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -9654,6 +10172,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#e8e8e8",
    "links": "few",
    "groups": 2,
@@ -9671,6 +10190,7 @@
     "newsletter"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#282828",
    "links": "some",
    "groups": 4,
@@ -9689,6 +10209,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -9707,6 +10228,7 @@
     "legal-row"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#e86818",
    "links": "some",
    "groups": 3,
@@ -9725,6 +10247,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#188878",
    "links": "few",
    "groups": 0,
@@ -9744,6 +10267,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8f858",
    "links": "few",
    "groups": 0,
@@ -9764,6 +10288,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 4,
@@ -9784,6 +10309,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "some",
    "groups": 3,
@@ -9801,6 +10327,7 @@
     "social-links"
    ],
    "theme": "image",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -9820,6 +10347,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#e8e8e8",
    "links": "few",
    "groups": 0,
@@ -9839,6 +10367,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -9856,6 +10385,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -9874,6 +10404,7 @@
     "newsletter"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -9898,6 +10429,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8e888",
    "links": "some",
    "groups": 4,
@@ -9916,6 +10448,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -9935,6 +10468,7 @@
     "legal-row"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -9954,6 +10488,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 5,
@@ -9974,6 +10509,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8e8",
    "links": "some",
    "groups": 2,
@@ -9994,6 +10530,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#087848",
    "links": "few",
    "groups": 0,
@@ -10011,6 +10548,7 @@
     "illustration"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -10030,6 +10568,7 @@
     "social-icons"
    ],
    "theme": "image",
+   "palette": "mono-color",
    "bg": "#282868",
    "links": "many",
    "groups": 4,
@@ -10050,6 +10589,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -10070,6 +10610,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#d8f8f8",
    "links": "some",
    "groups": 2,
@@ -10087,6 +10628,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#382818",
    "links": "some",
    "groups": 4,
@@ -10104,6 +10646,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8e8",
    "links": "few",
    "groups": 0,
@@ -10123,6 +10666,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8e8",
    "links": "few",
    "groups": 0,
@@ -10140,6 +10684,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#080808",
    "links": "some",
    "groups": 4,
@@ -10159,6 +10704,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#383838",
    "links": "few",
    "groups": 0,
@@ -10178,6 +10724,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -10194,6 +10741,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -10212,6 +10760,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -10230,6 +10779,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#183818",
    "links": "few",
    "groups": 2,
@@ -10249,6 +10799,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -10269,6 +10820,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8c858",
    "links": "some",
    "groups": 2,
@@ -10287,6 +10839,7 @@
     "social-links"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#b8c8f8",
    "links": "few",
    "groups": 4,
@@ -10306,6 +10859,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#c80808",
    "links": "few",
    "groups": 0,
@@ -10327,6 +10881,7 @@
     "switcher"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#c8b8b8",
    "links": "some",
    "groups": 2,
@@ -10343,6 +10898,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 3,
@@ -10363,6 +10919,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -10383,6 +10940,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#680838",
    "links": "few",
    "groups": 2,
@@ -10404,6 +10962,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#282828",
    "links": "some",
    "groups": 3,
@@ -10424,6 +10983,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 4,
@@ -10442,6 +11002,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "many",
    "groups": 5,
@@ -10465,6 +11026,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#482818",
    "links": "some",
    "groups": 2,
@@ -10483,6 +11045,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#e8e8d8",
    "links": "few",
    "groups": 3,
@@ -10502,6 +11065,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -10520,6 +11084,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "many",
    "groups": 4,
@@ -10538,6 +11103,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -10557,6 +11123,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -10577,6 +11144,7 @@
     "marquee"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -10596,6 +11164,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#081818",
    "links": "some",
    "groups": 2,
@@ -10616,6 +11185,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8e8",
    "links": "few",
    "groups": 0,
@@ -10635,6 +11205,7 @@
     "legal-row"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#f85838",
    "links": "few",
    "groups": 0,
@@ -10654,6 +11225,7 @@
     "switcher"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -10673,6 +11245,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#280808",
    "links": "few",
    "groups": 0,
@@ -10692,6 +11265,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8e8",
    "links": "few",
    "groups": 0,
@@ -10713,6 +11287,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -10733,6 +11308,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 2,
@@ -10752,6 +11328,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -10769,6 +11346,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#081838",
    "links": "few",
    "groups": 0,
@@ -10788,6 +11366,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -10803,6 +11382,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080818",
    "links": "few",
    "groups": 0,
@@ -10824,6 +11404,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 0,
@@ -10844,6 +11425,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8c8d8",
    "links": "some",
    "groups": 3,
@@ -10864,6 +11446,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "some",
    "groups": 3,
@@ -10882,6 +11465,7 @@
     "photo"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -10901,6 +11485,7 @@
     "social-links"
    ],
    "theme": "image",
+   "palette": "multicolor",
    "bg": "#080808",
    "links": "few",
    "groups": 3,
@@ -10917,6 +11502,7 @@
     "giant-type"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#788888",
    "links": "few",
    "groups": 0,
@@ -10934,6 +11520,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 4,
@@ -10952,6 +11539,7 @@
     "social-icons"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#180828",
    "links": "some",
    "groups": 2,
@@ -10968,6 +11556,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -10991,6 +11580,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "some",
    "groups": 2,
@@ -11010,6 +11600,7 @@
     "social-links"
    ],
    "theme": "image",
+   "palette": "mono-color",
    "bg": "#c8b8b8",
    "links": "few",
    "groups": 0,
@@ -11029,6 +11620,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#580818",
    "links": "few",
    "groups": 2,
@@ -11045,6 +11637,7 @@
     "giant-type"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -11061,6 +11654,7 @@
     "giant-type"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#b8c8c8",
    "links": "some",
    "groups": 3,
@@ -11082,6 +11676,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -11102,6 +11697,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181828",
    "links": "few",
    "groups": 0,
@@ -11121,6 +11717,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 0,
@@ -11141,6 +11738,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -11159,6 +11757,7 @@
     "legal-row"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -11179,6 +11778,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#f8f848",
    "links": "some",
    "groups": 3,
@@ -11199,6 +11799,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -11220,6 +11821,7 @@
     "social-links"
    ],
    "theme": "image",
+   "palette": "mono-color",
    "bg": "#081818",
    "links": "few",
    "groups": 0,
@@ -11239,6 +11841,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#e8d8d8",
    "links": "few",
    "groups": 0,
@@ -11257,6 +11860,7 @@
     "photo"
    ],
    "theme": "image",
+   "palette": "bw",
    "bg": "#181808",
    "links": "few",
    "groups": 2,
@@ -11276,6 +11880,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "some",
    "groups": 4,
@@ -11295,6 +11900,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 3,
@@ -11313,6 +11919,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -11330,6 +11937,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8e8",
    "links": "some",
    "groups": 6,
@@ -11350,6 +11958,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -11366,6 +11975,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 4,
@@ -11386,6 +11996,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#d8d8e8",
    "links": "some",
    "groups": 2,
@@ -11408,6 +12019,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#e8b808",
    "links": "some",
    "groups": 2,
@@ -11425,6 +12037,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 2,
@@ -11442,6 +12055,7 @@
     "inset-panel"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#888888",
    "links": "few",
    "groups": 0,
@@ -11460,6 +12074,7 @@
     "newsletter"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#e80808",
    "links": "few",
    "groups": 0,
@@ -11477,6 +12092,7 @@
     "photo"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#080808",
    "links": "some",
    "groups": 3,
@@ -11496,6 +12112,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -11516,6 +12133,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -11535,6 +12153,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080828",
    "links": "few",
    "groups": 0,
@@ -11554,6 +12173,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#d8d8c8",
    "links": "some",
    "groups": 3,
@@ -11574,6 +12194,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#283838",
    "links": "few",
    "groups": 0,
@@ -11591,6 +12212,7 @@
     "legal-row"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -11612,6 +12234,7 @@
     "switcher"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#c84838",
    "links": "some",
    "groups": 4,
@@ -11629,6 +12252,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#e8e8e8",
    "links": "few",
    "groups": 2,
@@ -11646,6 +12270,7 @@
     "photo"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -11665,6 +12290,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -11686,6 +12312,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -11704,6 +12331,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#686868",
    "links": "few",
    "groups": 0,
@@ -11725,6 +12353,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 2,
@@ -11744,6 +12373,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 0,
@@ -11764,6 +12394,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#7868f8",
    "links": "few",
    "groups": 3,
@@ -11782,6 +12413,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#e86848",
    "links": "few",
    "groups": 2,
@@ -11801,6 +12433,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 4,
@@ -11818,6 +12451,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "many",
    "groups": 6,
@@ -11838,6 +12472,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8e8",
    "links": "few",
    "groups": 0,
@@ -11857,6 +12492,7 @@
     "social-links"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#f83808",
    "links": "few",
    "groups": 0,
@@ -11877,6 +12513,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -11896,6 +12533,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181808",
    "links": "few",
    "groups": 0,
@@ -11916,6 +12554,7 @@
     "photo"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#183828",
    "links": "few",
    "groups": 0,
@@ -11934,6 +12573,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8a838",
    "links": "few",
    "groups": 4,
@@ -11953,6 +12593,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#e8e8f8",
    "links": "some",
    "groups": 3,
@@ -11970,6 +12611,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#481828",
    "links": "some",
    "groups": 3,
@@ -11989,6 +12631,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -12008,6 +12651,7 @@
     "social-links"
    ],
    "theme": "image",
+   "palette": "mono-color",
    "bg": "#f86808",
    "links": "few",
    "groups": 0,
@@ -12027,6 +12671,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 2,
@@ -12044,6 +12689,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -12061,6 +12707,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 5,
@@ -12079,6 +12726,7 @@
     "photo"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 1,
@@ -12100,6 +12748,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#d8d8e8",
    "links": "few",
    "groups": 2,
@@ -12116,6 +12765,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#183838",
    "links": "some",
    "groups": 4,
@@ -12139,6 +12789,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f84828",
    "links": "many",
    "groups": 4,
@@ -12158,6 +12809,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#d8f858",
    "links": "few",
    "groups": 2,
@@ -12177,6 +12829,7 @@
     "photo"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#f8f8e8",
    "links": "some",
    "groups": 4,
@@ -12196,6 +12849,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#e8e8e8",
    "links": "few",
    "groups": 0,
@@ -12211,6 +12865,7 @@
     "cta-button"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -12230,6 +12885,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -12247,6 +12903,7 @@
     "newsletter"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#3808b8",
    "links": "some",
    "groups": 2,
@@ -12266,6 +12923,7 @@
     "social-links"
    ],
    "theme": "gradient",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -12286,6 +12944,7 @@
     "legal-row"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#282828",
    "links": "few",
    "groups": 0,
@@ -12303,6 +12962,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -12321,6 +12981,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 3,
@@ -12337,6 +12998,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -12356,6 +13018,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#e8e8e8",
    "links": "few",
    "groups": 0,
@@ -12376,6 +13039,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 2,
@@ -12396,6 +13060,7 @@
     "newsletter"
    ],
    "theme": "gradient",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "many",
    "groups": 4,
@@ -12417,6 +13082,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 2,
@@ -12436,6 +13102,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#3808e8",
    "links": "few",
    "groups": 2,
@@ -12458,6 +13125,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8e868",
    "links": "few",
    "groups": 0,
@@ -12475,6 +13143,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 2,
@@ -12495,6 +13164,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f83818",
    "links": "some",
    "groups": 4,
@@ -12512,6 +13182,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8e8",
    "links": "few",
    "groups": 0,
@@ -12529,6 +13200,7 @@
     "legal-row"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -12551,6 +13223,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#280808",
    "links": "some",
    "groups": 0,
@@ -12572,6 +13245,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -12589,6 +13263,7 @@
     "giant-type"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#c8f838",
    "links": "few",
    "groups": 0,
@@ -12609,6 +13284,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 2,
@@ -12629,6 +13305,7 @@
     "newsletter"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#687888",
    "links": "few",
    "groups": 1,
@@ -12647,6 +13324,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -12667,6 +13345,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 0,
@@ -12688,6 +13367,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#080808",
    "links": "some",
    "groups": 1,
@@ -12705,6 +13385,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -12725,6 +13406,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -12742,6 +13424,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#080808",
    "links": "some",
    "groups": 0,
@@ -12759,6 +13442,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#282808",
    "links": "few",
    "groups": 0,
@@ -12779,6 +13463,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#180808",
    "links": "some",
    "groups": 4,
@@ -12797,6 +13482,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 4,
@@ -12815,6 +13501,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#78a8f8",
    "links": "few",
    "groups": 0,
@@ -12836,6 +13523,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -12853,6 +13541,7 @@
     "logo"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -12874,6 +13563,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 0,
@@ -12892,6 +13582,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -12911,6 +13602,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8e8",
    "links": "some",
    "groups": 0,
@@ -12930,6 +13622,7 @@
     "newsletter"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -12951,6 +13644,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "some",
    "groups": 2,
@@ -12970,6 +13664,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#181838",
    "links": "few",
    "groups": 0,
@@ -12989,6 +13684,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#688848",
    "links": "some",
    "groups": 6,
@@ -13007,6 +13703,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#c8c8c8",
    "links": "few",
    "groups": 0,
@@ -13028,6 +13725,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 1,
@@ -13048,6 +13746,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -13067,6 +13766,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 2,
@@ -13086,6 +13786,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -13105,6 +13806,7 @@
     "switcher"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#e8e8e8",
    "links": "few",
    "groups": 0,
@@ -13124,6 +13826,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "many",
    "groups": 5,
@@ -13142,6 +13845,7 @@
     "social-links"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#d8d8d8",
    "links": "some",
    "groups": 4,
@@ -13160,6 +13864,7 @@
     "legal-row"
    ],
    "theme": "gradient",
+   "palette": "multicolor",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -13178,6 +13883,7 @@
     "legal-row"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#e8e8e8",
    "links": "many",
    "groups": 6,
@@ -13197,6 +13903,7 @@
     "legal-row"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -13218,6 +13925,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8a808",
    "links": "few",
    "groups": 0,
@@ -13237,6 +13945,7 @@
     "marquee"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -13259,6 +13968,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 2,
@@ -13281,6 +13991,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 2,
@@ -13299,6 +14010,7 @@
     "newsletter"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -13319,6 +14031,7 @@
     "social-icons"
    ],
    "theme": "image",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "many",
    "groups": 4,
@@ -13338,6 +14051,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -13361,6 +14075,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 4,
@@ -13379,6 +14094,7 @@
     "legal-row"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -13399,6 +14115,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 3,
@@ -13415,6 +14132,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8e8",
    "links": "few",
    "groups": 0,
@@ -13435,6 +14153,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#c8a868",
    "links": "some",
    "groups": 0,
@@ -13455,6 +14174,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 4,
@@ -13475,6 +14195,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "some",
    "groups": 3,
@@ -13492,6 +14213,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -13507,6 +14229,7 @@
     "giant-type"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -13524,6 +14247,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 2,
@@ -13540,6 +14264,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#0808f8",
    "links": "some",
    "groups": 2,
@@ -13558,6 +14283,7 @@
     "photo"
    ],
    "theme": "dark",
+   "palette": "multicolor",
    "bg": "#080808",
    "links": "some",
    "groups": 4,
@@ -13573,6 +14299,7 @@
     "giant-type"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -13591,6 +14318,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#e8e8e8",
    "links": "many",
    "groups": 4,
@@ -13612,6 +14340,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#282828",
    "links": "some",
    "groups": 4,
@@ -13629,6 +14358,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#582828",
    "links": "some",
    "groups": 2,
@@ -13648,6 +14378,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -13668,6 +14399,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#182818",
    "links": "some",
    "groups": 0,
@@ -13688,6 +14420,7 @@
     "social-icons"
    ],
    "theme": "image",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -13710,6 +14443,7 @@
     "newsletter"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "some",
    "groups": 0,
@@ -13732,6 +14466,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 3,
@@ -13749,6 +14484,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#e8e8e8",
    "links": "few",
    "groups": 0,
@@ -13767,6 +14503,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#b84818",
    "links": "some",
    "groups": 2,
@@ -13785,6 +14522,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 4,
@@ -13806,6 +14544,7 @@
     "marquee"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -13824,6 +14563,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#4868f8",
    "links": "some",
    "groups": 3,
@@ -13846,6 +14586,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#182828",
    "links": "some",
    "groups": 3,
@@ -13865,6 +14606,7 @@
     "newsletter"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 1,
@@ -13884,6 +14626,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#a8b8a8",
    "links": "some",
    "groups": 4,
@@ -13903,6 +14646,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -13922,6 +14666,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "some",
    "groups": 2,
@@ -13941,6 +14686,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "some",
    "groups": 0,
@@ -13961,6 +14707,7 @@
     "switcher"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#e85848",
    "links": "some",
    "groups": 4,
@@ -13980,6 +14727,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#581828",
    "links": "many",
    "groups": 5,
@@ -14002,6 +14750,7 @@
     "newsletter"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#e8d8d8",
    "links": "few",
    "groups": 0,
@@ -14022,6 +14771,7 @@
     "social-links"
    ],
    "theme": "image",
+   "palette": "mono-color",
    "bg": "#3878b8",
    "links": "some",
    "groups": 0,
@@ -14041,6 +14791,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8e878",
    "links": "some",
    "groups": 3,
@@ -14062,6 +14813,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 0,
@@ -14080,6 +14832,7 @@
     "newsletter"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8e8",
    "links": "few",
    "groups": 0,
@@ -14101,6 +14854,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#181818",
    "links": "few",
    "groups": 3,
@@ -14121,6 +14875,7 @@
     "social-icons"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#181818",
    "links": "some",
    "groups": 3,
@@ -14143,6 +14898,7 @@
     "switcher"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#182838",
    "links": "many",
    "groups": 3,
@@ -14160,6 +14916,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f8f868",
    "links": "some",
    "groups": 2,
@@ -14181,6 +14938,7 @@
     "switcher"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 2,
@@ -14199,6 +14957,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#e8e8e8",
    "links": "few",
    "groups": 1,
@@ -14218,6 +14977,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#e87838",
    "links": "some",
    "groups": 2,
@@ -14236,6 +14996,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -14255,6 +15016,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#e8e8d8",
    "links": "some",
    "groups": 3,
@@ -14275,6 +15037,7 @@
     "social-links"
    ],
    "theme": "light",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -14295,6 +15058,7 @@
     "photo"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#181818",
    "links": "some",
    "groups": 3,
@@ -14313,6 +15077,7 @@
     "giant-type"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -14335,6 +15100,7 @@
     "social-icons"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "some",
    "groups": 3,
@@ -14353,6 +15119,7 @@
     "logo"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#282828",
    "links": "some",
    "groups": 0,
@@ -14373,6 +15140,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f85808",
    "links": "few",
    "groups": 0,
@@ -14392,6 +15160,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 2,
@@ -14413,6 +15182,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#381828",
    "links": "some",
    "groups": 4,
@@ -14431,6 +15201,7 @@
     "social-icons"
    ],
    "theme": "light",
+   "palette": "bw",
    "bg": "#f8f8f8",
    "links": "many",
    "groups": 6,
@@ -14449,6 +15220,7 @@
     "social-links"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#5848f8",
    "links": "some",
    "groups": 4,
@@ -14467,6 +15239,7 @@
     "social-links"
    ],
    "theme": "gradient",
+   "palette": "mono-color",
    "bg": "#f8f8f8",
    "links": "few",
    "groups": 0,
@@ -14485,6 +15258,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "bw",
    "bg": "#080808",
    "links": "few",
    "groups": 0,
@@ -14505,6 +15279,7 @@
     "social-icons"
    ],
    "theme": "colorful",
+   "palette": "mono-color",
    "bg": "#f83818",
    "links": "some",
    "groups": 4,
@@ -14524,6 +15299,7 @@
     "social-links"
    ],
    "theme": "dark",
+   "palette": "mono-color",
    "bg": "#080808",
    "links": "some",
    "groups": 3,

@@ -86,6 +86,7 @@ FEATURES = {
     "marquee": "a row of scrolling or repeated text",
 }
 THEMES = ["light", "dark", "colorful", "gradient", "image"]
+PALETTES = ["bw", "mono-color", "multicolor"]  # measured: grays only / one hue + neutrals / several hues
 LINKS = ["few", "some", "many"]  # <=8, 9-20, 21+
 TYPEFACES = ["sans", "serif", "mono", "mixed", "display"]
 EFFORTS = ["low", "medium", "high"]
@@ -249,13 +250,14 @@ def lookup(slugs, warn=True):
 # ---------------------------------------------------------------- choosing
 
 def vocab_counts(catalog):
-    counts = {k: {} for k in ("styles", "types", "pattern", "features", "theme", "links", "typeface")}
+    keys = ("styles", "types", "pattern", "features", "theme", "palette", "links", "typeface", "effort")
+    counts = {k: {} for k in keys}
     for d in catalog.values():
         for k in ("styles", "types"):
             for v in d.get(k) or []:
                 counts[k][v] = counts[k].get(v, 0) + 1
         lay = d.get("layout") or {}
-        for k in ("pattern", "theme", "links", "typeface"):
+        for k in ("pattern", "theme", "palette", "links", "typeface", "effort"):
             if lay.get(k):
                 counts[k][lay[k]] = counts[k].get(lay[k], 0) + 1
         for v in lay.get("features") or []:
@@ -270,72 +272,130 @@ def check_value(kind, value, allowed):
         raise UserError(f"unknown {kind} '{value}'.{hint}")
 
 
+def lay_of(d):
+    return d.get("layout") or {}
+
+
+def text_blob(d):
+    lay = lay_of(d)
+    return " ".join(str(x) for x in (d.get("name"), d.get("description"), lay.get("summary"),
+                                     lay.get("mobile"), " ".join(lay.get("features") or []))).lower()
+
+
+# kind -> (allowed values or None for free text, how to read it from a record)
+FIELDS = {
+    "theme": (THEMES, lambda d: [lay_of(d).get("theme")]),
+    "palette": (PALETTES, lambda d: [lay_of(d).get("palette")]),
+    "links": (LINKS, lambda d: [lay_of(d).get("links")]),
+    "typeface": (TYPEFACES, lambda d: [lay_of(d).get("typeface")]),
+    "effort": (EFFORTS, lambda d: [lay_of(d).get("effort")]),
+    "pattern": (PATTERNS, lambda d: [lay_of(d).get("pattern")]),
+    "feature": (FEATURES, lambda d: lay_of(d).get("features") or []),
+    "style": (None, lambda d: d.get("styles") or []),
+    "type": (None, lambda d: d.get("types") or []),
+}
+
+
+def allowed_for(kind, counts):
+    allowed = FIELDS[kind][0]
+    return allowed if allowed is not None else counts["styles" if kind == "style" else "types"]
+
+
 def search(catalog, a):
+    """Hard filters (theme, palette, links, typeface, effort, height, groups, --not) must match;
+    values given twice for the same hard filter are alternatives. Soft filters (pattern, feature,
+    style, type, text) each add a point; results rank by points, then newest."""
     counts = vocab_counts(catalog)
-    criteria = []  # (label, predicate)
-    for v in a.style:
-        check_value("style", v, counts["styles"])
-        criteria.append((f"style:{v}", lambda d, v=v: v in (d.get("styles") or [])))
-    for v in a.type:
-        check_value("type", v, counts["types"])
-        criteria.append((f"type:{v}", lambda d, v=v: v in (d.get("types") or [])))
-    for v in a.pattern:
-        check_value("pattern", v, PATTERNS)
-        criteria.append((f"pattern:{v}", lambda d, v=v: (d["layout"] or {}).get("pattern") == v))
-    for v in a.feature:
-        check_value("feature", v, FEATURES)
-        criteria.append((f"feature:{v}", lambda d, v=v: v in ((d["layout"] or {}).get("features") or [])))
-    for v in a.theme:
-        check_value("theme", v, THEMES)
-        criteria.append((f"theme:{v}", lambda d, v=v: (d["layout"] or {}).get("theme") == v))
-    for v in a.links:
-        check_value("links", v, LINKS)
-        criteria.append((f"links:{v}", lambda d, v=v: (d["layout"] or {}).get("links") == v))
-    for v in a.typeface:
-        check_value("typeface", v, TYPEFACES)
-        criteria.append((f"typeface:{v}", lambda d, v=v: (d["layout"] or {}).get("typeface") == v))
+    hard = []  # (label, predicate)
+    for kind in ("theme", "palette", "links", "typeface"):
+        values = getattr(a, kind)
+        for v in values:
+            check_value(kind, v, allowed_for(kind, counts))
+        if values:
+            hard.append((f"{kind}:{'|'.join(values)}",
+                         lambda d, k=kind, vs=set(values): bool(vs & set(FIELDS[k][1](d)))))
     if a.max_effort:
         check_value("effort", a.max_effort, EFFORTS)
-        cap = EFFORTS.index(a.max_effort)
-        criteria.append((f"effort<={a.max_effort}",
-                         lambda d: (d["layout"] or {}).get("effort") in EFFORTS[:cap + 1]))
+        ok = set(EFFORTS[: EFFORTS.index(a.max_effort) + 1])
+        hard.append((f"effort<={a.max_effort}", lambda d: lay_of(d).get("effort") in ok))
     if a.min_groups:
-        criteria.append((f"groups>={a.min_groups}",
-                         lambda d: ((d["layout"] or {}).get("groups") or 0) >= a.min_groups))
+        hard.append((f"groups>={a.min_groups}", lambda d: (lay_of(d).get("groups") or 0) >= a.min_groups))
     if a.max_height:
-        criteria.append((f"height<={a.max_height}",
-                         lambda d: 0 < ((d["layout"] or {}).get("height_px") or 0) <= a.max_height))
-    for word in a.text:
-        w = word.lower()
+        hard.append((f"height<={a.max_height}",
+                     lambda d: 0 < (lay_of(d).get("height_px") or 0) <= a.max_height))
+    for spec in a.exclude:
+        kind, _, v = spec.partition(":")
+        if kind == "text":
+            hard.append((f"not text:{v}", lambda d, v=v.lower(): v not in text_blob(d)))
+            continue
+        if kind not in FIELDS or not v:
+            raise UserError(f"--not takes KIND:VALUE with KIND in {', '.join(list(FIELDS) + ['text'])}; got '{spec}'")
+        check_value(kind, v, allowed_for(kind, counts))
+        hard.append((f"not {spec}", lambda d, k=kind, v=v: v not in FIELDS[k][1](d)))
 
-        def has(d, w=w):
-            lay = d["layout"] or {}
-            blob = " ".join(str(x) for x in (d.get("name"), d.get("description"), lay.get("summary"),
-                                             lay.get("mobile"), " ".join(lay.get("features") or [])))
-            return w in blob.lower()
-        criteria.append((f"text:{word}", has))
+    soft = []
+    for kind in ("pattern", "feature", "style", "type"):
+        for v in getattr(a, kind):
+            check_value(kind, v, allowed_for(kind, counts))
+            soft.append((f"{kind}:{v}", lambda d, k=kind, v=v: v in FIELDS[k][1](d)))
+    for word in a.text:
+        soft.append((f"text:{word}", lambda d, w=word.lower(): w in text_blob(d)))
 
     rows = []
     for d in catalog.values():  # catalog is newest first
-        hit = [label for label, pred in criteria if pred(d)]
-        if criteria and not hit:
+        if not all(pred(d) for _, pred in hard):
             continue
-        if a.all and len(hit) < len(criteria):
+        hit = [label for label, pred in soft if pred(d)]
+        if soft and not hit:
+            continue
+        if a.all and len(hit) < len(soft):
             continue
         rows.append(dict(d, matched=hit, score=len(hit)))
     rows.sort(key=lambda d: -d["score"])  # stable: ties stay newest first
-    return rows[: a.limit], len(criteria)
+    return rows, len(soft), [label for label, _ in hard]
 
 
-def fmt_row(d, total=None):
-    lay = d.get("layout") or {}
+def similar(catalog, slug, limit):
+    """Footers that share the most layout traits with one footer."""
+    slug = normalize_slug(slug)
+    if slug not in catalog:
+        raise UserError(f"unknown footer '{slug}'")
+    ref = lay_of(catalog[slug])
+    rfeat = set(ref.get("features") or [])
+    rstyle = set(catalog[slug].get("styles") or [])
+    rows = []
+    for s, d in catalog.items():
+        lay = lay_of(d)
+        if s == slug or not lay:
+            continue
+        score = 3 * (lay.get("pattern") == ref.get("pattern"))
+        score += 2 * (lay.get("theme") == ref.get("theme")) + 2 * (lay.get("palette") == ref.get("palette"))
+        score += (lay.get("links") == ref.get("links")) + (lay.get("typeface") == ref.get("typeface"))
+        score += abs((lay.get("groups") or 0) - (ref.get("groups") or 0)) <= 1
+        feat = set(lay.get("features") or [])
+        score += 4 * len(feat & rfeat) / max(1, len(feat | rfeat))
+        score += 0.5 * len(set(d.get("styles") or []) & rstyle)
+        rows.append(dict(d, score=round(score, 1), matched=[]))
+    rows.sort(key=lambda d: -d["score"])
+    return rows[:limit]
+
+
+def fmt_row(d, total=None, compact=False):
+    lay = lay_of(d)
+    if compact:
+        if not lay:
+            return f"{d['slug']} | (no layout description) | {', '.join(d.get('styles') or [])}"
+        groups = f"{lay.get('groups')}g" if lay.get("groups") else "0g"
+        return (f"{d['slug']} | {lay.get('pattern')} | {lay.get('theme')}/{lay.get('palette', '?')} | "
+                f"{lay.get('links')} {groups} | {lay.get('height_px')}px | {lay.get('effort')} | {lay.get('summary')}")
     head = f"{d['slug']}  ({d.get('name')}, {d.get('date_added') or '?'})"
     if total:
         head += f"  [{d['score']}/{total}: {', '.join(d['matched'])}]"
     lines = [head]
     if lay:
         groups = f"{lay['groups']} link groups" if lay.get("groups") else None
-        meta = ", ".join(x for x in (lay.get("pattern"), lay.get("theme"), f"{lay.get('links')} links", groups,
+        meta = ", ".join(x for x in (lay.get("pattern"), lay.get("theme"), lay.get("palette"),
+                                     f"{lay.get('links')} links", groups,
                                      f"{lay.get('height_px')}px tall" if lay.get("height_px") else None,
                                      f"effort {lay.get('effort')}") if x)
         lines.append(f"    {meta}")
@@ -384,18 +444,77 @@ def download_one(d, out, view):
     return to_png(dest) if ext.lower() in (".avif", ".webp") else dest
 
 
-def download(records, out, views=("desktop", "mobile")):
+def download(records, out, views=("desktop", "mobile"), warn=False):
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
     jobs = [(d, v) for d in records for v in views]
     with ThreadPoolExecutor(WORKERS) as pool:
         saved = list(pool.map(lambda j: download_one(j[0], out, j[1]), jobs))
+    if warn:
+        for (d, v), p in zip(jobs, saved):
+            if not p:
+                print(f"note: {d['slug']} has no {v} screenshot on footer.design", file=sys.stderr)
     return [str(p) for p in saved if p]
+
+
+def contact_sheet(records, shot_dir, out, per_sheet=5, width=1100):
+    """Numbered sheets, one footer per row (desktop + mobile), so finalists can be compared in a
+    few image reads. Needs Pillow; returns [] with a note when it's missing."""
+    try:
+        from PIL import Image, ImageDraw, ImageFont
+    except ImportError:
+        print("note: --sheet needs Pillow (pip install pillow); view the screenshots one by one instead",
+              file=sys.stderr)
+        return []
+    shot_dir = Path(shot_dir)
+    rows = []
+    for i, d in enumerate(records, 1):
+        found = {v: next(iter(sorted(shot_dir.glob(f"{d['slug']}-{v}.*"))), None) for v in ("desktop", "mobile")}
+        if not found["desktop"]:
+            continue
+        desk = Image.open(found["desktop"]).convert("RGB")
+        mob = Image.open(found["mobile"]).convert("RGB") if found["mobile"] else None
+        h = 420
+        desk = desk.resize((round(desk.width * h / desk.height), h))
+        parts = [desk] + ([mob.resize((round(mob.width * h / mob.height), h))] if mob else [])
+        row_w = sum(p.width for p in parts) + 12 * (len(parts) - 1)
+        scale = min(1, (width - 60) / row_w)
+        parts = [p.resize((max(1, round(p.width * scale)), max(1, round(p.height * scale)))) for p in parts]
+        row = Image.new("RGB", (width, parts[0].height + 16), "white")
+        x = 60
+        for p in parts:
+            row.paste(p, (x, 8))
+            x += p.width + 12
+        draw = ImageDraw.Draw(row)
+        try:
+            big, small = ImageFont.load_default(size=30), ImageFont.load_default(size=15)
+        except TypeError:  # Pillow < 10.1
+            big = small = ImageFont.load_default()
+        draw.rectangle((0, 0, 50, row.height), fill="#ff00ff")
+        draw.text((12, 10), str(i), fill="white", font=big)
+        box = draw.textbbox((66, 12), d["slug"], font=small)
+        draw.rectangle((box[0] - 5, box[1] - 4, box[2] + 5, box[3] + 4), fill="white", outline="black")
+        draw.text((66, 12), d["slug"], fill="black", font=small)
+        rows.append(row)
+    made = []
+    out = Path(out)
+    for k in range(0, len(rows), per_sheet):
+        chunk = rows[k:k + per_sheet]
+        sheet = Image.new("RGB", (width, sum(r.height for r in chunk) + 8 * len(chunk)), "#dddddd")
+        y = 0
+        for r in chunk:
+            sheet.paste(r, (0, y))
+            y += r.height + 8
+        dest = out.with_name(f"{out.stem}-{k // per_sheet + 1}{out.suffix or '.png'}")
+        sheet.save(dest)
+        made.append(str(dest))
+    return made
 
 
 GALLERY_CSS = """
 :root{--bg:#f6f6f4;--fg:#161616;--muted:#666;--card:#fff;--line:#e2e2e0;--accent:#1f6feb}
-@media (prefers-color-scheme:dark){:root{--bg:#101010;--fg:#f2f2f2;--muted:#9a9a9a;--card:#191919;--line:#2a2a2a;--accent:#6ea8ff}}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101010;--fg:#f2f2f2;--muted:#9a9a9a;--card:#191919;--line:#2a2a2a;--accent:#6ea8ff}}
+:root[data-theme="dark"]{--bg:#101010;--fg:#f2f2f2;--muted:#9a9a9a;--card:#191919;--line:#2a2a2a;--accent:#6ea8ff}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,sans-serif}
 main{max-width:1240px;margin:0 auto;padding:32px 16px 64px}h1{font-size:1.5rem;margin:0 0 4px}
 .lede{color:var(--muted);margin:0 0 28px}
@@ -414,7 +533,7 @@ a{color:inherit;text-underline-offset:2px}a:hover{color:var(--accent)}
 """
 
 
-def gallery(records, out, notes=None, pick=None, title="Footer shortlist"):
+def gallery(records, out, notes=None, pick=None, title="Footer shortlist", brief=None, images=None):
     """notes: optional {slug: "why it fits"}; pick: slug to highlight as the recommendation."""
     e = html.escape
     notes = notes or {}
@@ -430,9 +549,16 @@ def gallery(records, out, notes=None, pick=None, title="Footer shortlist"):
         summary = lay.get("summary") or ""
         if not why:
             why, summary = summary, ""
+        srcs = {}
+        for v in ("desktop", "mobile"):
+            local = next(iter(sorted(Path(images).glob(f"{d['slug']}-{v}.*"))), None) if images else None
+            if local:
+                srcs[v] = os.path.relpath(local, Path(out).resolve().parent)
+            elif d.get(v):
+                srcs[v] = d[v]
         imgs = "".join(
-            f'<img src="{e(d[v])}" alt="{e(d.get("name") or "")} footer, {v} view" loading="lazy">'
-            for v in ("desktop", "mobile") if d.get(v)
+            f'<img src="{e(src)}" alt="{e(d.get("name") or "")} footer, {v} view" loading="lazy">'
+            for v, src in srcs.items()
         )
         cards.append(
             f'<article id="{e(d["slug"])}" class="{"pick" if d["slug"] == pick else ""}"><header>'
@@ -443,13 +569,15 @@ def gallery(records, out, notes=None, pick=None, title="Footer shortlist"):
             + (f'<a href="{e(d["live"])}">live site</a>' if d.get("live") else "")
             + f'</span></header><p class="why">{e(why)}</p>'
             + (f'<p class="summary">{e(summary)}</p>' if summary else "")
-            + f'<div class="views{"" if d.get("mobile") else " solo"}">{imgs}</div></article>'
+            + f'<div class="views{"" if "mobile" in srcs else " solo"}">{imgs}</div></article>'
         )
     doc = (
         '<!doctype html><html lang="en"><head><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width,initial-scale=1">'
         f"<title>{e(title)}</title><style>{GALLERY_CSS}</style></head><body><main>"
-        f"<h1>{e(title)}</h1><p class=\"lede\">From footer.design. Desktop left, mobile right. "
+        f"<h1>{e(title)}</h1>"
+        + (f"<p class=\"lede\"><b>Brief:</b> {e(brief)}</p>" if brief else "")
+        + "<p class=\"lede\">From footer.design. Desktop left, mobile right. "
         "Reply with a number, or mix them (\"2's layout, 4's type\").</p>"
         + "".join(cards) + "</main></body></html>"
     )
@@ -528,7 +656,8 @@ def composite(records, out, max_w=1400):
             x += p.width + 24
         dest = out / f"{d['slug']}.png"
         canvas.save(dest, optimize=True)
-        made.append({"slug": d["slug"], "image": str(dest), "height_px": h_px, "bg": dominant_color(views["desktop"])})
+        made.append({"slug": d["slug"], "image": str(dest), "height_px": h_px,
+                     "bg": dominant_color(views["desktop"]), "palette": measure_palette(views["desktop"])})
     return made
 
 
@@ -547,6 +676,28 @@ def dominant_color(path):
     return f"#{r:02x}{g:02x}{b:02x}"
 
 
+def measure_palette(path):
+    """bw: grays only; mono-color: one hue family plus neutrals; multicolor: several hues."""
+    import colorsys
+
+    from PIL import Image
+
+    im = Image.open(path).convert("RGB")
+    im.thumbnail((200, 200))
+    raw = im.tobytes()
+    hues, colored = {}, 0
+    for i in range(0, len(raw), 3):
+        h, light, sat = colorsys.rgb_to_hls(raw[i] / 255, raw[i + 1] / 255, raw[i + 2] / 255)
+        if sat > 0.25 and 0.12 < light < 0.9:
+            colored += 1
+            k = int(h * 12) % 12
+            hues[k] = hues.get(k, 0) + 1
+    if colored < 0.03 * len(raw) / 3:
+        return "bw"
+    top = sorted(hues.values(), reverse=True)[:2]
+    return "mono-color" if sum(top) / colored > 0.8 else "multicolor"
+
+
 def validate_layout(slug, lay):
     errs = []
     if lay.get("pattern") not in PATTERNS:
@@ -554,7 +705,8 @@ def validate_layout(slug, lay):
     bad = [f for f in lay.get("features") or [] if f not in FEATURES]
     if bad:
         errs.append(f"features {bad}")
-    for key, allowed in (("theme", THEMES), ("links", LINKS), ("typeface", TYPEFACES), ("effort", EFFORTS)):
+    for key, allowed in (("theme", THEMES), ("palette", PALETTES), ("links", LINKS), ("typeface", TYPEFACES),
+                         ("effort", EFFORTS)):
         if lay.get(key) not in allowed:
             errs.append(f"{key} {lay.get(key)!r}")
     if not isinstance(lay.get("groups"), int):
@@ -591,7 +743,7 @@ def merge_layouts(files, check_only=False):
             if errs:
                 errors.extend(f"{f}:{n}: {e}" for e in errs)
                 continue
-            order = ["pattern", "features", "theme", "bg", "links", "groups", "typeface", "height_px",
+            order = ["pattern", "features", "theme", "palette", "bg", "links", "groups", "typeface", "height_px",
                      "effort", "summary", "mobile"]
             layouts[slug] = {k: rec[k] for k in order if k in rec}
             added += 1
@@ -616,33 +768,49 @@ def main():
     p = argparse.ArgumentParser(description="Search footer.design footers")
     sub = p.add_subparsers(dest="cmd", required=True)
     sub.add_parser("vocab", help="every filter value with how many footers have it")
-    s = sub.add_parser("search", help="filter the local index; best match first, then newest")
+    s = sub.add_parser("search", help="filter the local index: hard filters must match, soft ones rank",
+                       description="Hard filters must match (repeat one to allow alternatives): --theme "
+                                   "--palette --links --typeface --max-effort --max-height --min-groups --not. "
+                                   "Soft filters rank results by how many match: --pattern --feature --style "
+                                   "--type --text. --all makes soft filters required too.")
     s.add_argument("--style", action="append", default=[], help="footer.design style tag, e.g. dark")
     s.add_argument("--type", action="append", default=[], help="footer.design site type, e.g. saas")
     s.add_argument("--pattern", action="append", default=[], help="layout pattern, e.g. giant-wordmark")
     s.add_argument("--feature", action="append", default=[], help="layout feature, e.g. newsletter")
     s.add_argument("--theme", action="append", default=[], help=" | ".join(THEMES))
+    s.add_argument("--palette", action="append", default=[],
+                   help="bw (black/white/grays only) | mono-color (one hue + neutrals) | multicolor")
     s.add_argument("--links", action="append", default=[], help="few (<=8) | some (9-20) | many (21+)")
     s.add_argument("--typeface", action="append", default=[], help=" | ".join(TYPEFACES))
     s.add_argument("--max-effort", help="low | medium | high")
     s.add_argument("--max-height", type=int, help="max footer height in px at 1440 wide")
     s.add_argument("--min-groups", type=int, help="at least N link groups/columns, whatever the pattern")
     s.add_argument("--text", action="append", default=[], help="word in the name, description or summary")
-    s.add_argument("--all", action="store_true", help="require every filter to match")
+    s.add_argument("--not", dest="exclude", action="append", default=[], metavar="KIND:VALUE",
+                   help="exclude, e.g. --not feature:3d --not theme:colorful --not text:game")
+    s.add_argument("--all", action="store_true", help="require every soft filter to match too")
     s.add_argument("--limit", type=int, default=30)
+    s.add_argument("--compact", action="store_true", help="one line per footer")
     s.add_argument("--json", action="store_true")
+    sm = sub.add_parser("similar", help="footers that share the most layout traits with one footer")
+    sm.add_argument("slug")
+    sm.add_argument("--limit", type=int, default=12)
+    sm.add_argument("--compact", action="store_true")
     d = sub.add_parser("site", help="everything known about one or more footers")
     d.add_argument("slugs", nargs="+")
     d.add_argument("--json", action="store_true")
     dl = sub.add_parser("download", help="save desktop + mobile screenshots as viewable images")
     dl.add_argument("slugs", nargs="+")
     dl.add_argument("--out", default="footer-design-shots")
+    dl.add_argument("--sheet", metavar="FILE.png", help="also write numbered contact sheets (needs Pillow)")
     g = sub.add_parser("gallery", help="write a numbered HTML contact sheet")
     g.add_argument("slugs", nargs="+")
     g.add_argument("--out", default="footer-shortlist.html")
     g.add_argument("--notes", help="JSON file {slug: why it fits}; replaces the stock summaries")
     g.add_argument("--pick", help="slug to mark as recommended")
     g.add_argument("--title", default="Footer shortlist")
+    g.add_argument("--brief", help="one line restating the user's brief, shown under the title")
+    g.add_argument("--images", metavar="DIR", help="use screenshots saved by `download` instead of hotlinking")
     r = sub.add_parser("refresh-index", help="[maintainer] sync data/index.json with the live sitemap")
     r.add_argument("--full", action="store_true", help="re-fetch every site, not just new ones")
     sub.add_parser("layouts-todo", help="[maintainer] slugs in the index without a layout description")
@@ -663,17 +831,26 @@ def main():
             for k, v in desc.items():
                 print(f"  {k:16} {counts[key].get(k, 0):4}  {v}")
             print()
-        for key, flag in (("theme", "theme"), ("links", "links"), ("typeface", "typeface")):
+        for key, flag in (("theme", "theme"), ("palette", "palette"), ("links", "links"),
+                          ("typeface", "typeface"), ("effort", "max-effort")):
             print(f"--{flag}: " + ", ".join(f"{k} ({v})" for k, v in sorted(counts[key].items(), key=lambda x: -x[1])))
         for key, flag in (("styles", "style"), ("types", "type")):
             print(f"\n--{flag} (footer.design tags): "
                   + ", ".join(f"{k} ({v})" for k, v in sorted(counts[key].items(), key=lambda x: -x[1])))
     elif a.cmd == "search":
-        rows, total = search(load_catalog(), a)
+        rows, total, hard = search(load_catalog(), a)
+        shown = rows[: a.limit]
         if a.json:
-            print(json.dumps(rows, indent=1, ensure_ascii=False))
+            print(json.dumps(shown, indent=1, ensure_ascii=False))
         else:
-            print("\n".join(fmt_row(d, total) for d in rows) or "no matches; loosen the filters")
+            req = f" (all match: {', '.join(hard)})" if hard else ""
+            print(f"{len(rows)} footers{req}; showing {len(shown)}" if rows else
+                  "no matches: drop a hard filter, or allow alternatives (e.g. --links some --links many)")
+            print("\n".join(fmt_row(d, total, a.compact) for d in shown))
+    elif a.cmd == "similar":
+        rows = similar(load_catalog(), a.slug, a.limit)
+        print("\n".join(fmt_row(d, None, a.compact) + ("" if a.compact else f"\n    similarity {d['score']}")
+                        for d in rows))
     elif a.cmd == "site":
         data = lookup(a.slugs)
         if a.json:
@@ -685,7 +862,7 @@ def main():
                 print(f"  {k}: {x.get(k)}")
             print(f"  styles: {', '.join(x.get('styles') or [])}\n  types: {', '.join(x.get('types') or [])}")
             print(f"  about: {x.get('description')}")
-            for k in ("pattern", "features", "theme", "bg", "links", "groups", "typeface", "height_px",
+            for k in ("pattern", "features", "theme", "palette", "bg", "links", "groups", "typeface", "height_px",
                       "effort", "summary", "mobile"):
                 if k in lay:
                     v = ", ".join(lay[k]) if isinstance(lay[k], list) else lay[k]
@@ -694,8 +871,12 @@ def main():
         if not data:
             sys.exit(1)
     elif a.cmd == "download":
-        saved = download(lookup(a.slugs), a.out)
+        recs = lookup(a.slugs)
+        saved = download(recs, a.out, warn=True)
         print("\n".join(saved))
+        if a.sheet:
+            for sheet in contact_sheet(recs, a.out, a.sheet):
+                print(f"sheet: {sheet}")
         if not saved:
             sys.exit(1)
     elif a.cmd == "gallery":
@@ -703,7 +884,8 @@ def main():
         if not recs:
             sys.exit(1)
         notes = load_json(Path(a.notes), {}) if a.notes else None
-        print(gallery(recs, a.out, notes=notes, pick=a.pick and normalize_slug(a.pick), title=a.title))
+        print(gallery(recs, a.out, notes=notes, pick=a.pick and normalize_slug(a.pick), title=a.title,
+                      brief=a.brief, images=a.images))
     elif a.cmd == "refresh-index":
         refresh_index(a.full)
     elif a.cmd == "layouts-todo":
