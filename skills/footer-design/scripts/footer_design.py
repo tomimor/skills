@@ -524,22 +524,20 @@ def composite(records, out, max_w=1400):
             x += p.width + 24
         dest = out / f"{d['slug']}.png"
         canvas.save(dest, optimize=True)
-        made.append({"slug": d["slug"], "image": str(dest), "height_px": h_px, "bg": edge_color(views["desktop"])})
+        made.append({"slug": d["slug"], "image": str(dest), "height_px": h_px, "bg": dominant_color(views["desktop"])})
     return made
 
 
-def edge_color(path):
-    """Most common color along the image border, as hex: a good proxy for the footer background."""
+def dominant_color(path):
+    """Most common color across the desktop screenshot, as hex: a proxy for the footer background."""
     from PIL import Image
 
     im = Image.open(path).convert("RGB")
-    im.thumbnail((200, 200))
-    w, h = im.size
-    px = [im.getpixel((x, y)) for x in range(w) for y in (0, h - 1)] + \
-         [im.getpixel((x, y)) for y in range(h) for x in (0, w - 1)]
+    im.thumbnail((240, 240))
+    raw = im.tobytes()
     buckets = {}
-    for r, g, b in px:
-        k = (r // 8 * 8, g // 8 * 8, b // 8 * 8)
+    for i in range(0, len(raw), 3):
+        k = (raw[i] // 16 * 16 + 8, raw[i + 1] // 16 * 16 + 8, raw[i + 2] // 16 * 16 + 8)
         buckets[k] = buckets.get(k, 0) + 1
     r, g, b = max(buckets, key=buckets.get)
     return f"#{r:02x}{g:02x}{b:02x}"
