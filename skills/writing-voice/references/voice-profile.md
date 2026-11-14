@@ -86,7 +86,7 @@ Rioplatense, voseo, "ustedes" for groups. Friendly and direct, never stiff, neve
 | Saying no | "No tenemos eso desarrollado actualmente. Podríamos realizarlo, pero requeriría ..." |
 | Giving the reason | "La razón es que ..." · "Por este motivo, ..." |
 | Opening a path | "Si les interesa sumarlos, podemos armar una propuesta más integral ..." |
-| Low-pressure follow-up | "Pudieron ver la propuesta? Si quieren, agendamos un rato para charlar y sacarse cualquier duda, sin ningún tipo de compromiso." |
+| Low-pressure follow-up | "¿Pudieron ver la propuesta? Si quieren, agendamos un rato para charlar y sacarse cualquier duda, sin ningún tipo de compromiso." |
 | After a no-show | "Veo que no te pudiste sumar a la llamada. Si te interesa charlar, podemos hablar por WhatsApp." |
 | Logistics | Repeats the day, the time, and the link in the body, even when a calendar invite went out: "Dejo la info también acá:" |
 | Close | "Quedo atento a cualquier duda." · "Quedo a disposición." · "Quedo atento a sus comentarios." |
@@ -103,7 +103,7 @@ Rioplatense, voseo, "ustedes" for groups. Friendly and direct, never stiff, neve
 
 **Emphasis in outreach:** he bolds the two or three phrases that carry the offer, so a skim still gets it.
 
-**Marks:** exclamations with the closing mark only ("Buenas!", "Gracias!"). Questions with both marks in a composed email ("¿cómo están?") and with the closing mark alone in a quick reply ("Pudieron ver la propuesta?").
+**Marks:** exclamations with the closing mark only ("Buenas!", "Gracias!"). Questions with both marks ("¿cómo están?"). He often drops the opening mark when he types fast. A draft in his voice keeps it, except in chat.
 
 ## Spanish: product updates
 
@@ -116,6 +116,8 @@ The warmest register. One person on the team writing to the people who use the p
 | Pick up a promise | "Hace un par de ediciones les contábamos que estábamos preparando la cancha para [X]. Bueno, ya están acá!" |
 | What changed, what you gain | "Ahora podés [hacer X]. En vez de [lo que hacías antes], [lo que ves ahora]." |
 | Reassure | "Podés seguir usándola como la usás hoy, no cambia nada!" |
+| A fix | "Corregimos un error que por momentos hacía fallar [qué]. Si alguna vez te topaste con [el síntoma], eso ya quedó atrás." |
+| A beta | "Esta primera versión sale en beta: queremos que la usen y nos cuenten qué les sirve y qué les falta." |
 | Ask for feedback | "Si la probás, tu comentario nos viene bárbaro!" |
 | Give them a line to reuse | "Si alguna vez te preguntaron «y cómo manejan la seguridad?», ahí tenés la respuesta para mostrar." |
 | Thank the people who asked | "Si estás leyendo esto y alguno de estos pedidos te suena, gracias!" |

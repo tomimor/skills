@@ -30,11 +30,11 @@
         "Leaves out the refactor and every internal name (useClientes, feat/fix prefixes, backticks)",
         "Keeps the reader's acronyms (DFE, CCMA, CUIT) without explaining them",
         "Thanks the firms that asked for the filters",
-        "Uses only the fixed section markers (⭐️ ✨ 🛠️ 🐞 🙏🏼) and no emoji inside sentences",
+        "Uses only the fixed section markers (⭐️ ✨ 🛠️ 🙏🏼, and 🐞 at most) and no emoji inside sentences",
         "Contains none of: 'nos enorgullece', 'estamos emocionados', 'y mucho más', 'seguimos mejorando', 'potente', 'increíble'",
         "Invents no feature, number, or date beyond the four items supplied; anything missing is marked [Completar: ...] and repeated as a question in the notes",
         "Contains no em dash",
-        "The fix says what was wrong and that it is fixed, without internal detail"
+        "The fix sits under Mejoras, starts from what was wrong in the reader's terms, and says it is fixed"
       ],
       "files": []
     },

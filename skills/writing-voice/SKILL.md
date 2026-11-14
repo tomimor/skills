@@ -26,9 +26,9 @@ A short email or chat reply needs only this file. Load a reference when its trig
 | Load | When |
 |------|------|
 | [references/voice-profile.md](references/voice-profile.md) | The piece is longer than a short reply, or it is product copy, a pitch, a talk, or a feedback write-up. The moves and phrases he uses in each register, in both languages |
-| [references/channels.md](references/channels.md) | The piece is anything other than a short email or chat reply: a proposal, a product update, a client-facing or status Slack message, a post or DM, a talk, a video script, landing copy, a sales call, a feedback write-up, a bio or spoken intro, a personal note, a README, a commit |
+| [references/channels.md](references/channels.md) | The piece is anything other than a short email or chat message: a proposal or outreach email, a product update, a client-facing or status Slack message, a post or DM, a talk, a video script, landing copy, a sales call, a feedback write-up, a bio or spoken intro, a personal note, a README, a commit |
 | [references/ai-tells.md](references/ai-tells.md) | The task is a review or "make this sound less AI", or the scan flags something you can't rewrite |
-| [examples.md](examples.md) | You want a before-and-after model. It has: an English bad-news email, a Spanish "no" to a customer, a product update item, a pitch line, a first Slack reply in a client channel, a Spanish post, and a review report |
+| [examples.md](examples.md) | You want a before-and-after model, or a model of a review report. It has: an English bad-news email, a Spanish "no" to a customer, a product update item, a pitch line, a first Slack reply in a client channel, a Spanish post, and a review report |
 
 ## The voice, in order of damage
 
@@ -45,27 +45,28 @@ A short email or chat reply needs only this file. Load a reference when its trig
 
 **The cut test** is his own: if a sentence gives the reader no information and no concrete value, delete it. His most common edit to a draft is "not necessary".
 
-## Greetings and sign-offs
+## Short messages
 
-Enough for a short reply. The fuller palette is in the voice profile.
+A short email or chat message is 2 to 6 short sentences between greeting and sign-off: one line of reaction, the answer or what he did, the next step or a way out, and a warm close. That warm closing line passes the cut test. It is the one line of warmth he always keeps.
 
 | | English | Spanish |
 |---|---------|---------|
 | Greeting | `Hi <Name>,` or `Hi <Name>!` on good news. Slack: `Hey @Name!` | `Hola <Nombre>!` or `Buenas <Nombre>!`. A quick ack: `<Nombre>,`. Never "Estimada" to a customer |
 | One line of reaction | "Great news!" "Thanks for the clarification!" | "Recibido." "Impecable!" "Gracias por la consulta." |
+| Follow-up after silence | "I wanted to quickly check if you received my proposal. If it helps, I can walk you through it on a short call." | "¿Pudieron ver la propuesta? Si quieren, agendamos un rato para charlar y sacarse cualquier duda, sin ningún tipo de compromiso." |
 | Close | "Thanks in advance!" "Looking forward to it." | "Quedo atento a cualquier duda." "Quedo a disposición." "Gracias desde ya," |
 | Sign-off | `Best,` then `Tomas` | `Saludos,` then `Tomás.` |
 | Name | `Tomi` in either language with people who already call him that | |
 
-A second reply in the same exchange on the same day drops the greeting and the sign-off.
+A second reply in the same exchange on the same day drops the greeting and the sign-off. A reply keeps the thread's subject, so it needs none.
 
 ## Language
 
 - **Write in the reader's language, not the conversation's.** A reply goes in the language the other person wrote in. With no other signal, use the language Tomi briefed in and say you assumed it.
-- **Spanish is rioplatense.** Voseo for one person ("podés", "tenés", "probalo", "contame"), "ustedes" for a group, "acá", "charlar", "armar". Never "tú", "vosotros", or neutral-Spanish marketing phrasing.
+- **Spanish is rioplatense.** Voseo for one person ("podés", "tenés", "probalo", "contame"), "ustedes" for a group, "acá", "charlar", "armar". Never "tú", "vosotros", "usted" with a customer, or neutral-Spanish marketing phrasing.
 - **Argentine colloquial register is welcome** with customers and friends ("sin vueltas", "nos viene bárbaro", "la compu"). It sets him apart. Keep it, as long as it doesn't overpromise.
 - **English is plain and international.** Contractions are fine. No idiom that needs a US or UK childhood to parse.
-- **Spanish punctuation:** exclamations take the closing mark only ("Buenas!", "Gracias!"). Questions take both marks in email, posts, and product copy; in chat the closing mark alone is fine. Accents are always correct.
+- **Spanish punctuation:** exclamations take the closing mark only ("Buenas!", "Gracias!"). Questions take both marks ("¿Pudieron verla?") everywhere except chat, where the closing mark alone is fine. Accents are always correct.
 - **Quotes stay in their original language.** Don't translate a quote, a title, or a term of art. Add a short comment in his words instead.
 - **Work artifacts in an English repo or workspace stay in English** whatever language the chat is in.
 - **Notes and questions to Tomi** go in the language he is using with you.
@@ -76,9 +77,10 @@ A second reply in the same exchange on the same day drops the greeting and the s
 
 When something is missing:
 
-- **Ask first, and don't draft,** when the gap changes what the piece says: the answer itself, who the reader is, or more than three missing facts.
+- **Ask first, and don't draft,** when the gap changes what the piece says: the answer itself, who the reader is, or the facts the piece is built on.
 - **Draft with a placeholder** when the gap is a detail that slots in: a link, a date, a name, a number, a line only he can write. Use `[Completar: qué falta]` in Spanish and `[Missing: what]` in English, and repeat each one as a question in the notes.
 - **Offering to prepare something or to talk is fine.** A date, a price, or a scope is a commitment and comes from him.
+- **Names are never recalled or guessed.** A product, company, or person's name comes from the brief or from the project you are in. Otherwise it is a placeholder.
 
 A made-up statistic in a hook costs more than no hook.
 
@@ -92,11 +94,11 @@ A made-up statistic in a hook costs more than no hook.
 | Numbers | Digits for quantities: "2 or 3 slots", "15 días", "3 clientes" |
 | Lists | Numbered when the reader must answer or act on each item. A bold label and a colon when items run longer than a line. Otherwise write sentences |
 | Emphasis | One or two per item at most. If everything is highlighted, nothing stands out. Plain text in an email: no Markdown asterisks unless the destination renders them |
-| Bracket tags | For triage: `[Bug]` and `[Improvement]` on feedback items, `[Client: what happened]` on an internal update, `[Org - Counterparty] Topic` on an outreach subject |
+| Bracket tags | For triage. On feedback items: `[Bug]` when it behaves wrongly, `[Improvement]` when it works but could be better, `[Feedback]` for an observation with no ask. `[Client: what happened]` on an internal update. `[Org - Counterparty] Topic` on an outreach subject |
 | Parentheses | His aside: "(nuevamente)", "(y está perfecto)", "(at least by us)". One per paragraph at most |
-| Exclamation marks | On a greeting, thanks, or good news. Never doubled, at most one per sentence, never on a claim. None in a sales document, a feedback write-up, or anything technical |
+| Exclamation marks | On a greeting, thanks, or good news. Never doubled, at most one per sentence. None in a formal proposal, a sales script, or legal and technical text |
 | Emoji | None in an email or a Slack message. A fixed set of section markers in a product update. A functional marker in slides or a Notion doc (✅ ❌ 👉). Never as decoration |
-| Headings | Documents and the product update. Never in a one-to-one email or a chat message |
+| Headings | Documents (a feedback write-up, a plan, a README) and the product update. Never in a one-to-one email or a chat message |
 | Hashtags | None, anywhere in a post |
 | Capitals | Sentence case. No ALL CAPS for emphasis |
 
@@ -140,7 +142,17 @@ If the draft has no point or no concrete detail, say so and ask for it. Polishin
 
 ### Reviewing
 
-Run the scan on the draft, then read it. Report findings, most severe first, in the shape shown at the end of [examples.md](examples.md). Every finding carries a rewrite, or a question when only Tomi has the fact.
+Run the scan on the draft, then read it. Report findings, most severe first. Every finding carries a rewrite, or a question when only Tomi has the fact. Write the report in the language he is using with you.
+
+```text
+### Must fix
+1. Line 1: "Over 80% of firms lose clients to missed deadlines."
+   → No source for the number. Give me one, or cut the line. (unsourced fact)
+
+### Should fix
+2. Line 6: "It's not just a dashboard, it's peace of mind."
+   → "You see every overdue filing in one list at 7 AM." (contrast frame)
+```
 
 | Severity | Covers |
 |----------|--------|
@@ -148,7 +160,9 @@ Run the scan on the draft, then read it. Report findings, most severe first, in 
 | **Should fix** | No next step, a structural tell, a hollow opener or closer, hype or category nouns, a tone tell (hedging, pressure, engagement bait), an abstract claim where a number exists, the same thing said twice |
 | **Nice to have** | Greeting or sign-off off-register, a long sentence, emoji, hashtags, formatting |
 
-**When the draft is empty** (no fact, case, or opinion that is his), say that in the first line and ask for the material. Then list only the findings that would survive a rewrite, five at most. Line edits on text that will be replaced are noise.
+**When the draft is empty** (no fact, case, or opinion that is his), say that in the first line and ask for the material. Then list at most five findings: the ones about what the piece says and who it speaks to. Wording that a rewrite will replace anyway goes in one line under what you left out.
+
+A pressure line built on a claim nobody verified ("quedan pocos lugares") is an unsourced fact first, so it is a must fix.
 
 Stop at the report unless asked to fix.
 
@@ -160,7 +174,7 @@ Stop at the report unless asked to fix.
 <this-skill-dir>/scripts/voice-scan.sh -r contrast .    # one rule
 ```
 
-Rules: `emdash`, `hype`, `filler`, `hedge`, `contrast`, `hook`, `intensifier`, `exclaim`, `hashtag`, `emoji`, `placeholder`, in English and Spanish. The script skips fenced code blocks, inline code spans, and URLs, and exits 1 when it finds candidates. It needs only `bash` and `awk`.
+Rules: `emdash`, `hype`, `filler`, `hedge`, `contrast`, `hook`, `pressure`, `intensifier`, `exclaim`, `hashtag`, `emoji`, `placeholder`, in English and Spanish. The script skips fenced code blocks, inline code spans, and URLs, and exits 1 when it finds candidates. It needs only `bash` and `awk`.
 
 Every hit needs a human read. One concrete contrast is allowed, a section marker in a product update is fine, and a `placeholder` hit only means the piece isn't ready to send. The scan can't see a buried answer, a missing next step, a triad, or an invented fact. Those are yours to catch.
 
@@ -186,7 +200,7 @@ READMEs and commit messages have no skill. Their conventions are in [references/
 
 The reply has two parts, in this order, with a `---` line between them.
 
-1. **The piece, bare.** No "Here's the draft" before it. Plain text, not inside a code block, so it copies clean. A piece with several fields (title, subject, preview, body) labels each one.
+1. **The piece, bare.** No "Here's the draft" before it. Plain text, not inside a code block, so it copies clean. The exception is a piece whose destination takes Markdown (a product update body, a README): that goes in a fenced block so the marks survive. A piece with several fields labels each one. In a review, the report is the piece.
 2. **Notes, short, in the language Tomi is using with you:** your questions, numbered, with every placeholder repeated as one. Then what you assumed. Then what you left out, because he will ask "what did you leave out?" otherwise.
 
 Also:

@@ -41,13 +41,16 @@ The periodic email to the users of his product. It should sound like one person 
 
 | Part | Convention |
 |------|------------|
-| Fields | Four, each labeled: **Título** (the headline shown at the top of the email), **Asunto** (the inbox subject), **Preview** (the fragment shown after the subject), and the body in Markdown |
-| Subject | The headline change in the reader's words, as an invitation: "Instalá [producto] como app en tu compu y en tu celu!" |
+| Fields | Four, each labeled: **Título**, **Asunto**, **Preview**, and **Cuerpo** (the body, in Markdown) |
+| Título and Asunto | The headline change in the reader's words, often as an invitation: "Instalá [producto] como app en tu compu y en tu celu!" · "Llegó el reporte para [quiénes]!" They are usually the same line. The Título can instead be a warm line for the whole edition |
+| Preview | A fragment that adds the benefit: "A un toque de distancia, a pantalla completa y más rápida." |
 | Opening | `Buenas!` then one human line (the long weekend, what was promised last time) or a scene from the reader's day: "En el día a día, manejás 20 pestañas y [producto] se mezcla entre tantas." The human line is Tomi's to supply. Ask for it, or leave a placeholder |
-| Sections | Subtitles with a fixed marker each, in this order: ⭐️ and the star change as its title, `✨ Otras novedades`, `🛠️ Mejoras`, 🐞 for fixes, `🙏🏼 Gracias!`. A section with nothing in it is left out. ⚠️ marks an edition with no news. No other emoji |
+| Sections | `##` subtitles with a fixed marker each, in this order: `## ⭐️` with the star change as its title, `## ✨ Otras novedades`, `## 🛠️ Mejoras`, `## 🙏🏼 Gracias!`. A section with nothing in it is left out. 🐞 only when a fix needs a section of its own. ⚠️ marks an edition with no news. No other emoji |
+| Otras novedades and Mejoras | Bullets. A news item is a bold label, a colon, and one or two sentences. An improvement is one sentence with the key phrase in bold |
 | Who "you" is | The greeting addresses the group ("Espero que hayan disfrutado..."). Each item speaks to one reader in voseo ("Ahora podés...") |
 | Each item | What changed, then what you gain. One or two emphases at most |
-| A fix | What was wrong, that it is fixed, and what the reader has to do, if anything. One or two sentences, no drama |
+| A fix | Goes under Mejoras and starts with "Corregimos...": what was wrong, in the reader's terms, and that it is behind them. "Si alguna vez te topaste con una pantalla que no levantaba, eso ya quedó atrás." Add what the reader has to do, if anything |
+| Names | The product's name and the founders' first names come from the project you are in or from Tomi. They are not written in this skill |
 | Reassurance | Say what does not change: "Podés seguir usándola como hoy, no cambia nada!" |
 | Thanks | Credit the users who asked: "Si estás leyendo esto y alguno de estos pedidos te suena, gracias!" |
 | Sign-off | `Un saludo,` and the first names of the founders |
@@ -75,7 +78,7 @@ The periodic email to the users of his product. It should sound like one person 
 
   We plan to give the client clarity by EOD.
   ```
-- **In a channel shared with a client, the first reply does four things:** thanks them, says who owns it on our side, asks the one question that sets the urgency, and commits to a time for the next update. It says nothing about cause, severity, scope, or blame until the team has agreed internally.
+- **In a channel shared with a client, the first reply does four things:** thanks them, says who owns it on our side, asks the one question that sets the urgency, and commits to a time for the next update. It says nothing about cause, severity, scope, or blame until the team has agreed internally, even when Tomi's brief mentions a suspicion. "We are looking at it now" is the honest limit here.
 - **A promise to a client has a time,** and the update arrives even when there is no news. Internally, "I'll keep everyone posted here" is enough once the client deadline is stated.
 - **Mentions are written `@Name`.** Tomi picks them from Slack's autocomplete when he pastes.
 - **No emoji** in a Slack message he writes by hand.
@@ -164,12 +167,13 @@ Pedagogical clarity comes before completeness. People came to learn, not to read
 
 ## Feedback write-ups and plans
 
+- It is a document, so it has headings and no greeting or sign-off. If he will paste it into an email, he adds those.
 - Start with thanks and the frame, then one line on how the document is organized.
-- One section per item. The heading is a bracket tag and the problem in plain words.
+- One section per item. The heading is a bracket tag and the problem in plain words: `## [Bug] The two delivery dates don't match`.
 - Each item: what happened, why it mattered, a suggestion, the evidence.
 - Separate facts from assumptions, and label the assumptions.
 - A plan names who owns each decision and drafts the messages in full.
-- End with thanks. No summary of what was just said.
+- End with thanks, and an exclamation mark is fine there: "Thank you for reading through all of this!" No summary of what was just said.
 
 ## Bios and spoken intros
 

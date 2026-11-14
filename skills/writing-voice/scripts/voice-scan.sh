@@ -3,8 +3,8 @@
 # Usage: voice-scan.sh [path ...]        (files or folders; .md, .mdx, .txt, .html)
 #        voice-scan.sh -r RULE [path]    (run one rule)
 #        voice-scan.sh - < draft.txt     (scan a draft from stdin)
-# Rules: emdash, hype, filler, hedge, contrast, hook, intensifier, exclaim,
-#        hashtag, emoji, placeholder
+# Rules: emdash, hype, filler, hedge, contrast, hook, pressure, intensifier,
+#        exclaim, hashtag, emoji, placeholder
 # Skips fenced code blocks, inline code spans, and URLs, so quoted "before"
 # samples and commands don't produce false hits. English and Spanish.
 # Reports every hit on a line. Exits 1 when it finds candidates, 0 when clean.
@@ -62,10 +62,10 @@ BEGIN {
   n = 0
   # Vocabulary that sells instead of saying. Name the concrete thing instead.
   rule[++n] = "hype"
-  re[n] = "(delve|delves|delving|dive into|deep dive|game.chang[a-z]+|revolutionary|revolutioni[sz][a-z]+|groundbreaking|cutting.edge|state.of.the.art|world.class|next.level|seamless|seamlessly|robust|leverage|leverages|leveraging|unleash[a-z]*|unlock the|harness[a-z]*|elevate[sd]?|supercharge[sd]?|empower[a-z]*|transformative|synerg[a-z]+|holistic|tapestry|testament to|ever.evolving|fast.paced|embark[a-z]*|pivotal|paradigm shift|revolucion[a-z]+|disruptiv[oa]s?|de vanguardia|clase mundial|siguiente nivel|sinergias?|cambio de paradigma|empoder[a-z]+|potenciar|potenci[aá] tu|sin fricciones|potentes?|incre\xc3\xadbles?|plataforma integral|soluci\xc3\xb3n integral|soluci\xc3\xb3n de gesti\xc3\xb3n|ecosistema para|somos (una|la) (plataforma|soluci\xc3\xb3n)|we are a platform|we.re a platform)"
+  re[n] = "(delve|delves|delving|dive into|deep dive|game.chang[a-z]+|revolutionary|revolutioni[sz][a-z]+|groundbreaking|cutting.edge|state.of.the.art|world.class|next.level|seamless|seamlessly|robust|leverage|leverages|leveraging|unleash[a-z]*|unlock the|harness[a-z]*|elevate[sd]?|supercharge[sd]?|empower[a-z]*|transformative|synerg[a-z]+|holistic|tapestry|testament to|ever.evolving|fast.paced|embark[a-z]*|pivotal|paradigm shift|revolucion[a-z]+|disruptiv[oa]s?|de vanguardia|clase mundial|siguiente nivel|sinergias?|cambio de paradigma|empoder[a-z]+|potenciar|potenci[aá] tu|sin fricciones|potentes?|incre\xc3\xadbles?|innovador[a-z]*|innovative|plataforma integral|soluci\xc3\xb3n integral|soluci\xc3\xb3n de gesti\xc3\xb3n|ecosistema para|somos (una|la) (plataforma|soluci\xc3\xb3n)|we are a platform|we.re a platform)"
   # Sentences that announce content instead of delivering it.
   rule[++n] = "filler"
-  re[n] = "(it.s important to note|it is important to note|it.s worth noting|it is worth noting|it goes without saying|needless to say|in today.s [a-z]+|at the end of the day|without further ado|in conclusion|in summary|to sum up|let.s dive in|i hope this (email|message|note) finds you|when it comes to|in order to|cabe destacar|cabe mencionar|cabe se\xc3\xb1alar|es importante (destacar|mencionar|se\xc3\xb1alar|remarcar)|vale la pena (destacar|mencionar)|en el mundo actual|en la actualidad|en conclusi\xc3\xb3n|en resumen|sin m\xc3\xa1s pre\xc3\xa1mbulos|espero que (te encuentres|se encuentren|este (mensaje|correo|mail) te encuentre)|a la hora de|en un mundo (cada vez|donde)|en el mundo de hoy|nos enorgullece|estamos emocionados|y mucho m\xc3\xa1s|seguimos mejorando|esperamos que disfrut[a-z]+|we.re excited to|we are excited to|we.re thrilled|we are thrilled|proud to announce|and much more|stay tuned)"
+  re[n] = "(it.s important to note|it is important to note|it.s worth noting|it is worth noting|it goes without saying|needless to say|in today.s [a-z]+|at the end of the day|without further ado|in conclusion|in summary|to sum up|let.s dive in|i hope this (email|message|note) finds you|when it comes to|in order to|cabe destacar|cabe mencionar|cabe se\xc3\xb1alar|es importante (destacar|mencionar|se\xc3\xb1alar|remarcar)|vale la pena (destacar|mencionar)|en el mundo actual|en la actualidad|en conclusi\xc3\xb3n|en resumen|sin m\xc3\xa1s pre\xc3\xa1mbulos|espero que (te encuentres|se encuentren|se encuentre|est\xc3\xa9s? (muy )?bien|este (mensaje|correo|mail) te encuentre)|a la hora de|en un mundo (cada vez|donde)|en el mundo de hoy|nos enorgullece|estamos emocionados|y mucho m\xc3\xa1s|seguimos mejorando|esperamos que disfrut[a-z]+|we.re excited to|we are excited to|we.re thrilled|we are thrilled|proud to announce|and much more|stay tuned)"
   # Advice wrapped so nobody can disagree with it.
   rule[++n] = "hedge"
   re[n] = "(you might want to consider|you may want to consider|have you thought about|have you considered|it could be worth|it might be worth|one thing to think about|i think maybe|perhaps we could|i just wanted to|tal vez podr\xc3\xadas considerar|quiz\xc3\xa1s podr\xc3\xadamos|me preguntaba si)"
@@ -75,6 +75,9 @@ BEGIN {
   # A question asked only so the writer can answer it.
   rule[++n] = "hook"
   re[n] = "(the result\\?|the best part\\?|this one thing|agree\\?|thoughts\\?|what do you think\\?|est\xc3\xa1s de acuerdo\\?|qu\xc3\xa9 opin[a\xc3\xa1]n?\\?|the catch\\?|the kicker|sound familiar\\?|and for me\\?|here.s the thing|here.s the kicker|want to know (the|a) secret|you won.t believe|el resultado\\?|lo mejor\\?|la clave\\?|te suena( familiar)?\\?|y lo mejor de todo|y eso no es todo)"
+  # Urgency or scarcity used to push. He never manufactures either.
+  rule[++n] = "pressure"
+  re[n] = "(don.t miss|limited time|last chance|act now|before it.s too late|only [0-9]+ (spots|seats|places) left|no (te )?pierdas|no pierda|oportunidad \xc3\xbanica|\xc3\xbaltimos lugares|quedan pocos|por tiempo limitado|antes de que sea tarde)"
   rule[++n] = "intensifier"
   re[n] = "(really|extremely|incredibly|truly|absolutely|literally|super|s\xc3\xbaper|sumamente|incre\xc3\xadblemente)"
   rule[++n] = "hashtag"

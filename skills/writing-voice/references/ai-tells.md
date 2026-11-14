@@ -104,6 +104,6 @@ These are his, so leave them alone.
 
 ## What the scan covers
 
-`scripts/voice-scan.sh` flags candidates for: `emdash`, `hype`, `filler`, `hedge`, `contrast`, `hook`, `intensifier`, `exclaim`, `hashtag`, `emoji`, and `placeholder` (a `[Missing: ...]` or `[Completar: ...]` left in the text).
+`scripts/voice-scan.sh` flags candidates for: `emdash`, `hype`, `filler`, `hedge`, `contrast`, `hook`, `pressure`, `intensifier`, `exclaim`, `hashtag`, `emoji`, and `placeholder` (a `[Missing: ...]` or `[Completar: ...]` left in the text).
 
 It can't see the structural tells that need judgment: a triad, items on one template, an echo ending, a buried answer, a missing next step, an invented fact. Read for those yourself, in that order of cost: invented fact first, buried answer second.
