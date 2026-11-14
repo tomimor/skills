@@ -54,7 +54,7 @@ The periodic email to the users of his product. It should sound like one person 
 | A fix | Goes under Mejoras and starts with "Corregimos...": what was wrong, in the reader's terms, and that it is behind them. "Si alguna vez te topaste con una pantalla que no levantaba, eso ya quedó atrás." Whether the reader has to do anything is a fact: write it only if Tomi told you, and otherwise ask |
 | Names | The product's name and the founders' first names come from the project you are in or from Tomi. They are not written in this skill |
 | Reassurance | Say what does not change: "Podés seguir usándola como hoy, no cambia nada!" |
-| Thanks | Credit the users who asked: "Si estás leyendo esto y alguno de estos pedidos te suena, gracias!" |
+| Thanks | Credit the users who asked: "Si estás leyendo esto y alguno de estos pedidos te suena, gracias!" Thank them for what he said they did, and add no promise of your own ("las leemos todas") |
 | Sign-off | `Un saludo,` and the first names of the founders |
 | PS | Optional, short, human. One line about the week, never about the product |
 
