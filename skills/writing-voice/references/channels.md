@@ -114,7 +114,7 @@ The conventions below come from his own posts, counting only the ones he wrote b
 | Paragraphs | 4 to 7, of one or two sentences each, with a blank line between them |
 | Reader | The group ("Los invito a...", "Los esperamos!"), and one person in voseo for the call to action ("sumate", "mandame un mensaje") |
 | People | He thanks people by full name for a concrete thing, with one specific compliment: "Gracias [nombre] por la invitación!" He credits the team: "fuimos", "logramos" |
-| Link | Not in the body. "Dejo el link en el primer comentario." |
+| Link | Never in the body, not even as a placeholder. The post says "Dejo el link en el primer comentario", and the notes ask him for the link |
 | Ending | Logistics, thanks, or a short forward line ("Vamos por más", "Let's keep building"). An open question now and then ("What do you think?"), only when he wants the answers |
 | Emoji | One or two, closing a line: 🦾 🚀 🔥 🇦🇷 🙌. Never as a section header |
 | Exclamation marks | Yes, on the news and on the thanks |

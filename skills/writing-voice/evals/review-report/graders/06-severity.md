@@ -4,4 +4,6 @@ focus: last_message
 weight: 1
 ---
 
-Findings are grouped by severity with the most severe first.
+PASS if the statement below is true of the reply. FAIL if it is false.
+
+Statement: Findings are grouped by severity with the most severe first.

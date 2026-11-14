@@ -4,4 +4,6 @@ focus: last_message
 weight: 1
 ---
 
-The reply gives numbered options and says which one it would pick and why.
+PASS if the statement below is true of the reply. FAIL if it is false.
+
+Statement: The reply gives numbered options and says which one it would pick and why.

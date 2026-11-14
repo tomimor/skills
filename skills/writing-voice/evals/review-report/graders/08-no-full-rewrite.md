@@ -4,4 +4,6 @@ focus: last_message
 weight: 1
 ---
 
-The review does not deliver a full rewritten post.
+PASS if the statement below is true of the reply. FAIL if it is false.
+
+Statement: The review does not deliver a full rewritten post.

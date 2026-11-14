@@ -4,4 +4,6 @@ focus: last_message
 weight: 1
 ---
 
-The result keeps 'Buenas!' with the closing mark only.
+PASS if the statement below is true of the reply. FAIL if it is false.
+
+Statement: The result keeps 'Buenas!' with the closing mark only.

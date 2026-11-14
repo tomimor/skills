@@ -4,4 +4,6 @@ focus: last_message
 weight: 1
 ---
 
-The body opens with 'Buenas!' (closing mark only) and not with an announcement formula such as 'Nos enorgullece' or 'Estamos emocionados'.
+PASS if the statement below is true of the reply. FAIL if it is false.
+
+Statement: The body opens with 'Buenas!' (closing mark only) and not with an announcement formula such as 'Nos enorgullece' or 'Estamos emocionados'.

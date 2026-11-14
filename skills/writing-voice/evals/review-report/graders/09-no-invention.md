@@ -4,4 +4,6 @@ focus: last_message
 weight: 1
 ---
 
-The review does not invent replacement lessons, numbers or anecdotes for him.
+PASS if the statement below is true of the reply. FAIL if it is false.
+
+Statement: The review does not invent replacement lessons, numbers or anecdotes for him.

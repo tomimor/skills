@@ -4,4 +4,6 @@ focus: last_message
 weight: 1
 ---
 
-The review flags the 97% statistic as unsourced or invented, at the highest severity.
+PASS if the statement below is true of the reply. FAIL if it is false.
+
+Statement: The review flags the 97% statistic as unsourced or invented, at the highest severity.

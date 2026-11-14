@@ -4,4 +4,6 @@ focus: last_message
 weight: 1
 ---
 
-The piece thanks the firms that asked for the filter.
+PASS if the statement below is true of the reply. FAIL if it is false.
+
+Statement: The piece thanks the firms that asked for the filter.
