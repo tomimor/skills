@@ -148,7 +148,7 @@ If the draft has no point or no concrete detail, say so and ask for it. Polishin
 
 ### Reviewing
 
-Run the scan on the draft, then read it. Report findings, most severe first. Every finding carries a rewrite, or a question when only Tomi has the fact. Don't illustrate a rewrite with a made-up example ("after 12 customer calls we cut X"): he may paste it. Write the report in the language he is using with you.
+Run the scan on the draft, then read it. Report findings, most severe first. Every finding carries a rewrite, or a question when only Tomi has the fact. A finding that only says what is wrong is half a finding: "it has an em dash" needs "→ replace it with a period, or cut the line". Don't illustrate a rewrite with a made-up example ("after 12 customer calls we cut X"): he may paste it. Write the report in the language he is using with you.
 
 ```text
 ### Must fix
