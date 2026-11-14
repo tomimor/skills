@@ -102,7 +102,7 @@ Rioplatense, voseo, "ustedes" for groups. Friendly and direct, never stiff, neve
 
 **Commitments carry a date:** "nos comprometemos a incluir [X] dentro de los siguientes 3 meses". What exists today and what is promised are in separate sentences.
 
-**Emphasis in outreach:** he bolds the two or three phrases that carry the offer, so a skim still gets it.
+**Emphasis in outreach:** in a rich-text email he sometimes bolds the two or three phrases that carry the offer. Leave it to him: a draft is plain text.
 
 **Marks:** exclamations with the closing mark only ("Buenas!", "Gracias!"). Questions with both marks ("¿cómo están?"). He often drops the opening mark when he types fast. A draft in his voice keeps it, except in chat.
 

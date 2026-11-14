@@ -73,7 +73,7 @@ Replace each with the measurable thing it stands for. If there is nothing measur
 | Scripted empathy: "I understand how you feel." · "Entiendo cómo te sentís." | Address the concern itself |
 | Manufactured urgency: "Don't miss out." · "Últimos lugares." | The real date, if there is one |
 | Pressure close: "Can we get this signed today?" | "Al final puede ser sí, no, o seguir charlando." |
-| Empty motivation: "Keep building." · "El futuro es de los que se animan." | A fact the reader can use |
+| Empty motivation: "The future belongs to the bold." · "El futuro es de los que se animan." | A fact the reader can use. His own forward lines ("Vamos por más", "Let's keep building") are fine after real news |
 | A label where a number would do: "a big client", "cliente grande" | The number: "90 cuentas". The reader judges |
 | Overpromise: "always", "guaranteed", "the best" | What it does, and where it stops |
 

@@ -22,16 +22,18 @@ What changes from one channel to the next. The voice rules in `SKILL.md` apply e
 
 | Part | Convention |
 |------|------------|
-| Subject | Says the thing. Outreach between two organizations takes a bracket prefix: `[Org - Counterparty] Topic`. Administrative mail is `Topic - Full Name` |
+| Subject | Says the thing. When he writes for one organization to another, a bracket prefix: `[Org - Counterparty] Topic`. Administrative mail is `Topic - Full Name`. A cold email takes a direct question about the reader's day |
 | Reply | 2 to 6 short sentences between greeting and sign-off: reaction, answer, next step, thanks. No new subject: it inherits the thread's |
 | Proposal or outreach | Up to about 200 words. Pick up the thread ("Tal como conversamos..."), list what is attached as numbered items, separate what exists today from what is promised and by when, offer a call |
 | Asks | One per email. Two or more questions become a numbered list |
 | Follow-up after silence | One line asking, one line making the next step cheap, no guilt |
 | Logistics | When he sets or confirms a meeting himself: day, time, time zone, and link in the body, even if an invite went out |
-| Signature | First name only. Name and role on a first formal contact |
+| Signature | First name only. Name and role on a first formal contact. `Tomás / [producto]` on a cold email |
 | Format | Plain text. No Markdown asterisks unless the destination renders them |
 
-No headings and no emoji. Bold only in outreach, where two or three phrases carry the offer.
+No headings, no emoji, no bold.
+
+**Cold email,** to someone who is not looking for the product. Four moves, under 90 words: a subject that asks about their day ("¿Cuántos clientes descarga tu estudio a mano cada mes?"), why he is asking ("Te pregunto porque la mayoría de los estudios con los que hablo hacen lo mismo: ..."), what the product does in one verb-first sentence, and a small ask with a size ("Te muestro cómo en 15 minutos. ¿Tenés tiempo esta semana?"). If they met, the first line says where.
 
 Offering to prepare something or to talk is a stock move and always fine. A date, a price, or a scope is a commitment, so it comes from Tomi or goes in as a question.
 
@@ -44,11 +46,11 @@ The periodic email to the users of his product. It should sound like one person 
 | Fields | Four, each labeled: **Título**, **Asunto**, **Preview**, and **Cuerpo** (the body, in Markdown) |
 | Título and Asunto | The headline change in the reader's words, often as an invitation: "Instalá [producto] como app en tu compu y en tu celu!" · "Llegó el reporte para [quiénes]!" They are usually the same line. The Título can instead be a warm line for the whole edition |
 | Preview | A fragment that adds the benefit: "A un toque de distancia, a pantalla completa y más rápida." |
-| Opening | `Buenas!` then one human line (the long weekend, what was promised last time) or a scene from the reader's day: "En el día a día, manejás 20 pestañas y [producto] se mezcla entre tantas." The human line is Tomi's to supply. Ask for it, or leave a placeholder |
+| Opening | `Buenas!` then one human line (the long weekend, what was promised last time) or a scene from the reader's day: "En el día a día, manejás 20 pestañas y [producto] se mezcla entre tantas." The human line and the scene are Tomi's to supply. Build one from a fact in his brief ("este lunes fue feriado"), or leave a placeholder |
 | Sections | `##` subtitles with a fixed marker each, in this order: `## ⭐️` with the star change as its title, `## ✨ Otras novedades`, `## 🛠️ Mejoras`, `## 🙏🏼 Gracias!`. A section with nothing in it is left out. 🐞 only when a fix needs a section of its own. ⚠️ marks an edition with no news. No other emoji |
-| Otras novedades and Mejoras | Bullets. A news item is a bold label, a colon, and one or two sentences. An improvement is one sentence with the key phrase in bold |
+| Otras novedades and Mejoras | Bullets. A news item is a bold label, a colon, and one or two sentences. An improvement is one sentence with the key phrase in bold. A fix may take two |
 | Who "you" is | The greeting addresses the group ("Espero que hayan disfrutado..."). Each item speaks to one reader in voseo ("Ahora podés...") |
-| Each item | What changed, then what you gain. One or two emphases at most |
+| Each item | What changed, then what you gain. The gain has to follow from the change as he described it. If you would have to guess what a feature is for, ask. One or two emphases at most |
 | A fix | Goes under Mejoras and starts with "Corregimos...": what was wrong, in the reader's terms, and that it is behind them. "Si alguna vez te topaste con una pantalla que no levantaba, eso ya quedó atrás." Add what the reader has to do, if anything |
 | Names | The product's name and the founders' first names come from the project you are in or from Tomi. They are not written in this skill |
 | Reassurance | Say what does not change: "Podés seguir usándola como hoy, no cambia nada!" |
@@ -56,6 +58,8 @@ The periodic email to the users of his product. It should sound like one person 
 | Sign-off | `Un saludo,` and the first names of the founders |
 | PS | Optional, short, human. One line about the week, never about the product |
 
+- **A commit list is raw material, not his wording.** Translate it into what the reader sees, and ask in the notes whether a screen name ("dashboard", "tabla de clientes") is the label the user knows.
+- **The four field labels sit outside the code fence.** Only the Markdown body goes inside it.
 - **Left out:** commit-level detail, internal names, work on the marketing site, and filler such as "seguimos mejorando semana a semana".
 - **A week with one topic** gets one topic. Don't pad it to fill the sections.
 - **A week with no news** says so in one line instead of inventing some.
@@ -102,7 +106,7 @@ The conventions below come from his own posts, counting only the ones he wrote b
 | Part | Convention |
 |------|------------|
 | First line | The news, the event, or the topic, stated plainly. No greeting. "Tengo una gran noticia" · "Confirmado [evento] en Argentina!" · "Para mí, la línea entre producto y engineering tiende a desaparecer." |
-| Length | 40 to 130 words. Never over 250. One or two lines are enough over a reshare |
+| Length | Usually 40 to 130 words. Never over 250. Shorter is fine: one or two lines are enough over a reshare |
 | Paragraphs | 4 to 7, of one or two sentences each, with a blank line between them |
 | Reader | The group ("Los invito a...", "Los esperamos!"), and one person in voseo for the call to action ("sumate", "mandame un mensaje") |
 | People | He thanks people by full name for a concrete thing, with one specific compliment: "Gracias [nombre] por la invitación!" He credits the team: "fuimos", "logramos" |
@@ -119,9 +123,11 @@ The conventions below come from his own posts, counting only the ones he wrote b
 
 - **His own news:** the fact or the feeling in line one ("Me hace feliz compartirles que..."), then what it is, who it is with, and a forward line.
 - **Recap with thanks:** what happened and what was covered, thanks by name, one compliment to the host or the venue, where the recording is.
-- **Promotion of a class, talk, or stream:** when and where, what it covers, who else takes part (with a line on why they are worth hearing), who it is for, where the link is.
+- **Promotion of a class, talk, or stream:** when and where, what it covers, who else takes part, who it is for, where the link is. He usually adds a line on why the other speakers are worth hearing. That line is his: ask for it in the notes.
 - **Recommendation:** where he found it, why he likes it ("Me encanta porque..."), who should read it, link in the comments.
 - **Opinion:** the claim in line one ("Para mí, ...", "My take: ..."), the reason, one case, and often a question back to the reader.
+
+A post can mix two kinds (a recommendation that carries an opinion). Lead with the news or the claim, and keep one ending.
 
 **Not his.** These marked the posts he drafted with an assistant in 2023 to 2025, and he rejects them now: em dashes, emoji as headers or as a bullet on every line, a hashtag block, "..." for suspense, a closing aphorism ("The gap is an opportunity."), a question he answers himself, a post over 250 words, neutral Spanish ("Súmate"), empty motivational tone, clickbait hooks, thread-bait.
 
@@ -129,7 +135,7 @@ The conventions below come from his own posts, counting only the ones he wrote b
 
 **X:** one idea per post, and a thread only when each post stands alone. This skill has no sample of his X posts, so ask for one before assuming more.
 
-A direct message on either platform is a short email reply without the sign-off block: greeting, the point, the next step.
+A direct message on either platform is a short email reply without the sign-off block: greeting, the point, the next step. For outreach: `Hola [nombre], vi que [un hecho de su perfil]. Pregunta directa: [la pregunta sobre su día].` Then what the product does in one sentence, and "Si te interesa, te cuento cómo en 10 minutos." 
 
 ## Talks and classes
 
@@ -174,6 +180,8 @@ Pedagogical clarity comes before completeness. People came to learn, not to read
 - **Open by saying how the call goes and that "no" is a fine outcome:** "Te hago un par de preguntas, te muestro solo lo que te sirve, y al final puede ser sí, no, o seguir charlando. No te vengo a apurar."
 - **Say who it is not for:** "No te sirve para todo. Te sirve si tu cuello de botella es este."
 - **Pitch lines start with a verb in the first person plural:** "Sincronizamos...", "Te avisamos cuando..., antes de que se entere él." If a line starts with "Somos una plataforma de...", rewrite it. When he asks for options, every one starts from the verb. A headline that starts from the reader's situation is a different piece: offer it separately and say so.
+- **The one-sentence pitch** for networking has a fixed shape: `Hacemos que [quién] deje de [la tarea manual]: [qué pasa en su lugar].`
+- **Use the words customers use for their problem,** not the category's. Customer quotes go in verbatim. Proof points are the documented ones only. For the owner of a firm, talk about outcomes for the business. For the person who uses the product, talk about their day.
 - **The offer names the frictions removed:** "15 días de prueba, sin tarjeta. Si no te cambia la semana, lo dejás."
 - **Never:** manufactured urgency, a pressure close, scripted empathy ("entiendo cómo te sentís").
 - **A one-page version exists for every script.** If it doesn't fit on a page, it won't be used in the call.
