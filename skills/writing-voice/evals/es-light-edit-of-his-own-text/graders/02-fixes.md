@@ -4,4 +4,4 @@ focus: trace
 weight: 1
 ---
 
-The result fixes 'a el' to 'al' and the lowercase start of the last sentence.
+In the edited text, the phrase reads 'al desarrollo' (not 'a el desarrollo'), and the sentence about being a cofounder starts with a capital letter.

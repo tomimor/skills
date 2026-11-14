@@ -51,7 +51,7 @@ The periodic email to the users of his product. It should sound like one person 
 | Otras novedades and Mejoras | Bullets. A news item is a bold label, a colon, and one or two sentences. An improvement is one sentence with the key phrase in bold. A fix may take two |
 | Who "you" is | The greeting addresses the group ("Espero que hayan disfrutado..."). Each item speaks to one reader in voseo ("Ahora podés...") |
 | Each item | What changed, then what you gain. The gain has to follow from the change as he described it. If you would have to guess what a feature is for, ask. One or two emphases at most |
-| A fix | Goes under Mejoras and starts with "Corregimos...": what was wrong, in the reader's terms, and that it is behind them. "Si alguna vez te topaste con una pantalla que no levantaba, eso ya quedó atrás." Add what the reader has to do, if anything |
+| A fix | Goes under Mejoras and starts with "Corregimos...": what was wrong, in the reader's terms, and that it is behind them. "Si alguna vez te topaste con una pantalla que no levantaba, eso ya quedó atrás." Whether the reader has to do anything is a fact: write it only if Tomi told you, and otherwise ask |
 | Names | The product's name and the founders' first names come from the project you are in or from Tomi. They are not written in this skill |
 | Reassurance | Say what does not change: "Podés seguir usándola como hoy, no cambia nada!" |
 | Thanks | Credit the users who asked: "Si estás leyendo esto y alguno de estos pedidos te suena, gracias!" |
@@ -122,7 +122,7 @@ The conventions below come from his own posts, counting only the ones he wrote b
 **Shape by kind of post:**
 
 - **His own news:** the fact or the feeling in line one ("Me hace feliz compartirles que..."), then what it is, who it is with, and a forward line.
-- **Recap with thanks:** what happened and what was covered, thanks by name, one compliment to the host or the venue, where the recording is.
+- **Recap with thanks:** what happened and what was covered, thanks by name, one compliment to the host or the venue, where the recording is. Thank people only for what he told you happened, and ask him for the compliment.
 - **Promotion of a class, talk, or stream:** when and where, what it covers, who else takes part, who it is for, where the link is. He usually adds a line on why the other speakers are worth hearing. That line is his: ask for it in the notes.
 - **Recommendation:** where he found it, why he likes it ("Me encanta porque..."), who should read it, link in the comments.
 - **Opinion:** the claim in line one ("Para mí, ...", "My take: ..."), the reason, one case, and often a question back to the reader.

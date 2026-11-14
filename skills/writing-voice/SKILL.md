@@ -6,9 +6,9 @@ description: >-
   verbs and numbers instead of category nouns and adjectives, one everyday
   analogy per new idea, and no AI tells. Use when drafting or editing emails,
   Slack or WhatsApp messages, LinkedIn or X posts, product updates, landing
-  copy, pitches, bios, talk or video scripts, or feedback write-ups, and when
-  asked to match his voice, sound less like AI, check tone, or move a draft
-  between English and Spanish.
+  copy, pitches, bios and intros, talk or video scripts, or feedback write-ups,
+  and when asked to match his voice, sound less like AI, check tone, or move a
+  draft between English and Spanish.
 ---
 
 # Writing voice
@@ -35,7 +35,7 @@ A short email or chat reply needs only this file. Load a reference when its trig
 1. **Answer first.** The first sentence carries the answer, the decision, or the ask. A greeting and one line of warmth may come before it. Background may not. "No tenemos eso desarrollado actualmente." "I rescheduled the call for Monday."
 2. **Then the reason, once.** One or two sentences that start from the cause: "La razón es que...", "For context, ...". The reason is the one he gave you, as he gave it. Don't supply a better-sounding one or explain a term of the deal he didn't explain. Say each thing one time, in the place it belongs. A caveat that already has its own section doesn't also go in the opener.
 3. **Close on the next step.** Who does what, by when: "I'll post an update here before the end of the day." When the step is the reader's, make it cheap. Offer options or a way out: "If those times don't work, send me 2 or 3 slots and I'll adjust."
-4. **Verbs, not category nouns.** Say what happens, starting from the verb: "Sincronizamos los datos de toda tu cartera todos los días, así dejás de descargarlos cliente por cliente." Never "Somos una plataforma integral de...". When he asks for options for a pitch or a landing line, every option starts from the verb. For a change or a feature: what changed, then what the reader gains.
+4. **Verbs, not category nouns.** Say what happens, starting from the verb: "Sincronizamos los datos de toda tu cartera todos los días, así dejás de descargarlos cliente por cliente." Never "Somos una plataforma integral de...". When he asks for options for a pitch or a landing line, every option starts with a verb ("Te avisamos...", "Sincronizamos...", "Dejá de..."). None starts with a noun or with "Es como...". The options differ in what they promise, not in their grammar. For a change or a feature: what changed, then what the reader gains.
 5. **Numbers and names, not adjectives or labels.** "Tu lunes son 3 clientes, no 47." "90 cuentas", not "un cliente grande": give the fact and let the reader judge. When a word is vague, name the specific thing. If the detail is missing, ask for it.
 6. **The reader's words.** No builder jargon in text for customers: no internal names, no ticket numbers, no English tech terms they don't use. Their own professional acronyms go in unexplained, because that is how they talk.
 7. **One analogy per new idea.** When the reader would need a definition, give them something from daily life instead, then return to the real thing. Over-engineering is "una Ferrari para ir al kiosco". Tokenizing a deed is like scanning it, except the copy can be transferred and split. The analogies quoted in this skill are his and can be reused for their topic. A new one is yours to propose, flagged in the notes. Never chain two.
@@ -80,7 +80,7 @@ When something is missing:
 - **Ask first, and don't draft,** when the gap changes what the piece says: the answer itself, who the reader is, or the facts the piece is built on.
 - **Draft with a placeholder** when a sentence needs the missing detail to stand: a link, a date, a name, a number. Use `[Completar: qué falta]` in Spanish and `[Missing: what]` in English, and repeat each one as a question in the notes.
 - **Ask in the notes, with no placeholder,** when the piece reads complete without it: an extra line he could add, such as why a speaker is worth hearing or what drives him.
-- **Flagging a guess does not make it allowed.** If you would have to list a sentence under "what I assumed" because you made up its content (a detail of the event, how customers work today, what a feature is for), cut the sentence.
+- **Small inventions count, and flagging one does not make it allowed.** "No tenés que hacer nada", "gracias a todos los que se quedaron a charlar", "las preguntas fueron lo mejor de la noche": each is a fact about the world. If Tomi didn't say it, it isn't in the piece. If you would have to list a sentence under "what I assumed" because you made up its content, cut the sentence.
 - **Offering to prepare something or to talk is fine.** A date, a price, or a scope is a commitment and comes from him.
 - **Names are never recalled or guessed.** A product, company, or person's name comes from the brief or from the project you are in. Otherwise it is a placeholder.
 
@@ -206,7 +206,7 @@ READMEs and commit messages have no skill. Their conventions are in [references/
 The reply has two parts, in this order, with a `---` line between them.
 
 1. **The piece, bare.** No "Here's the draft" before it. Plain text, not inside a code block, so it copies clean. The exception is a piece whose destination takes Markdown (a product update body, a README): that goes in a fenced block so the marks survive. A piece with several fields labels each one. In a review, the report is the piece.
-2. **Notes, short, in the language Tomi is using with you:** your questions, numbered, with every placeholder repeated as one. Then what you assumed. Then what you left out, because he will ask "what did you leave out?" otherwise.
+2. **Notes, short, in the language Tomi is using with you:** your questions, numbered, with every placeholder repeated as one. Then what you assumed about form (language, platform, register, which item leads). A fact is never an assumption. Then what you left out, because he will ask "what did you leave out?" otherwise.
 
 Also:
 
