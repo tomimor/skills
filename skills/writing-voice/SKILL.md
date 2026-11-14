@@ -134,8 +134,9 @@ The full catalog, with rewrites in both languages, is in [references/ai-tells.md
 2. **Collect the facts.** See [Ask before inventing](#ask-before-inventing).
 3. **Draft in order:** answer, reason, next step.
 4. **Cut.** Apply the cut test to every sentence. Keep it minimal and straight to the point.
-5. **Scan the piece** (not your notes, and before you put it in a code fence, because the scan skips fences), then read it once as the recipient. Is the answer in the first two lines? Could they reply in one line?
-6. **Deliver.** See [Delivering](#delivering).
+5. **Trace every sentence.** Go through the piece and, for each sentence that states something about the world, point to the line of his brief or the source it comes from. A sentence you can't trace goes, however small: "así que lo pusimos primero", "la sala quedó con ganas de más", "ya no tenés que hacer nada". Greetings, thanks, and logistics lines need no source.
+6. **Scan the piece** (not your notes, and before you put it in a code fence, because the scan skips fences), then read it once as the recipient. Is the answer in the first two lines? Could they reply in one line?
+7. **Deliver.** See [Delivering](#delivering).
 
 ### Rewriting
 

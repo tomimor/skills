@@ -101,6 +101,10 @@ The shortest register. He uses it with customers and partners in Spanish.
 
 **Ask which platform first.** LinkedIn is the main one. If you can't ask, draft for LinkedIn in the language he briefed in, and say you assumed both. The audience is founders, operators, and product and tech people. The goal is reputation and authority in his niche (tech, startups, product), so optimize for authority over virality, and quality over volume.
 
+**The voice he set for his brand** has three parts: authentic (real experiences, including the ones that went wrong), expert but approachable, and educational (a complex topic made digestible). He likes sharing other people's work as a source of learning.
+
+**What he posts:** his take on an article, a clip of a founder or an expert, an explainer, a milestone, takeaways from an event, a personal reflection, a shout-out to someone in the community, a roundup of trends. A reference from outside the industry (football, a scene from a film) is welcome when it connects to the topic. In his words, people buy from people.
+
 The conventions below come from his own posts, counting only the ones he wrote by hand. His posts start from something that happened: an event he ran or attended, news of his own, something he read. About 3 in 10 promote an event, a class, or a stream. About 3 in 10 are a recap with thanks. The rest are his own news, a recommendation, or an opinion.
 
 | Part | Convention |
@@ -129,7 +133,7 @@ The conventions below come from his own posts, counting only the ones he wrote b
 
 A post can mix two kinds (a recommendation that carries an opinion). Lead with the news or the claim, and keep one ending.
 
-**Not his.** These marked the posts he drafted with an assistant in 2023 to 2025, and he rejects them now: em dashes, emoji as headers or as a bullet on every line, a hashtag block, "..." for suspense, a closing aphorism ("The gap is an opportunity."), a question he answers himself, a post over 250 words, neutral Spanish ("Súmate"), empty motivational tone, clickbait hooks, thread-bait.
+**Not his.** He once had an assistant write sample posts for each type and noted that he did not like the tone of most of them: "was a game-changer for me", "is not just technology, it's a movement", "Thoughts?". The same marks show in the posts he drafted with an assistant in 2023 to 2025, and he rejects them now: em dashes, emoji as headers or as a bullet on every line, a hashtag block, "..." for suspense, a closing aphorism ("The gap is an opportunity."), a question he answers himself, a post over 250 words, neutral Spanish ("Súmate"), empty motivational tone, clickbait hooks, thread-bait.
 
 **Comments** on other people's posts run under 10 words: the person, a reaction, a wish, one emoji at the end. "Grande [nombre]! A seguir creciendo 🦾" · "Tremendo laburo!" · "Great read! Thanks for sharing." · "Completely agree. Let's go!"
 
