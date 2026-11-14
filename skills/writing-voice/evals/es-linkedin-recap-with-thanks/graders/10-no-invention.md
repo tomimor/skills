@@ -4,4 +4,4 @@ focus: trace
 weight: 1
 ---
 
-The post invents no number, quote or detail beyond the brief (a talk yesterday, the topic, the meetup, the host, a full room, the stream on YouTube).
+Look only at the post itself (the text before the --- line), not at the notes after it. The post states no fact that the brief did not give: no audience number, no quote, no named case or company, no anecdote about what happened before or after the talk, and no compliment about the organisers. These are all fine and are NOT inventions: restating the topic in other words, saying that the room was full or that it went well (both are in the brief), the line saying the link is in the first comment, a short forward line such as 'Vamos por más', and [Completar: ...] placeholders.
