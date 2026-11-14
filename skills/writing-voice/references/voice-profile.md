@@ -2,7 +2,9 @@
 
 How Tomi sounds in each register, with the phrases he reaches for. The patterns come from his own sent email, product updates, talk scripts, product copy, feedback write-ups, the rules he wrote for his own notes, and the corrections he gave on drafts. Names, companies, and private details are left out on purpose: this repo is public.
 
-Use the phrases as a palette, not a template. Two of them in one message is plenty. Imitate the rhythm, never the typos: he drops accents and leaves a typo when he types fast, and a draft in his voice has neither.
+The quoted lines are real, lightly generalized. They show a move. Don't reuse a product line as copy for another piece: its claim was true of one product on one day.
+
+Each table row is a slot, and the phrases are examples of what fills it. Use the slots the message needs, one phrase per slot, and write your own wording as often as you borrow his. Imitate the rhythm, never the typos: he drops accents and leaves a typo when he types fast, and a draft in his voice has neither.
 
 ## Contents
 
@@ -45,7 +47,7 @@ These hold in every register and both languages.
 | Nudge | "I wanted to quickly check if you received ..." · "I'm checking in to see if you have any updates on ..." |
 | Asking for a fix | "Could you please resend it?" then "Sorry for the inconvenience, and thanks in advance!" |
 | Close | "Thanks in advance!" · "Looking forward to speaking with the team on Thursday." · "Thanks, and I hope you have a great week!" |
-| Sign-off | `Best,` or `Best regards,` then `Tomas` with a new contact, `Tomi` once there is rapport. A quick reply inside a thread has no greeting and no sign-off |
+| Sign-off | `Best,` or `Best regards,` then `Tomas` by default, `Tomi` with people who already call him that. A second reply in the same exchange on the same day has no greeting and no sign-off |
 
 **Several questions at once:** a numbered list, each item with a bold label and one question that can be answered alone, then a line saying why he asks.
 
@@ -68,21 +70,6 @@ For context, I'm blocking one or two days for this, so the answers decide which 
 | Invite input | "I would love to hear your thoughts and discuss next steps." · "Happy to discuss anything here in the thread!" |
 | Leave the door open | "If anything changes on your side, feel free to ping me here!" |
 
-**Internal update:** a bracketed topic line and who it is for, two or three sentences of fact, the link, then numbered next steps with owners and a time.
-
-```text
-[Client X: issue reported after delivery] @Lead, cc @Manager for visibility
-Client X reported a bug two weeks after we delivered. They found it on testnet, and I've asked them to confirm nothing is live. They already have a fix PR.
-
-Thread: [link]
-
-Next steps:
-1. @Lead checks whether it was in scope and how it relates to what we already reported.
-2. I keep everyone posted here and confirm next steps with the client.
-
-We plan to give the client clarity by EOD.
-```
-
 ## Spanish: customers, partners, university
 
 Rioplatense, voseo, "ustedes" for groups. Friendly and direct, never stiff, never salesy.
@@ -104,7 +91,9 @@ Rioplatense, voseo, "ustedes" for groups. Friendly and direct, never stiff, neve
 | Logistics | Repeats the day, the time, and the link in the body, even when a calendar invite went out: "Dejo la info también acá:" |
 | Close | "Quedo atento a cualquier duda." · "Quedo a disposición." · "Quedo atento a sus comentarios." |
 | Thanks | "Gracias desde ya," · "Muchas gracias," |
-| Sign-off | `Saludos,` · `Un saludo,` · `Nos vemos en un rato,` then `Tomi.` or `Tomás.` Name and role only on a first formal contact or a proposal |
+| Sign-off | `Saludos,` · `Un saludo,` · `Nos vemos en un rato,` then `Tomás.` by default, `Tomi.` with people who already call him that. Name and role only on a first formal contact or a proposal |
+
+**One person or the firm:** he writes to the person ("Si te interesa...") and switches to "ustedes" when the decision belongs to the firm ("Si les interesa sumarlos...").
 
 **Vocabulary that is his:** "charlar", "armar", "sumar" and "sumarse", "agendar", "coordinar", "avanzar", "acá", "un rato", "sin problema", "cualquier duda". Future with "ir a": "van a encontrar", "vamos a dictar", "vas a poder".
 
@@ -197,7 +186,7 @@ Long-form, written for another team or a manager.
 | One dry line | "This may be one of those famous cases of 'it's not a bug, it's a feature', so dismiss it if so." |
 | Close | "Thank you for reading through all of this!" |
 
-**Plans and scenario write-ups:** assumptions listed first and labeled as assumptions, roles and boundaries ("I own ...", "[Lead] owns the decision on ..."), then a timeline of actions. Each action is a bold verb phrase and a colon, then one or two sentences. Messages he would send are drafted in full, ready to paste. Placeholders go in brackets: `[Lead]`, `[link]`.
+**Plans and scenario write-ups:** assumptions listed first and labeled as assumptions, roles and boundaries ("I own ...", "[Lead] owns the decision on ..."), then a timeline of actions. Each action is a bold verb phrase and a colon, then one or two sentences. Messages he would send are drafted in full, ready to paste. In a scenario or a template, roles go in brackets: `[Lead]`, `[BD]`.
 
 ## English: his own site and bio
 

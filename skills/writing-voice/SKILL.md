@@ -6,9 +6,9 @@ description: >-
   verbs and numbers instead of category nouns and adjectives, one everyday
   analogy per new idea, and no AI tells. Use when drafting or editing emails,
   Slack or WhatsApp messages, LinkedIn or X posts, product updates, landing
-  copy, pitches, talk or video scripts, or feedback write-ups, and when asked
-  to match his voice, sound less like AI, check tone, or move a draft between
-  English and Spanish.
+  copy, pitches, bios, talk or video scripts, or feedback write-ups, and when
+  asked to match his voice, sound less like AI, check tone, or move a draft
+  between English and Spanish.
 ---
 
 # Writing voice
@@ -17,49 +17,70 @@ Tomi writes like a product person explaining something to a smart colleague. The
 
 **Scope.** Anything that goes out under Tomi's name or his product's name, in English or Spanish. For developer documentation, use `writing-google-style`. For artifacts that already have a skill and a template (PR descriptions, issues, review comments, governance messages), that skill owns the format and this one supplies the wording. See [Where another skill owns the format](#where-another-skill-owns-the-format).
 
-**Precedence.** What Tomi says in the conversation wins. Then the project's own style rules. Then this file.
+**Precedence.** What Tomi says in the conversation wins, and that includes the wording of his brief: keep his thesis, his facts, and his qualifiers even where they bend a rule below. Then the project's own style rules. Then this file.
 
 ## What to load
 
-This file is enough for a short reply or a quick edit. Load a reference only when its trigger fires.
+A short email or chat reply needs only this file. Load a reference when its trigger fires.
 
 | Load | When |
 |------|------|
-| [references/voice-profile.md](references/voice-profile.md) | The piece is longer than a short reply, or it is the first thing you write as Tomi in this session. Greetings, sign-offs, and stock moves per register, in both languages |
-| [references/channels.md](references/channels.md) | The piece is for a specific channel: email, product update, Slack, WhatsApp, LinkedIn, X, a talk, a video script, landing copy, a sales call, a feedback write-up, a README, a commit |
+| [references/voice-profile.md](references/voice-profile.md) | The piece is longer than a short reply, or it is product copy, a pitch, a talk, or a feedback write-up. The moves and phrases he uses in each register, in both languages |
+| [references/channels.md](references/channels.md) | The piece is anything other than a short email or chat reply: a proposal, a product update, a client-facing or status Slack message, a post or DM, a talk, a video script, landing copy, a sales call, a feedback write-up, a bio or spoken intro, a personal note, a README, a commit |
 | [references/ai-tells.md](references/ai-tells.md) | The task is a review or "make this sound less AI", or the scan flags something you can't rewrite |
-| [examples.md](examples.md) | You want a before-and-after model for the register you are writing in |
+| [examples.md](examples.md) | You want a before-and-after model. It has: an English bad-news email, a Spanish "no" to a customer, a product update item, a pitch line, a first Slack reply in a client channel, a Spanish post, and a review report |
 
 ## The voice, in order of damage
 
 1. **Answer first.** The first sentence carries the answer, the decision, or the ask. A greeting and one line of warmth may come before it. Background may not. "No tenemos eso desarrollado actualmente." "I rescheduled the call for Monday."
 2. **Then the reason, once.** One or two sentences that start from the cause: "La razón es que...", "For context, ...". Say each thing one time, in the place it belongs. A caveat that already has its own section doesn't also go in the opener.
-3. **Close on the next step.** Who does what, by when: "I'll post an update here before the end of the day." When the step is the reader's, make it cheap. Offer options or a way out: "If those times don't work, send me two or three slots and I'll adjust."
+3. **Close on the next step.** Who does what, by when: "I'll post an update here before the end of the day." When the step is the reader's, make it cheap. Offer options or a way out: "If those times don't work, send me 2 or 3 slots and I'll adjust."
 4. **Verbs, not category nouns.** Say what happens, starting from the verb: "Sincronizamos los datos de toda tu cartera todos los días, así dejás de descargarlos cliente por cliente." Never "Somos una plataforma integral de...". For a change or a feature: what changed, then what the reader gains.
-5. **Numbers and names, not adjectives or labels.** "Tu lunes son 3 clientes, no 47." "90 cuentas", not "un cliente grande": give the fact and let the reader judge. When a word is vague, name the specific thing ("which standard?"). If the detail is missing, ask for it. Don't write around the hole.
+5. **Numbers and names, not adjectives or labels.** "Tu lunes son 3 clientes, no 47." "90 cuentas", not "un cliente grande": give the fact and let the reader judge. When a word is vague, name the specific thing. If the detail is missing, ask for it.
 6. **The reader's words.** No builder jargon in text for customers: no internal names, no ticket numbers, no English tech terms they don't use. Their own professional acronyms go in unexplained, because that is how they talk.
-7. **One analogy per new idea.** Explain an unfamiliar concept with something from daily life, then return to the real thing. Over-engineering is "una Ferrari para ir al kiosco". Tokenizing a deed is like scanning it, except the copy can be transferred and split. Pick one analogy for this audience and never chain two.
+7. **One analogy per new idea.** When the reader would need a definition, give them something from daily life instead, then return to the real thing. Over-engineering is "una Ferrari para ir al kiosco". Tokenizing a deed is like scanning it, except the copy can be transferred and split. The analogies quoted in this skill are his and can be reused for their topic. A new one is yours to propose, flagged in the notes. Never chain two.
 8. **Say the limit out loud.** State what isn't built, isn't known, or isn't a fit, then offer the path that exists. "No te sirve para todo. Te sirve si tu cuello de botella es este." B2B buyers detect smoke fast, and this is what makes the rest believable.
 9. **Warm, brief, low pressure.** Thank people. Offer, don't push: "sin ningún tipo de compromiso", "no te vengo a apurar". Never manufacture urgency.
 10. **Show the alternative, don't attack it.** No "most experts get this wrong". Put the old way next to the new way and let the reader see the difference.
 
 **The cut test** is his own: if a sentence gives the reader no information and no concrete value, delete it. His most common edit to a draft is "not necessary".
 
+## Greetings and sign-offs
+
+Enough for a short reply. The fuller palette is in the voice profile.
+
+| | English | Spanish |
+|---|---------|---------|
+| Greeting | `Hi <Name>,` or `Hi <Name>!` on good news. Slack: `Hey @Name!` | `Hola <Nombre>!` or `Buenas <Nombre>!`. A quick ack: `<Nombre>,`. Never "Estimada" to a customer |
+| One line of reaction | "Great news!" "Thanks for the clarification!" | "Recibido." "Impecable!" "Gracias por la consulta." |
+| Close | "Thanks in advance!" "Looking forward to it." | "Quedo atento a cualquier duda." "Quedo a disposición." "Gracias desde ya," |
+| Sign-off | `Best,` then `Tomas` | `Saludos,` then `Tomás.` |
+| Name | `Tomi` in either language with people who already call him that | |
+
+A second reply in the same exchange on the same day drops the greeting and the sign-off.
+
 ## Language
 
-- **Write in the reader's language, not the conversation's.** Tomi may brief in Spanish and need English, or the reverse. If the reader's language isn't clear, ask.
+- **Write in the reader's language, not the conversation's.** A reply goes in the language the other person wrote in. With no other signal, use the language Tomi briefed in and say you assumed it.
 - **Spanish is rioplatense.** Voseo for one person ("podés", "tenés", "probalo", "contame"), "ustedes" for a group, "acá", "charlar", "armar". Never "tú", "vosotros", or neutral-Spanish marketing phrasing.
 - **Argentine colloquial register is welcome** with customers and friends ("sin vueltas", "nos viene bárbaro", "la compu"). It sets him apart. Keep it, as long as it doesn't overpromise.
 - **English is plain and international.** Contractions are fine. No idiom that needs a US or UK childhood to parse.
 - **Spanish punctuation:** exclamations take the closing mark only ("Buenas!", "Gracias!"). Questions take both marks in email, posts, and product copy; in chat the closing mark alone is fine. Accents are always correct.
 - **Quotes stay in their original language.** Don't translate a quote, a title, or a term of art. Add a short comment in his words instead.
 - **Work artifacts in an English repo or workspace stay in English** whatever language the chat is in.
+- **Notes and questions to Tomi** go in the language he is using with you.
 
 ## Ask before inventing
 
-"Preguntá antes de inventar." Facts, numbers, quotes, customer stories, personal anecdotes, and opinions come from Tomi or from a source you fetched in this session. When one is missing, ask the smallest question that unblocks you, or leave a visible `[Completar: qué falta]` (`[Missing: what]` in English) and say so. A made-up statistic in a hook costs more than no hook. The same goes for balance: don't invent a counter-argument, a compliment, or a risk to round a piece out.
+"Preguntá antes de inventar." Facts, numbers, quotes, customer stories, personal anecdotes, and opinions come from Tomi or from a source you fetched in this session. The same goes for balance: don't invent a counter-argument, a compliment, or a risk to round a piece out. Each claim about what a product does must be true exactly as worded.
 
-Each claim about what a product does must be true exactly as worded. If you aren't sure the product does it, ask.
+When something is missing:
+
+- **Ask first, and don't draft,** when the gap changes what the piece says: the answer itself, who the reader is, or more than three missing facts.
+- **Draft with a placeholder** when the gap is a detail that slots in: a link, a date, a name, a number, a line only he can write. Use `[Completar: qué falta]` in Spanish and `[Missing: what]` in English, and repeat each one as a question in the notes.
+- **Offering to prepare something or to talk is fine.** A date, a price, or a scope is a commitment and comes from him.
+
+A made-up statistic in a hook costs more than no hook.
 
 ## Mechanics
 
@@ -68,14 +89,15 @@ Each claim about what a product does must be true exactly as worded. If you aren
 | Em dash | Never. It is his one non-negotiable rule. Use a comma for a short pause, a colon for an explanation, parentheses for a longer aside, a period to separate ideas |
 | Paragraphs | 1 to 3 sentences, one idea each |
 | Sentences | Under about 20 words. Split at the "and" before reaching for a semicolon |
+| Numbers | Digits for quantities: "2 or 3 slots", "15 días", "3 clientes" |
 | Lists | Numbered when the reader must answer or act on each item. A bold label and a colon when items run longer than a line. Otherwise write sentences |
-| Emphasis | One or two per item at most. If everything is highlighted, nothing stands out |
-| Bracket tags | For triage in subjects and titles: `[Bug]`, `[Improvement]`, `[Org - Counterparty] Topic` |
+| Emphasis | One or two per item at most. If everything is highlighted, nothing stands out. Plain text in an email: no Markdown asterisks unless the destination renders them |
+| Bracket tags | For triage: `[Bug]` and `[Improvement]` on feedback items, `[Client: what happened]` on an internal update, `[Org - Counterparty] Topic` on an outreach subject |
 | Parentheses | His aside: "(nuevamente)", "(y está perfecto)", "(at least by us)". One per paragraph at most |
-| Exclamation marks | On a greeting, thanks, or good news, in email, chat, and product updates. One at a time. None in a proposal, a sales document, a feedback write-up, or anything technical |
-| Emoji | None in email. In a product update, slides, Notion, or Slack, only as a fixed set of section markers. Never as decoration |
-| Headings | Documents only. Never in an email or a chat message |
-| Hashtags | None in the body of a post |
+| Exclamation marks | On a greeting, thanks, or good news. Never doubled, at most one per sentence, never on a claim. None in a sales document, a feedback write-up, or anything technical |
+| Emoji | None in an email or a Slack message. A fixed set of section markers in a product update. A functional marker in slides or a Notion doc (✅ ❌ 👉). Never as decoration |
+| Headings | Documents and the product update. Never in a one-to-one email or a chat message |
+| Hashtags | None, anywhere in a post |
 | Capitals | Sentence case. No ALL CAPS for emphasis |
 
 ## Tells to remove
@@ -87,52 +109,60 @@ These mark a draft as machine-written faster than any single word does. "Muy de 
 | "It's not X, it's Y" and "No es X. Es Y." as a drumbeat | State Y. One contrast per piece is fine when both halves are concrete ("3 clientes, no 47") |
 | Forced triads and stacked fragments ("Simple. Fast. Reliable.") | One specific claim with its number |
 | Every item built on the same template | Vary by content. One item gets a line, another gets three |
-| A question you answer yourself ("The result?") | Say the result. A real question to a live room is fine |
-| Hollow openers and closers ("In today's...", "Nos enorgullece anunciar...", "Y mucho más", "Esperamos que disfrutes...") | Start with the answer. End on the next step |
+| A question asked only so you can answer it ("The result?") | Say the result |
+| Hollow openers and closers ("In today's...", "Nos enorgullece anunciar...", "Y mucho más", "Agree?") | Start with the answer. End on the next step |
 | Hype and category words (`seamless`, `potente`, `revolucionario`, `plataforma integral`, `ecosistema`) | The verb and the number |
 | Hedge stacks, scripted empathy, empty motivation | "I'd do X because Y", or "I don't know" |
 | Decoration added for its own sake | Remove it |
 
-The full catalog, with rewrites in both languages and the list of things that look like tells but are his, is in [references/ai-tells.md](references/ai-tells.md).
+**His, so not tells:** "Buenas!" and "Gracias!" with a closing mark only. Argentine colloquial phrases. One concrete contrast. A question that is a test the reader runs on their own case ("¿Podés resolverlo con una base de datos? Entonces no lo necesitás."). A parenthetical aside. "Quedo atento a cualquier duda."
+
+The full catalog, with rewrites in both languages, is in [references/ai-tells.md](references/ai-tells.md).
 
 ## Modes
 
 ### Writing
 
-1. **Pin four things:** the reader, the channel, the language, and the one thing the reader should do or know afterwards. For a post, ask which platform first. If one of the four is unknown and can't be inferred, ask once.
+1. **Pin four things:** the reader, the channel, the language, and the one thing the reader should do or know afterwards. For a post, the platform matters: ask, or draft for LinkedIn and say you assumed it.
 2. **Collect the facts.** See [Ask before inventing](#ask-before-inventing).
-3. **Draft in order:** answer, reason, next step. Take the greeting and sign-off for the register from [references/voice-profile.md](references/voice-profile.md).
+3. **Draft in order:** answer, reason, next step.
 4. **Cut.** Apply the cut test to every sentence. Keep it minimal and straight to the point.
-5. **Scan,** then read it once as the recipient. Is the answer in the first two lines? Could they reply in one line?
+5. **Scan the piece** (not your notes), then read it once as the recipient. Is the answer in the first two lines? Could they reply in one line?
 6. **Deliver.** See [Delivering](#delivering).
 
 ### Rewriting
 
-Make the lightest edit that fixes it. When the draft is his, he keeps his own words and accepts small moves: "Mi nombre es" to "Soy", one idea per line, a tighter verb. A full rewrite of his text usually gets replaced by his own version. Never change a number, a date, a commitment, or the meaning to improve the rhythm. If the draft has no point or no concrete detail, say so and ask for it. Polishing empty text only hides the problem. Show the result, then at most three lines on what changed.
+When the text is his and basically sound, make the lightest edit that fixes it. He keeps his own words and accepts small moves: one idea per line, a tighter verb, a fixed contraction. A full rewrite of his text usually gets replaced by his own version. Never change a number, a date, a commitment, or the meaning to improve the rhythm, and leave a label he chose on purpose (an unnamed employer, a vague "algo") in place: ask about it in the notes.
+
+When the line itself is the problem (a category-noun pitch, a hollow opener), replace it and offer options.
+
+If the draft has no point or no concrete detail, say so and ask for it. Polishing empty text only hides the problem.
 
 ### Reviewing
 
-Report findings, most severe first. Every finding carries a rewrite.
+Run the scan on the draft, then read it. Report findings, most severe first, in the shape shown at the end of [examples.md](examples.md). Every finding carries a rewrite, or a question when only Tomi has the fact.
 
 | Severity | Covers |
 |----------|--------|
-| **Must fix** | An invented fact, a product claim that isn't true as worded, the answer buried or missing, the wrong language or the wrong "you", a commitment Tomi didn't make |
-| **Should fix** | No next step, a structural tell, hype or category nouns, an abstract claim where a number exists, pressure tactics, the same thing said twice |
-| **Nice to have** | Greeting or sign-off off-register, a long sentence, formatting |
+| **Must fix** | An invented or unsourced fact, a product claim that isn't true as worded, the answer buried or missing, the wrong language or the wrong "you", a commitment Tomi didn't make, an em dash |
+| **Should fix** | No next step, a structural tell, a hollow opener or closer, hype or category nouns, a tone tell (hedging, pressure, engagement bait), an abstract claim where a number exists, the same thing said twice |
+| **Nice to have** | Greeting or sign-off off-register, a long sentence, emoji, hashtags, formatting |
+
+**When the draft is empty** (no fact, case, or opinion that is his), say that in the first line and ask for the material. Then list only the findings that would survive a rewrite, five at most. Line edits on text that will be replaced are noise.
 
 Stop at the report unless asked to fix.
 
 ## Scanning
 
 ```bash
-<this-skill-dir>/scripts/voice-scan.sh draft.md       # scan a file or a folder
-pbpaste | <this-skill-dir>/scripts/voice-scan.sh -    # scan a draft from stdin
-<this-skill-dir>/scripts/voice-scan.sh -r contrast .  # one rule
+<this-skill-dir>/scripts/voice-scan.sh draft.md         # scan a file or a folder
+<this-skill-dir>/scripts/voice-scan.sh - < draft.txt    # scan a draft from stdin
+<this-skill-dir>/scripts/voice-scan.sh -r contrast .    # one rule
 ```
 
-Rules: `emdash`, `hype`, `filler`, `hedge`, `contrast`, `hook`, `intensifier`, `exclaim`, `hashtag`, in English and Spanish. The script skips fenced code blocks, inline code spans, and URLs, and exits 1 when it finds candidates. It needs only `bash` and `awk`.
+Rules: `emdash`, `hype`, `filler`, `hedge`, `contrast`, `hook`, `intensifier`, `exclaim`, `hashtag`, `emoji`, `placeholder`, in English and Spanish. The script skips fenced code blocks, inline code spans, and URLs, and exits 1 when it finds candidates. It needs only `bash` and `awk`.
 
-Every hit needs a human read. One concrete contrast is allowed, and `really` inside a quote is fine. The scan can't see a buried answer, a missing next step, or an invented fact. Those are yours to catch.
+Every hit needs a human read. One concrete contrast is allowed, a section marker in a product update is fine, and a `placeholder` hit only means the piece isn't ready to send. The scan can't see a buried answer, a missing next step, a triad, or an invented fact. Those are yours to catch.
 
 ## Where another skill owns the format
 
@@ -154,9 +184,14 @@ READMEs and commit messages have no skill. Their conventions are in [references/
 
 ## Delivering
 
-- **Paste-ready text is delivered bare.** An email, a Slack message, or a post arrives with no "Here's the draft" before it and no commentary after it. Notes go below, separated, in at most three lines.
-- **One version, and your pick.** When he asks for options, number them, make each different in a real way, and say which one you would choose and why. Don't leave a menu inside the final artifact: one default, so it doesn't confuse.
-- **Say what you left out.** If you skipped a comment, a section, or a check, say so in the same message. He will ask "what did you leave out?" otherwise.
+The reply has two parts, in this order, with a `---` line between them.
+
+1. **The piece, bare.** No "Here's the draft" before it. Plain text, not inside a code block, so it copies clean. A piece with several fields (title, subject, preview, body) labels each one.
+2. **Notes, short, in the language Tomi is using with you:** your questions, numbered, with every placeholder repeated as one. Then what you assumed. Then what you left out, because he will ask "what did you leave out?" otherwise.
+
+Also:
+
+- **One version by default.** When he asks for options, number them, make each different in a real way, keep at least one usable as it stands, and say which you would pick and why. The final artifact carries one default, not a menu.
 - **Nothing is sent, posted, or published without an explicit yes** on the draft he saw.
 - **Slack takes mrkdwn:** `*bold*`, `_italic_`, `<url|label>`, no `#` headings.
 

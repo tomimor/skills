@@ -23,14 +23,17 @@ What changes from one channel to the next. The voice rules in `SKILL.md` apply e
 | Part | Convention |
 |------|------------|
 | Subject | Says the thing. Outreach between two organizations takes a bracket prefix: `[Org - Counterparty] Topic`. Administrative mail is `Topic - Full Name` |
-| Reply | 2 to 6 lines: greeting, reaction, answer, next step, thanks |
+| Reply | 2 to 6 short sentences between greeting and sign-off: reaction, answer, next step, thanks. No new subject: it inherits the thread's |
 | Proposal or outreach | Up to about 200 words. Pick up the thread ("Tal como conversamos..."), list what is attached as numbered items, separate what exists today from what is promised and by when, offer a call |
 | Asks | One per email. Two or more questions become a numbered list |
 | Follow-up after silence | One line asking, one line making the next step cheap, no guilt |
-| Logistics | Day, time, time zone, and link in the body, even if an invite went out |
+| Logistics | When he sets or confirms a meeting himself: day, time, time zone, and link in the body, even if an invite went out |
 | Signature | First name only. Name and role on a first formal contact |
+| Format | Plain text. No Markdown asterisks unless the destination renders them |
 
 No headings and no emoji. Bold only in outreach, where two or three phrases carry the offer.
+
+Offering to prepare something or to talk is a stock move and always fine. A date, a price, or a scope is a commitment, so it comes from Tomi or goes in as a question.
 
 ## Product update email
 
@@ -38,11 +41,13 @@ The periodic email to the users of his product. It should sound like one person 
 
 | Part | Convention |
 |------|------------|
-| Fields | Title, subject, preview line, body |
+| Fields | Four, each labeled: **Título** (the headline shown at the top of the email), **Asunto** (the inbox subject), **Preview** (the fragment shown after the subject), and the body in Markdown |
 | Subject | The headline change in the reader's words, as an invitation: "Instalá [producto] como app en tu compu y en tu celu!" |
-| Opening | `Buenas!` then one human line (the long weekend, what was promised last time) or a scene from the reader's day: "En el día a día, manejás 20 pestañas y [producto] se mezcla entre tantas." |
-| Sections | A fixed, small set with one marker emoji each: the star change, other news, improvements, thanks. No other emoji |
+| Opening | `Buenas!` then one human line (the long weekend, what was promised last time) or a scene from the reader's day: "En el día a día, manejás 20 pestañas y [producto] se mezcla entre tantas." The human line is Tomi's to supply. Ask for it, or leave a placeholder |
+| Sections | Subtitles with a fixed marker each, in this order: ⭐️ and the star change as its title, `✨ Otras novedades`, `🛠️ Mejoras`, 🐞 for fixes, `🙏🏼 Gracias!`. A section with nothing in it is left out. ⚠️ marks an edition with no news. No other emoji |
+| Who "you" is | The greeting addresses the group ("Espero que hayan disfrutado..."). Each item speaks to one reader in voseo ("Ahora podés...") |
 | Each item | What changed, then what you gain. One or two emphases at most |
+| A fix | What was wrong, that it is fixed, and what the reader has to do, if anything. One or two sentences, no drama |
 | Reassurance | Say what does not change: "Podés seguir usándola como hoy, no cambia nada!" |
 | Thanks | Credit the users who asked: "Si estás leyendo esto y alguno de estos pedidos te suena, gracias!" |
 | Sign-off | `Un saludo,` and the first names of the founders |
@@ -56,9 +61,24 @@ The periodic email to the users of his product. It should sound like one person 
 
 - **One message, complete.** The reader shouldn't need the next message to act on this one.
 - **Thread replies open by naming the person:** "Thanks @Name for the detailed write-up!"
-- **A status or escalation follows the internal-update shape** in [voice-profile.md](voice-profile.md#english-work-email-and-chat): bracketed topic, facts, link, numbered next steps with owners, a time for the next update.
+- **A status or escalation has a fixed shape:** a bracketed topic line and who it is for, two or three sentences of fact, the link, then numbered next steps with owners. A step you don't know is written as the status you do know, or asked for. Never invent one.
+
+  ```text
+  [Client X: issue reported after delivery] @Lead, cc @Manager for visibility
+  Client X reported a bug two weeks after we delivered. They found it on testnet, and I've asked them to confirm nothing is live. They already have a fix PR.
+
+  Thread: <link>
+
+  Next steps:
+  1. @Lead checks whether it was in scope and how it relates to what we already reported.
+  2. I keep everyone posted here and confirm next steps with the client.
+
+  We plan to give the client clarity by EOD.
+  ```
 - **In a channel shared with a client, the first reply does four things:** thanks them, says who owns it on our side, asks the one question that sets the urgency, and commits to a time for the next update. It says nothing about cause, severity, scope, or blame until the team has agreed internally.
-- **Every promise of an update has a time,** and the update arrives even when there is no news.
+- **A promise to a client has a time,** and the update arrives even when there is no news. Internally, "I'll keep everyone posted here" is enough once the client deadline is stated.
+- **Mentions are written `@Name`.** Tomi picks them from Slack's autocomplete when he pastes.
+- **No emoji** in a Slack message he writes by hand.
 - **An automated alert carries the facts in a fixed order** (what happened, who, how much, in the local number format) and no verdict. "Plan Profesional: $ 180.000 por mes (90 cuentas)" tells the team more than "cliente grande", and it shows for every account, not only the big ones.
 - **Formatting is Slack mrkdwn:** `*bold*`, `_italic_`, `<url|label>`, `•` or `-` for bullets, no `#` headings, no `**bold**`.
 
@@ -72,7 +92,9 @@ The shortest register. He uses it with customers and partners in Spanish.
 
 ## LinkedIn and X
 
-**Ask which platform first.** LinkedIn is the main one: long-form and professional. X is short and punchy. The same idea needs two different drafts.
+**Ask which platform first.** LinkedIn is the main one: long-form and professional. X is short and punchy. The same idea needs two different drafts. If you can't ask, draft for LinkedIn in the language he briefed in, and say you assumed both.
+
+This skill has no verified sample of his posts yet. Until he adds one, borrow the stance and the moves from his talks: the claim first, the limit stated, a test the reader can run.
 
 The audience is founders, operators, and product and tech people. The goal is reputation and authority in his niche (tech, startups, product), so optimize for authority over virality, and quality over volume.
 
@@ -81,13 +103,17 @@ The audience is founders, operators, and product and tech people. The goal is re
 | First line | Says exactly what the post is about. Clarity creates the pull, not mystery |
 | Reader | One person: "tu equipo", not "sus equipos" |
 | Body | Short paragraphs with air between them, one idea each. The reason, one concrete case or number with its source, one analogy if the idea is new |
+| Case | A post is stronger with one real case. If he gave none, ask for it in the notes. Put a placeholder in the post only when it makes no sense without the case |
+| Length | As long as the idea needs. With no other signal, 80 to 200 words on LinkedIn and one post on X |
 | Stance | An opinion he holds, argued soberly. What works and what doesn't. A case that failed is as useful as one that succeeded |
 | Personal angle | Only a real one that Tomi supplied. Never invent a confession, a story, or a family tie |
 | Ending | The takeaway or a test the reader can run. A question only when he wants the answers |
 | Language | One language per post, chosen for the audience of that post |
-| Not used | Empty motivational tone, clickbait hooks, thread-bait, hashtags in the body, emoji as bullets, "Agree?" |
+| Not used | Empty motivational tone, clickbait hooks, thread-bait, hashtags anywhere, emoji as bullets, "Agree?" |
 
 On X: one idea per post. A thread only when each post stands alone.
+
+A direct message on either platform is a short email reply without the sign-off block: greeting, the point, the next step.
 
 ## Talks and classes
 
@@ -117,7 +143,7 @@ Pedagogical clarity comes before completeness. People came to learn, not to read
 
 ## Landing and product copy
 
-"Mantenela mínima y directo al grano." Use the product-copy moves in [voice-profile.md](voice-profile.md#spanish-product-copy).
+"Mantenela mínima y directo al grano." The moves themselves (verb first, their moment in numbers, the objection honored) are in the voice profile, which `SKILL.md` has you load together with this file for product copy.
 
 - **Headline:** the user's situation or the outcome, in their words. Not the category of the product.
 - **Subhead:** what it does, in plain terms, in one sentence that starts with a verb.
@@ -149,7 +175,7 @@ Pedagogical clarity comes before completeness. People came to learn, not to read
 
 **Written bio:** role first, then what he does now, then background, in two or three sentences. First person on his own site, third person for an event page. Verbs and numbers ("built and shipped X, used daily by N firms"), no adjectives about himself. The details come from Tomi or from a bio he already published, never from memory.
 
-**Spoken intro** (a podcast, a panel): `Buenas! Soy Tomás.` Then years and what he does in one sentence, then what he is doing today with each front on its own line, then one closing line about what drives him. In a personal setting he wants less CV and more of himself, so ask for that line instead of writing it for him.
+**Spoken intro** (a podcast, a panel): `Buenas! Soy Tomás.` or `Buenas! Mi nombre es Tomás.` (both are his). Then years and what he does in one sentence, then what he is doing today with each front on its own line, then one closing line about what drives him. In a personal setting he wants less CV and more of himself. That closing line is his to write: ask for it in the notes, and don't put a placeholder in the text.
 
 ## Personal notes
 

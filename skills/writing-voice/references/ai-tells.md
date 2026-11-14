@@ -21,7 +21,8 @@ The test behind every entry is Tomi's own: **if a sentence gives the reader no i
 | Contrast drumbeat | "It isn't a tool. It's a mindset." · "No es solo software. Es tranquilidad." | State the second half with its evidence: "Te avisa el mismo día que cambia el domicilio de un cliente." |
 | Forced triad | "Simple. Fast. Reliable." · "Rápido, seguro y confiable." | The one that matters, with its number: "Sincroniza 47 clientes antes de las 7." |
 | Stacked fragments | "No meetings. No noise. Just results." | A full sentence |
-| Self-answered question | "The result? A 40% lift." · "¿El resultado? Menos trabajo." | "Conversion went up 40%." |
+| A question asked only so you can answer it | "The result? A 40% lift." · "¿El resultado? Menos trabajo." | "Conversion went up 40%." |
+| Engagement bait | "Agree?" · "Thoughts?" · "¿Qué opinan?" tacked on the end | End on the takeaway. Ask only what he wants answered |
 | Every item on one template | Each bullet is "**Bold label:** benefit sentence." of equal length | Vary by content. Some items are one line, one deserves three |
 | Parallel openings | Three paragraphs in a row starting "Whether you're...", "When you...", "Si sos..." | Start each from its own fact |
 | Echo ending | A last line that restates the piece as an aphorism | End on the next step or the last fact |
@@ -83,7 +84,7 @@ Replace each with the measurable thing it stands for. If there is nothing measur
 | Headings in an email or chat message | Paragraphs |
 | A bulleted list for what is one sentence | The sentence |
 | ALL CAPS for emphasis | Word choice |
-| Hashtag block | None |
+| Hashtags, in the body or as a closing block | None |
 | A translated quote or title | The original, with a short comment in his words. A translated quote reads as "medio mala" |
 | Decoration that carries no information (an accent bar, a mascot, an icon per card) | Remove it. "Es muy de AI" |
 
@@ -95,6 +96,7 @@ These are his, so leave them alone.
 - **Argentine colloquial phrases** in customer-facing Spanish: "sin vueltas", "nos viene bárbaro", "preparando la cancha", "la compu", "el finde". They set him apart. Keep them, as long as they don't overpromise.
 - **One concrete contrast:** "Tu lunes son 3 clientes, no 47."
 - **A real question to a real audience,** in a talk or in a call script.
+- **A test question the reader answers about their own case:** "¿Podés resolverlo con una base de datos? Entonces no lo necesitás." The reader supplies the answer, so it is a tool and not a setup.
 - **A parenthetical aside,** one per paragraph.
 - **A short PS** with something human in a product update.
 - **Three verbs that are three real actions:** "I design, build, and ship products." The tell is the forced triad, where the third item is there for the rhythm.
@@ -102,6 +104,6 @@ These are his, so leave them alone.
 
 ## What the scan covers
 
-`scripts/voice-scan.sh` flags candidates for: `emdash`, `hype`, `filler`, `hedge`, `contrast`, `hook`, `intensifier`, `exclaim`, `hashtag`.
+`scripts/voice-scan.sh` flags candidates for: `emdash`, `hype`, `filler`, `hedge`, `contrast`, `hook`, `intensifier`, `exclaim`, `hashtag`, `emoji`, and `placeholder` (a `[Missing: ...]` or `[Completar: ...]` left in the text).
 
 It can't see the structural tells that need judgment: a triad, items on one template, an echo ending, a buried answer, a missing next step, an invented fact. Read for those yourself, in that order of cost: invented fact first, buried answer second.

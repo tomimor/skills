@@ -1,6 +1,6 @@
 # Worked examples
 
-Before-and-after pairs, one per register, with the reason for each change. Names, companies, and numbers are invented. The order of the fixes is the same every time: facts first, then where the answer sits, then tone, then mechanics.
+Before-and-after pairs, one per register, with the reason for each change. Names, companies, numbers, and product facts are invented, so copy the move and never the claim. The order of the fixes is the same every time: facts first, then where the answer sits, then tone, then mechanics.
 
 ## Contents
 
