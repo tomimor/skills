@@ -98,7 +98,7 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 | 🟦 [office-hours](skills/office-hours/SKILL.md) | YC-style premise interrogation: six forcing questions, alternative approaches, and a written assignment. Never writes code. Adapted from [gstack](https://github.com/garrytan/gstack). |
 | 🟦 [grill-me](skills/grill-me/SKILL.md) | Interview you about a plan, one decision at a time, resolving the decision tree into an assumptions ledger. |
 | 🟦 [whats-missing](skills/whats-missing/SKILL.md) | Surface the single most important blindspot in a plan, with an observable signal and a cheap test. |
-| 🟦 [writing-voice](skills/writing-voice/SKILL.md) | Write in a direct, personal, sensory style. Bans AI-giveaway phrases, with per-platform guidance (LinkedIn, X, blog, email). |
+| 🟦 [writing-voice](skills/writing-voice/SKILL.md) | Write, rewrite, or review text in Tomi's voice, in English or rioplatense Spanish: answer first, verbs and numbers over adjectives, never an em dash. Per-channel guidance (email, product updates, Slack, LinkedIn, talks, product copy) and a scanner that flags AI tells in both languages. |
 | 🟦 [writing-google-style](skills/writing-google-style/SKILL.md) | Write and review developer docs in [Google style](https://developers.google.com/style): second person, active voice, timeless wording, Google's word list, plus a fence-aware scanner that flags mechanical violations without tripping on code samples. |
 | 🟦 [governance-message](skills/governance-message/SKILL.md) | Turn a governance proposal URL (forum, Tally, Snapshot) into a Slack-ready summary with stance, risk, and PRO/CON. |
 | 🟦 [teach](skills/teach/SKILL.md) | Teach a concept across sessions using the current directory as a stateful workspace. Adapted from [mattpocock/skills](https://github.com/mattpocock/skills). |
@@ -237,7 +237,7 @@ Skills use the same `SKILL.md` format everywhere. The only difference is where t
 | Cursor | `~/.cursor/skills/<skill-name>/` |
 | Claude Code | `~/.claude/skills/<skill-name>/` |
 
-Most GitHub-related skills need the [GitHub CLI](https://cli.github.com/) (`gh`). `writing-voice`, `writing-google-style`, `teach`, and `remotion-best-practices` have no extra requirements — `writing-google-style` ships a scanner script, but it needs only `bash` and `awk`. `impeccable` downloads its self-contained launcher binary once on first run (no Node or other runtime needed).
+Most GitHub-related skills need the [GitHub CLI](https://cli.github.com/) (`gh`). `writing-voice`, `writing-google-style`, `teach`, and `remotion-best-practices` have no extra requirements. `writing-voice` and `writing-google-style` each ship a scanner script, which needs only `bash` and `awk`. `impeccable` downloads its self-contained launcher binary once on first run (no Node or other runtime needed).
 
 ## License
 

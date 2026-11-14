@@ -11,7 +11,7 @@ SKILLS=(
   "gh-issue-creator:Create GitHub issues from bug/feature/tech-debt templates"
   "gh-pr-description-updater:Read or update PR descriptions using repo template"
   "verify-pr:Three-phase PR verification (code review, test plan, upstream assumptions)"
-  "writing-voice:Direct, personal writing style with AI-slop blacklist"
+  "writing-voice:Write in Tomi's voice (English and rioplatense Spanish), with a scanner for AI tells"
   "grill-me:Interview the user relentlessly about a plan or design via AskQuestion"
   "improve-prompt:Critique and rewrite a prompt using general prompt engineering best practices"
   "create-skill:Guide for authoring Cursor agent skills (forked from Cursor built-in)"
