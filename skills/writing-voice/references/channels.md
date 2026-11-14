@@ -45,7 +45,7 @@ The periodic email to the users of his product. It should sound like one person 
 |------|------------|
 | Fields | Four, each labeled: **Título**, **Asunto**, **Preview**, and **Cuerpo** (the body, in Markdown) |
 | Título and Asunto | The headline change in the reader's words, often as an invitation: "Instalá [producto] como app en tu compu y en tu celu!" · "Llegó el reporte para [quiénes]!" They are usually the same line. The Título can instead be a warm line for the whole edition |
-| Preview | A fragment that adds the benefit: "A un toque de distancia, a pantalla completa y más rápida." |
+| Preview | A fragment that names the next item in the update, or a benefit Tomi gave you: "A un toque de distancia, a pantalla completa y más rápida." Never a benefit you inferred, such as "más rápido" when he didn't say it |
 | Opening | `Buenas!` then one human line (the long weekend, what was promised last time) or a scene from the reader's day: "En el día a día, manejás 20 pestañas y [producto] se mezcla entre tantas." The human line and the scene are Tomi's to supply. Build one from a fact in his brief ("este lunes fue feriado"), or leave a placeholder |
 | Sections | `##` subtitles with a fixed marker each, in this order: `## ⭐️` with the star change as its title, `## ✨ Otras novedades`, `## 🛠️ Mejoras`, `## 🙏🏼 Gracias!`. A section with nothing in it is left out. 🐞 only when a fix needs a section of its own. ⚠️ marks an edition with no news. No other emoji |
 | Otras novedades and Mejoras | Bullets. A news item is a bold label, a colon, and one or two sentences. An improvement is one sentence with the key phrase in bold. A fix may take two |
