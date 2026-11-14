@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: en-nudge-with-a-default
+expected_outcome: |
+  A two or three sentence Slack nudge to a client contact who has not replied: it holds the slot he
+  named, says the invite goes out today, and leaves the door open for another time. No guilt, no
+  filler, and nothing the brief did not say.

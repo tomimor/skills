@@ -105,7 +105,7 @@ These are his, so leave them alone.
 - **A parenthetical aside,** one per paragraph.
 - **A short PS** with something human in a product update or a post ("pd: la foto es de...").
 - **One or two emoji closing a line in a LinkedIn post or comment:** 🦾 🚀 🔥 🇦🇷. They are his. Emoji as headers are not.
-- **One word in capitals** in a post ("GRATIS"), and "&" for "and" in English posts.
+- **One word in capitals** in a post ("GRATIS"), and "&" for "and" in English posts, headings, and labels ("Capacity & Timeline").
 - **Three verbs that are three real actions:** "I design, build, and ship products." The tell is the forced triad, where the third item is there for the rhythm.
 - **"Quedo atento a cualquier duda."** It reads like a stock close, and it is his.
 

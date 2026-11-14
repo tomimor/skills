@@ -74,6 +74,10 @@ For context, I'm blocking one or two days for this, so the answers decide which 
 | Recommend | "Our recommendation: [option], because [reason]." |
 | Ask before going back to the client | "Before I take this to [who], I'd like your input on [what]." |
 | Keep one voice | "If anyone at [client] raises this with you directly, please point them to me, and let's not commit to dates or scope until we agree internally." |
+| Propose a time | "Would Wed Nov 11 work for you, at 11:00 or 14:00 (UTC-3, so 14:00 or 17:00 UTC)?" |
+| Nudge with a default | "I'm holding Wed Nov 11 at 11:00 (UTC-3) for us and will send the invite for that slot today, unless another time works better." |
+| Make the prep small | "A five-minute skim is plenty. The one slide worth checking before we meet is [which]." |
+| Give a default while waiting | "Until they do, I would default to [the safer order]." |
 | Show an assumption | "I read it as [the reading]. The rationale for this is:" · "So I don't promise a date here." |
 
 ## Spanish: customers, partners, university

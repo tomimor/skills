@@ -19,6 +19,7 @@ What changes from one channel to the next. The voice rules in `SKILL.md` apply e
 - [Executive brief](#executive-brief)
 - [Assumptions and rationale](#assumptions-and-rationale)
 - [Client kickoff deck](#client-kickoff-deck)
+- [Plan documents](#plan-documents)
 - [Feedback write-ups and plans](#feedback-write-ups-and-plans)
 - [Bios and spoken intros](#bios-and-spoken-intros)
 - [Personal notes](#personal-notes)
@@ -33,12 +34,13 @@ What changes from one channel to the next. The voice rules in `SKILL.md` apply e
 | Proposal or outreach | Up to about 200 words. Pick up the thread ("Tal como conversamos..."), list what is attached as numbered items, separate what exists today from what is promised and by when, offer a call. The attached document has its own shape: see [Commercial proposal](#commercial-proposal) |
 | To a client executive | Restate the ask in their terms ("We understand you would like [the ask] ahead of [their milestone]."). Say who reviews it and when he follows up. Then ask what he needs to plan: "To help guide our approach, could you clarify the following?" Each question opens with a bold label ("**Scope:**") and offers the alternative: "Do you require the full [thing], or would an initial core version suffice?" Close warm: "Looking forward to working together!" |
 | Asks | One per email. Two or more questions become a numbered list |
-| Follow-up after silence | One line asking, one line making the next step cheap, no guilt |
-| Logistics | When he sets or confirms a meeting himself: day, time, time zone, and link in the body, even if an invite went out |
+| Follow-up after silence | One line asking, one line making the next step cheap, no guilt. When a date depends on the answer, the nudge decides by default and leaves the door open: "I'm holding Wed Nov 11 at 11:00 (UTC-3) for us and will send the invite for that slot today, unless another time works better." Which slot he holds is his call |
+| Logistics | When he sets or confirms a meeting himself: day, time, time zone, and link in the body, even if an invite went out. When he proposes a time, he offers two concrete slots and spells the time zone out: "Would Wed Nov 11 work for you, at 11:00 or 14:00 (UTC-3, so 14:00 or 17:00 UTC)?" Two options save a round trip |
+| Calendar invite | Title `[Client] and [Org]: [meeting]`. One line of context, a numbered agenda, and when the slides arrive |
 | Signature | First name only. On a first formal contact: `Best regards,`, his first name, and his role and company on the next line. `Tomás / [producto]` on a cold email |
 | Format | Plain text. No Markdown asterisks unless the destination renders them |
 
-No headings and no emoji. Bold only as the label that opens each question in a list, and only where the mail client renders it.
+No headings and no emoji. Bold is for the label that opens each question in a list and, in an email to an executive, for the two or three phrases they must not miss (the ask, the date he commits to, the alternatives): "I will **follow up with a plan next week.**" Only where the mail client renders it.
 
 **Cold email,** to someone who is not looking for the product. Four moves, under 90 words: a subject that asks about their day ("¿Cuántos clientes descarga tu estudio a mano cada mes?"), why he is asking ("Te pregunto porque la mayoría de los estudios con los que hablo hacen lo mismo: ..."), what the product does in one verb-first sentence, and a small ask with a size ("Te muestro cómo en 15 minutos. ¿Tenés tiempo esta semana?"). If they met, the first line says where.
 
@@ -93,6 +95,11 @@ The periodic email to the users of his product. It should sound like one person 
 - **A promise to a client has a time,** and the update arrives even when there is no news. Internally, "I'll keep everyone posted here" is enough once the client deadline is stated.
 - **Closing the loop on a promise starts by saying so:** "Hi @Name! As promised, here's our plan after looking into the issue with @Lead:". Then one bullet per commitment: a bold label, a colon, who does what, and by when ("We'll share feedback here by [Missing: date]."). It ends on an offer: "Happy to jump on a quick call this week to walk through it together. Let me know what works for you!"
 - **A DM that asks a teammate for time has four parts:** what happened, the link, an ask with its size, and what he plans to do in the meantime. "Hey @Lead! [Client] just posted that they found a bug in [the contract]. Thread: <link>. Do you have 5 minutes to sync? I was planning to reply in the thread to acknowledge and confirm that nothing is live."
+- **The first message to a client contact he hasn't worked with** opens `Hi <Name>,` (not `Hey @Name!`, which is for teammates). It says who he is and what he owns, then proposes the meeting with two slots. Two short blocks follow, each under a bold label: "*What we'll cover*" as a numbered agenda, and "*Before we meet, if you have them handy*" as bullets where every ask carries its reason: "It stays frozen for the whole audit, so every finding maps to an exact version of the code." It ends on when the slides arrive and "Looking forward to working together."
+- **A pre-read note says how little is needed:** "Hi <Name>, here are the slides for tomorrow's kickoff: [link]. A five-minute skim is plenty. The one slide worth checking before we meet is scope. See you Wednesday."
+- **After a sync or a decision, a recap goes out the same day,** in three lines: what, who, by when. One owner and one date per step.
+- **A change request has a fixed checklist:** ask why, launch-critical or not, size, what it affects, options, decision.
+- **Channel names:** `int-<client>-<topic>` for the internal one, `ext-<client>-<topic>` for the one shared with the client.
 - **A new scope ask from a client is framed as a choice,** never as a yes or a no. His own line: "Frame every new scope ask as a choice: swap priorities, add capacity or add time".
 - **Options go to the people who approve as a short list, then his pick, then what he needs from them:** "These are the options we could offer [client]:", one line per option (a bold label, a colon, what changes and what the client gives up), "Our recommendation: [option], because [reason].", and "Before I take this to [who], I'd like your input on [what]." The pick and its reason are his. Without them, ask.
 - **One voice toward the client:** "If anyone at [client] raises this with you directly, please point them to me, and let's not commit to dates or scope until we agree internally."
@@ -258,6 +265,8 @@ The weekly deck for a client or a steering group. Three slides do the work: a co
 | Coming up | Short noun labels with the same area tag: "Review queue". No date unless he gave one |
 | Highlight | One slide for the change worth showing, with a screenshot |
 
+The written version for a client has five parts, in this order: overall status, each workstream, decisions, what we're waiting on from the client, top 3 risks.
+
 ## Executive brief
 
 One page for the people who decide: an account thesis, a strategy, a recommendation. He builds it on situation, complication, answer and the pyramid principle. The answer sits on top, and in his words "all other slides act as backup".
@@ -283,6 +292,9 @@ The note that goes with a plan or an estimate and shows where each date and rule
 - **A reading of an ambiguous number gets its own short section:** the reading in bold, then the reasons as a numbered list where each item opens with its claim in bold.
 - **Say what breaks if the assumption is wrong:** "if this assumption differs from expectations, the only affected result should be the number of days".
 - **Where no source gives a date, don't promise one:** "So I don't promise a date here."
+- **He states an assumption in the open instead of sending a question back:** "I wanted to share the rationale for how I am filling those gaps."
+
+**Questions that de-risk a plan** use the same idea. The list opens with how many questions stand between the plan and its date. They are grouped by who answers and by when, and ranked inside each group by how far the plan moves if the answer surprises him. Each question is followed by "Assumption if unanswered:" with the default he works on and its source. A check with a safe default is not chased: he states it and adds "correct me if wrong".
 
 ## Client kickoff deck
 
@@ -294,6 +306,27 @@ The deck that opens an engagement. It speaks to the client in the second person 
 - **One "Important" callout** holds the single hard rule of the engagement. One rule, not a list.
 - **It closes on "Thank you!"**
 - **Dates and rules come from the plan.** A date nobody gave is not on a slide. See [Assumptions and rationale](#assumptions-and-rationale).
+
+## Plan documents
+
+A delivery plan, or the plan that answers a change (a new ask, an incident). The frameworks he names for these are BLUF, Who/What/When, and Situation/Complication/Question/Recommendation.
+
+- **It opens with `## TL;DR`:** bullets that each start on a claim in bold. "**The quarterly train is fixed. Scope moves.**"
+- **When the plan answers a brief, each later heading is the brief's question, word for word,** with the answer under it.
+- **A challenge gets three parts:** "**Assessment**" as bullets, "**Next steps**" numbered, and when it rests on something unconfirmed, a quoted line: "**Assumes:** the spike can be staffed in week 1."
+- **Assumptions are numbered in one table** (#, Assumption, Based on) and cited by id where they matter, with what moves if one is wrong: "**Assumes:** A1 to A5. If [client] targets [a later date], the gate stays at [milestone]."
+- **Tables end on a reason column:** "Request / From whom / Why", "Lesson / Evidence / Where it lands".
+- **He writes in the first person and gives a default:** "Until they do, I would default to risk order." When two teams disagree, he is fair to both: "Both sides are right."
+
+When the plan answers a change:
+
+- **A step-by-step plan, numbered.** Each step starts with a verb and names who: "Confirm with the [manager] and [account owner] the options we will offer and our recommendation."
+- **"Information to gather now",** grouped by who answers. Each item is a label, a colon, and the question: "Budget: Is adding more capacity through a paid change order a possibility?"
+- **The internal step states its goal in one line:** "Goal: one [org] position before any options go back to [client]."
+- **An options table** with three columns: Option, What it means, Trade-off. Trade-off cells are short: "No extra cost, launch date held. [Client] gives up some features at launch."
+- **A risks table** with two columns: Risk, Mitigation. Each mitigation starts with a verb.
+- **The value holds in both outcomes:** "If [it] ships, [what we can show the next client]. If it doesn't, [what still carries over]."
+- **The messages it needs are drafted in full** inside the plan, each under who it goes to.
 
 ## Feedback write-ups and plans
 
