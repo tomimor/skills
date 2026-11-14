@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: es-commercial-proposal
+expected_outcome: |
+  A one-page commercial proposal document in Spanish: the whole offer with the price in bold in the
+  first paragraph, the client named in the third person, a price table, conditions, the roadmap
+  commitment, numbered next steps that name who acts, and nothing the brief did not state.

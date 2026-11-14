@@ -1,0 +1,7 @@
+---
+type: llm
+focus: last_message
+weight: 1
+---
+
+Look only at the proposal, not at the notes after the line '---'. The brief gave exactly these facts: the product is called Clara and synchronizes the fiscal data of the whole client portfolio every day; more than 100 firms use it today; a monthly fee of $250.000 with a quarterly adjustment by IPC; no lock-in, the client can cancel at any time with one month's notice; up to 8 hours of support from the technical team to integrate the API are included; Factura C; payment by bank transfer from the 1st to the 5th of each month, in arrears; a commitment to add the retentions module within 2 months of signing; next steps: the client confirms, the contract is signed and the account is opened, then a first technical session for the API. FAIL only if the proposal states as fact something else of these kinds: another price, discount, or number of hours; another deadline or date (a date line under the title is fine); another commercial condition; another count of customers or clients; or a product capability beyond the daily synchronization, the API, and the committed retentions module (for example alerts, reports, a dashboard, encryption, an MCP server). These are fine and are not inventions: restating the brief's facts in other words, saying that the team stops downloading data client by client, [Completar: ...] placeholders, and section headings. Otherwise PASS.

@@ -95,10 +95,12 @@ Replace each with the measurable thing it stands for. If there is nothing measur
 
 These are his, so leave them alone.
 
-- **"Buenas!" and "Gracias!" with a closing mark only.** That is how he writes exclamations in Spanish, in email and in product updates. An exclamation on a greeting, thanks, or good news is his. One on a claim is not.
+- **"Buenas!" and "Gracias!" with a closing mark only.** That is how he writes exclamations in Spanish, in email and in product updates. An exclamation on a greeting, thanks, or good news is his, and so is one on the offer that closes a chat message ("Happy to discuss anything here in the thread!"). One on a claim is not.
 - **Argentine colloquial phrases** in customer-facing Spanish: "sin vueltas", "nos viene bárbaro", "preparando la cancha", "la compu", "el finde". They set him apart. Keep them, as long as they don't overpromise.
 - **One concrete contrast:** "Tu lunes son 3 clientes, no 47."
 - **A real question to a real audience,** in a talk or in a call script.
+- **One spoken transition question in a voiceover** ("So, what changed for [the example]?"), when the next caption answers it on screen.
+- **An ellipsis that carries one sentence across two caption rows** in a video script. It marks where the voice continues, not suspense.
 - **A test question the reader answers about their own case:** "¿Podés resolverlo con una base de datos? Entonces no lo necesitás." The reader supplies the answer, so it is a tool and not a setup.
 - **A parenthetical aside,** one per paragraph.
 - **A short PS** with something human in a product update or a post ("pd: la foto es de...").

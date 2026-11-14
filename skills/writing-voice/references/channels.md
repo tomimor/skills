@@ -9,10 +9,13 @@ What changes from one channel to the next. The voice rules in `SKILL.md` apply e
 - [Slack and work chat](#slack-and-work-chat)
 - [WhatsApp](#whatsapp)
 - [LinkedIn and X](#linkedin-and-x)
+- [Forum and community replies](#forum-and-community-replies)
 - [Talks and classes](#talks-and-classes)
 - [Video and ad scripts](#video-and-ad-scripts)
 - [Landing and product copy](#landing-and-product-copy)
 - [Sales calls and pitches](#sales-calls-and-pitches)
+- [Commercial proposal](#commercial-proposal)
+- [Weekly status update](#weekly-status-update)
 - [Feedback write-ups and plans](#feedback-write-ups-and-plans)
 - [Bios and spoken intros](#bios-and-spoken-intros)
 - [Personal notes](#personal-notes)
@@ -24,7 +27,7 @@ What changes from one channel to the next. The voice rules in `SKILL.md` apply e
 |------|------------|
 | Subject | Says the thing. When he writes for one organization to another, a bracket prefix: `[Org - Counterparty] Topic`. Administrative mail is `Topic - Full Name`. A cold email takes a direct question about the reader's day |
 | Reply | 2 to 6 short sentences between greeting and sign-off: reaction, answer, next step, thanks. No new subject: it inherits the thread's |
-| Proposal or outreach | Up to about 200 words. Pick up the thread ("Tal como conversamos..."), list what is attached as numbered items, separate what exists today from what is promised and by when, offer a call |
+| Proposal or outreach | Up to about 200 words. Pick up the thread ("Tal como conversamos..."), list what is attached as numbered items, separate what exists today from what is promised and by when, offer a call. The attached document has its own shape: see [Commercial proposal](#commercial-proposal) |
 | Asks | One per email. Two or more questions become a numbered list |
 | Follow-up after silence | One line asking, one line making the next step cheap, no guilt |
 | Logistics | When he sets or confirms a meeting himself: day, time, time zone, and link in the body, even if an invite went out |
@@ -84,7 +87,9 @@ The periodic email to the users of his product. It should sound like one person 
   ```
 - **In a channel shared with a client, the first reply does four things:** thanks them, says who owns it on our side, asks the one question that sets the urgency, and commits to a time for the next update. It says nothing about cause, severity, scope, or blame until the team has agreed internally, even when Tomi's brief mentions a suspicion. "We are looking at it now" is the honest limit here.
 - **A promise to a client has a time,** and the update arrives even when there is no news. Internally, "I'll keep everyone posted here" is enough once the client deadline is stated.
-- **Mentions are written `@Name`.** Tomi picks them from Slack's autocomplete when he pastes.
+- **Closing the loop on a promise starts by saying so:** "Hi @Name! As promised, here's our plan after looking into the issue with @Lead:". Then one bullet per commitment: a bold label, a colon, who does what, and by when ("We'll share feedback here by [Missing: date]."). It ends on an offer: "Happy to jump on a quick call this week to walk through it together. Let me know what works for you!"
+- **A DM that asks a teammate for time has four parts:** what happened, the link, an ask with its size, and what he plans to do in the meantime. "Hey @Lead! [Client] just posted that they found a bug in [the contract]. Thread: <link>. Do you have 5 minutes to sync? I was planning to reply in the thread to acknowledge and confirm that nothing is live."
+- **Mentions are written `@Name`.** Tomi picks them from Slack's autocomplete when he pastes. A person he hasn't named is their role in brackets (`[Lead]`, `[BD]`), and the notes ask who it is.
 - **No emoji** in a Slack message he writes by hand.
 - **An automated alert carries the facts in a fixed order** (what happened, who, how much, in the local number format) and no verdict. "Plan Profesional: $ 180.000 por mes (90 cuentas)" tells the team more than "cliente grande", and it shows for every account, not only the big ones.
 - **Formatting is Slack mrkdwn:** `*bold*`, `_italic_`, `<url|label>`, `•` or `-` for bullets, no `#` headings, no `**bold**`.
@@ -96,6 +101,8 @@ The shortest register. He uses it with customers and partners in Spanish.
 - Open with `Buenas <Nombre>!` or `Hola <Nombre>!`, then the point in the same message.
 - One question per message. No lists, no bold, no sign-off.
 - Anything with numbers, dates, or commitments also goes by email, and the message says so.
+- **First contact with a lead** says who he is, then what the product does in one sentence that starts with a verb, then asks one thing: "Buenas! Soy Tomás, cofundador de [producto]. Ayudamos a [quiénes] con [qué]."
+- **An ask says how small it is and what it is for:** "es cortito y me ayuda así entiendo tu caso para asesorarte".
 
 ## LinkedIn and X
 
@@ -141,6 +148,17 @@ A post can mix two kinds (a recommendation that carries an opinion). Lead with t
 
 A direct message on either platform is a short email reply without the sign-off block: greeting, the point, the next step. For outreach: `Hola [nombre], vi que [un hecho de su perfil]. Pregunta directa: [la pregunta sobre su día].` Then what the product does in one sentence, and "Si te interesa, te cuento cómo en 10 minutos." 
 
+## Forum and community replies
+
+A technical answer in a public forum or a community channel, to someone who asked several things at once.
+
+- **Answer their questions in their order,** each under a bold numbered label that repeats the question in a few words.
+- **Start from their world.** When they come from another stack, a short table maps their terms to the ones used here before the answers begin.
+- **Confirm what they got right** in one plain sentence: "Thinking of it as [their model] is right."
+- **Say the limit in the first person:** "I haven't seen a standard for [that case]."
+- **Link the official source for each claim,** and credit material you adapted.
+- **Post the short version.** A longer draft stays in the notes for whoever asks a follow-up.
+
 ## Talks and classes
 
 Pedagogical clarity comes before completeness. People came to learn, not to read an encyclopedia.
@@ -167,6 +185,17 @@ Pedagogical clarity comes before completeness. People came to learn, not to read
 - Each variant is a hypothesis about what moves the buyer (time, fear, money, peace of mind). Say which one, so the results can be read later.
 - A production note says which shot does the work, and what must be verified with the product before filming.
 
+**An explainer with voiceover** (2 to 5 minutes: a proof of concept, a product walkthrough) is a different piece. It is a document with one numbered heading per section, and under each a table with three columns: Time, On screen, Say. Each row is one caption. Pace it at about 150 words a minute, and open with one line that gives the total running time.
+
+- **Arc:** what this is, the problem with a sourced quote, a real example, the evidence in numbers, the tool, the tool applied to the example, the result as before and after, the takeaway, where to learn more.
+- **Say is written for the ear:** one sentence per row, under about 25 words. When a sentence runs across rows, "…" ends one row and opens the next.
+- **On screen carries the numbers** ("17 → 0 committed files"). Say carries what they mean: "The build reads no committed files."
+- **Say what does not change:** "The compiler and the application code stay exactly the same."
+- **One spoken transition question is fine** ("So, what changed for [the example]?"), because the next row answers it on screen.
+- **The link is shown, not read aloud:** "...at the link on screen." The last row can be the logo with no line.
+
+**Captions for a product walkthrough** (how the product works, step by step, in Spanish): each step title starts with a verb in voseo ("Conectás tu estudio"), and each caption stays under 10 words ("Y lo hace con cada cliente.").
+
 ## Landing and product copy
 
 "Mantenela mínima y directo al grano." The moves themselves (verb first, their moment in numbers, the objection honored) are in the voice profile, which `SKILL.md` has you load together with this file for product copy.
@@ -189,6 +218,36 @@ Pedagogical clarity comes before completeness. People came to learn, not to read
 - **The offer names the frictions removed:** "15 días de prueba, sin tarjeta. Si no te cambia la semana, lo dejás."
 - **Never:** manufactured urgency, a pressure close, scripted empathy ("entiendo cómo te sentís").
 - **A one-page version exists for every script.** If it doesn't fit on a page, it won't be used in the call.
+
+## Commercial proposal
+
+The document a prospect receives after the call, in Spanish. The email that carries it is under [Email](#email). It fits on one page (about 350 words), has no greeting and no sign-off, and takes no exclamation marks.
+
+| Part | Convention |
+|------|------------|
+| Title | `Propuesta comercial [producto] para [cliente]`, then the date and his name on one line |
+| First paragraph | The whole offer in one sentence, with the price in bold: "Proponemos que [cliente] sume [producto] por **$320.000 mensuales**, sin lock-in, con 6 horas de soporte técnico incluidas para [para qué]." A reader who stops there knows the deal |
+| `## Qué es [producto]` | One sentence that starts with a verb, and one proof number. Then two run-in labels in bold. **El problema.** is the reader's day in their own numbers. **Cómo lo resolvemos.** is a list where each bullet starts with a verb in bold: "**Sincronizamos [la fuente] a diario**, para toda la cartera." One bullet per capability he gave you, and no more |
+| `## Qué puede hacer [producto] por [cliente]` | What this client gets beyond a standard account, as a table with two columns: Canal, Qué habilita |
+| `## Propuesta económica` | A table with three columns: Concepto, Detalle, Precio. Whatever is included says "Incluido". One sentence under the table says how the price changes over time and which index it follows |
+| `## Condiciones comerciales` | Bullets with a bold label and one line each: **Facturación:**, **Pago:**, **Sin lock-in:** ("puede cancelar en cualquier momento con un mes de aviso") |
+| `## Compromiso de roadmap y próximos pasos` | What he commits to build and by when ("dentro de los 2 meses desde la firma del contrato"). Then numbered steps that name who acts: "1. [Cliente] confirma la propuesta. 2. Firmamos el contrato y damos de alta la cuenta." |
+| Who "you" is | The client by name, in the third person: "[Cliente] accede a...", "[Cliente] puede cancelar...". Not "ustedes" and not voseo |
+
+- **Every price, hour, deadline, and condition is his.** If the price is missing, ask before drafting. A missing deadline or condition goes in as `[Completar: ...]`.
+- **A section with nothing in his brief is left out.** A proposal with no roadmap commitment has no roadmap section.
+
+## Weekly status update
+
+The weekly deck for a client or a steering group. Three slides do the work: a cover, the week in review, and one highlight. It is denser than a talk slide, because the room reads it together.
+
+| Part | Convention |
+|------|------------|
+| Cover | The meeting name, the date, and one line that lists what the week covered: "Roles, access lists, and new accounts." |
+| Status | One label: On track, At risk, or Off track. Tomi sets it. If he didn't, ask |
+| Shipped | Each item is titled with who can now do what, in the present tense: "Admins invite and remove members from the dashboard". Not "Member management improvements". A tag names the product area. One or two sentences follow: how it works, and the guardrail ("A removal that would leave the team without an owner is refused.") |
+| Coming up | Short noun labels with the same area tag: "Review queue". No date unless he gave one |
+| Highlight | One slide for the change worth showing, with a screenshot |
 
 ## Feedback write-ups and plans
 

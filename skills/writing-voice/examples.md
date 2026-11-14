@@ -8,6 +8,8 @@ Before-and-after pairs, one per register, with the reason for each change. Names
 - [Spanish email: saying no to a customer](#spanish-email-saying-no-to-a-customer)
 - [Spanish product update: feature to benefit](#spanish-product-update-feature-to-benefit)
 - [Spanish pitch line: nouns to verbs](#spanish-pitch-line-nouns-to-verbs)
+- [Spanish proposal: the offer first](#spanish-proposal-the-offer-first)
+- [Weekly update: who can now do what](#weekly-update-who-can-now-do-what)
 - [Slack: first reply in a channel shared with a client](#slack-first-reply-in-a-channel-shared-with-a-client)
 - [Spanish post: explaining a concept](#spanish-post-explaining-a-concept)
 - [Spanish post: recap with thanks](#spanish-post-recap-with-thanks)
@@ -133,6 +135,50 @@ descargarlos cliente por cliente.
 
 - A pitch line starts with a verb in the first person plural: what we do, then what the reader stops doing.
 - "Plataforma", "solución", and "ecosistema" name a category. The listener still doesn't know what happens on Monday morning.
+
+## Spanish proposal: the offer first
+
+**Before**
+
+```text
+Estimados,
+
+Nos complace presentarles nuestra propuesta de valor. Norte es una solución
+integral que les permitirá optimizar su operación. A continuación detallamos
+las características de la plataforma. Al final encontrarán la inversión.
+```
+
+**After**
+
+```text
+Proponemos que Estudio Ferrer sume Norte por **$320.000 mensuales**, sin
+lock-in, con 6 horas de soporte técnico incluidas para integrar la API.
+```
+
+- The first paragraph is the whole offer: who, what, the price in bold, and the terms that matter. The detail comes after, for whoever keeps reading.
+- A proposal is a document, so it has no greeting and no exclamation marks. It names the client in the third person.
+- "La inversión" is a price. Call it "Precio" and put the number next to it.
+
+## Weekly update: who can now do what
+
+**Before**
+
+```text
+Member management improvements
+We've enhanced the admin experience with robust new capabilities.
+```
+
+**After**
+
+```text
+Admins invite and remove members from the dashboard
+Dashboard
+Send an invite by email, or remove a member from the same screen. A removal
+that would leave the team without an owner is refused.
+```
+
+- The title says who can now do what, in the present tense. A reader who only reads titles still knows what shipped.
+- The body adds how it works and the guardrail. The tag on the second line names the product area.
 
 ## Slack: first reply in a channel shared with a client
 
