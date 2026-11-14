@@ -1,14 +1,14 @@
 # 2026 limits and warning thresholds
 
-The script enforces these. The template's cell comments are out of date for several values — these are the verified 2026 limits.
+The script enforces these. The template's cell comments are out of date for several values. These are the verified 2026 limits.
 
 | Field | Hard max (error) | Warn over | Why warn |
 |-------|------------------|-----------|----------|
-| Campaign / Ad Set / Ad name | 35 chars | — | Meta truncates name in reports |
+| Campaign / Ad Set / Ad name | 35 chars | none | Meta truncates name in reports |
 | Title (Headline) | 40 chars | 27 chars | Mobile Feed truncates at 27 |
 | Body (Primary text) | 2,200 chars | 125 chars | "See more" link appears past 125 on mobile |
 | Link Description | 200 chars | 30 chars | Often hidden on mobile Feed/Stories/Reels anyway |
-| Import file (`output.txt`) | ~2,000,000 bytes | — | Meta's parser limit |
+| Import file (`output.txt`) | ~2,000,000 bytes | none | Meta's parser limit |
 
 Other format rules the script enforces:
 

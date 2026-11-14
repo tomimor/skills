@@ -54,7 +54,7 @@ Also before:
    - Behavior: run the app and exercise the path (use `qa-manual` skill)
    - Lint / format: `pnpm lint`, `ruff check`
 2. **Run it fresh.** Not "I ran it earlier." Run it now, in the current tree.
-3. **Read the full output.** All of it — including warnings and partial
+3. **Read the full output.** All of it, including warnings and partial
    failures. Don't grep for "PASS" and call it done.
 4. **State the conclusion with evidence.** Quote the relevant lines when
    claiming success. If output is large, summarize and reference the path to
@@ -106,12 +106,12 @@ If the gate fails:
 >
 > Ran: `pnpm test src/auth/oauth.test.ts`
 >
-> Output: 1 failing — `redirects on missing state param`: expected 302, got
+> Output: 1 failing, `redirects on missing state param`: expected 302, got
 > 500. Need to handle the null branch in `callback.ts:42` before claiming done.
 
 ## Pair with
 
-- `qa-manual` — for behavior verification of web features (the proof command
+- `qa-manual`: for behavior verification of web features (the proof command
   is "drive the app in Chrome").
-- `verify-pr` — heavier verification scoped to a whole PR.
-- `miguel-review` — review the diff for shape; this skill verifies behavior.
+- `verify-pr`: heavier verification scoped to a whole PR.
+- `miguel-review`: review the diff for shape; this skill verifies behavior.

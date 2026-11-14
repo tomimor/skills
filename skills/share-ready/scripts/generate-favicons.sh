@@ -11,7 +11,7 @@
 #
 # Prefers ImageMagick (magick/convert); falls back to npx sharp-cli + png-to-ico.
 # Source should be square and >=512px. SVG favicon: just copy the source .svg
-# alongside — no rasterization needed for <link rel="icon" type="image/svg+xml">.
+# alongside: no rasterization needed for <link rel="icon" type="image/svg+xml">.
 
 set -euo pipefail
 
@@ -69,7 +69,7 @@ if [ -n "$IM" ]; then
 else
   npx --yes png-to-ico "$SRC" > "$TMP/favicon-full.ico"
   # png-to-ico always appends a 256x256 PNG entry (~270KB uncompressed source);
-  # drop it — favicon.ico exists for legacy consumers that can't read it anyway
+  # drop it: favicon.ico exists for legacy consumers that can't read it anyway
   python3 - "$TMP/favicon-full.ico" "$OUT/favicon.ico" <<'PY'
 import struct, sys
 d = open(sys.argv[1], 'rb').read()

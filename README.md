@@ -42,7 +42,7 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 
 ## Skills
 
-> **Legend** — 🟦 own skill · 🟧 vendor skill (git submodule)
+> **Legend:** 🟦 own skill · 🟧 vendor skill (git submodule)
 
 ### 🐙 GitHub & Git
 
@@ -83,7 +83,7 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 | 🟦 [share-ready](skills/share-ready/SKILL.md) | Audit + fully configure how a site looks when shared (Open Graph, Twitter/X cards, per-platform quirks) and in the browser (title, favicons, theme-color, web manifest). Detects the framework, infers brand values from the repo, generates missing assets (favicon set, 1200×630 og:image), and verifies everything end-to-end with a local script. |
 | 🟦 [seo-geo-audit](skills/seo-geo-audit/SKILL.md) | Technical SEO/GEO audit + fixes for a site: crawlability, sitemaps, robots.txt + AI crawler policy (GPTBot, ClaudeBot, PerplexityBot…), canonicals, structured data, rendering strategy, hreflang, CWV basics, and search-engine verification. Ships a dependency-free live-site auditor script and a verified-vs-folklore GEO reference. |
 | 🟦 [footer-design](skills/footer-design/SKILL.md) | Pick a footer to replicate from [footer.design](https://www.footer.design), then rebuild it. Ships an index of all ~780 footers, each described from its screenshots: layout pattern (giant-wordmark, link-columns…), theme and measured palette, link count and groups, height, rebuild effort, content (opening hours, newsletter, address, payment icons, language switcher…) and link labels. Search uses hard filters for requirements and weighted soft filters for vibe; finalists go into numbered contact sheets and an HTML gallery. For the rebuild, a Playwright inspector measures the live footer (grid, rules, type, artwork, animation-aware) and `compare` puts the result next to the source. Ships 4 eval cases in `evals/`: 30/30 checks pass with the skill vs 22/30 without, in less than half the time. |
-| 🟧 [emil-design-eng](skills/emil-design-eng/SKILL.md) | Build-time companion to `review-animations`: Emil Kowalski's design-engineering playbook for crafting interfaces that feel right — animation decision framework, component building, transforms, gestures, performance, a11y. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
+| 🟧 [emil-design-eng](skills/emil-design-eng/SKILL.md) | Build-time companion to `review-animations`: Emil Kowalski's design-engineering playbook for crafting interfaces that feel right (animation decision framework, component building, transforms, gestures, performance, a11y). From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
 | 🟧 [animation-vocabulary](skills/animation-vocabulary/SKILL.md) | Reverse-lookup glossary that turns a vague description of a motion effect into its exact term ("the bouncy thing when a popover opens" → Pop in; "the iOS rubber-band scroll" → Rubber-banding). For naming an effect, not designing or building one. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
 | 🟧 [apple-design](skills/apple-design/SKILL.md) | Apple's approach to interface design and fluid, physical motion, translated for the web: gesture-driven UI, spring animations, drag/swipe/sheet interactions, momentum and interruptible transitions, translucent materials and depth, typography, reduced-motion, and the design foundations behind Apple-style interfaces. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
 | 🟧 [state-machine](skills/state-machine/SKILL.md) | Workbench for one component: renders it in every state its code can reach (loading, empty, error, plan tier, role, flags…) on a throwaway route with realistic mock data and a keyboard-driven state switcher, without editing the component. User-invoked (`/state-machine`). From [jakubkrehel/skills](https://github.com/jakubkrehel/skills). |
@@ -159,11 +159,11 @@ Vendor skills are third-party packs tracked as git submodules under `vendor/` an
 | Impeccable | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | v4.4.0 (2026-09-24) | `impeccable` |
 | improve | [shadcn/improve](https://github.com/shadcn/improve) | v1.0.0 | `improve` |
 | Remotion | [remotion-dev/skills](https://github.com/remotion-dev/skills) | v4.0.529 (2026-09-25) | `remotion-best-practices` (router that bundles the 11 per-topic skills) |
-| Emil Kowalski | [emilkowalski/skill](https://github.com/emilkowalski/skill) | main (2026-09-24) | `review-animations`, `emil-design-eng`, `animation-vocabulary`, `apple-design` — upstream also ships `animate`, `animate-expo`, `improve-animations`, `find-animation-opportunities`, `prototype`, `pick-ui-library`, `mobile-native`, `ask-sonner`, `write-swift`; add any of them to the `emil` entry in `VENDOR_SKILLS` to link it |
+| Emil Kowalski | [emilkowalski/skill](https://github.com/emilkowalski/skill) | main (2026-09-24) | `review-animations`, `emil-design-eng`, `animation-vocabulary`, `apple-design`. Upstream also ships `animate`, `animate-expo`, `improve-animations`, `find-animation-opportunities`, `prototype`, `pick-ui-library`, `mobile-native`, `ask-sonner`, `write-swift`; add any of them to the `emil` entry in `VENDOR_SKILLS` to link it |
 | Cloudflare | [cloudflare/skills](https://github.com/cloudflare/skills) | v1.0.2 (2026-10-12) | All 18 skills (see [☁️ Cloudflare](#️-cloudflare)) |
-| Jakub Krehel | [jakubkrehel/skills](https://github.com/jakubkrehel/skills) | v1.10.3 (2026-10-10) | `state-machine`, `break`, `variant` — upstream also ships `better-interface`, `better-ui`, `better-typography`, `better-colors`, `better-accessibility`, `better-layout`, `better-writing`, `interface-review`, `explain-interface`, `build-design`; add any of them to the `jakubkrehel` entry in `VENDOR_SKILLS` to link it |
+| Jakub Krehel | [jakubkrehel/skills](https://github.com/jakubkrehel/skills) | v1.10.3 (2026-10-10) | `state-machine`, `break`, `variant`. Upstream also ships `better-interface`, `better-ui`, `better-typography`, `better-colors`, `better-accessibility`, `better-layout`, `better-writing`, `interface-review`, `explain-interface`, `build-design`; add any of them to the `jakubkrehel` entry in `VENDOR_SKILLS` to link it |
 | Anatomy | [wheresryan22/anatomy](https://github.com/wheresryan22/anatomy) | v1.0.0+ main (2026-10-12) | `anatomy` (the repo root is the skill, so its entry uses `.` as the skills path) |
-| snapcn | [snapcndev/snapcn](https://github.com/snapcndev/snapcn) | main (2026-10-13) | `snapcn`, `remotion-product-demo`, `remotion-launch-video` — upstream also ships `remotion-motion-graphics`, `remotion-logo-animation`, `remotion-explainer-video`, `remotion-kinetic-typography`; add any of them to the `snapcn` entry in `VENDOR_SKILLS` to link it |
+| snapcn | [snapcndev/snapcn](https://github.com/snapcndev/snapcn) | main (2026-10-13) | `snapcn`, `remotion-product-demo`, `remotion-launch-video`. Upstream also ships `remotion-motion-graphics`, `remotion-logo-animation`, `remotion-explainer-video`, `remotion-kinetic-typography`; add any of them to the `snapcn` entry in `VENDOR_SKILLS` to link it |
 
 **Update all vendors to their latest upstream:**
 
@@ -208,7 +208,7 @@ curl -fsSL https://raw.githubusercontent.com/tomimor/skills/main/install.sh | ba
 
 Running `install.sh` with no flags starts an interactive picker.
 
-**Manual install** — copy any skill directory into your platform's skills folder:
+**Manual install.** Copy any skill directory into your platform's skills folder:
 
 ```bash
 cp -r skills/pr-dashboard ~/.cursor/skills/    # Cursor
@@ -237,7 +237,7 @@ Skills use the same `SKILL.md` format everywhere. The only difference is where t
 | Cursor | `~/.cursor/skills/<skill-name>/` |
 | Claude Code | `~/.claude/skills/<skill-name>/` |
 
-Most GitHub-related skills need the [GitHub CLI](https://cli.github.com/) (`gh`). `writing-voice`, `writing-google-style`, `teach`, and `remotion-best-practices` have no extra requirements — `writing-google-style` ships a scanner script, but it needs only `bash` and `awk`. `impeccable` downloads its self-contained launcher binary once on first run (no Node or other runtime needed).
+Most GitHub-related skills need the [GitHub CLI](https://cli.github.com/) (`gh`). `writing-voice`, `writing-google-style`, `teach`, and `remotion-best-practices` have no extra requirements. `writing-google-style` ships a scanner script, but it needs only `bash` and `awk`. `impeccable` downloads its self-contained launcher binary once on first run (no Node or other runtime needed).
 
 ## License
 

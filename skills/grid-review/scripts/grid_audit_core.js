@@ -1,12 +1,12 @@
 /*
- * grid_audit_core.js — the single source of truth for grid measurement.
+ * grid_audit_core.js: the single source of truth for grid measurement.
  *
  * Defines window.__gridAudit(opts) -> a JSON-serializable report for ONE viewport.
  * Pure in-page DOM/canvas work, no dependencies. Two consumers:
- *   1. scripts/audit_grid.mjs  — injects this file into a headless browser (CI path).
- *   2. A browser-eval MCP tool  — paste this file, then call __gridAudit({...}) (no install).
+ *   1. scripts/audit_grid.mjs: injects this file into a headless browser (CI path).
+ *   2. A browser-eval MCP tool: paste this file, then call __gridAudit({...}) (no install).
  *
- * It MEASURES and REPORTS only. It never judges appropriateness — that is the agent's
+ * It MEASURES and REPORTS only. It never judges appropriateness: that is the agent's
  * job, using grid-discipline.md. Mechanical facts in, raw numbers out.
  */
 (function () {

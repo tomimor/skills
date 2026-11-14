@@ -1,7 +1,7 @@
 ---
 name: agent-guide-bootstrap
 description: >-
-  Bootstrap a complete agent guide system for a repo — generates AGENTS.md
+  Bootstrap a complete agent guide system for a repo: generates AGENTS.md
   (always-on), .agents/{domain}.md (loaded on demand), CLAUDE.md (redirect),
   and .agents/design-decisions.md using progressive disclosure and
   canonical references instead of stale embedded code. Use when the user
@@ -14,7 +14,7 @@ description: >-
 
 Generate the full agent-guide system for a repo so AI coding assistants (Claude Code, Cursor, Copilot, Codex) get the right context at the right time.
 
-**The system uses progressive disclosure**: a terse always-on `AGENTS.md` (~80 lines) + on-demand domain guides + canonical reference files. One source of truth — tool-specific files like `CLAUDE.md` are thin redirects.
+**The system uses progressive disclosure**: a terse always-on `AGENTS.md` (~80 lines) + on-demand domain guides + canonical reference files. One source of truth: tool-specific files like `CLAUDE.md` are thin redirects.
 
 ## Additional triggers
 
@@ -25,7 +25,7 @@ Beyond the description's "Use when…" phrases, also invoke when:
 
 ## Critical rules
 
-1. **Never embed code examples that will go stale.** Point to canonical reference files (`Canonical example: src/routes/users-routes.ts`). The codebase is always up to date — embedded examples are not.
+1. **Never embed code examples that will go stale.** Point to canonical reference files (`Canonical example: src/routes/users-routes.ts`). The codebase is always up to date. Embedded examples are not.
 2. **Lead domain guides with "Do Not" lists.** Agents discover positive patterns from existing code. They cannot discover which valid-looking patterns are prohibited.
 3. **AGENTS.md ≤ 80 lines.** It loads on every turn. Anything domain-specific moves to `.agents/{domain}.md`.
 4. **Exact commands, not descriptions.** `pnpm biome check --write path/to/file.ts`, not "run the linter".
@@ -40,7 +40,7 @@ Read these:
 - Build/CI configs: `Makefile`, `.github/workflows/`, `Dockerfile`, `docker-compose.yml`
 - Existing docs: `README.md`, `CONTRIBUTING.md`, `docs/`
 - Recent commit history (commit message format)
-- Any existing `AGENTS.md`, `CLAUDE.md`, `.cursorrules`, `.github/copilot-instructions.md` — do not duplicate, merge
+- Any existing `AGENTS.md`, `CLAUDE.md`, `.cursorrules`, `.github/copilot-instructions.md` (do not duplicate, merge)
 
 ### 2. Identify
 
@@ -54,7 +54,7 @@ Read these:
 
 ### 3. Clarification gate
 
-If anything is ambiguous — which pattern is canonical, what the commit format is, whether a domain needs its own guide — **STOP and ask the user** with `AskUserQuestion` before generating files. Guessing here cascades into bad rules.
+If anything is ambiguous (which pattern is canonical, what the commit format is, whether a domain needs its own guide), **STOP and ask the user** with `AskUserQuestion` before generating files. Guessing here cascades into bad rules.
 
 ### 4. Generate files
 
@@ -77,7 +77,7 @@ Use the structure spec in [references/agent-guide-spec.md](references/agent-guid
 
 - **Do not** generate `AGENTS.md` over 100 lines. It costs tokens on every turn.
 - **Do not** duplicate content between `AGENTS.md` and tool-specific files. Tool files are redirects.
-- **Do not** write "prefer" or "consider" rules. Use "Do NOT" and "NEVER" — agents follow prohibitions reliably; suggestions get ignored.
+- **Do not** write "prefer" or "consider" rules. Use "Do NOT" and "NEVER": agents follow prohibitions reliably; suggestions get ignored.
 - **Do not** invent reference paths. Verify they exist.
 - **Do not** add a domain guide for an area the repo doesn't actually have. One guide per real domain.
 

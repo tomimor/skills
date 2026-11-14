@@ -28,7 +28,7 @@ If the user includes exact wording, use it **verbatim** in `SKILL.md`. Do not pa
 
 ### Inferring from context
 
-If conversation context exists, infer the skill from what was discussed — workflows, patterns, or domain knowledge that emerged.
+If conversation context exists, infer the skill from what was discussed: workflows, patterns, or domain knowledge that emerged.
 
 ### Gathering information
 
@@ -120,7 +120,7 @@ The description drives skill discovery. Include both **WHAT** (capabilities) and
 
 ### Best practices
 
-1. **Third person** — the description is injected into the system prompt:
+1. **Third person** (the description is injected into the system prompt):
    - Good: "Processes Excel files and generates reports"
    - Bad: "I can help you process Excel files"
 

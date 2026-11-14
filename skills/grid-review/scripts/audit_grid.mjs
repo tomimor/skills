@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 /*
- * audit_grid.mjs — headless runner for the grid audit (CI path).
+ * audit_grid.mjs: headless runner for the grid audit (CI path).
  *
  * Usage:
  *   node audit_grid.mjs <url|file> [--widths=1440,1180,768] [--display-min=40] [--json out.json]
  *
  * Auto-detects a driver, in order: playwright, puppeteer, puppeteer-core (+ CHROME env).
- * If none is installed, it prints the Chrome-MCP fallback instructions and exits 2 —
+ * If none is installed, it prints the Chrome-MCP fallback instructions and exits 2:
  * the audit logic itself needs no install (see grid_audit_core.js / SKILL.md).
  *
  * It injects grid_audit_core.js and calls __gridAudit() at each width, waiting for
@@ -78,7 +78,7 @@ if (jsonOut) { (await import('node:fs')).writeFileSync(jsonOut, JSON.stringify(o
 
 // ---- human summary ----
 for (const r of runs) {
-  console.log(`\n=== ${r.width}px — ${r.mode} grid (${r.grid.confidence} confidence, ${r.grid.columns} cols) ===`);
+  console.log(`\n=== ${r.width}px: ${r.mode} grid (${r.grid.confidence} confidence, ${r.grid.columns} cols) ===`);
   console.log(`  column violations: ${r.columnViolations.length} (worst ${r.columnViolations[0]?.offsetPx ?? 0}px)`);
   console.log(`  baseline: ${r.baseline.unit ?? '?'}px unit, ${Math.round((r.baseline.lineHeightMultipleRate || 0) * 100)}% line-heights on rhythm (${r.baseline.confidence})`);
   console.log(`  optical-ink violations: ${r.opticalViolations.length} (worst ${r.opticalViolations[0]?.inkOffsetPx ?? 0}px)`);

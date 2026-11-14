@@ -57,5 +57,5 @@ await browser.close();
 const kb = Math.round(statSync(output).size / 1024);
 console.log(`Rendered ${output} (1200x630, ${kb}KB)`);
 if (kb > 300) {
-  console.warn(`WARN: ${kb}KB > 300KB — WhatsApp may drop the large preview. Flatten gradients/photos or render to .jpg.`);
+  console.warn(`WARN: ${kb}KB > 300KB. WhatsApp may drop the large preview. Flatten gradients/photos or render to .jpg.`);
 }
