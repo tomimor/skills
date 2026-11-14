@@ -10,6 +10,7 @@ Before-and-after pairs, one per register, with the reason for each change. Names
 - [Spanish pitch line: nouns to verbs](#spanish-pitch-line-nouns-to-verbs)
 - [Slack: first reply in a channel shared with a client](#slack-first-reply-in-a-channel-shared-with-a-client)
 - [Spanish post: explaining a concept](#spanish-post-explaining-a-concept)
+- [Spanish post: recap with thanks](#spanish-post-recap-with-thanks)
 - [A review report](#a-review-report)
 
 ## English email: bad news
@@ -186,6 +187,47 @@ conocen necesitan confiar en el mismo registro.
 - **One analogy from daily life,** then back to the real thing.
 - **The limit is stated,** which is what makes the claim before it believable.
 - **Cut:** the scene-setting opener, "no es solo... es...", the self-answered question, "revolución", "cambio de paradigma", and the emoji. After the cut, nothing was left of the original, which is the sign it carried no information.
+
+## Spanish post: recap with thanks
+
+**Before**
+
+```text
+🚀 ¡Qué jornada increíble! 🚀
+
+Ayer tuve el honor de participar en un evento que redefine el futuro de las
+finanzas. La tecnología no es solo código — es confianza.
+
+¿El resultado? Una audiencia inspirada y lista para el cambio.
+
+✅ Innovación
+✅ Comunidad
+✅ Futuro
+
+¡Súmate a la conversación! 👇
+
+#Blockchain #Fintech #Innovación #Futuro #Web3
+```
+
+**After**
+
+```text
+Gran jornada ayer en [evento]!
+
+Hablamos de cómo se usan hoy las stablecoins para pagos entre empresas, con
+casos de Argentina y de la región.
+
+Gracias [nombre] por la invitación y por armar un espacio para charlar de
+estos temas con gente que los está construyendo.
+
+Dejo el link al stream completo en el primer comentario 🦾
+```
+
+- **It starts from what happened** and says what was covered. The original said nothing a reader could repeat.
+- **Thanks by name, for a concrete thing.**
+- **The link goes in the first comment,** and the post ends there. No call for engagement.
+- **One emoji closing a line** in place of emoji as headers and bullets. No hashtags.
+- **Cut:** the contrast with the em dash, the self-answered question, the three-word list, "tuve el honor", and "Súmate" (neutral Spanish; his is "sumate").
 
 ## A review report
 

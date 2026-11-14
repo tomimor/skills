@@ -12,6 +12,7 @@ Each table row is a slot, and the phrases are examples of what fills it. Use the
 - [English: work email and chat](#english-work-email-and-chat)
 - [Spanish: customers, partners, university](#spanish-customers-partners-university)
 - [Spanish: product updates](#spanish-product-updates)
+- [Posts and comments](#posts-and-comments)
 - [Spanish: teaching and talks](#spanish-teaching-and-talks)
 - [Spanish: product copy](#spanish-product-copy)
 - [English: feedback and plans](#english-feedback-and-plans)
@@ -129,6 +130,55 @@ The warmest register. One person on the team writing to the people who use the p
 **Preview lines** are a fragment with the benefit: "A un toque de distancia, a pantalla completa y más rápida."
 
 He sometimes doubles an exclamation mark in a PS. Leave his when you edit his text, and don't add one of your own.
+
+## Posts and comments
+
+From the LinkedIn posts he wrote by hand, in Spanish and in English. He writes from something that happened, in the first person, warm and modest, and he credits other people by name.
+
+| Move | Spanish | English |
+|------|---------|---------|
+| Open with the news | "Tengo una gran noticia" · "Confirmado [evento] en Argentina!" | "First place in [hackathon]!" |
+| Open with the topic | "Privacidad on-chain." · "Tecnología > Precios" | "Why build a CLI tool instead of an IDE?" |
+| Say how he feels about it | "Me hace feliz compartirles que..." · "Es un gusto para mí..." · "Estas oportunidades me encantan." | "What a blast of a weekend." |
+| Opinion marker | "Para mí, ..." · "Y ojo, ..." | "My take: ..." · "In my opinion, ..." |
+| Thank by name | "Gracias [nombre] por la invitación!" · "gracias por bancar" | "Kudos to [name] for..." · "Thanks for sharing" |
+| Praise, specific | "Vengan a escuchar a [nombre], que sabe mucho y explica excelente." · "Gran laburo" · "la rompieron" | "Great read!" · "Rocking it" |
+| Invite | "Los invito a..." · "Sumate" · "Si te interesa saber más, ..." | "Who's in for next year?" |
+| Say who it is for | "Si trabajás en [sector] y querés entender [tema], este programa es para vos." | |
+| Point to the link | "Dejo el link en el primer comentario." | "Link in the first comment." |
+| Close | "Vamos por más" · "A seguir aprendiendo" · "Los esperamos!" · "Se viene con todo" | "Let's keep building" · "Let's go!" · "What do you think?" |
+
+**His words here:** "tremendo", "lindo", "hermoso", "excelente", "un gusto", "charlar", "arrancamos", "se viene", "golazo", "laburo". In English: "amazing", "awesome", "for sure", "bullish", and "&" for "and".
+
+A recap with thanks, with the names taken out:
+
+```text
+Tecnología > Precios
+
+Los invito a revivir el stream donde recorremos los orígenes de la tecnología blockchain y lo que significa una "cadena de bloques" 🚀
+
+Gracias [nombre] por la invitación!
+
+Hermoso estudio, y un gran agradecimiento por generar este tipo de espacios para charlar sobre estos temas.
+
+Dejo el link en el primer comentario 🦾
+```
+
+An opinion post in English:
+
+```text
+Why build a CLI tool instead of an IDE? It's an interesting product question.
+
+[Company] launched its new coding assistant today, and it is a CLI.
+
+It made me think of something [name] said about why building CLI tools can be smarter than building full IDEs.
+
+Is the future going to be more about natural language and CLI-powered actions than about UIs & buttons?
+
+What do you think?
+```
+
+**Comments** are a line: "Grande [nombre]! Éxitos!" · "Tremendo laburo!" · "Coincido, el ecosistema es mucho más grande que esto!" · "Completely agree. Let's go!" · "Great image! Do you have the source?"
 
 ## Spanish: teaching and talks
 

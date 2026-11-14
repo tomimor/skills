@@ -25,7 +25,9 @@ The test behind every entry is Tomi's own: **if a sentence gives the reader no i
 | Engagement bait | "Agree?" · "Thoughts?" · "¿Qué opinan?" tacked on the end | End on the takeaway. Ask only what he wants answered |
 | Every item on one template | Each bullet is "**Bold label:** benefit sentence." of equal length | Vary by content. Some items are one line, one deserves three |
 | Parallel openings | Three paragraphs in a row starting "Whether you're...", "When you...", "Si sos..." | Start each from its own fact |
-| Echo ending | A last line that restates the piece as an aphorism | End on the next step or the last fact |
+| Echo ending | A last line that restates the piece as an aphorism: "The gap is an opportunity." | End on the next step, the logistics, or the last fact |
+| Suspense ellipsis | "So... keep building." · "Y entonces..." | Say it |
+| Emoji as structure | An emoji heading each section of a post, or starting every bullet | One or two closing a line, or none |
 | Setup then reveal | "Here's the thing:" · "Acá viene lo interesante:" | Say the thing |
 | False range | "From startups to enterprises" · "desde monotributistas hasta grandes empresas" | Name the actual reader |
 | Summary of what was just said | "In short, ..." after four sentences | Cut it |
@@ -53,7 +55,8 @@ Replace each with the measurable thing it stands for. If there is nothing measur
 | Empty verbs | `leverage`, `unlock`, `harness`, `elevate`, `empower`, `supercharge` | `potenciar`, `empoderar`, `llevar al siguiente nivel` |
 | Category nouns | `platform`, `solution`, `ecosystem` as the subject of a pitch | `plataforma integral`, `solución de gestión`, `ecosistema para...` |
 | Signposts | `it's worth noting`, `it's important to note`, `needless to say` | `cabe destacar`, `es importante mencionar`, `vale la pena destacar` |
-| Stock metaphors | `landscape`, `journey`, `tapestry`, `deep dive`, `delve` | `cambio de paradigma`, `un antes y un después` |
+| Stock metaphors | `landscape`, `journey`, `tapestry`, `deep dive`, `delve`, `testament` | `cambio de paradigma`, `un antes y un después` |
+| Eulogy words | `unwavering`, `nothing short of`, `resonates`, `onward and upward` | `apasionante`, `un honor` |
 | Intensifiers | `really`, `extremely`, `incredibly`, `truly` | `súper`, `sumamente`, `increíblemente` |
 
 **Category nouns get verbs instead.** A pitch line starts with what the product does, in the first person plural: "Sincronizamos [la fuente] todos los días para toda tu cartera, así dejás de descargar datos cliente por cliente." If a line starts with "Somos una plataforma de...", rewrite it.
@@ -98,7 +101,9 @@ These are his, so leave them alone.
 - **A real question to a real audience,** in a talk or in a call script.
 - **A test question the reader answers about their own case:** "¿Podés resolverlo con una base de datos? Entonces no lo necesitás." The reader supplies the answer, so it is a tool and not a setup.
 - **A parenthetical aside,** one per paragraph.
-- **A short PS** with something human in a product update.
+- **A short PS** with something human in a product update or a post ("pd: la foto es de...").
+- **One or two emoji closing a line in a LinkedIn post or comment:** 🦾 🚀 🔥 🇦🇷. They are his. Emoji as headers are not.
+- **One word in capitals** in a post ("GRATIS"), and "&" for "and" in English posts.
 - **Three verbs that are three real actions:** "I design, build, and ship products." The tell is the forced triad, where the third item is there for the rhythm.
 - **"Quedo atento a cualquier duda."** It reads like a stock close, and it is his.
 

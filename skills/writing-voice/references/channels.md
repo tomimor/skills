@@ -95,26 +95,39 @@ The shortest register. He uses it with customers and partners in Spanish.
 
 ## LinkedIn and X
 
-**Ask which platform first.** LinkedIn is the main one: long-form and professional. X is short and punchy. The same idea needs two different drafts. If you can't ask, draft for LinkedIn in the language he briefed in, and say you assumed both.
+**Ask which platform first.** LinkedIn is the main one. If you can't ask, draft for LinkedIn in the language he briefed in, and say you assumed both. The audience is founders, operators, and product and tech people. The goal is reputation and authority in his niche (tech, startups, product), so optimize for authority over virality, and quality over volume.
 
-This skill has no verified sample of his posts yet. Until he adds one, borrow the stance and the moves from his talks: the claim first, the limit stated, a test the reader can run.
-
-The audience is founders, operators, and product and tech people. The goal is reputation and authority in his niche (tech, startups, product), so optimize for authority over virality, and quality over volume.
+The conventions below come from his own posts, counting only the ones he wrote by hand. His posts start from something that happened: an event he ran or attended, news of his own, something he read. About 3 in 10 promote an event, a class, or a stream. About 3 in 10 are a recap with thanks. The rest are his own news, a recommendation, or an opinion.
 
 | Part | Convention |
 |------|------------|
-| First line | Says exactly what the post is about. Clarity creates the pull, not mystery |
-| Reader | One person: "tu equipo", not "sus equipos" |
-| Body | Short paragraphs with air between them, one idea each. The reason, one concrete case or number with its source, one analogy if the idea is new |
-| Case | A post is stronger with one real case. If he gave none, ask for it in the notes. Put a placeholder in the post only when it makes no sense without the case |
-| Length | As long as the idea needs. With no other signal, 80 to 200 words on LinkedIn and one post on X |
-| Stance | An opinion he holds, argued soberly. What works and what doesn't. A case that failed is as useful as one that succeeded |
+| First line | The news, the event, or the topic, stated plainly. No greeting. "Tengo una gran noticia" · "Confirmado [evento] en Argentina!" · "Para mí, la línea entre producto y engineering tiende a desaparecer." |
+| Length | 40 to 130 words. Never over 250. One or two lines are enough over a reshare |
+| Paragraphs | 4 to 7, of one or two sentences each, with a blank line between them |
+| Reader | The group ("Los invito a...", "Los esperamos!"), and one person in voseo for the call to action ("sumate", "mandame un mensaje") |
+| People | He thanks people by full name for a concrete thing, with one specific compliment: "Gracias [nombre] por la invitación!" He credits the team: "fuimos", "logramos" |
+| Link | Not in the body. "Dejo el link en el primer comentario." |
+| Ending | Logistics, thanks, or a short forward line ("Vamos por más", "Let's keep building"). An open question now and then ("What do you think?"), only when he wants the answers |
+| Emoji | One or two, closing a line: 🦾 🚀 🔥 🇦🇷 🙌. Never as a section header |
+| Exclamation marks | Yes, on the news and on the thanks |
+| Hashtags | None |
+| Emphasis | At most one word in capitals. No bold |
 | Personal angle | Only a real one that Tomi supplied. Never invent a confession, a story, or a family tie |
-| Ending | The takeaway or a test the reader can run. A question only when he wants the answers |
-| Language | One language per post, chosen for the audience of that post |
-| Not used | Empty motivational tone, clickbait hooks, thread-bait, hashtags anywhere, emoji as bullets, "Agree?" |
+| Language | One per post. Spanish posts keep English tech terms ("stream", "link", "stablecoins") and write "cripto". English posts write "crypto" |
 
-On X: one idea per post. A thread only when each post stands alone.
+**Shape by kind of post:**
+
+- **His own news:** the fact or the feeling in line one ("Me hace feliz compartirles que..."), then what it is, who it is with, and a forward line.
+- **Recap with thanks:** what happened and what was covered, thanks by name, one compliment to the host or the venue, where the recording is.
+- **Promotion of a class, talk, or stream:** when and where, what it covers, who else takes part (with a line on why they are worth hearing), who it is for, where the link is.
+- **Recommendation:** where he found it, why he likes it ("Me encanta porque..."), who should read it, link in the comments.
+- **Opinion:** the claim in line one ("Para mí, ...", "My take: ..."), the reason, one case, and often a question back to the reader.
+
+**Not his.** These marked the posts he drafted with an assistant in 2023 to 2025, and he rejects them now: em dashes, emoji as headers or as a bullet on every line, a hashtag block, "..." for suspense, a closing aphorism ("The gap is an opportunity."), a question he answers himself, a post over 250 words, neutral Spanish ("Súmate"), empty motivational tone, clickbait hooks, thread-bait.
+
+**Comments** on other people's posts run under 10 words: the person, a reaction, a wish, one emoji at the end. "Grande [nombre]! A seguir creciendo 🦾" · "Tremendo laburo!" · "Great read! Thanks for sharing." · "Completely agree. Let's go!"
+
+**X:** one idea per post, and a thread only when each post stands alone. This skill has no sample of his X posts, so ask for one before assuming more.
 
 A direct message on either platform is a short email reply without the sign-off block: greeting, the point, the next step.
 

@@ -66,7 +66,7 @@ A second reply in the same exchange on the same day drops the greeting and the s
 - **Spanish is rioplatense.** Voseo for one person ("podés", "tenés", "probalo", "contame"), "ustedes" for a group, "acá", "charlar", "armar". Never "tú", "vosotros", "usted" with a customer, or neutral-Spanish marketing phrasing.
 - **Argentine colloquial register is welcome** with customers and friends ("sin vueltas", "nos viene bárbaro", "la compu"). It sets him apart. Keep it, as long as it doesn't overpromise.
 - **English is plain and international.** Contractions are fine. No idiom that needs a US or UK childhood to parse.
-- **Spanish punctuation:** exclamations take the closing mark only ("Buenas!", "Gracias!"). Questions take both marks ("¿Pudieron verla?") everywhere except chat, where the closing mark alone is fine. Accents are always correct.
+- **Spanish punctuation:** exclamations take the closing mark only ("Buenas!", "Gracias!"). Questions take both marks ("¿Pudieron verla?") in email, product copy, and documents. In posts, comments, and chat he writes the closing mark alone, and that is fine there. Accents are always correct.
 - **Quotes stay in their original language.** Don't translate a quote, a title, or a term of art. Add a short comment in his words instead.
 - **Work artifacts in an English repo or workspace stay in English** whatever language the chat is in.
 - **Notes and questions to Tomi** go in the language he is using with you.
@@ -98,11 +98,11 @@ The lines quoted in this skill show a move. Never reuse one as copy: "Tu lunes s
 | Emphasis | One or two per item at most. If everything is highlighted, nothing stands out. Plain text in an email: no Markdown asterisks unless the destination renders them |
 | Bracket tags | For triage. On feedback items: `[Bug]` when it behaves wrongly, `[Improvement]` when it works but could be better, `[Feedback]` for an observation with no ask. `[Client: what happened]` on an internal update. `[Org - Counterparty] Topic` on an outreach subject |
 | Parentheses | His aside: "(nuevamente)", "(y está perfecto)", "(at least by us)". One per paragraph at most |
-| Exclamation marks | On a greeting, thanks, or good news. Never doubled, at most one per sentence. None in a formal proposal, a sales script, or legal and technical text |
-| Emoji | None in an email or a Slack message. A fixed set of section markers in a product update. A functional marker in slides or a Notion doc (✅ ❌ 👉). Never as decoration |
+| Exclamation marks | On a greeting, thanks, or good news, in email, chat, posts, and product updates. Never doubled, at most one per sentence. None in a formal proposal, a sales script, or legal and technical text |
+| Emoji | None in an email or a Slack message. One or two closing a line in a LinkedIn post or comment (🦾 🚀 🔥). A fixed set of section markers in a product update. A functional marker in slides or a Notion doc (✅ ❌ 👉). Never as a header, or as a bullet on every line |
 | Headings | Documents (a feedback write-up, a plan, a README) and the product update. Never in a one-to-one email or a chat message |
 | Hashtags | None, anywhere in a post |
-| Capitals | Sentence case. No ALL CAPS for emphasis |
+| Capitals | Sentence case. At most one word in capitals in a post, none anywhere else |
 
 ## Tells to remove
 
@@ -115,11 +115,12 @@ These mark a draft as machine-written faster than any single word does. "Muy de 
 | Every item built on the same template | Vary by content. One item gets a line, another gets three |
 | A question asked only so you can answer it ("The result?") | Say the result |
 | Hollow openers and closers ("In today's...", "Nos enorgullece anunciar...", "Y mucho más", "Agree?") | Start with the answer. End on the next step |
+| A closing aphorism ("The gap is an opportunity."), or "..." for suspense | End on logistics, thanks, or the last fact |
 | Hype and category words (`seamless`, `potente`, `revolucionario`, `plataforma integral`, `ecosistema`) | The verb and the number |
 | Hedge stacks, scripted empathy, empty motivation | "I'd do X because Y", or "I don't know" |
 | Decoration added for its own sake | Remove it |
 
-**His, so not tells:** "Buenas!" and "Gracias!" with a closing mark only. Argentine colloquial phrases. One concrete contrast. A question that is a test the reader runs on their own case ("¿Podés resolverlo con una base de datos? Entonces no lo necesitás."). A parenthetical aside. "Quedo atento a cualquier duda."
+**His, so not tells:** "Buenas!" and "Gracias!" with a closing mark only. Argentine colloquial phrases. One or two emoji closing a line in a post. One concrete contrast. A question that is a test the reader runs on their own case ("¿Podés resolverlo con una base de datos? Entonces no lo necesitás."). A parenthetical aside. "Quedo atento a cualquier duda."
 
 The full catalog, with rewrites in both languages, is in [references/ai-tells.md](references/ai-tells.md).
 

@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: es-linkedin-recap-with-thanks
+expected_outcome: |
+  A LinkedIn post in rioplatense Spanish built the way he builds a recap: the event in the first line
+  with no greeting, what was covered, thanks to the host by name, the link sent to the first comment,
+  40 to 130 words in short paragraphs, at most two emoji closing a line, no hashtags, and no invented
+  facts.
