@@ -16,6 +16,9 @@ What changes from one channel to the next. The voice rules in `SKILL.md` apply e
 - [Sales calls and pitches](#sales-calls-and-pitches)
 - [Commercial proposal](#commercial-proposal)
 - [Weekly status update](#weekly-status-update)
+- [Executive brief](#executive-brief)
+- [Assumptions and rationale](#assumptions-and-rationale)
+- [Client kickoff deck](#client-kickoff-deck)
 - [Feedback write-ups and plans](#feedback-write-ups-and-plans)
 - [Bios and spoken intros](#bios-and-spoken-intros)
 - [Personal notes](#personal-notes)
@@ -25,16 +28,17 @@ What changes from one channel to the next. The voice rules in `SKILL.md` apply e
 
 | Part | Convention |
 |------|------------|
-| Subject | Says the thing. When he writes for one organization to another, a bracket prefix: `[Org - Counterparty] Topic`. Administrative mail is `Topic - Full Name`. A cold email takes a direct question about the reader's day |
+| Subject | Says the thing. When he writes for one organization to another, a bracket prefix: `[Org - Counterparty] Topic` or `[Org <> Client] Topic`. Administrative mail is `Topic - Full Name`. A cold email takes a direct question about the reader's day |
 | Reply | 2 to 6 short sentences between greeting and sign-off: reaction, answer, next step, thanks. No new subject: it inherits the thread's |
 | Proposal or outreach | Up to about 200 words. Pick up the thread ("Tal como conversamos..."), list what is attached as numbered items, separate what exists today from what is promised and by when, offer a call. The attached document has its own shape: see [Commercial proposal](#commercial-proposal) |
+| To a client executive | Restate the ask in their terms ("We understand you would like [the ask] ahead of [their milestone]."). Say who reviews it and when he follows up. Then ask what he needs to plan: "To help guide our approach, could you clarify the following?" Each question opens with a bold label ("**Scope:**") and offers the alternative: "Do you require the full [thing], or would an initial core version suffice?" Close warm: "Looking forward to working together!" |
 | Asks | One per email. Two or more questions become a numbered list |
 | Follow-up after silence | One line asking, one line making the next step cheap, no guilt |
 | Logistics | When he sets or confirms a meeting himself: day, time, time zone, and link in the body, even if an invite went out |
-| Signature | First name only. Name and role on a first formal contact. `Tomás / [producto]` on a cold email |
+| Signature | First name only. On a first formal contact: `Best regards,`, his first name, and his role and company on the next line. `Tomás / [producto]` on a cold email |
 | Format | Plain text. No Markdown asterisks unless the destination renders them |
 
-No headings, no emoji, no bold.
+No headings and no emoji. Bold only as the label that opens each question in a list, and only where the mail client renders it.
 
 **Cold email,** to someone who is not looking for the product. Four moves, under 90 words: a subject that asks about their day ("¿Cuántos clientes descarga tu estudio a mano cada mes?"), why he is asking ("Te pregunto porque la mayoría de los estudios con los que hablo hacen lo mismo: ..."), what the product does in one verb-first sentence, and a small ask with a size ("Te muestro cómo en 15 minutos. ¿Tenés tiempo esta semana?"). If they met, the first line says where.
 
@@ -89,6 +93,10 @@ The periodic email to the users of his product. It should sound like one person 
 - **A promise to a client has a time,** and the update arrives even when there is no news. Internally, "I'll keep everyone posted here" is enough once the client deadline is stated.
 - **Closing the loop on a promise starts by saying so:** "Hi @Name! As promised, here's our plan after looking into the issue with @Lead:". Then one bullet per commitment: a bold label, a colon, who does what, and by when ("We'll share feedback here by [Missing: date]."). It ends on an offer: "Happy to jump on a quick call this week to walk through it together. Let me know what works for you!"
 - **A DM that asks a teammate for time has four parts:** what happened, the link, an ask with its size, and what he plans to do in the meantime. "Hey @Lead! [Client] just posted that they found a bug in [the contract]. Thread: <link>. Do you have 5 minutes to sync? I was planning to reply in the thread to acknowledge and confirm that nothing is live."
+- **A new scope ask from a client is framed as a choice,** never as a yes or a no. His own line: "Frame every new scope ask as a choice: swap priorities, add capacity or add time".
+- **Options go to the people who approve as a short list, then his pick, then what he needs from them:** "These are the options we could offer [client]:", one line per option (a bold label, a colon, what changes and what the client gives up), "Our recommendation: [option], because [reason].", and "Before I take this to [who], I'd like your input on [what]." The pick and its reason are his. Without them, ask.
+- **One voice toward the client:** "If anyone at [client] raises this with you directly, please point them to me, and let's not commit to dates or scope until we agree internally."
+- **A DM before a meeting lists the questions:** "Hey team! I've booked 45 minutes on [topic]. These are the questions I'd like us to answer:", grouped under each `@Name`.
 - **Mentions are written `@Name`.** Tomi picks them from Slack's autocomplete when he pastes. A person he hasn't named is their role in brackets (`[Lead]`, `[BD]`), and the notes ask who it is.
 - **No emoji** in a Slack message he writes by hand.
 - **An automated alert carries the facts in a fixed order** (what happened, who, how much, in the local number format) and no verdict. "Plan Profesional: $ 180.000 por mes (90 cuentas)" tells the team more than "cliente grande", and it shows for every account, not only the big ones.
@@ -173,6 +181,7 @@ Pedagogical clarity comes before completeness. People came to learn, not to read
 - **Speaker notes** carry the timing per section and the moments where the room does something (raise hands, write down their own case).
 - **Scripts for the camera** are written to be said aloud: one sentence per line, no clause that needs a breath in the middle. Close on an invitation: "Te esperamos."
 - **Course material is sober:** calm, precise, confident. The warmth comes from the writing and the examples, not from decoration.
+- **A deck that presents his own work** keeps each slide to three short points at most, and links the deliverable behind it.
 
 ## Video and ad scripts
 
@@ -249,6 +258,43 @@ The weekly deck for a client or a steering group. Three slides do the work: a co
 | Coming up | Short noun labels with the same area tag: "Review queue". No date unless he gave one |
 | Highlight | One slide for the change worth showing, with a screenshot |
 
+## Executive brief
+
+One page for the people who decide: an account thesis, a strategy, a recommendation. He builds it on situation, complication, answer and the pyramid principle. The answer sits on top, and in his words "all other slides act as backup".
+
+| Part | Convention |
+|------|------------|
+| Title line | The title, then the date and "by" his name |
+| `## The thesis` | One sentence with the situation and the deadline: "[Client] already runs on our [product], but [the gap], and our contract ends on [date]." Then two bullets that say what to do: "We should [renew the core work] first, priced on its own." |
+| `## What we know about [client]` | Three or four bullets. Each opens with a claim in bold ("**It already depends on us.**"), then the numbers behind it, each one linked to its source |
+| `## Account strategy` | A table with two columns: Pillar, What we offer. Pillars are numbered, start with a verb in bold, and carry a date: "**1. Keep the core**, signed by [date]" |
+| `## Risks and the decision` | One line that frames them: "Two risks are high, and both land inside the renewal window:". Each risk is a bold label, the evidence, then what we do and by when: "We name a second line of maintainers now." |
+| Close | "**Left for later:**" with what is out and why. Then "**The decision:** approve [what] by [date]." |
+
+- **Every number links to a source he can open.** No source, no number.
+- **A deadline is a date:** "by 27 Nov", not "soon" or "in the coming weeks".
+
+## Assumptions and rationale
+
+The note that goes with a plan or an estimate and shows where each date and rule came from. It is in the first person: "I read it as...", "I use the same three dates here."
+
+- **One table carries it:** Decision, Basis, Strength. Strength is one of three words: Sourced, Derived, Assumed.
+- **Basis quotes the source and says where it is:** `Process guide, p.3: "every change is reviewed by two people"`. A derived row shows the arithmetic: "15 plus 5 is 20".
+- **A reading of an ambiguous number gets its own short section:** the reading in bold, then the reasons as a numbered list where each item opens with its claim in bold.
+- **Say what breaks if the assumption is wrong:** "if this assumption differs from expectations, the only affected result should be the number of days".
+- **Where no source gives a date, don't promise one:** "So I don't promise a date here."
+
+## Client kickoff deck
+
+The deck that opens an engagement. It speaks to the client in the second person and says what happens, when, and what they have to do.
+
+- **An overview slide lists the stages, numbered,** each with its dates ("Mon, Nov 16") and what the client does and receives: "You receive an initial report with all findings."
+- **One slide per stage,** titled with its number.
+- **One slide says who is who** and which channel to use.
+- **One "Important" callout** holds the single hard rule of the engagement. One rule, not a list.
+- **It closes on "Thank you!"**
+- **Dates and rules come from the plan.** A date nobody gave is not on a slide. See [Assumptions and rationale](#assumptions-and-rationale).
+
 ## Feedback write-ups and plans
 
 - It is a document, so it has headings and no greeting or sign-off. If he will paste it into an email, he adds those.
@@ -264,6 +310,8 @@ The weekly deck for a client or a steering group. Three slides do the work: a co
 **Written bio:** role first, then what he does now, then background, in two or three sentences. First person on his own site, third person for an event page. Verbs and numbers ("built and shipped X, used daily by N firms"), no adjectives about himself. The details come from Tomi or from a bio he already published, never from memory.
 
 **Spoken intro** (a podcast, a panel): `Buenas! Soy Tomás.` or `Buenas! Mi nombre es Tomás.` (both are his). Then years and what he does in one sentence, then what he is doing today with each front on its own line, then one closing line about what drives him. In a personal setting he wants less CV and more of himself. That closing line is his to write: ask for it in the notes, and don't put a placeholder in the text.
+
+**Prep notes for speaking** (an interview, a panel, a pitch) are cues, not a script: short sentences, active voice, one idea per line, in Simplified Technical English. He does not read them word for word. A pitch gets a 30-second and a 2-minute version.
 
 ## Personal notes
 

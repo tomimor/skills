@@ -70,6 +70,11 @@ For context, I'm blocking one or two days for this, so the answers decide which 
 | Ask for time | "Do you have 5 minutes to sync?" |
 | Invite input | "I would love to hear your thoughts and discuss next steps." · "Happy to discuss anything here in the thread!" |
 | Leave the door open | "If anything changes on your side, feel free to ping me here!" |
+| Restate a client's ask | "We understand you would like [the ask] ahead of [their milestone]." |
+| Recommend | "Our recommendation: [option], because [reason]." |
+| Ask before going back to the client | "Before I take this to [who], I'd like your input on [what]." |
+| Keep one voice | "If anyone at [client] raises this with you directly, please point them to me, and let's not commit to dates or scope until we agree internally." |
+| Show an assumption | "I read it as [the reading]. The rationale for this is:" · "So I don't promise a date here." |
 
 ## Spanish: customers, partners, university
 

@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: en-options-to-approvers
+expected_outcome: |
+  A Slack message to his manager and the account owner: the client's ask in two or three sentences,
+  the three options as a short list, his recommendation with his own reason, and a request for
+  their input before he goes back to the client. No invented trade-off, price, date, or name.

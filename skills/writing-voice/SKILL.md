@@ -6,10 +6,10 @@ description: >-
   verbs and numbers instead of category nouns and adjectives, one everyday
   analogy per new idea, and no AI tells. Use when drafting or editing emails,
   Slack or WhatsApp messages, LinkedIn or X posts, product updates, weekly
-  updates, commercial proposals, landing copy, pitches, bios and intros, talk
-  or video scripts, forum replies, or feedback write-ups, and when asked to
-  match his voice, sound less like AI, check tone, or move a draft between
-  English and Spanish.
+  updates, commercial proposals, executive briefs, kickoff decks, landing
+  copy, pitches, bios and intros, talk or video scripts, forum replies, or
+  feedback write-ups, and when asked to match his voice, sound less like AI,
+  check tone, or move a draft between English and Spanish.
 ---
 
 # Writing voice
@@ -27,7 +27,7 @@ A short email or chat reply needs only this file. Load a reference when its trig
 | Load | When |
 |------|------|
 | [references/voice-profile.md](references/voice-profile.md) | The piece is longer than a short reply, or it is product copy, a pitch, a talk, or a feedback write-up. The moves and phrases he uses in each register, in both languages |
-| [references/channels.md](references/channels.md) | The piece is anything other than a short email or chat message: a proposal or outreach email, a commercial proposal, a product update, a weekly status update, a client-facing or status Slack message, a first WhatsApp to a lead, a post or DM, a forum reply, a talk, a video script, landing copy, a sales call, a feedback write-up, a bio or spoken intro, a personal note, a README, a commit |
+| [references/channels.md](references/channels.md) | The piece is anything other than a short email or chat message: a proposal or outreach email, an email to a client executive, a commercial proposal, an executive brief, an assumptions note, a client kickoff deck, a product update, a weekly status update, a client-facing or status Slack message, a first WhatsApp to a lead, a post or DM, a forum reply, a talk, a video script, landing copy, a sales call, a feedback write-up, a bio or spoken intro, a personal note, a README, a commit |
 | [references/ai-tells.md](references/ai-tells.md) | The task is a review or "make this sound less AI", or the scan flags something you can't rewrite |
 | [examples.md](examples.md) | You want a before-and-after model, or a model of a review report. It has: an English bad-news email, a Spanish "no" to a customer, a product update item, a pitch line, a proposal opening, a weekly update item, a first Slack reply in a client channel, two Spanish posts, and a review report |
 
@@ -40,7 +40,7 @@ A short email or chat reply needs only this file. Load a reference when its trig
 5. **Numbers and names, not adjectives or labels.** "Tu lunes son 3 clientes, no 47." "90 cuentas", not "un cliente grande": give the fact and let the reader judge. When a word is vague, name the specific thing. If the detail is missing, ask for it.
 6. **The reader's words.** No builder jargon in text for customers: no internal names, no ticket numbers, no English tech terms they don't use. Their own professional acronyms go in unexplained, because that is how they talk.
 7. **One analogy per new idea.** When the reader would need a definition, give them something from daily life instead, then return to the real thing. Over-engineering is "una Ferrari para ir al kiosco". Tokenizing a deed is like scanning it, except the copy can be transferred and split. The analogies quoted in this skill are his and can be reused for their topic. A new one is yours to propose, flagged in the notes. Never chain two.
-8. **Say the limit out loud.** State what isn't built, isn't known, or isn't a fit, then offer the path that exists. "No te sirve para todo. Te sirve si tu cuello de botella es este." B2B buyers detect smoke fast, and this is what makes the rest believable.
+8. **Say the limit out loud.** State what isn't built, isn't known, or isn't a fit, then offer the path that exists. When a plan rests on an assumption, say what changes if it is wrong, and where no source gives a date: "So I don't promise a date here." "No te sirve para todo. Te sirve si tu cuello de botella es este." B2B buyers detect smoke fast, and this is what makes the rest believable.
 9. **Warm, brief, low pressure.** Thank people. Offer, don't push: "sin ningún tipo de compromiso", "no te vengo a apurar". An ask says how small it is and what it is for: "Do you have 5 minutes to sync?", "es cortito y me ayuda así entiendo tu caso". Never manufacture urgency.
 10. **Show the alternative, don't attack it.** No "most experts get this wrong". Put the old way next to the new way and let the reader see the difference.
 
@@ -56,7 +56,7 @@ A short email or chat message is 2 to 6 short sentences between greeting and sig
 | One line of reaction | "Great news!" "Thanks for the clarification!" | "Recibido." "Impecable!" "Gracias por la consulta." |
 | Follow-up after silence | "I wanted to quickly check if you received my proposal. If it helps, I can walk you through it on a short call." | "¿Pudieron ver la propuesta? Si quieren, agendamos un rato para charlar y sacarse cualquier duda, sin ningún tipo de compromiso." |
 | Close | "Thanks in advance!" "Looking forward to it." | "Quedo atento a cualquier duda." "Quedo a disposición." "Gracias desde ya," |
-| Sign-off | `Best,` then `Tomas` | `Saludos,` then `Tomás.` |
+| Sign-off | `Best,` then `Tomas`. `Best regards,` and his role on a formal first contact | `Saludos,` then `Tomás.` |
 | Name | `Tomi` in either language with people who already call him that | |
 
 A second reply in the same exchange on the same day drops the greeting and the sign-off. A reply keeps the thread's subject, so it needs none.
@@ -98,13 +98,14 @@ Stock phrases quoted in this skill (greetings, thanks, logistics, sign-offs) are
 | Paragraphs | 1 to 3 sentences, one idea each |
 | Sentences | Under about 20 words. Split at the "and" before reaching for a semicolon |
 | Numbers | Digits for quantities: "2 or 3 slots", "15 días", "3 clientes" |
+| Dates | A deadline is a date, not "soon": "by 27 Nov". In a schedule the weekday goes with it: "Mon, Nov 16". One format per piece |
 | Lists | Numbered when the reader must answer or act on each item. A bold label and a colon when items run longer than a line. Otherwise write sentences |
 | Emphasis | One or two per item at most. If everything is highlighted, nothing stands out. Plain text in an email: no Markdown asterisks unless the destination renders them |
-| Bracket tags | For triage. On feedback items: `[Bug]` when it behaves wrongly, `[Improvement]` when it works but could be better, `[Feedback]` for an observation with no ask. `[Client: what happened]` on an internal update. `[Org - Counterparty] Topic` on a subject when he writes for one organization to another |
+| Bracket tags | For triage. On feedback items: `[Bug]` when it behaves wrongly, `[Improvement]` when it works but could be better, `[Feedback]` for an observation with no ask. `[Client: what happened]` on an internal update. `[Org - Counterparty] Topic` or `[Org <> Client] Topic` on a subject when he writes for one organization to another |
 | Parentheses | His aside: "(nuevamente)", "(y está perfecto)", "(at least by us)". One per paragraph at most |
-| Exclamation marks | On a greeting, thanks, or good news, in email, chat, posts, and product updates. Also on the offer that closes a chat message ("Feel free to ping me here!"). Never doubled, at most one per sentence, and never on a claim. None in a formal proposal, a sales script, or legal and technical text |
+| Exclamation marks | On a greeting, thanks, or good news, in email, chat, posts, and product updates. Also on the warm line or the offer that closes a message ("Looking forward to working together!", "Feel free to ping me here!"). Never doubled, at most one per sentence, and never on a claim. None in a formal proposal, a sales script, or legal and technical text |
 | Emoji | None in an email or a Slack message. One or two closing a line in a LinkedIn post or comment (🦾 🚀 🔥). A fixed set of section markers in a product update. A functional marker in slides or a Notion doc (✅ ❌ 👉). Never as a header, or as a bullet on every line |
-| Headings | Documents (a feedback write-up, a plan, a commercial proposal, a video script, a README) and the product update. Never in a one-to-one email or a chat message |
+| Headings | Documents (a feedback write-up, a plan, a commercial proposal, an executive brief, a video script, a README) and the product update. Never in a one-to-one email or a chat message |
 | Hashtags | None, anywhere in a post |
 | Capitals | Sentence case. At most one word in capitals in a post, none anywhere else |
 
@@ -208,7 +209,7 @@ READMEs and commit messages have no skill. Their conventions are in [references/
 
 The reply has two parts, in this order, with a `---` line between them.
 
-1. **The piece, bare.** No "Here's the draft" before it. Plain text, not inside a code block, so it copies clean. The exception is a piece whose destination takes Markdown (a product update body, a commercial proposal, a video script, a README): that goes in a fenced block so the marks survive. A piece with several fields labels each one. In a review, the report is the piece.
+1. **The piece, bare.** No "Here's the draft" before it. Plain text, not inside a code block, so it copies clean. The exception is a piece whose destination takes Markdown (a product update body, a commercial proposal, an executive brief, a video script, a README): that goes in a fenced block so the marks survive. A piece with several fields labels each one. In a review, the report is the piece.
 2. **Notes, short, in the language Tomi is using with you:** your questions, numbered, with every placeholder repeated as one. Then what you assumed about form (language, platform, register, which item leads). A fact is never an assumption: if a note would say "es mi interpretación de para qué sirve" or "I guessed what this is for", go back, cut that sentence from the piece, and ask instead. Then what you left out, because he will ask "what did you leave out?" otherwise.
 
 Also:
