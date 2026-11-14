@@ -98,7 +98,7 @@ Stock phrases quoted in this skill (greetings, thanks, logistics, sign-offs) are
 | Paragraphs | 1 to 3 sentences, one idea each |
 | Sentences | Under about 20 words. Split at the "and" before reaching for a semicolon |
 | Numbers | Digits for quantities: "2 or 3 slots", "15 días", "3 clientes" |
-| Dates | A deadline is a date, not "soon": "by 27 Nov". In a schedule the weekday goes with it: "Mon, Nov 16". One format per piece |
+| Dates | A deadline is a date, not "soon": "by 27 Nov". In a schedule the weekday goes with it: "Mon, Nov 16". One format per piece. A day stays as he gave it: "Wednesday" doesn't become a calendar date you worked out |
 | Lists | Numbered when the reader must answer or act on each item. A bold label and a colon when items run longer than a line. Otherwise write sentences |
 | Emphasis | One or two per item at most. If everything is highlighted, nothing stands out. Plain text in an email: no Markdown asterisks unless the destination renders them |
 | Bracket tags | For triage. On feedback items: `[Bug]` when it behaves wrongly, `[Improvement]` when it works but could be better, `[Feedback]` for an observation with no ask. `[Client: what happened]` on an internal update. `[Org - Counterparty] Topic` or `[Org <> Client] Topic` on a subject when he writes for one organization to another |
