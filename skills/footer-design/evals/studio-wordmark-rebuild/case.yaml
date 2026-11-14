@@ -1,0 +1,9 @@
+schema_version: "1.1"
+name: studio-wordmark-rebuild
+expected_outcome: |
+  index.html and styles.css contain a new footer modeled on a named, linked footer.design footer
+  with a giant wordmark: Northbeam's own content (nav links, email, socials) and a large
+  "Northbeam" wordmark (live text or an SVG of its own wordmark), using the site's existing tokens,
+  responsive at 390px, accessible, and with no brand assets copied from the source.
+context:
+  scaffold_script: place-files.sh

@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: restaurant-content-shortlist
+expected_outcome: |
+  shortlist.md offers 4-6 real footer.design footers, each linked, mostly light, chosen so that
+  several already show the restaurant's kind of content (opening hours, an address, a newsletter),
+  with notes on where hours, address, reservations and newsletter go, and one recommendation.
+  gallery.html shows each option's screenshots.

@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: bw-portfolio-footer-shortlist
+expected_outcome: |
+  shortlist.md offers 4-6 real footer.design footers, each linked, all strictly black and white
+  (no color accents), bold, suited to about 5 links, differing in structure, with one recommendation.
+  gallery.html shows each option's screenshots.

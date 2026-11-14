@@ -1,0 +1,22 @@
+[
+  {"query": "can you go through footer.design and pick a few footers that would work for our b2b analytics app? we have like 30 links in the footer right now and it looks like a junk drawer", "should_trigger": true},
+  {"query": "I love the footer on footer.design/sites/mother-design. Rebuild something like that for my portfolio (it's an Astro site, src/components/Footer.astro). My name is Ingrid Solberg", "should_trigger": true},
+  {"query": "our nonprofit's website footer is ugly. we need a footer with a donate button, newsletter signup and our office address, light and friendly. is there a gallery of good footers we could borrow a layout from?", "should_trigger": true},
+  {"query": "redesign the footer in src/components/SiteFooter.vue so it's a big statement, giant wordmark style, black and white. find a real reference first so it doesn't look generic", "should_trigger": true},
+  {"query": "footr design has those huge wordmark footers. find me 5 that would still work with a long brand name like 'Hollingsworth Partners'", "should_trigger": true},
+  {"query": "what footer layouts do premium dev tools use? show me real examples I could copy for our docs site footer, dark theme, ~25 links in 4 groups", "should_trigger": true},
+  {"query": "make our marketing site footer feel like the one resend has (huge glossy wordmark over the link columns) but for our product. it lives in app/(marketing)/footer.tsx", "should_trigger": true},
+  {"query": "building a coffee shop site in plain html/css. I need a footer with opening hours, address and instagram, warm and a bit playful. show me a few options first, then build the one I pick", "should_trigger": true},
+  {"query": "pick a footer for my yoga studio site from that footer gallery website, we need weekly class times, a 'book a class' button and app store badges", "should_trigger": true},
+  {"query": "footer ideas pls. shopify custom theme for an outdoor gear store, needs payment icons, a currency switcher and a newsletter. want it organized but not boring", "should_trigger": true},
+  {"query": "my footer overlaps the page content on mobile, I think it's the position: fixed in src/styles/layout.css. can you fix it?", "should_trigger": false},
+  {"query": "add a copyright year that updates automatically to the footer in components/Footer.jsx, right now it's hardcoded to 2023", "should_trigger": false},
+  {"query": "build me a header with a mega menu like stripe.com's for our next.js site, with product and resources dropdowns", "should_trigger": false},
+  {"query": "in my Word report the page footer shows the wrong page numbers after section 3, how do I fix the section breaks so numbering continues?", "should_trigger": false},
+  {"query": "find hero section inspiration from land-book or godly.website for our saas landing page, we want something with a product screenshot and a big headline", "should_trigger": false},
+  {"query": "audit the links in our site footer for SEO: which should be nofollow, should we add a sitemap link, and are the anchor texts ok?", "should_trigger": false},
+  {"query": "the footer of our mjml newsletter template renders broken in outlook desktop (columns stack weirdly). can you fix the mjml?", "should_trigger": false},
+  {"query": "run an accessibility check on our existing site footer (contrast, link names, focus states) and fix what fails, don't redesign it", "should_trigger": false},
+  {"query": "add visa/mastercard/apple pay icons under the pay button on our checkout page (checkout.tsx), svgs are in public/payment", "should_trigger": false},
+  {"query": "write a footer disclaimer for our fintech app's marketing emails that covers FDIC insurance and the referral bonus terms", "should_trigger": false}
+]
