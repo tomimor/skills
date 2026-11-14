@@ -126,7 +126,7 @@ The conventions below come from his own posts, counting only the ones he wrote b
 **Shape by kind of post:**
 
 - **His own news:** the fact or the feeling in line one ("Me hace feliz compartirles que..."), then what it is, who it is with, and a forward line.
-- **Recap with thanks:** what happened and what was covered, thanks by name, one compliment to the host or the venue, where the recording is. Thank people only for what he told you happened, and ask him for the compliment.
+- **Recap with thanks:** what happened and what was covered, thanks by name, one compliment to the host or the venue, where the recording is. Thank people only for what he told you happened ("por la invitación" if she invited him, and nothing added such as "y por armar el espacio"), and ask him for the compliment.
 - **Promotion of a class, talk, or stream:** when and where, what it covers, who else takes part, who it is for, where the link is. He usually adds a line on why the other speakers are worth hearing. That line is his: ask for it in the notes.
 - **Recommendation:** where he found it, why he likes it ("Me encanta porque..."), who should read it, link in the comments.
 - **Opinion:** the claim in line one ("Para mí, ...", "My take: ..."), the reason, one case, and often a question back to the reader.
