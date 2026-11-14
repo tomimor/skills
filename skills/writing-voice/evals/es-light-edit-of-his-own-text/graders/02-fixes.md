@@ -1,7 +1,7 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 weight: 1
 ---
 
-In the edited text, the phrase reads 'al desarrollo' (not 'a el desarrollo'), and the sentence about being a cofounder starts with a capital letter.
+The edited text (the part before the notes) no longer contains the error 'a el desarrollo', and no sentence in it starts with a lowercase letter after a period.

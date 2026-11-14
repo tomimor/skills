@@ -140,7 +140,7 @@ The full catalog, with rewrites in both languages, is in [references/ai-tells.md
 
 ### Rewriting
 
-When the text is his and basically sound, make the lightest edit that fixes it. He keeps his own words and accepts small moves: one idea per line, a tighter verb, a fixed contraction. A full rewrite of his text usually gets replaced by his own version. Never change a number, a date, a commitment, or the meaning to improve the rhythm, and leave a label he chose on purpose (an unnamed employer, a vague "algo") in place: ask about it in the notes.
+When the text is his and basically sound, make the lightest edit that fixes it. He keeps his own words and accepts small moves: one idea per line, a tighter verb, a fixed contraction. When he says to change little ("sin cambiarlo mucho"), fix only errors and line breaks, and offer any wording change as a suggestion in the notes. A full rewrite of his text usually gets replaced by his own version. Never change a number, a date, a commitment, or the meaning to improve the rhythm, and leave a label he chose on purpose (an unnamed employer, a vague "algo") in place: ask about it in the notes.
 
 When the line itself is the problem (a category-noun pitch, a hollow opener), replace it and offer options.
 
@@ -148,7 +148,7 @@ If the draft has no point or no concrete detail, say so and ask for it. Polishin
 
 ### Reviewing
 
-Run the scan on the draft, then read it. Report findings, most severe first. Every finding carries a rewrite, or a question when only Tomi has the fact. Write the report in the language he is using with you.
+Run the scan on the draft, then read it. Report findings, most severe first. Every finding carries a rewrite, or a question when only Tomi has the fact. Don't illustrate a rewrite with a made-up example ("after 12 customer calls we cut X"): he may paste it. Write the report in the language he is using with you.
 
 ```text
 ### Must fix
@@ -211,7 +211,7 @@ The reply has two parts, in this order, with a `---` line between them.
 
 Also:
 
-- **One version by default.** When he asks for options, number them, make each different in a real way, keep at least one usable as it stands, and say which you would pick and why. The final artifact carries one default, not a menu.
+- **One version by default.** When he asks for options, give three unless he names a number. Number them, make each different in a real way, keep at least one usable as it stands, and say which you would pick and why. Two honest options beat five where the last ones are padding or claim something he didn't say. The final artifact carries one default, not a menu.
 - **Nothing is sent, posted, or published without an explicit yes** on the draft he saw.
 - **Slack takes mrkdwn:** `*bold*`, `_italic_`, `<url|label>`, no `#` headings.
 
