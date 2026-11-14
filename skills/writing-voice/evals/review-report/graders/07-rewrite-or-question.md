@@ -4,4 +4,4 @@ focus: trace
 weight: 1
 ---
 
-Each finding carries a concrete rewrite or a specific question to him.
+Each must-fix finding carries a concrete rewrite, an instruction to cut the line, or a specific question to him.

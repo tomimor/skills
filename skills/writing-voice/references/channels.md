@@ -160,7 +160,7 @@ Pedagogical clarity comes before completeness. People came to learn, not to read
 
 - **Open by saying how the call goes and that "no" is a fine outcome:** "Te hago un par de preguntas, te muestro solo lo que te sirve, y al final puede ser sí, no, o seguir charlando. No te vengo a apurar."
 - **Say who it is not for:** "No te sirve para todo. Te sirve si tu cuello de botella es este."
-- **Pitch lines start with a verb in the first person plural:** "Sincronizamos...", "Te avisamos cuando..., antes de que se entere él." If a line starts with "Somos una plataforma de...", rewrite it.
+- **Pitch lines start with a verb in the first person plural:** "Sincronizamos...", "Te avisamos cuando..., antes de que se entere él." If a line starts with "Somos una plataforma de...", rewrite it. When he asks for options, every one starts from the verb. A headline that starts from the reader's situation is a different piece: offer it separately and say so.
 - **The offer names the frictions removed:** "15 días de prueba, sin tarjeta. Si no te cambia la semana, lo dejás."
 - **Never:** manufactured urgency, a pressure close, scripted empathy ("entiendo cómo te sentís").
 - **A one-page version exists for every script.** If it doesn't fit on a page, it won't be used in the call.

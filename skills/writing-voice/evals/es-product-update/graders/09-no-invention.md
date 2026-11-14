@@ -4,4 +4,4 @@ focus: trace
 weight: 1
 ---
 
-The piece invents no feature, number or date beyond the items supplied. The product name and the founders' names are placeholders such as [Completar: ...], or were asked for, and are not made-up names.
+The email invents no feature, number or date beyond the four items supplied, and no person's or product's name. Where a name or a fact is missing, the email uses a [Completar: ...] placeholder or leaves it out. A plain statement of what the reader gains from a listed change does not count as an invention.

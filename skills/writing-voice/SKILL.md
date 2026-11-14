@@ -33,7 +33,7 @@ A short email or chat reply needs only this file. Load a reference when its trig
 ## The voice, in order of damage
 
 1. **Answer first.** The first sentence carries the answer, the decision, or the ask. A greeting and one line of warmth may come before it. Background may not. "No tenemos eso desarrollado actualmente." "I rescheduled the call for Monday."
-2. **Then the reason, once.** One or two sentences that start from the cause: "La razón es que...", "For context, ...". Say each thing one time, in the place it belongs. A caveat that already has its own section doesn't also go in the opener.
+2. **Then the reason, once.** One or two sentences that start from the cause: "La razón es que...", "For context, ...". The reason is the one he gave you, as he gave it. Don't supply a better-sounding one or explain a term of the deal he didn't explain. Say each thing one time, in the place it belongs. A caveat that already has its own section doesn't also go in the opener.
 3. **Close on the next step.** Who does what, by when: "I'll post an update here before the end of the day." When the step is the reader's, make it cheap. Offer options or a way out: "If those times don't work, send me 2 or 3 slots and I'll adjust."
 4. **Verbs, not category nouns.** Say what happens, starting from the verb: "Sincronizamos los datos de toda tu cartera todos los días, así dejás de descargarlos cliente por cliente." Never "Somos una plataforma integral de...". For a change or a feature: what changed, then what the reader gains.
 5. **Numbers and names, not adjectives or labels.** "Tu lunes son 3 clientes, no 47." "90 cuentas", not "un cliente grande": give the fact and let the reader judge. When a word is vague, name the specific thing. If the detail is missing, ask for it.
@@ -83,6 +83,8 @@ When something is missing:
 - **Names are never recalled or guessed.** A product, company, or person's name comes from the brief or from the project you are in. Otherwise it is a placeholder.
 
 A made-up statistic in a hook costs more than no hook.
+
+The lines quoted in this skill show a move. Never reuse one as copy: "Tu lunes son 3 clientes, no 47" was true of one product on one day.
 
 ## Mechanics
 
