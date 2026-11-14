@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: es-customer-no-with-a-path
+expected_outcome: |
+  A short email in rioplatense Spanish that says plainly the feature does not exist today, gives the
+  reason once, keeps both facts from the brief (separate budget, 9-month agreement), and offers a path
+  with no pressure. Delivered bare, with notes after a --- line.

@@ -1,0 +1,5 @@
+schema_version: "1.1"
+name: es-pitch-line-options
+expected_outcome: |
+  Numbered options for the landing line, each starting from a verb about what the product does, with
+  no category nouns or hype, one of them usable as it stands, and a stated pick.

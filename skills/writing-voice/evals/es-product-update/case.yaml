@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: es-product-update
+expected_outcome: |
+  A weekly product update email with labeled Título, Asunto and Preview fields and a Markdown body:
+  'Buenas!' opening, each change written as what changed and what the reader gains, internal detail
+  left out, the firms that asked thanked, placeholders for the product and founder names.

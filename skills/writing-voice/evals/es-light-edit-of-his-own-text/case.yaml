@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: es-light-edit-of-his-own-text
+expected_outcome: |
+  A light edit of his own podcast intro: his wording and order are kept, the grammar slips are fixed,
+  each front sits on its own line, no fact changes, and the closing line about what drives him is
+  asked for and not written.

@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: en-short-reply
+expected_outcome: |
+  A reply of six sentences or fewer in plain English: a greeting, a one-line reaction, the statement
+  that the slots were already picked, the way out (she can send 2 or 3 options), and a sign-off as
+  Tomas or Tomi.
