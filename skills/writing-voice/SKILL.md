@@ -52,7 +52,7 @@ A short email or chat message is 2 to 6 short sentences between greeting and sig
 
 | | English | Spanish |
 |---|---------|---------|
-| Greeting | `Hi <Name>,` or `Hi <Name>!` on good news. Slack: `Hey @Name!` | `Hola <Nombre>!` or `Buenas <Nombre>!`. A quick ack: `<Nombre>,`. Never "Estimada" to a customer |
+| Greeting | `Hi <Name>,` or `Hi <Name>!` on good news. Slack: `Hey @Name!` to a teammate, `Hi <Name>,` to a client contact | `Hola <Nombre>!` or `Buenas <Nombre>!`. A quick ack: `<Nombre>,`. Never "Estimada" to a customer |
 | One line of reaction | "Great news!" "Thanks for the clarification!" | "Recibido." "Impecable!" "Gracias por la consulta." |
 | Follow-up after silence | "I wanted to quickly check if you received my proposal. If it helps, I can walk you through it on a short call." | "¿Pudieron ver la propuesta? Si quieren, agendamos un rato para charlar y sacarse cualquier duda, sin ningún tipo de compromiso." |
 | Close | "Thanks in advance!" "Looking forward to it." | "Quedo atento a cualquier duda." "Quedo a disposición." "Gracias desde ya," |

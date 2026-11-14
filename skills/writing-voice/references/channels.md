@@ -248,7 +248,7 @@ The document a prospect receives after the call, in Spanish. The email that carr
 | `## Propuesta económica` | A table with three columns: Concepto, Detalle, Precio. Whatever is included says "Incluido". One sentence under the table says how the price changes over time and which index it follows |
 | `## Condiciones comerciales` | Bullets with a bold label and one line each: **Facturación:**, **Pago:**, **Sin lock-in:** ("puede cancelar en cualquier momento con un mes de aviso") |
 | `## Compromiso de roadmap y próximos pasos` | What he commits to build and by when ("dentro de los 2 meses desde la firma del contrato"). Then numbered steps that name who acts: "1. [Cliente] confirma la propuesta. 2. Firmamos el contrato y damos de alta la cuenta." |
-| Who "you" is | The client by name, in the third person: "[Cliente] accede a...", "[Cliente] puede cancelar...". Not "ustedes" and not voseo |
+| Who "you" is | The client by name, in the third person: "[Cliente] accede a...", "[Cliente] puede cancelar...". Not "ustedes" and not voseo, in any line, bullets included: "con el equipo de [cliente]", not "con ustedes" |
 
 - **Every price, hour, deadline, and condition is his.** If the price is missing, ask before drafting. A missing deadline or condition goes in as `[Completar: ...]`.
 - **A section with nothing in his brief is left out.** A proposal with no roadmap commitment has no roadmap section.
