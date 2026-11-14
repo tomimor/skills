@@ -209,7 +209,7 @@ READMEs and commit messages have no skill. Their conventions are in [references/
 The reply has two parts, in this order, with a `---` line between them.
 
 1. **The piece, bare.** No "Here's the draft" before it. Plain text, not inside a code block, so it copies clean. The exception is a piece whose destination takes Markdown (a product update body, a commercial proposal, a video script, a README): that goes in a fenced block so the marks survive. A piece with several fields labels each one. In a review, the report is the piece.
-2. **Notes, short, in the language Tomi is using with you:** your questions, numbered, with every placeholder repeated as one. Then what you assumed about form (language, platform, register, which item leads). A fact is never an assumption. Then what you left out, because he will ask "what did you leave out?" otherwise.
+2. **Notes, short, in the language Tomi is using with you:** your questions, numbered, with every placeholder repeated as one. Then what you assumed about form (language, platform, register, which item leads). A fact is never an assumption: if a note would say "es mi interpretación de para qué sirve" or "I guessed what this is for", go back, cut that sentence from the piece, and ask instead. Then what you left out, because he will ask "what did you leave out?" otherwise.
 
 Also:
 
