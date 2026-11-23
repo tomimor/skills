@@ -51,6 +51,7 @@ VENDOR_SKILLS=(
   "jakubkrehel:jakubkrehel/skills:skills:state-machine,break,variant"
   "anatomy:wheresryan22/anatomy:."
   "snapcn:snapcndev/snapcn:skills:snapcn,remotion-product-demo,remotion-launch-video"
+  "agent-browser:vercel-labs/agent-browser:skill-data:modern-web-guidance"
 )
 
 TARGET_DIR=""

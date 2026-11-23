@@ -2,7 +2,7 @@
 
 # 🧠 skills
 
-[![Skills](https://img.shields.io/badge/skills-67-1f6feb?style=flat-square)](#skills)
+[![Skills](https://img.shields.io/badge/skills-68-1f6feb?style=flat-square)](#skills)
 [![Install](https://img.shields.io/badge/install-one%20command-22c55e?style=flat-square)](#install)
 
 </div>
@@ -90,6 +90,7 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 | 🟧 [break](skills/break/SKILL.md) | Stress-tests one component: renders it under every worst-case scenario that can reach it (long text, huge lists, narrow containers…) side by side on a temporary page and marks what visibly breaks. User-invoked (`/break`). From [jakubkrehel/skills](https://github.com/jakubkrehel/skills). |
 | 🟧 [variant](skills/variant/SKILL.md) | Builds three deliberately different versions of a component (structure, density, emphasis, type or voice) behind a picker in the real page so you can flip between them and choose. User-invoked (`/variant`). From [jakubkrehel/skills](https://github.com/jakubkrehel/skills). |
 | 🟧 [anatomy](skills/anatomy/SKILL.md) | Explains a technical idea as an invented physical machine, drawn as a detailed, interactive isometric SVG figure with optional WebGL shaders (fire, water, light) and a beta 3D mode. Heavy: a figure takes 30–90 min, a hero 2–4 h. Needs Node 20.10+ and Chrome. From [wheresryan22/anatomy](https://github.com/wheresryan22/anatomy). |
+| 🟧 [modern-web-guidance](skills/modern-web-guidance/SKILL.md) | Looks up Chrome's [Modern Web Guidance](https://developer.chrome.com/docs/modern-web-guidance) for a UI task (`npx modern-web-guidance` search and retrieve, with Baseline data), applies it, then checks the built page in a real browser with the `agent-browser` CLI: layout shift (CLS before and after), reduced motion, light/dark color scheme, and dialog focus and inertness. Reports one row per rule with recorded evidence; a rule with no browser check stays unverified. Needs the `agent-browser` CLI, Node, and `ffmpeg` for recordings. v0.43.0, from [vercel-labs/agent-browser](https://github.com/vercel-labs/agent-browser). |
 
 ### 💡 Product, thinking & writing
 
@@ -164,6 +165,7 @@ Vendor skills are third-party packs tracked as git submodules under `vendor/` an
 | Jakub Krehel | [jakubkrehel/skills](https://github.com/jakubkrehel/skills) | v1.10.3 (2026-10-10) | `state-machine`, `break`, `variant` — upstream also ships `better-interface`, `better-ui`, `better-typography`, `better-colors`, `better-accessibility`, `better-layout`, `better-writing`, `interface-review`, `explain-interface`, `build-design`; add any of them to the `jakubkrehel` entry in `VENDOR_SKILLS` to link it |
 | Anatomy | [wheresryan22/anatomy](https://github.com/wheresryan22/anatomy) | v1.0.0+ main (2026-10-12) | `anatomy` (the repo root is the skill, so its entry uses `.` as the skills path) |
 | snapcn | [snapcndev/snapcn](https://github.com/snapcndev/snapcn) | main (2026-10-13) | `snapcn`, `remotion-product-demo`, `remotion-launch-video` — upstream also ships `remotion-motion-graphics`, `remotion-logo-animation`, `remotion-explainer-video`, `remotion-kinetic-typography`; add any of them to the `snapcn` entry in `VENDOR_SKILLS` to link it |
+| agent-browser | [vercel-labs/agent-browser](https://github.com/vercel-labs/agent-browser) | v0.43.0+ main (2026-11-20) | `modern-web-guidance`, pinned from `skill-data/` (the directory the CLI serves skills from). The `agent-browser` stub under upstream's `skills/` is deliberately not linked: its description tells agents to prefer agent-browser over every other browser tool. `skill-data/` also ships `core`, `dogfood`, `electron`, `slack`, `derive-client`, `webmcp-gen`, `vercel`, `vercel-sandbox`, `agentcore`; add any of them to the `agent-browser` entry in `VENDOR_SKILLS` to link it |
 
 **Update all vendors to their latest upstream:**
 
@@ -237,7 +239,7 @@ Skills use the same `SKILL.md` format everywhere. The only difference is where t
 | Cursor | `~/.cursor/skills/<skill-name>/` |
 | Claude Code | `~/.claude/skills/<skill-name>/` |
 
-Most GitHub-related skills need the [GitHub CLI](https://cli.github.com/) (`gh`). `writing-voice`, `writing-google-style`, `teach`, and `remotion-best-practices` have no extra requirements — `writing-google-style` ships a scanner script, but it needs only `bash` and `awk`. `impeccable` downloads its self-contained launcher binary once on first run (no Node or other runtime needed).
+Most GitHub-related skills need the [GitHub CLI](https://cli.github.com/) (`gh`). `writing-voice`, `writing-google-style`, `teach`, and `remotion-best-practices` have no extra requirements — `writing-google-style` ships a scanner script, but it needs only `bash` and `awk`. `impeccable` downloads its self-contained launcher binary once on first run (no Node or other runtime needed). `modern-web-guidance` needs the [agent-browser](https://github.com/vercel-labs/agent-browser) CLI (`npm i -g agent-browser && agent-browser install`, which downloads Chrome), Node for `npx modern-web-guidance`, and `ffmpeg` for its recordings.
 
 ## License
 
