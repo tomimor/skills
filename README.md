@@ -171,6 +171,12 @@ Vendor skills are third-party packs tracked as git submodules under `vendor/` an
 ./install.sh --update-vendor
 ```
 
+Pass names to update only some of them, e.g. `./install.sh --update-vendor impeccable cloudflare`.
+
+The command prints one line per vendor (old → new version, commit count, commit range), flags skills that upstream
+added, removed, or renamed, stages the new submodule pointers, runs the catalog check, and ends with the steps left
+before committing. A vendor that fails to update is reported with git's error and does not stop the others.
+
 <details>
 <summary><strong>Add a new vendor</strong></summary>
 
@@ -226,7 +232,7 @@ cp -r skills/pr-dashboard ~/.claude/skills/     # Claude Code
 | `--symlink` | Symlink skills into the target instead of copying (live edits) |
 | `--self` | Wire this repo into your own `~/.cursor` and `~/.claude` with edit-once symlinks |
 | `--check` | Validate frontmatter, `SKILLS`-array sync, and that `README.md` and `index.html` list every skill with the right count, then exit (used in CI) |
-| `--update-vendor` | Update vendor submodules to their latest versions |
+| `--update-vendor [name...]` | Update vendor submodules to their latest upstream (all, or only the named ones), re-link their skills, stage the new pointers, and report what changed |
 
 ## Platform compatibility
 

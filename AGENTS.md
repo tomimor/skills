@@ -138,7 +138,7 @@ linked under the vendor name, e.g. `"anatomy:wheresryan22/anatomy:."` → `skill
 
 - **Never edit files inside `vendor/`**. Those are managed by the upstream repo. To make changes, contribute upstream or override with an own skill of the same name (own skills take priority over vendor symlinks).
 - **Name conflicts**: if an own skill and a vendor skill share the same name, the own skill wins. The `link_vendor_skills` function in `install.sh` skips symlink creation when a non-symlink directory already exists.
-- **Updating vendors**: run `./install.sh --update-vendor` to pull latest from all vendor submodules and re-link.
+- **Updating vendors**: run `./install.sh --update-vendor` to pull latest from all vendor submodules and re-link, or `./install.sh --update-vendor <name>...` for only some of them.
 
 ## Updating vendor skills
 
@@ -146,21 +146,33 @@ linked under the vendor name, e.g. `"anatomy:wheresryan22/anatomy:."` → `skill
 ./install.sh --update-vendor
 ```
 
-This runs `git submodule update --remote --merge` and re-creates the symlinks. After updating:
+Pass vendor names to update only those: `./install.sh --update-vendor impeccable cloudflare`.
 
-1. **Stage the submodule pointers immediately** (`git add vendor/*`). Every other `install.sh` invocation runs
-   `git submodule update --init`, which resets each submodule to the pointer in the index -- an unstaged bump is
-   silently undone the next time you run the script.
-2. Check whether upstream renamed or split a skill directory (`ls -l skills/` shows dangling symlinks). Re-point the
+For each vendor this runs `git submodule update --init --remote --merge`, re-creates the symlinks, and **stages the
+new submodule pointer**. Staging matters: every other `install.sh` invocation runs `git submodule update --init`,
+which checks each submodule out at the pointer in the index, so an unstaged bump would be undone (the script now
+says so when it happens). A vendor that fails to update is reported with git's error and the rest still run; the
+exit code is non-zero if any failed.
+
+The report shows, per vendor, the old → new version, the number of new commits, and the commit range. Under a vendor
+it also lists skills upstream added (linked, or not linked because the vendor is pinned), skills upstream removed or
+renamed, and dangling symlinks. It then lists the staged pointers, runs the catalog check, and prints the remaining
+steps. Those steps are yours to do:
+
+1. Fix what the report flags. A newly linked skill needs a README row and an `index.html` card (or pin the vendor in
+   `VENDOR_SKILLS` to drop it). A dangling symlink means upstream renamed or split a skill: re-point or delete the
    symlink and update the `VENDOR_SKILLS` filter, the README row, and the `index.html` card to the new name.
-3. Refresh the "Vendor skills" table in `README.md` (version from the vendor's `plugin.json` or `SKILL.md`
-   frontmatter, or `main (<date>)` when there is none) and any version mentioned in that vendor's catalog rows.
-4. Run `./install.sh --check`, then commit:
+2. Refresh the "Vendor skills" table in `README.md` with the versions the report prints (from the vendor's
+   `plugin.json` or `SKILL.md` frontmatter, or `main (<date>)` when there is none) and any version mentioned in that
+   vendor's catalog rows.
+3. Run `./install.sh --check`, then commit. The pointers are already staged:
 
 ```bash
-git add vendor/<name> README.md index.html
+git add skills README.md index.html install.sh
 git commit -m "update <name> to v<new-version>"
 ```
+
+To back out of an update before committing: `git restore --staged vendor/<name> && git submodule update vendor/<name>`.
 
 ## Keeping the catalogs in sync
 

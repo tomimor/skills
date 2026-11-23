@@ -58,11 +58,25 @@ INSTALL_ALL=false
 SINGLE_SKILL=""
 FORCE=false
 UPDATE_VENDOR=false
+VENDOR_ONLY=()
 SYMLINK=false
 CHECK=false
 SELF=false
 SOURCE_DIR=""
 CLEANUP_TMP=""
+LINK_NEW=""
+LINK_MISSING=""
+
+# Colors only when writing to a terminal, and never when NO_COLOR is set.
+IS_TTY=false
+C_BOLD="" C_DIM="" C_GREEN="" C_YELLOW="" C_RED="" C_RESET=""
+if [[ -t 1 ]]; then
+  IS_TTY=true
+  if [[ -z "${NO_COLOR:-}" ]]; then
+    C_BOLD=$'\033[1m' C_DIM=$'\033[2m' C_GREEN=$'\033[32m'
+    C_YELLOW=$'\033[33m' C_RED=$'\033[31m' C_RESET=$'\033[0m'
+  fi
+fi
 
 usage() {
   cat <<EOF
@@ -78,7 +92,10 @@ Options:
   --symlink          Symlink skills into the target instead of copying (live edits)
   --self             Wire this repo into your own ~/.cursor and ~/.claude (edit-once symlinks)
   --check            Validate frontmatter, SKILLS-array sync, and README/index.html catalogs, then exit
-  --update-vendor    Update vendor submodules to their latest versions
+  --update-vendor [name...]
+                     Update vendor submodules to their latest upstream commit, re-link
+                     their skills, stage the new pointers, and report what changed.
+                     Pass vendor names to update only those (default: all).
   -h, --help         Show this help message
 
 Running without flags starts an interactive picker.
@@ -142,80 +159,408 @@ resolve_source_dir() {
   SOURCE_DIR="$CLEANUP_TMP/repo/skills"
 }
 
+# Checks every vendor submodule out at the commit the repo pins. That discards
+# an update whose pointer was never staged, so say so instead of doing it quietly.
 init_vendor_submodules() {
-  if [[ -f "$SCRIPT_DIR/.gitmodules" ]]; then
-    echo "Initializing vendor submodules..."
-    git -C "$SCRIPT_DIR" submodule update --init --recursive --quiet 2>/dev/null || true
+  [[ -f "$SCRIPT_DIR/.gitmodules" ]] || return 0
+  echo "Initializing vendor submodules..."
+
+  local line sha path pinned
+  while IFS= read -r line; do
+    [[ "$line" == +* ]] || continue
+    read -r sha path _ <<< "${line#+}"
+    pinned=$(git -C "$SCRIPT_DIR" ls-files -s -- "$path" | awk '{print $2}')
+    echo "  ${C_YELLOW}!${C_RESET} $path: checked out at ${sha:0:7}, syncing to the pinned ${pinned:0:7}"
+  done < <(git -C "$SCRIPT_DIR" submodule status 2>/dev/null || true)
+
+  local out
+  if ! out=$(git -C "$SCRIPT_DIR" submodule update --init --recursive --quiet 2>&1); then
+    echo "  ${C_YELLOW}Warning:${C_RESET} could not initialize vendor submodules:" >&2
+    printf '%s\n' "$out" | tail -3 | sed 's/^/    /' >&2
   fi
 }
 
-link_vendor_skills() {
-  local skills_dir="$1"
-
-  for entry in "${VENDOR_SKILLS[@]}"; do
-    # Format: name:owner/repo:skills_subdir[:skill1,skill2,...]
-    # The optional 4th field pins which skills to link; omit it to link them all.
-    # A skills_subdir of "." means the repo root is itself one skill, linked as $vendor_name.
-    local vendor_name repo skills_subdir skills_filter
-    IFS=':' read -r vendor_name repo skills_subdir skills_filter <<< "$entry"
-    local vendor_skills_path="$SCRIPT_DIR/vendor/$vendor_name/$skills_subdir"
-
-    if [[ ! -d "$vendor_skills_path" ]]; then
-      echo "  Warning: vendor skills not found at $vendor_skills_path (run git submodule update)" >&2
-      continue
-    fi
-
-    local version="unknown"
-    local plugin_json="$SCRIPT_DIR/vendor/$vendor_name/.claude-plugin/plugin.json"
-    if [[ -f "$plugin_json" ]] && command -v grep &>/dev/null; then
-      version=$(grep -o '"version": *"[^"]*"' "$plugin_json" | head -1 | grep -o '"[^"]*"$' | tr -d '"')
-    fi
-
-    local skill_dirs=()
-    if [[ "$skills_subdir" == "." ]]; then
-      skill_dirs=("$vendor_skills_path/")
-    elif [[ -n "${skills_filter:-}" ]]; then
-      local wanted name
-      IFS=',' read -ra wanted <<< "$skills_filter"
-      for name in "${wanted[@]}"; do
-        skill_dirs+=("$vendor_skills_path/$name/")
-      done
-    else
-      skill_dirs=("$vendor_skills_path"/*/)
-    fi
-
-    echo "  Linking $vendor_name skills (v$version)..."
-    for skill_dir in "${skill_dirs[@]}"; do
-      [[ -d "$skill_dir" ]] || continue
-      local skill_name rel_target
-      if [[ "$skills_subdir" == "." ]]; then
-        skill_name="$vendor_name"
-        rel_target="../vendor/$vendor_name"
-      else
-        skill_name=$(basename "$skill_dir")
-        rel_target="../vendor/$vendor_name/$skills_subdir/$skill_name"
-      fi
-      local link_path="$skills_dir/$skill_name"
-
-      if [[ -e "$link_path" ]] && [[ ! -L "$link_path" ]]; then
-        echo "    Skipped $skill_name (local skill takes priority)"
-        continue
-      fi
-
-      # -n (no-dereference): without it, re-running over an existing symlink that
-      # points at a directory makes ln create the link *inside* that directory,
-      # producing nested self-symlinks inside the submodules.
-      ln -sfn "$rel_target" "$link_path"
-      echo "    Linked $skill_name"
+# Version a vendor declares: plugin.json first, then the `version:` frontmatter
+# of one of its skills. Prints nothing when it declares none.
+vendor_version() {
+  local root="$SCRIPT_DIR/vendor/$1" skills_subdir="$2" version="" f
+  for f in "$root/.claude-plugin/plugin.json" "$root/plugin.json"; do
+    [[ -f "$f" ]] || continue
+    version=$(grep -o '"version": *"[^"]*"' "$f" | head -1 | sed 's/.*"\([^"]*\)"$/\1/' || true)
+    [[ -z "$version" ]] || break
+  done
+  if [[ -z "$version" ]]; then
+    for f in "$root/$skills_subdir"/SKILL.md "$root/$skills_subdir"/*/SKILL.md; do
+      [[ -f "$f" ]] || continue
+      version=$(awk '/^---/ { n++; next }
+        n == 1 && /^[[:space:]]*version:/ { sub(/^[[:space:]]*version:[[:space:]]*/, ""); print; exit }
+        n >= 2 { exit }' "$f" | tr -d '"'\'' \r')
+      [[ -z "$version" ]] || break
     done
+  fi
+  echo "$version"
+}
+
+# "v1.2.3", or "main" for a vendor that declares no version.
+version_label() {
+  if [[ -n "$1" ]]; then echo "v$1"; else echo "main"; fi
+}
+
+# Names of the skills a vendor ships, one per line.
+vendor_skill_names() {
+  local base="$SCRIPT_DIR/vendor/$1/$2" d
+  [[ "$2" != "." ]] || return 0
+  for d in "$base"/*/; do
+    [[ ! -f "$d/SKILL.md" ]] || basename "$d"
   done
 }
 
+# Symlinks in $2 that point into vendor $1 but whose target no longer exists.
+dangling_vendor_links() {
+  local link target
+  for link in "$2"/*; do
+    [[ -L "$link" && ! -e "$link" ]] || continue
+    target=$(readlink "$link")
+    [[ "$target" == "../vendor/$1" || "$target" == "../vendor/$1/"* ]] || continue
+    basename "$link"
+  done
+}
+
+# Joins the lines of $1 into "a, b, c".
+join_lines() {
+  local line joined=""
+  while IFS= read -r line; do
+    [[ -z "$line" ]] || joined+="${joined:+, }$line"
+  done <<< "$1"
+  echo "$joined"
+}
+
+# Lines of $1 that are not lines of $2.
+lines_not_in() {
+  local line
+  while IFS= read -r line; do
+    [[ -n "$line" ]] || continue
+    grep -qxF -- "$line" <<< "$2" || echo "$line"
+  done <<< "$1"
+}
+
+# Pads $1 with spaces to $2 columns. printf's own %-Ns counts bytes, and so
+# does ${#1} outside a UTF-8 locale, so the arrow is measured as one ASCII char.
+pad() {
+  local plain="${1//→/-}"
+  local n=$(( $2 - ${#plain} ))
+  if (( n > 0 )); then printf '%s%*s' "$1" "$n" ""; else printf '%s' "$1"; fi
+}
+
+# The "Version" cell of a vendor's row in the README "Vendor skills" table.
+readme_vendor_version() {
+  awk -F'|' -v link="](https://github.com/$1)" '
+    /^## Vendor skills/ { on = 1 }
+    on && index($3, link) { gsub(/^ +| +$/, "", $4); print $4; exit }
+  ' "$SCRIPT_DIR/README.md"
+}
+
+# Links one vendor's skills into $2. Sets LINK_NEW (links that were missing or
+# pointed elsewhere) and LINK_MISSING (pinned skills the vendor no longer
+# ships), one name per line. Pass "quiet" as $3 to skip the per-skill log.
+link_one_vendor() {
+  local entry="$1" skills_dir="$2" quiet="${3:-}"
+  LINK_NEW=""
+  LINK_MISSING=""
+
+  # Format: name:owner/repo:skills_subdir[:skill1,skill2,...]
+  # The optional 4th field pins which skills to link; omit it to link them all.
+  # A skills_subdir of "." means the repo root is itself one skill, linked as $vendor_name.
+  local vendor_name repo skills_subdir skills_filter
+  IFS=':' read -r vendor_name repo skills_subdir skills_filter <<< "$entry"
+  local vendor_skills_path="$SCRIPT_DIR/vendor/$vendor_name/$skills_subdir"
+
+  if [[ ! -d "$vendor_skills_path" ]]; then
+    echo "  Warning: vendor skills not found at $vendor_skills_path (run git submodule update)" >&2
+    return 0
+  fi
+
+  local skill_dirs=()
+  if [[ "$skills_subdir" == "." ]]; then
+    skill_dirs=("$vendor_skills_path/")
+  elif [[ -n "${skills_filter:-}" ]]; then
+    local wanted name
+    IFS=',' read -ra wanted <<< "$skills_filter"
+    for name in "${wanted[@]}"; do
+      skill_dirs+=("$vendor_skills_path/$name/")
+    done
+  else
+    skill_dirs=("$vendor_skills_path"/*/)
+  fi
+
+  if [[ "$quiet" != quiet ]]; then
+    echo "  Linking $vendor_name skills ($(version_label "$(vendor_version "$vendor_name" "$skills_subdir")"))..."
+  fi
+  local skill_dir
+  for skill_dir in "${skill_dirs[@]}"; do
+    local skill_name rel_target
+    if [[ "$skills_subdir" == "." ]]; then
+      skill_name="$vendor_name"
+      rel_target="../vendor/$vendor_name"
+    else
+      skill_name=$(basename "$skill_dir")
+      rel_target="../vendor/$vendor_name/$skills_subdir/$skill_name"
+    fi
+    local link_path="$skills_dir/$skill_name"
+
+    if [[ ! -d "$skill_dir" ]]; then
+      # An unmatched glob is not a skill; a pinned name with no directory is.
+      [[ -n "${skills_filter:-}" ]] || continue
+      LINK_MISSING+="$skill_name"$'\n'
+      if [[ "$quiet" != quiet ]]; then
+        echo "    Warning: $skill_name is pinned in VENDOR_SKILLS but $vendor_name no longer ships it" >&2
+      fi
+      continue
+    fi
+
+    if [[ -e "$link_path" ]] && [[ ! -L "$link_path" ]]; then
+      [[ "$quiet" == quiet ]] || echo "    Skipped $skill_name (local skill takes priority)"
+      continue
+    fi
+
+    if [[ "$(readlink "$link_path" 2>/dev/null || true)" != "$rel_target" ]]; then
+      LINK_NEW+="$skill_name"$'\n'
+    fi
+
+    # -n (no-dereference): without it, re-running over an existing symlink that
+    # points at a directory makes ln create the link *inside* that directory,
+    # producing nested self-symlinks inside the submodules.
+    ln -sfn "$rel_target" "$link_path"
+    [[ "$quiet" == quiet ]] || echo "    Linked $skill_name"
+  done
+}
+
+link_vendor_skills() {
+  local entry
+  for entry in "${VENDOR_SKILLS[@]}"; do
+    link_one_vendor "$entry" "$1"
+  done
+}
+
+# One line of detail under a vendor's row in the update report.
+vendor_note() {
+  echo "      $1 $2"
+}
+
 update_vendor() {
-  echo "Updating vendor submodules..."
-  git -C "$SCRIPT_DIR" submodule update --remote --merge --quiet 2>/dev/null
-  link_vendor_skills "$SCRIPT_DIR/skills"
-  echo "Vendor skills updated."
+  if [[ ! -f "$SCRIPT_DIR/.gitmodules" ]] || ! git -C "$SCRIPT_DIR" rev-parse --git-dir &>/dev/null; then
+    echo "Error: --update-vendor only works inside a git clone of $REPO_URL." >&2
+    return 1
+  fi
+
+  local -a entries=()
+  local entry name found
+  if [[ ${#VENDOR_ONLY[@]} -eq 0 ]]; then
+    entries=("${VENDOR_SKILLS[@]}")
+  else
+    for name in "${VENDOR_ONLY[@]}"; do
+      found=""
+      for entry in "${VENDOR_SKILLS[@]}"; do
+        [[ "${entry%%:*}" != "$name" ]] || found="$entry"
+      done
+      if [[ -z "$found" ]]; then
+        echo "Error: unknown vendor '$name'. Known vendors:" >&2
+        for entry in "${VENDOR_SKILLS[@]}"; do echo "  ${entry%%:*}" >&2; done
+        return 1
+      fi
+      entries+=("$found")
+    done
+  fi
+
+  local name_width=0
+  for entry in "${entries[@]}"; do
+    name="${entry%%:*}"
+    if (( ${#name} > name_width )); then name_width=${#name}; fi
+  done
+
+  local noun="vendors"
+  [[ ${#entries[@]} -ne 1 ]] || noun="vendor"
+  echo "${C_BOLD}Updating ${#entries[@]} $noun from upstream${C_RESET}"
+  echo ""
+
+  local updated=0 failed=0 attention=0
+  for entry in "${entries[@]}"; do
+    local vendor_name repo skills_subdir skills_filter
+    IFS=':' read -r vendor_name repo skills_subdir skills_filter <<< "$entry"
+    local path="vendor/$vendor_name" dir="$SCRIPT_DIR/vendor/$vendor_name"
+    local padded_name
+    padded_name=$(pad "$vendor_name" "$name_width")
+
+    # An uninitialized submodule is an empty directory, where git would answer
+    # for the parent repo instead.
+    local old_sha="" old_version="" old_skills=""
+    if [[ -e "$dir/.git" ]]; then
+      old_sha=$(git -C "$dir" rev-parse HEAD)
+      old_version=$(vendor_version "$vendor_name" "$skills_subdir")
+      old_skills=$(vendor_skill_names "$vendor_name" "$skills_subdir")
+    fi
+
+    if [[ "$IS_TTY" = true ]]; then
+      printf '  %s %s  %s' "${C_DIM}…" "$padded_name" "fetching${C_RESET}"
+    fi
+    local out status=0
+    out=$(git -C "$SCRIPT_DIR" submodule update --init --remote --merge -- "$path" 2>&1) || status=$?
+    if [[ "$IS_TTY" = true ]]; then
+      printf '\r\033[K'
+    fi
+
+    if [[ $status -ne 0 ]]; then
+      echo "  ${C_RED}✗${C_RESET} $padded_name  ${C_RED}update failed${C_RESET}"
+      printf '%s\n' "$out" | grep -v '^[[:space:]]*$' | tail -4 | sed 's/^/      /'
+      failed=$((failed + 1))
+      continue
+    fi
+
+    local new_sha new_version new_skills new_date
+    new_sha=$(git -C "$dir" rev-parse HEAD)
+    new_version=$(vendor_version "$vendor_name" "$skills_subdir")
+    new_skills=$(vendor_skill_names "$vendor_name" "$skills_subdir")
+    new_date=$(git -C "$dir" log -1 --date=short --format=%cd)
+
+    local versions
+    versions=$(version_label "$new_version")
+    if [[ -n "$old_sha" && "$old_version" != "$new_version" ]]; then
+      versions="$(version_label "$old_version") → $versions"
+    fi
+    versions=$(pad "$versions" 20)
+
+    if [[ "$old_sha" == "$new_sha" ]]; then
+      echo "  ${C_DIM}✓ $padded_name  $versions  up to date${C_RESET}"
+    elif [[ -z "$old_sha" ]]; then
+      echo "  ${C_GREEN}↑${C_RESET} $padded_name  $versions  ${C_GREEN}cloned${C_RESET} at ${new_sha:0:7} ($new_date)"
+      updated=$((updated + 1))
+    else
+      local count commits="commits"
+      count=$(git -C "$dir" rev-list --count "$old_sha..$new_sha")
+      [[ "$count" != 1 ]] || commits="commit"
+      echo "  ${C_GREEN}↑${C_RESET} ${C_BOLD}$padded_name${C_RESET}  $versions  ${C_GREEN}$count new $commits${C_RESET}  ${C_DIM}${old_sha:0:7}..${new_sha:0:7}  $new_date${C_RESET}"
+      updated=$((updated + 1))
+    fi
+
+    # Staged right away: every other install.sh run checks submodules out at
+    # the staged pointer, which would silently undo this update.
+    git -C "$SCRIPT_DIR" add -- "$path"
+
+    link_one_vendor "$entry" "$SCRIPT_DIR/skills" quiet
+
+    local skill added="" removed=""
+    if [[ -n "$old_sha" ]]; then
+      added=$(lines_not_in "$new_skills" "$old_skills")
+      removed=$(lines_not_in "$old_skills" "$new_skills")
+    fi
+    local linked="" unlinked="" shadowed=""
+    while IFS= read -r skill; do
+      [[ -n "$skill" ]] || continue
+      if [[ -L "$SCRIPT_DIR/skills/$skill" ]]; then
+        linked+="$skill"$'\n'
+      elif [[ -e "$SCRIPT_DIR/skills/$skill" ]]; then
+        shadowed+="$skill"$'\n'
+      else
+        unlinked+="$skill"$'\n'
+      fi
+    done <<< "$added"
+    # A link that is new without the skill being new upstream: a restored or
+    # re-pointed symlink, or a skill just added to the VENDOR_SKILLS pin.
+    linked+=$(lines_not_in "$LINK_NEW" "$added")
+    if [[ -n "$linked" ]]; then
+      attention=$((attention + 1))
+      vendor_note "${C_GREEN}+${C_RESET}" "linked into skills/: ${C_BOLD}$(join_lines "$linked")${C_RESET}"
+      vendor_note " " "each needs a README.md row and an index.html card (./install.sh --check lists what is missing)"
+    fi
+    if [[ -n "$unlinked" ]]; then
+      vendor_note "${C_DIM}+${C_RESET}" "new upstream, not linked: $(join_lines "$unlinked")"
+      vendor_note " " "${C_DIM}add a name to the $vendor_name entry in VENDOR_SKILLS to link it${C_RESET}"
+    fi
+    if [[ -n "$shadowed" ]]; then
+      vendor_note "${C_DIM}+${C_RESET}" "new upstream, hidden by your own skill of the same name: $(join_lines "$shadowed")"
+    fi
+    while IFS= read -r skill; do
+      [[ -n "$skill" ]] || continue
+      vendor_note "${C_DIM}-${C_RESET}" "upstream removed or renamed $skill"
+    done <<< "$removed"
+    while IFS= read -r skill; do
+      [[ -n "$skill" ]] || continue
+      attention=$((attention + 1))
+      vendor_note "${C_RED}!${C_RESET}" "skills/$skill is a dangling symlink: re-point or delete it, then fix VENDOR_SKILLS, README.md and index.html"
+    done < <(dangling_vendor_links "$vendor_name" "$SCRIPT_DIR/skills")
+  done
+
+  echo ""
+  local summary="$updated updated, $(( ${#entries[@]} - updated - failed )) up to date"
+  [[ $failed -eq 0 ]] || summary+=", ${C_RED}$failed failed${C_RESET}"
+  echo "$summary."
+
+  # Everything below covers every staged vendor pointer, so a second run still
+  # says what is left to do after an earlier one already pulled the updates.
+  local staged
+  staged=$(git -C "$SCRIPT_DIR" diff --cached --name-only -- vendor)
+  if [[ -z "$staged" ]]; then
+    [[ $failed -eq 0 ]] || return 1
+    return 0
+  fi
+
+  local -a pending=()
+  local readme_rows="" last_label=""
+  for entry in "${VENDOR_SKILLS[@]}"; do
+    local vendor_name repo skills_subdir skills_filter
+    IFS=':' read -r vendor_name repo skills_subdir skills_filter <<< "$entry"
+    grep -qxF -- "vendor/$vendor_name" <<< "$staged" || continue
+    pending+=("$vendor_name")
+
+    local version current wanted
+    version=$(vendor_version "$vendor_name" "$skills_subdir")
+    last_label="v$version"
+    [[ -n "$version" ]] || last_label=$(git -C "$SCRIPT_DIR/vendor/$vendor_name" rev-parse --short HEAD)
+    wanted="$(version_label "$version") ($(git -C "$SCRIPT_DIR/vendor/$vendor_name" log -1 --date=short --format=%cd))"
+    current=$(readme_vendor_version "$repo")
+    if [[ "$current" != "$wanted" ]]; then
+      readme_rows+="       $(pad "$vendor_name" "$name_width")  ${C_DIM}$(pad "${current:-(no row)}" 26)${C_RESET}  →  ${C_BOLD}$wanted${C_RESET}"$'\n'
+    fi
+  done
+
+  if [[ ${#pending[@]} -eq 0 ]]; then
+    [[ $failed -eq 0 ]] || return 1
+    return 0
+  fi
+
+  echo ""
+  echo "${C_BOLD}Staged${C_RESET} ${C_DIM}(undo one with: git restore --staged vendor/<name> && git submodule update vendor/<name>)${C_RESET}"
+  for name in "${pending[@]}"; do
+    echo "  vendor/$name"
+  done
+
+  echo ""
+  echo "${C_BOLD}Catalog check${C_RESET}"
+  local catalogs_ok=true
+  check_skills || catalogs_ok=false
+
+  local message joined
+  printf -v joined '%s, ' "${pending[@]}"
+  message="update vendor skills: ${joined%, }"
+  [[ ${#pending[@]} -ne 1 ]] || message="update ${pending[0]} to $last_label"
+
+  echo ""
+  echo "${C_BOLD}Next steps${C_RESET}"
+  local step=1
+  if [[ -n "$readme_rows" ]]; then
+    echo "  $step. Refresh the \"Vendor skills\" table in README.md:"
+    printf '%s' "$readme_rows"
+    step=$((step + 1))
+  fi
+  if [[ "$catalogs_ok" = false || $attention -gt 0 ]]; then
+    echo "  $step. Fix what is flagged above (catalog rows, dangling links), then re-run ./install.sh --check"
+    step=$((step + 1))
+  fi
+  echo "  $step. Commit:"
+  echo "       git add skills README.md index.html install.sh"
+  echo "       git commit -m \"$message\""
+
+  [[ $failed -eq 0 ]] || return 1
 }
 
 in_array() {
@@ -491,7 +836,10 @@ main() {
       --symlink) SYMLINK=true; shift ;;
       --self) SELF=true; shift ;;
       --check) CHECK=true; shift ;;
-      --update-vendor) UPDATE_VENDOR=true; shift ;;
+      --update-vendor)
+        UPDATE_VENDOR=true; shift
+        while [[ $# -gt 0 && "$1" != -* ]]; do VENDOR_ONLY+=("$1"); shift; done
+        ;;
       -h|--help) usage; exit 0 ;;
       *) echo "Unknown option: $1" >&2; usage; exit 1 ;;
     esac
@@ -508,8 +856,6 @@ main() {
 
   if [[ "$UPDATE_VENDOR" = true ]]; then
     update_vendor
-    echo ""
-    echo "Done."
     return
   fi
 
