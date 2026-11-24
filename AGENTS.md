@@ -162,7 +162,8 @@ exit code is non-zero if any failed.
 
 The report shows, per vendor, the old → new version and the number of new commits. Under a vendor it notes skills
 that were newly linked (they are not in the catalogs yet), new upstream skills that were not linked because the
-vendor is pinned, and dangling symlinks. It ends with the remaining steps, which are yours to do:
+vendor is pinned, and dangling symlinks. It ends with a prompt for a coding agent that covers the remaining steps
+(printed, and copied to the clipboard on a terminal). If you are the agent handed that prompt, these are the steps:
 
 1. Fix what the report flags. A newly linked skill needs a README row and an `index.html` card (or pin the vendor in
    `VENDOR_SKILLS` to drop it). A dangling symlink means upstream renamed or split a skill: re-point or delete the

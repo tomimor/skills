@@ -805,16 +805,25 @@ fetch_vendors() {
   VENDOR_FAILED=$failed
 }
 
-# Prints what is left to do by hand for every staged vendor pointer, and sets
-# VENDOR_PENDING. It looks at the index rather than at this run, so a later run
-# still says what an earlier one left unfinished.
+# Copies stdin to the system clipboard. Fails when there is no tool for it.
+copy_to_clipboard() {
+  if command -v pbcopy &>/dev/null; then pbcopy
+  elif command -v wl-copy &>/dev/null; then wl-copy
+  elif command -v xclip &>/dev/null; then xclip -selection clipboard
+  else return 1
+  fi
+}
+
+# For every staged vendor pointer, prints a prompt to paste into a coding agent
+# that finishes the update (README versions, catalogs, commit), and sets
+# VENDOR_PENDING. It reads the index rather than this run, so a later run
+# still offers the prompt for what an earlier one left unfinished.
 vendor_next_steps() {
-  local entry name_width staged
-  name_width=$(vendor_name_width)
+  local entry staged
   staged=$(git -C "$SCRIPT_DIR" diff --cached --name-only -- vendor)
 
   local -a pending=()
-  local readme_rows="" last_label=""
+  local versions="" dangling="" last_label=""
   for entry in "${VENDOR_SKILLS[@]}"; do
     local vendor_name repo skills_subdir skills_filter
     IFS=':' read -r vendor_name repo skills_subdir skills_filter <<< "$entry"
@@ -827,8 +836,9 @@ vendor_next_steps() {
     [[ -n "$version" ]] || last_label=$(git -C "$SCRIPT_DIR/vendor/$vendor_name" rev-parse --short HEAD)
     wanted="$(version_label "$version") ($(git -C "$SCRIPT_DIR/vendor/$vendor_name" log -1 --date=short --format=%cd))"
     if [[ "$(readme_vendor_version "$repo")" != "$wanted" ]]; then
-      readme_rows+="         $(pad "$vendor_name" "$name_width")  $wanted"$'\n'
+      versions+="   - $vendor_name: $wanted"$'\n'
     fi
+    dangling+=$(dangling_vendor_links "$vendor_name" "$SCRIPT_DIR/skills")$'\n'
   done
 
   [[ ${#pending[@]} -gt 0 ]] || return 0
@@ -838,22 +848,32 @@ vendor_next_steps() {
   printf -v joined '%s, ' "${pending[@]}"
   message="update vendor skills: ${joined%, }"
   [[ ${#pending[@]} -ne 1 ]] || message="update ${pending[0]} to $last_label"
+  dangling=$(join_lines "$dangling")
 
+  local step=1 prompt
+  prompt="Finish the vendor skills update in this repo. The new vendor pointers are already staged. Follow \"Updating vendor skills\" in AGENTS.md, and do not edit anything under vendor/."$'\n\n'
+  if [[ -n "$versions" ]]; then
+    prompt+="$step. In the README.md \"Vendor skills\" table, set these versions:"$'\n'"$versions"
+    prompt+="   Also update any version mentioned in those vendors' catalog rows, and the \"upstream also ships\" lists of pinned vendors."$'\n'
+    step=$((step + 1))
+  fi
+  if [[ -n "$dangling" ]]; then
+    prompt+="$step. These symlinks in skills/ are dangling because upstream removed or renamed the skill: $dangling. Re-point or delete each one, then update VENDOR_SKILLS in install.sh and both catalogs to match."$'\n'
+    step=$((step + 1))
+  fi
+  prompt+="$step. Run ./install.sh --check and fix everything it reports. A newly linked skill needs a README.md catalog row and an index.html card (take the description from its SKILL.md), and both skill counts must match."$'\n'
+  step=$((step + 1))
+  prompt+="$step. Commit skills/, README.md, index.html and install.sh with the message \"$message\"."
+
+  local how="paste this into your coding agent" rule="────────────────────────────────────────────────────────────"
+  if [[ "$IS_TTY" = true ]] && printf '%s\n' "$prompt" | copy_to_clipboard 2>/dev/null; then
+    how="copied to your clipboard, paste it into your coding agent"
+  fi
   echo ""
-  echo "  ${C_BOLD}Next${C_RESET} ${C_DIM}(the new vendor pointers are already staged)${C_RESET}"
-  local step=1
-  if [[ -n "$readme_rows" ]]; then
-    echo "    $step. Set these versions in the README.md vendor table:"
-    printf '%s' "$readme_rows"
-    step=$((step + 1))
-  fi
-  if ! check_skills > /dev/null; then
-    echo "    $step. Catalogs are out of sync: run ./install.sh --check"
-    step=$((step + 1))
-  fi
-  echo "    $step. Commit:"
-  echo "         git add skills README.md index.html install.sh"
-  echo "         git commit -m \"$message\""
+  echo "  ${C_BOLD}Next${C_RESET} ${C_DIM}· $how${C_RESET}"
+  echo "  ${C_DIM}$rule${C_RESET}"
+  printf '%s\n' "$prompt" | fold -s -w $(( TERM_COLS > 44 ? TERM_COLS - 4 : 76 )) | sed 's/^/  /;s/ *$//'
+  echo "  ${C_DIM}$rule${C_RESET}"
 }
 
 update_vendor() {

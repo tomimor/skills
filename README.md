@@ -183,8 +183,9 @@ skills update         # from any folder: git pull, update the vendor packs, re-l
 Pass names to update only some of them, e.g. `./install.sh --update-vendor impeccable cloudflare`.
 
 The command prints one line per vendor (old → new version and commit count), notes skills that upstream added or
-that are left dangling, stages the new submodule pointers, and ends with the steps left before committing. A vendor
-that fails to update is reported with git's error and does not stop the others.
+that are left dangling, stages the new submodule pointers, and ends with a prompt to paste into a coding agent that
+finishes the job (README versions, catalogs, commit). On a terminal the prompt is also copied to the clipboard. A
+vendor that fails to update is reported with git's error and does not stop the others.
 
 <details>
 <summary><strong>Add a new vendor</strong></summary>
