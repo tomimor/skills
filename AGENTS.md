@@ -154,10 +154,9 @@ which checks each submodule out at the pointer in the index, so an unstaged bump
 says so when it happens). A vendor that fails to update is reported with git's error and the rest still run; the
 exit code is non-zero if any failed.
 
-The report shows, per vendor, the old → new version, the number of new commits, and the commit range. Under a vendor
-it also lists skills upstream added (linked, or not linked because the vendor is pinned), skills upstream removed or
-renamed, and dangling symlinks. It then lists the staged pointers, runs the catalog check, and prints the remaining
-steps. Those steps are yours to do:
+The report shows, per vendor, the old → new version and the number of new commits. Under a vendor it notes skills
+that were newly linked (they are not in the catalogs yet), new upstream skills that were not linked because the
+vendor is pinned, and dangling symlinks. It ends with the remaining steps, which are yours to do:
 
 1. Fix what the report flags. A newly linked skill needs a README row and an `index.html` card (or pin the vendor in
    `VENDOR_SKILLS` to drop it). A dangling symlink means upstream renamed or split a skill: re-point or delete the
@@ -193,8 +192,10 @@ The check reports, per skill, which file is missing it, and flags catalog entrie
   `"${arr[@]}"` on an array that may be empty (it is an "unbound variable" error under `set -u`).
 - **Fancy output is terminal-only.** Colors, spinners and the progress bar are gated on `IS_TTY`; the arrow-key menus
   on `INTERACTIVE` (a keyboard reachable through `/dev/tty`). Piped and CI runs must stay plain text with no escape
-  codes and no new prompts, so route output through the existing helpers (`ok`, `warn`, `title`, `spin`,
+  codes and no new prompts, so route output through the existing helpers (`ok`, `warn`, `banner`, `spin`,
   `menu_select`, `multi_select`) instead of hand-written escapes.
+- **One accent color.** `C_ACCENT` for anything interactive or branded, and green/yellow/red only for outcomes
+  (done, needs attention, failed). No other colors.
 - **Anything redrawn must fit on one line.** The menus move the cursor up by a fixed number of rows, so a row that
   wraps corrupts the screen. Cut text with `fit` against `TERM_COLS`.
 - CI runs `shellcheck install.sh`, `install.sh --help` and `install.sh --check`. Run all three before committing.

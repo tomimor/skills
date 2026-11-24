@@ -173,9 +173,9 @@ Vendor skills are third-party packs tracked as git submodules under `vendor/` an
 
 Pass names to update only some of them, e.g. `./install.sh --update-vendor impeccable cloudflare`.
 
-The command prints one line per vendor (old → new version, commit count, commit range), flags skills that upstream
-added, removed, or renamed, stages the new submodule pointers, runs the catalog check, and ends with the steps left
-before committing. A vendor that fails to update is reported with git's error and does not stop the others.
+The command prints one line per vendor (old → new version and commit count), notes skills that upstream added or
+that are left dangling, stages the new submodule pointers, and ends with the steps left before committing. A vendor
+that fails to update is reported with git's error and does not stop the others.
 
 <details>
 <summary><strong>Add a new vendor</strong></summary>

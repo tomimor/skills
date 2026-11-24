@@ -71,14 +71,13 @@ EXISTING_POLICY=ask   # what to do with a skill already in the target: ask | ove
 INSTALL_RESULT=""
 
 # ── Terminal UI ──────────────────────────────────────────────────────────────
-# Colors, spinners and progress bars need stdout to be a terminal. Arrow-key
+# One accent color plus green/yellow/red for outcomes, all from the terminal's
+# own palette. Colors, spinners and progress bars need stdout to be a terminal. Arrow-key
 # menus also need a keyboard, read from /dev/tty (fd 3) so they still work under
 # `curl ... | bash`, where stdin is the script itself. Piped and CI output stays
 # plain text with no escape codes.
 IS_TTY=false
 INTERACTIVE=false
-TRUECOLOR=false
-UTF8_LOCALE=false
 CURSOR_HIDDEN=false
 BANNER_SHOWN=false
 SPIN_TMP=""
@@ -94,17 +93,13 @@ if [[ -t 1 && "${TERM:-dumb}" != dumb ]]; then
   IS_TTY=true
   if [[ -z "${NO_COLOR:-}" ]]; then
     C_BOLD=$'\033[1m' C_DIM=$'\033[2m' C_GREEN=$'\033[32m' C_YELLOW=$'\033[33m'
-    C_RED=$'\033[31m' C_ACCENT=$'\033[38;5;75m' C_RESET=$'\033[0m'
-    case "${COLORTERM:-}" in truecolor|24bit) TRUECOLOR=true ;; esac
+    C_RED=$'\033[31m' C_ACCENT=$'\033[36m' C_RESET=$'\033[0m'
   fi
   if (: </dev/tty) 2>/dev/null; then
     exec 3</dev/tty
     INTERACTIVE=true
   fi
 fi
-case "${LC_ALL:-${LC_CTYPE:-${LANG:-}}}" in
-  *[Uu][Tt][Ff]-8*|*[Uu][Tt][Ff]8*) UTF8_LOCALE=true ;;
-esac
 
 # Keys pressed while a spinner runs would be echoed across it, so echo is
 # switched off for its duration. They stay queued for the next menu.
@@ -153,29 +148,6 @@ fit() {
   if (( ${#1} > $2 )); then printf '%s...' "${1:0:$(( $2 > 3 ? $2 - 3 : 0 ))}"; else printf '%s' "$1"; fi
 }
 
-# Prints $1 with a blue-to-violet gradient, one color step per character.
-# Slicing a string per character only works on multibyte text in a UTF-8
-# locale, so anything else non-ASCII gets the flat accent color instead.
-gradient() {
-  local text="$1" n=${#1} i out="" span
-  if [[ -z "$C_RESET" ]]; then printf '%s' "$text"; return; fi
-  if [[ "$UTF8_LOCALE" = false && "$text" == *[!\ -~]* ]]; then
-    printf '%s%s%s' "$C_ACCENT" "$text" "$C_RESET"
-    return
-  fi
-  local -a steps=(75 69 105 141 177)
-  span=$(( n > 1 ? n - 1 : 1 ))
-  for (( i = 0; i < n; i++ )); do
-    if [[ "$TRUECOLOR" = true ]]; then
-      out+=$'\033[38;2;'"$(( 68 + 127 * i / span ));$(( 147 - 43 * i / span ));$(( 248 - 6 * i / span ))m"
-    else
-      out+=$'\033[38;5;'"${steps[i * 5 / n]}m"
-    fi
-    out+="${text:i:1}"
-  done
-  printf '%s%s' "$out" "$C_RESET"
-}
-
 # Reads the terminal size into TERM_ROWS and TERM_COLS; 24x80 when unknown.
 term_size() {
   local size
@@ -186,27 +158,17 @@ term_size() {
   fi
 }
 
+# The wordmark with a line saying what this run does. Terminal only, once per run.
 banner() {
   if [[ "$IS_TTY" = false || "$BANNER_SHOWN" = true ]]; then return 0; fi
   BANNER_SHOWN=true
-  local line2="Agent skills for Cursor and Claude Code"
-  local line3="${#SKILLS[@]} own skills · ${#VENDOR_SKILLS[@]} vendor packs"
+  local doing="${1:-Agent skills for Cursor and Claude Code}"
+  local stats="${#SKILLS[@]} own skills · ${#VENDOR_SKILLS[@]} vendor packs"
   term_size
-  if (( TERM_COLS >= 84 )); then line3+=" · ${REPO_URL#https://}"; fi
-  if (( TERM_COLS < 64 )); then line2="" line3=""; fi
+  if (( TERM_COLS < 66 )); then doing="" stats=""; fi
   echo ""
-  echo "  $(gradient '┌─┐┬┌─┬┬  ┬  ┌─┐')"
-  echo "  $(gradient '└─┐├┴┐││  │  └─┐')   ${C_BOLD}$line2${C_RESET}"
-  echo "  $(gradient '└─┘┴ ┴┴┴─┘┴─┘└─┘')   ${C_DIM}$line3${C_RESET}"
-  echo ""
-}
-
-# One-line header for a subcommand. Terminal only; plain runs print their own.
-title() {
-  if [[ "$IS_TTY" = false || "$BANNER_SHOWN" = true ]]; then return 0; fi
-  BANNER_SHOWN=true
-  echo ""
-  echo "  $(gradient '✦ skills') ${C_DIM}·${C_RESET} ${C_BOLD}$1${C_RESET}"
+  echo "  ${C_ACCENT}█▀ █▄▀ █ █   █   █▀${C_RESET}   ${C_BOLD}$doing${C_RESET}"
+  echo "  ${C_ACCENT}▄█ █ █ █ █▄▄ █▄▄ ▄█${C_RESET}   ${C_DIM}$stats${C_RESET}"
   echo ""
 }
 
@@ -376,7 +338,7 @@ multi_select() {
     if (( cur >= top + rows )); then top=$(( cur - rows + 1 )); fi
     for (( i = top; i < top + rows; i++ )); do
       local box="${C_DIM}◯${C_RESET}" pointer=" " weight=""
-      if (( on[i] == 1 )); then box="${C_GREEN}◉${C_RESET}"; fi
+      if (( on[i] == 1 )); then box="${C_ACCENT}◉${C_RESET}"; fi
       if (( i == cur )); then pointer="${C_ACCENT}❯${C_RESET}"; weight="$C_BOLD"; fi
       printf '\033[K  %s %s %s%s%s  %s%s%s\n' "$pointer" "$box" "$weight" "${labels[i]}" "$C_RESET" "$C_DIM" "${hints[i]}" "$C_RESET"
     done
@@ -528,9 +490,7 @@ init_vendor_submodules() {
     echo "  ${C_YELLOW}!${C_RESET} $path: checked out at ${sha:0:7}, syncing to the pinned ${pinned:0:7}"
   done < <(git -C "$SCRIPT_DIR" submodule status 2>/dev/null || true)
 
-  if spin "Syncing vendor submodules" git -C "$SCRIPT_DIR" submodule update --init --recursive --quiet; then
-    if [[ "$IS_TTY" = true ]]; then ok "Vendor submodules in sync"; fi
-  else
+  if ! spin "Syncing vendor skills" git -C "$SCRIPT_DIR" submodule update --init --recursive --quiet; then
     warn "Could not initialize vendor submodules:"
     printf '%s\n' "$RUN_OUT" | tail -3 | sed 's/^/    /' >&2
   fi
@@ -689,18 +649,17 @@ link_vendor_skills() {
   for link in "$1"/*; do
     if [[ -L "$link" ]]; then count=$((count + 1)); fi
   done
-  ok "$count vendor skills linked into skills/ ${C_DIM}(${#VENDOR_SKILLS[@]} packs)${C_RESET}"
+  ok "$count vendor skills in sync"
 }
 
-# One line of detail under a vendor's row in the update report.
+# A note under a vendor's row in the update report: $1 glyph, $2 label, $3 skill
+# names (one per line), wrapped so a long list does not run off the edge.
 vendor_note() {
-  echo "      $1 $2"
-}
-
-# The lines of $1 as a comma-separated list under a vendor note, wrapped to
-# the terminal so a long list of skills does not run off the edge.
-vendor_names() {
-  join_lines "$1" | fold -s -w $(( TERM_COLS > 52 ? TERM_COLS - 12 : 68 )) | sed 's/^/          /;s/ *$//'
+  local line first=true
+  while IFS= read -r line; do
+    if [[ "$first" = true ]]; then echo "      $1 $line"; else echo "          $line"; fi
+    first=false
+  done < <(printf '%s %s\n' "$2" "$(join_lines "$3")" | fold -s -w $(( TERM_COLS > 54 ? TERM_COLS - 14 : 66 )))
 }
 
 update_vendor() {
@@ -729,7 +688,7 @@ update_vendor() {
   fi
 
   local name_width=0
-  for entry in "${entries[@]}"; do
+  for entry in "${VENDOR_SKILLS[@]}"; do
     name="${entry%%:*}"
     if (( ${#name} > name_width )); then name_width=${#name}; fi
   done
@@ -737,13 +696,13 @@ update_vendor() {
   local noun="vendors"
   [[ ${#entries[@]} -ne 1 ]] || noun="vendor"
   term_size
-  title "Updating ${#entries[@]} $noun from upstream"
+  banner "Updating ${#entries[@]} $noun"
   if [[ "$IS_TTY" = false ]]; then
     echo "Updating ${#entries[@]} $noun from upstream"
     echo ""
   fi
 
-  local updated=0 failed=0 attention=0
+  local updated=0 failed=0
   for entry in "${entries[@]}"; do
     local vendor_name repo skills_subdir skills_filter
     IFS=':' read -r vendor_name repo skills_subdir skills_filter <<< "$entry"
@@ -760,25 +719,20 @@ update_vendor() {
       old_skills=$(vendor_skill_names "$vendor_name" "$skills_subdir")
     fi
 
-    local out status=0
-    spin "$padded_name  fetching upstream" \
+    local status=0
+    spin "$padded_name  fetching" \
       git -C "$SCRIPT_DIR" submodule update --init --remote --merge -- "$path" || status=$?
-    out="$RUN_OUT"
 
     if [[ $status -ne 0 ]]; then
-      echo "  ${C_RED}✗${C_RESET} $padded_name  ${C_RED}update failed${C_RESET}"
-      printf '%s\n' "$out" | grep -v '^[[:space:]]*$' | tail -4 | sed 's/^/      /'
+      echo "  ${C_RED}✗ $padded_name  update failed${C_RESET}"
+      printf '%s\n' "$RUN_OUT" | grep -v '^[[:space:]]*$' | tail -3 | sed 's/^/      /'
       failed=$((failed + 1))
       continue
     fi
 
-    local new_sha new_version new_skills new_date
+    local new_sha new_version versions
     new_sha=$(git -C "$dir" rev-parse HEAD)
     new_version=$(vendor_version "$vendor_name" "$skills_subdir")
-    new_skills=$(vendor_skill_names "$vendor_name" "$skills_subdir")
-    new_date=$(git -C "$dir" log -1 --date=short --format=%cd)
-
-    local versions
     versions=$(version_label "$new_version")
     if [[ -n "$old_sha" && "$old_version" != "$new_version" ]]; then
       versions="$(version_label "$old_version") → $versions"
@@ -787,14 +741,13 @@ update_vendor() {
 
     if [[ "$old_sha" == "$new_sha" ]]; then
       echo "  ${C_DIM}✓ $padded_name  $versions  up to date${C_RESET}"
-    elif [[ -z "$old_sha" ]]; then
-      echo "  ${C_GREEN}↑${C_RESET} $padded_name  $versions  ${C_GREEN}cloned${C_RESET} at ${new_sha:0:7} ($new_date)"
-      updated=$((updated + 1))
     else
-      local count commits="commits"
-      count=$(git -C "$dir" rev-list --count "$old_sha..$new_sha")
-      [[ "$count" != 1 ]] || commits="commit"
-      echo "  ${C_GREEN}↑${C_RESET} ${C_BOLD}$padded_name${C_RESET}  $versions  ${C_GREEN}$count new $commits${C_RESET}  ${C_DIM}${old_sha:0:7}..${new_sha:0:7}  $new_date${C_RESET}"
+      local change="cloned"
+      if [[ -n "$old_sha" ]]; then
+        change="$(git -C "$dir" rev-list --count "$old_sha..$new_sha") commits"
+        [[ "$change" != "1 commits" ]] || change="1 commit"
+      fi
+      echo "  ${C_GREEN}↑${C_RESET} ${C_BOLD}$padded_name${C_RESET}  $versions  ${C_GREEN}$change${C_RESET}"
       updated=$((updated + 1))
     fi
 
@@ -804,64 +757,34 @@ update_vendor() {
 
     link_one_vendor "$entry" "$SCRIPT_DIR/skills"
 
-    local skill added="" removed=""
+    # New upstream skills that were not linked: the vendor is pinned to a subset.
+    local skill unlinked="" dangling
     if [[ -n "$old_sha" ]]; then
-      added=$(lines_not_in "$new_skills" "$old_skills")
-      removed=$(lines_not_in "$old_skills" "$new_skills")
+      while IFS= read -r skill; do
+        [[ -z "$skill" || -e "$SCRIPT_DIR/skills/$skill" ]] || unlinked+="$skill"$'\n'
+      done <<< "$(lines_not_in "$(vendor_skill_names "$vendor_name" "$skills_subdir")" "$old_skills")"
     fi
-    local linked="" unlinked="" shadowed=""
-    while IFS= read -r skill; do
-      [[ -n "$skill" ]] || continue
-      if [[ -L "$SCRIPT_DIR/skills/$skill" ]]; then
-        linked+="$skill"$'\n'
-      elif [[ -e "$SCRIPT_DIR/skills/$skill" ]]; then
-        shadowed+="$skill"$'\n'
-      else
-        unlinked+="$skill"$'\n'
-      fi
-    done <<< "$added"
-    # A link that is new without the skill being new upstream: a restored or
-    # re-pointed symlink, or a skill just added to the VENDOR_SKILLS pin.
-    linked+=$(lines_not_in "$LINK_NEW" "$added")
-    if [[ -n "$linked" ]]; then
-      attention=$((attention + 1))
-      vendor_note "${C_GREEN}+${C_RESET}" "linked into skills/:"
-      vendor_names "$linked"
-      vendor_note " " "${C_YELLOW}each needs a README.md row and an index.html card${C_RESET}"
+    dangling=$(dangling_vendor_links "$vendor_name" "$SCRIPT_DIR/skills")
+    if [[ -n "$LINK_NEW" ]]; then
+      vendor_note "${C_YELLOW}+${C_RESET}" "linked, not in the catalogs yet:" "$LINK_NEW"
     fi
     if [[ -n "$unlinked" ]]; then
-      vendor_note "${C_DIM}+${C_RESET}" "new upstream, not linked:"
-      vendor_names "$unlinked"
-      vendor_note " " "${C_DIM}add a name to the $vendor_name entry in VENDOR_SKILLS to link it${C_RESET}"
+      vendor_note "${C_DIM}+${C_RESET}" "new upstream, not linked:" "$unlinked"
     fi
-    if [[ -n "$shadowed" ]]; then
-      vendor_note "${C_DIM}+${C_RESET}" "new upstream, hidden by your own skill of the same name:"
-      vendor_names "$shadowed"
+    if [[ -n "$dangling" ]]; then
+      vendor_note "${C_RED}✗${C_RESET}" "dangling symlink, removed or renamed upstream:" "$dangling"
     fi
-    while IFS= read -r skill; do
-      [[ -n "$skill" ]] || continue
-      vendor_note "${C_DIM}-${C_RESET}" "upstream removed or renamed $skill"
-    done <<< "$removed"
-    while IFS= read -r skill; do
-      [[ -n "$skill" ]] || continue
-      attention=$((attention + 1))
-      vendor_note "${C_RED}!${C_RESET}" "skills/$skill is a dangling symlink: re-point or delete it, then fix VENDOR_SKILLS, README.md and index.html"
-    done < <(dangling_vendor_links "$vendor_name" "$SCRIPT_DIR/skills")
   done
 
   echo ""
   local summary="$updated updated, $(( ${#entries[@]} - updated - failed )) up to date"
   [[ $failed -eq 0 ]] || summary+=", ${C_RED}$failed failed${C_RESET}"
-  echo "$summary."
+  echo "  $summary"
 
-  # Everything below covers every staged vendor pointer, so a second run still
-  # says what is left to do after an earlier one already pulled the updates.
+  # What follows covers every staged vendor pointer, so a second run still says
+  # what is left to do after an earlier one already pulled the updates.
   local staged
   staged=$(git -C "$SCRIPT_DIR" diff --cached --name-only -- vendor)
-  if [[ -z "$staged" ]]; then
-    [[ $failed -eq 0 ]] || return 1
-    return 0
-  fi
 
   local -a pending=()
   local readme_rows="" last_label=""
@@ -871,14 +794,13 @@ update_vendor() {
     grep -qxF -- "vendor/$vendor_name" <<< "$staged" || continue
     pending+=("$vendor_name")
 
-    local version current wanted
+    local version wanted
     version=$(vendor_version "$vendor_name" "$skills_subdir")
     last_label="v$version"
     [[ -n "$version" ]] || last_label=$(git -C "$SCRIPT_DIR/vendor/$vendor_name" rev-parse --short HEAD)
     wanted="$(version_label "$version") ($(git -C "$SCRIPT_DIR/vendor/$vendor_name" log -1 --date=short --format=%cd))"
-    current=$(readme_vendor_version "$repo")
-    if [[ "$current" != "$wanted" ]]; then
-      readme_rows+="       $(pad "$vendor_name" "$name_width")  ${C_DIM}$(pad "${current:-(no row)}" 26)${C_RESET}  →  ${C_BOLD}$wanted${C_RESET}"$'\n'
+    if [[ "$(readme_vendor_version "$repo")" != "$wanted" ]]; then
+      readme_rows+="         $(pad "$vendor_name" "$name_width")  $wanted"$'\n'
     fi
   done
 
@@ -887,38 +809,26 @@ update_vendor() {
     return 0
   fi
 
-  echo ""
-  echo "${C_BOLD}Staged${C_RESET}"
-  for name in "${pending[@]}"; do
-    echo "  vendor/$name"
-  done
-  echo "  ${C_DIM}undo one: git restore --staged vendor/<name> && git submodule update vendor/<name>${C_RESET}"
-
-  echo ""
-  echo "${C_BOLD}Catalog check${C_RESET}"
-  local catalogs_ok=true
-  check_skills || catalogs_ok=false
-
   local message joined
   printf -v joined '%s, ' "${pending[@]}"
   message="update vendor skills: ${joined%, }"
   [[ ${#pending[@]} -ne 1 ]] || message="update ${pending[0]} to $last_label"
 
   echo ""
-  echo "${C_BOLD}Next steps${C_RESET}"
+  echo "  ${C_BOLD}Next${C_RESET} ${C_DIM}(the new vendor pointers are already staged)${C_RESET}"
   local step=1
   if [[ -n "$readme_rows" ]]; then
-    echo "  $step. Refresh the \"Vendor skills\" table in README.md:"
+    echo "    $step. Set these versions in the README.md vendor table:"
     printf '%s' "$readme_rows"
     step=$((step + 1))
   fi
-  if [[ "$catalogs_ok" = false || $attention -gt 0 ]]; then
-    echo "  $step. Fix what is flagged above (catalog rows, dangling links), then re-run ./install.sh --check"
+  if ! check_skills > /dev/null; then
+    echo "    $step. Catalogs are out of sync: run ./install.sh --check"
     step=$((step + 1))
   fi
-  echo "  $step. Commit:"
-  echo "       git add skills README.md index.html install.sh"
-  echo "       git commit -m \"$message\""
+  echo "    $step. Commit:"
+  echo "         git add skills README.md index.html install.sh"
+  echo "         git commit -m \"$message\""
 
   [[ $failed -eq 0 ]] || return 1
 }
@@ -1034,7 +944,7 @@ check_skills() {
   fi
 
   if [[ $errors -eq 0 ]]; then
-    ok "${#dir_skills[@]} own skills valid and in sync with the SKILLS array; README.md and index.html list all $total skills."
+    ok "$total skills valid and cataloged (${#dir_skills[@]} own, $(( total - ${#dir_skills[@]} )) vendor)"
     return 0
   fi
   echo ""
@@ -1046,7 +956,7 @@ check_skills() {
 # Cursor loads skills from a symlinked top-level dir, so a single dir symlink
 # works there. Claude Code does NOT, so it needs per-skill symlinks instead.
 install_self() {
-  title "Linking this repo into this machine"
+  banner "Linking this repo into this machine"
   resolve_source_dir
   local source_dir="$SOURCE_DIR"
   init_vendor_submodules
@@ -1278,18 +1188,14 @@ pick_skills() {
 home_menu() {
   banner
   menu_select "What do you want to do?" \
-    "Install skills|pick skills and where to copy them" \
-    "Link this repo|symlink every skill into ~/.cursor and ~/.claude   --self" \
-    "Update vendors|pull the latest upstream vendor skills   --update-vendor" \
-    "Check catalogs|validate skills, README.md and index.html   --check" \
-    "Help|show every flag   --help" \
-    "Quit|"
+    "Install skills|choose what to copy and where" \
+    "Link this repo|symlink everything into Cursor and Claude Code" \
+    "Update vendors|pull the latest third-party skills" \
+    "Check catalogs|validate skills, README.md and index.html"
   case "$MENU_INDEX" in
     1) SELF=true ;;
     2) UPDATE_VENDOR=true ;;
     3) CHECK=true ;;
-    4) echo ""; usage; exit 0 ;;
-    5) exit 0 ;;
   esac
 }
 
@@ -1323,7 +1229,7 @@ main() {
   fi
 
   if [[ "$CHECK" = true ]]; then
-    title "Checking skills and catalogs"
+    banner "Checking skills and catalogs"
     if check_skills; then exit 0; else exit 1; fi
   fi
 
@@ -1337,7 +1243,7 @@ main() {
     return
   fi
 
-  title "Installing skills"
+  banner "Installing skills"
   resolve_source_dir
   local source_dir="$SOURCE_DIR"
 
