@@ -66,54 +66,409 @@ SOURCE_DIR=""
 CLEANUP_TMP=""
 LINK_NEW=""
 LINK_MISSING=""
+SELECTED_SKILLS=()
+EXISTING_POLICY=ask   # what to do with a skill already in the target: ask | overwrite | skip
+INSTALL_RESULT=""
 
-# Colors only when writing to a terminal, and never when NO_COLOR is set.
+# ── Terminal UI ──────────────────────────────────────────────────────────────
+# Colors, spinners and progress bars need stdout to be a terminal. Arrow-key
+# menus also need a keyboard, read from /dev/tty (fd 3) so they still work under
+# `curl ... | bash`, where stdin is the script itself. Piped and CI output stays
+# plain text with no escape codes.
 IS_TTY=false
-C_BOLD="" C_DIM="" C_GREEN="" C_YELLOW="" C_RED="" C_RESET=""
-if [[ -t 1 ]]; then
+INTERACTIVE=false
+TRUECOLOR=false
+UTF8_LOCALE=false
+CURSOR_HIDDEN=false
+BANNER_SHOWN=false
+SPIN_TMP=""
+STTY_SAVED=""
+RUN_OUT=""
+KEY=""
+MENU_INDEX=0
+PICKED=""
+TERM_ROWS=24
+TERM_COLS=80
+C_BOLD="" C_DIM="" C_GREEN="" C_YELLOW="" C_RED="" C_ACCENT="" C_RESET=""
+if [[ -t 1 && "${TERM:-dumb}" != dumb ]]; then
   IS_TTY=true
   if [[ -z "${NO_COLOR:-}" ]]; then
-    C_BOLD=$'\033[1m' C_DIM=$'\033[2m' C_GREEN=$'\033[32m'
-    C_YELLOW=$'\033[33m' C_RED=$'\033[31m' C_RESET=$'\033[0m'
+    C_BOLD=$'\033[1m' C_DIM=$'\033[2m' C_GREEN=$'\033[32m' C_YELLOW=$'\033[33m'
+    C_RED=$'\033[31m' C_ACCENT=$'\033[38;5;75m' C_RESET=$'\033[0m'
+    case "${COLORTERM:-}" in truecolor|24bit) TRUECOLOR=true ;; esac
+  fi
+  if (: </dev/tty) 2>/dev/null; then
+    exec 3</dev/tty
+    INTERACTIVE=true
   fi
 fi
+case "${LC_ALL:-${LC_CTYPE:-${LANG:-}}}" in
+  *[Uu][Tt][Ff]-8*|*[Uu][Tt][Ff]8*) UTF8_LOCALE=true ;;
+esac
+
+# Keys pressed while a spinner runs would be echoed across it, so echo is
+# switched off for its duration. They stay queued for the next menu.
+mute_keys() {
+  [[ "$INTERACTIVE" = true ]] || return 0
+  STTY_SAVED=$(stty -g <&3 2>/dev/null || true)
+  stty -echo <&3 2>/dev/null || true
+}
+
+unmute_keys() {
+  if [[ -n "$STTY_SAVED" ]]; then stty "$STTY_SAVED" <&3 2>/dev/null || true; fi
+  STTY_SAVED=""
+}
+
+cleanup() {
+  unmute_keys
+  if [[ "$CURSOR_HIDDEN" = true ]]; then printf '\033[?25h'; fi
+  if [[ -n "$SPIN_TMP" ]]; then rm -f "$SPIN_TMP"; fi
+  if [[ -n "$CLEANUP_TMP" ]]; then rm -rf "$CLEANUP_TMP"; fi
+}
+trap cleanup EXIT
+trap 'echo ""; exit 130' INT
+
+hide_cursor() { printf '\033[?25l'; CURSOR_HIDDEN=true; }
+show_cursor() { printf '\033[?25h'; CURSOR_HIDDEN=false; }
+
+ok()   { echo "  ${C_GREEN}✓${C_RESET} $1"; }
+warn() { echo "  ${C_YELLOW}!${C_RESET} $1" >&2; }
+
+# "~/x" for a path under $HOME. Built by hand: a "~" in a ${var/pat/repl}
+# replacement is tilde-expanded straight back by some bash versions.
+tilde() {
+  if [[ "$1" == "$HOME"/* ]]; then printf '~%s' "${1#"$HOME"}"; else printf '%s' "$1"; fi
+}
+
+# Pads $1 with spaces to $2 columns. printf's own %-Ns counts bytes, and so
+# does ${#1} outside a UTF-8 locale, so the arrow is measured as one ASCII char.
+pad() {
+  local plain="${1//→/-}"
+  local n=$(( $2 - ${#plain} ))
+  if (( n > 0 )); then printf '%s%*s' "$1" "$n" ""; else printf '%s' "$1"; fi
+}
+
+# Cuts $1 down to $2 characters, marking the cut.
+fit() {
+  if (( ${#1} > $2 )); then printf '%s...' "${1:0:$(( $2 > 3 ? $2 - 3 : 0 ))}"; else printf '%s' "$1"; fi
+}
+
+# Prints $1 with a blue-to-violet gradient, one color step per character.
+# Slicing a string per character only works on multibyte text in a UTF-8
+# locale, so anything else non-ASCII gets the flat accent color instead.
+gradient() {
+  local text="$1" n=${#1} i out="" span
+  if [[ -z "$C_RESET" ]]; then printf '%s' "$text"; return; fi
+  if [[ "$UTF8_LOCALE" = false && "$text" == *[!\ -~]* ]]; then
+    printf '%s%s%s' "$C_ACCENT" "$text" "$C_RESET"
+    return
+  fi
+  local -a steps=(75 69 105 141 177)
+  span=$(( n > 1 ? n - 1 : 1 ))
+  for (( i = 0; i < n; i++ )); do
+    if [[ "$TRUECOLOR" = true ]]; then
+      out+=$'\033[38;2;'"$(( 68 + 127 * i / span ));$(( 147 - 43 * i / span ));$(( 248 - 6 * i / span ))m"
+    else
+      out+=$'\033[38;5;'"${steps[i * 5 / n]}m"
+    fi
+    out+="${text:i:1}"
+  done
+  printf '%s%s' "$out" "$C_RESET"
+}
+
+# Reads the terminal size into TERM_ROWS and TERM_COLS; 24x80 when unknown.
+term_size() {
+  local size
+  [[ "$INTERACTIVE" = true ]] || return 0
+  if size=$(stty size <&3 2>/dev/null) && [[ "$size" == *" "* ]]; then
+    TERM_ROWS=${size% *}
+    TERM_COLS=${size#* }
+  fi
+}
+
+banner() {
+  if [[ "$IS_TTY" = false || "$BANNER_SHOWN" = true ]]; then return 0; fi
+  BANNER_SHOWN=true
+  local line2="Agent skills for Cursor and Claude Code"
+  local line3="${#SKILLS[@]} own skills · ${#VENDOR_SKILLS[@]} vendor packs"
+  term_size
+  if (( TERM_COLS >= 84 )); then line3+=" · ${REPO_URL#https://}"; fi
+  if (( TERM_COLS < 64 )); then line2="" line3=""; fi
+  echo ""
+  echo "  $(gradient '┌─┐┬┌─┬┬  ┬  ┌─┐')"
+  echo "  $(gradient '└─┐├┴┐││  │  └─┐')   ${C_BOLD}$line2${C_RESET}"
+  echo "  $(gradient '└─┘┴ ┴┴┴─┘┴─┘└─┘')   ${C_DIM}$line3${C_RESET}"
+  echo ""
+}
+
+# One-line header for a subcommand. Terminal only; plain runs print their own.
+title() {
+  if [[ "$IS_TTY" = false || "$BANNER_SHOWN" = true ]]; then return 0; fi
+  BANNER_SHOWN=true
+  echo ""
+  echo "  $(gradient '✦ skills') ${C_DIM}·${C_RESET} ${C_BOLD}$1${C_RESET}"
+  echo ""
+}
+
+finish() {
+  local took=""
+  if (( SECONDS >= 2 )); then took=" ${C_DIM}in ${SECONDS}s${C_RESET}"; fi
+  echo ""
+  if [[ "$IS_TTY" = true ]]; then
+    echo "  ${C_GREEN}${C_BOLD}Done${C_RESET}$took"
+  else
+    echo "Done."
+  fi
+}
+
+# Runs "${@:2}" behind a spinner labelled $1. The command's output lands in
+# RUN_OUT and its exit status is returned. Without a terminal it just runs.
+spin() {
+  local label="$1"; shift
+  local status=0
+  if [[ "$IS_TTY" = false ]]; then
+    RUN_OUT=$("$@" 2>&1) || status=$?
+    return $status
+  fi
+
+  local -a frames=(⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏)
+  local i=0 started=$SECONDS pid elapsed
+  SPIN_TMP=$(mktemp)
+  "$@" > "$SPIN_TMP" 2>&1 &
+  pid=$!
+  mute_keys
+  hide_cursor
+  while kill -0 "$pid" 2>/dev/null; do
+    elapsed=""
+    if (( SECONDS - started >= 3 )); then elapsed=" $(( SECONDS - started ))s"; fi
+    printf '\r\033[K  %s%s%s %s%s%s' "$C_ACCENT" "${frames[i % 10]}" "$C_RESET" "$label" "$C_DIM" "$elapsed$C_RESET"
+    i=$((i + 1))
+    sleep 0.08
+  done
+  wait "$pid" || status=$?
+  printf '\r\033[K'
+  show_cursor
+  unmute_keys
+  RUN_OUT=$(cat "$SPIN_TMP")
+  rm -f "$SPIN_TMP"
+  SPIN_TMP=""
+  return $status
+}
+
+# Redraws a one-line progress bar: $1 done of $2, working on $3.
+progress() {
+  local width=24 filled=$(( $1 * 24 / $2 )) full="" empty="" i
+  for (( i = 0; i < width; i++ )); do
+    if (( i < filled )); then full+="█"; else empty+="░"; fi
+  done
+  printf '\r\033[K  %s%s%s%s%s  %s/%s  %s' "$C_ACCENT" "$full" "$C_DIM" "$empty" "$C_RESET" "$1" "$2" "$3"
+}
+
+# Reads one keypress from the terminal into KEY: up, down, pgup, pgdn, home,
+# end, enter, space, esc, or the character itself.
+read_key() {
+  local k="" rest=""
+  if ! IFS= read -rsn1 k <&3; then KEY=esc; return 0; fi
+  case "$k" in
+    $'\033')
+      # An arrow key is ESC plus two more bytes. A lone ESC has nothing behind
+      # it, hence the timeout (whole seconds: bash 3.2 takes no fractions).
+      IFS= read -rsn2 -t 1 rest <&3 || rest=""
+      case "$rest" in
+        '[A'|'OA') KEY=up ;;
+        '[B'|'OB') KEY=down ;;
+        '[H'|'OH') KEY=home ;;
+        '[F'|'OF') KEY=end ;;
+        '[5') IFS= read -rsn1 -t 1 rest <&3 || true; KEY=pgup ;;
+        '[6') IFS= read -rsn1 -t 1 rest <&3 || true; KEY=pgdn ;;
+        *) KEY=esc ;;
+      esac ;;
+    "") KEY=enter ;;
+    " ") KEY=space ;;
+    *) KEY="$k" ;;
+  esac
+}
+
+# Erases the $1 lines just drawn and leaves, for a menu the user backed out of.
+cancel_menu() {
+  printf '\033[%dA\033[J' "$1"
+  show_cursor
+  echo "  ${C_DIM}Cancelled. Nothing was changed.${C_RESET}"
+  exit 0
+}
+
+# Arrow-key single choice. $1 is the question, the rest are "label|hint" items.
+# Sets MENU_INDEX to the chosen item; exits if the user backs out.
+menu_select() {
+  local question="$1"; shift
+  local n=$# cur=0 i item width=0 room
+  local -a labels=() hints=()
+  term_size
+  for item in "$@"; do
+    item="${item%%|*}"
+    if (( ${#item} > width )); then width=${#item}; fi
+  done
+  room=$(( TERM_COLS - width - 8 ))
+  for item in "$@"; do
+    labels+=("$(pad "${item%%|*}" "$width")")
+    if (( room < 12 )); then hints+=(""); else hints+=("$(fit "${item#*|}" "$room")"); fi
+  done
+
+  hide_cursor
+  echo "  ${C_ACCENT}?${C_RESET} ${C_BOLD}$question${C_RESET}  ${C_DIM}↑↓ move · enter select · q quit${C_RESET}"
+  while true; do
+    for (( i = 0; i < n; i++ )); do
+      if (( i == cur )); then
+        printf '\033[K  %s❯ %s%s%s  %s%s%s\n' "$C_ACCENT" "$C_BOLD" "${labels[i]}" "$C_RESET" "$C_DIM" "${hints[i]}" "$C_RESET"
+      else
+        printf '\033[K    %s  %s%s%s\n' "${labels[i]}" "$C_DIM" "${hints[i]}" "$C_RESET"
+      fi
+    done
+    read_key
+    case "$KEY" in
+      up|k) cur=$(( (cur + n - 1) % n )) ;;
+      down|j) cur=$(( (cur + 1) % n )) ;;
+      home) cur=0 ;;
+      end) cur=$(( n - 1 )) ;;
+      enter|space) break ;;
+      q|esc) cancel_menu $(( n + 1 )) ;;
+      [1-9]) if (( KEY <= n )); then cur=$(( KEY - 1 )); break; fi ;;
+    esac
+    printf '\033[%dA' "$n"
+  done
+
+  printf '\033[%dA\033[J' $(( n + 1 ))
+  show_cursor
+  item="${labels[cur]}"
+  ok "$question ${C_DIM}·${C_RESET} ${C_ACCENT}${item%"${item##*[! ]}"}${C_RESET}"
+  MENU_INDEX=$cur
+  SECONDS=0
+}
+
+# Arrow-key checklist. $1 is the question, the rest are "label|hint" items.
+# Sets PICKED to the chosen indices, space-separated; exits if the user backs out.
+multi_select() {
+  local question="$1"; shift
+  local n=$# cur=0 top=0 count=0 i item width=0 room rows note="" more below keys
+  local -a labels=() hints=() on=()
+  term_size
+  for item in "$@"; do
+    item="${item%%|*}"
+    if (( ${#item} > width )); then width=${#item}; fi
+  done
+  room=$(( TERM_COLS - width - 10 ))
+  for item in "$@"; do
+    labels+=("$(pad "${item%%|*}" "$width")")
+    if (( room < 12 )); then hints+=(""); else hints+=("$(fit "${item#*|}" "$room")"); fi
+    on+=(0)
+  done
+  rows=$(( TERM_ROWS - 6 ))
+  if (( rows > 16 )); then rows=16; fi
+  if (( rows < 4 )); then rows=4; fi
+  if (( rows > n )); then rows=$n; fi
+  keys="space toggle · a all · enter confirm · q quit"
+  if (( TERM_COLS < 96 )); then keys="space · a all · enter · q quit"; fi
+
+  hide_cursor
+  echo "  ${C_ACCENT}?${C_RESET} ${C_BOLD}$question${C_RESET}"
+  while true; do
+    if (( cur < top )); then top=$cur; fi
+    if (( cur >= top + rows )); then top=$(( cur - rows + 1 )); fi
+    for (( i = top; i < top + rows; i++ )); do
+      local box="${C_DIM}◯${C_RESET}" pointer=" " weight=""
+      if (( on[i] == 1 )); then box="${C_GREEN}◉${C_RESET}"; fi
+      if (( i == cur )); then pointer="${C_ACCENT}❯${C_RESET}"; weight="$C_BOLD"; fi
+      printf '\033[K  %s %s %s%s%s  %s%s%s\n' "$pointer" "$box" "$weight" "${labels[i]}" "$C_RESET" "$C_DIM" "${hints[i]}" "$C_RESET"
+    done
+    more=""
+    below=$(( n - top - rows ))
+    if (( top > 0 )); then more+=" · ↑ $top more"; fi
+    if (( below > 0 )); then more+=" · ↓ $below more"; fi
+    if [[ -n "$note" ]]; then
+      printf '\033[K  %s%s%s\n' "$C_YELLOW" "$note" "$C_RESET"
+    else
+      printf '\033[K  %s%s selected · %s%s%s\n' "$C_DIM" "$count" "$keys" "$more" "$C_RESET"
+    fi
+
+    read_key
+    note=""
+    case "$KEY" in
+      up|k) cur=$(( (cur + n - 1) % n )) ;;
+      down|j) cur=$(( (cur + 1) % n )) ;;
+      pgup) cur=$(( cur - rows > 0 ? cur - rows : 0 )) ;;
+      pgdn) cur=$(( cur + rows < n ? cur + rows : n - 1 )) ;;
+      home|g) cur=0 ;;
+      end|G) cur=$(( n - 1 )) ;;
+      space)
+        if (( on[cur] == 1 )); then on[cur]=0; count=$(( count - 1 )); else on[cur]=1; count=$(( count + 1 )); fi ;;
+      a)
+        local value=1
+        if (( count == n )); then value=0; fi
+        for (( i = 0; i < n; i++ )); do on[i]=$value; done
+        count=$(( value * n )) ;;
+      enter)
+        if (( count > 0 )); then break; fi
+        note="Nothing selected yet: press space on a row, or a for all." ;;
+      q|esc) cancel_menu $(( rows + 2 )) ;;
+    esac
+    printf '\033[%dA' $(( rows + 1 ))
+  done
+
+  printf '\033[%dA\033[J' $(( rows + 2 ))
+  show_cursor
+  PICKED=""
+  for (( i = 0; i < n; i++ )); do
+    if (( on[i] == 1 )); then PICKED+="$i "; fi
+  done
+  ok "$question ${C_DIM}·${C_RESET} ${C_ACCENT}$count selected${C_RESET}"
+  SECONDS=0
+}
 
 usage() {
-  cat <<EOF
-Usage: install.sh [OPTIONS]
-
-Install agent skills to your Cursor or Claude Code skills directory.
-
-Options:
-  --all              Install all skills (non-interactive)
-  --skill <name>     Install a single skill by name
-  --target <dir>     Override the install directory
-  --force            Overwrite existing skills without confirming
-  --symlink          Symlink skills into the target instead of copying (live edits)
-  --self             Wire this repo into your own ~/.cursor and ~/.claude (edit-once symlinks)
-  --check            Validate frontmatter, SKILLS-array sync, and README/index.html catalogs, then exit
-  --update-vendor [name...]
-                     Update vendor submodules to their latest upstream commit, re-link
-                     their skills, stage the new pointers, and report what changed.
-                     Pass vendor names to update only those (default: all).
-  -h, --help         Show this help message
-
-Running without flags starts an interactive picker.
-
-Available skills:
+  banner
+  local b="$C_BOLD" a="$C_ACCENT" d="$C_DIM" r="$C_RESET" entry
+  echo "${b}Usage:${r} install.sh [OPTIONS]"
+  echo ""
+  echo "Install agent skills to your Cursor or Claude Code skills directory."
+  echo "Run it with no options for an interactive menu."
+  echo ""
+  echo "${b}Options:${r}"
+  while IFS='|' read -r flag text; do
+    printf '  %s%-26s%s %s\n' "$a" "$flag" "$r" "$text"
+  done <<'EOF'
+--all|Install all skills (non-interactive)
+--skill <name>|Install a single skill by name
+--target <dir>|Override the install directory
+--force|Overwrite existing skills without confirming
+--symlink|Symlink skills into the target instead of copying
+|(live edits)
+--self|Wire this repo into your own ~/.cursor and ~/.claude
+|(edit-once symlinks)
+--check|Validate frontmatter, SKILLS-array sync, and the
+|README/index.html catalogs, then exit
+--update-vendor [name...]|Update vendor submodules to their latest upstream
+|(all, or only the named ones), re-link their skills,
+|stage the pointers, and report what changed
+-h, --help|Show this help message
 EOF
+  echo ""
+  # On a terminal, cut descriptions so each skill stays on one line.
+  local text room=0
+  if [[ "$INTERACTIVE" = true ]]; then
+    term_size
+    room=$(( TERM_COLS - 34 ))
+  fi
+  echo "${b}Available skills:${r}"
   for entry in "${SKILLS[@]}"; do
-    name="${entry%%:*}"
-    desc="${entry#*:}"
-    printf "  %-30s %s\n" "$name" "$desc"
+    text="${entry#*:}"
+    if (( room >= 20 )); then text=$(fit "$text" "$room"); fi
+    printf '  %s%-30s%s %s%s%s\n' "$a" "${entry%%:*}" "$r" "$d" "$text" "$r"
   done
   echo ""
-  echo "Vendor skills (via git submodules):"
+  echo "${b}Vendor skills (via git submodules):${r}"
   for entry in "${VENDOR_SKILLS[@]}"; do
-    local vendor_name="${entry%%:*}"
     local rest="${entry#*:}"
-    local repo="${rest%%:*}"
-    printf "  %-30s %s\n" "$vendor_name" "https://github.com/$repo"
+    printf '  %s%-30s%s %s%s%s\n' "$a" "${entry%%:*}" "$r" "$d" "https://github.com/${rest%%:*}" "$r"
   done
 }
 
@@ -129,18 +484,14 @@ detect_platforms() {
 }
 
 confirm_overwrite() {
-  local dest="$1"
-  if [[ -d "$dest" ]] && [[ "$FORCE" = false ]]; then
-    printf "  Skill already exists at %s. Overwrite? [y/N] " "$dest"
-    read -r answer
-    [[ "$answer" =~ ^[Yy]$ ]] || return 1
-  fi
-  return 0
+  local answer
+  printf "  Skill already exists at %s. Overwrite? [y/N] " "$1"
+  read -r answer
+  [[ "$answer" =~ ^[Yy]$ ]]
 }
 
 # Sets SOURCE_DIR to the skills directory. When run outside the repo, clones it
-# to a temp dir and registers an EXIT trap to clean up. Must be called directly
-# (not via $(...)) so the trap is installed in the main shell, not a subshell.
+# to a temp dir that the EXIT trap removes.
 resolve_source_dir() {
   if [[ -d "$SCRIPT_DIR/skills" ]]; then
     SOURCE_DIR="$SCRIPT_DIR/skills"
@@ -153,9 +504,13 @@ resolve_source_dir() {
   fi
 
   CLEANUP_TMP="$(mktemp -d)"
-  trap 'rm -rf "$CLEANUP_TMP"' EXIT
-  echo "Downloading skills from $REPO_URL..." >&2
-  git clone --depth 1 --quiet "$REPO_URL" "$CLEANUP_TMP/repo" 2>/dev/null
+  if [[ "$IS_TTY" = false ]]; then echo "Downloading skills from $REPO_URL..." >&2; fi
+  if ! spin "Downloading skills from ${REPO_URL#https://}" git clone --depth 1 --quiet "$REPO_URL" "$CLEANUP_TMP/repo"; then
+    echo "Error: could not download $REPO_URL" >&2
+    printf '%s\n' "$RUN_OUT" | tail -3 | sed 's/^/  /' >&2
+    exit 1
+  fi
+  if [[ "$IS_TTY" = true ]]; then ok "Downloaded the latest skills"; fi
   SOURCE_DIR="$CLEANUP_TMP/repo/skills"
 }
 
@@ -163,7 +518,7 @@ resolve_source_dir() {
 # an update whose pointer was never staged, so say so instead of doing it quietly.
 init_vendor_submodules() {
   [[ -f "$SCRIPT_DIR/.gitmodules" ]] || return 0
-  echo "Initializing vendor submodules..."
+  if [[ "$IS_TTY" = false ]]; then echo "Initializing vendor submodules..."; fi
 
   local line sha path pinned
   while IFS= read -r line; do
@@ -173,10 +528,11 @@ init_vendor_submodules() {
     echo "  ${C_YELLOW}!${C_RESET} $path: checked out at ${sha:0:7}, syncing to the pinned ${pinned:0:7}"
   done < <(git -C "$SCRIPT_DIR" submodule status 2>/dev/null || true)
 
-  local out
-  if ! out=$(git -C "$SCRIPT_DIR" submodule update --init --recursive --quiet 2>&1); then
-    echo "  ${C_YELLOW}Warning:${C_RESET} could not initialize vendor submodules:" >&2
-    printf '%s\n' "$out" | tail -3 | sed 's/^/    /' >&2
+  if spin "Syncing vendor submodules" git -C "$SCRIPT_DIR" submodule update --init --recursive --quiet; then
+    if [[ "$IS_TTY" = true ]]; then ok "Vendor submodules in sync"; fi
+  else
+    warn "Could not initialize vendor submodules:"
+    printf '%s\n' "$RUN_OUT" | tail -3 | sed 's/^/    /' >&2
   fi
 }
 
@@ -244,14 +600,6 @@ lines_not_in() {
   done <<< "$1"
 }
 
-# Pads $1 with spaces to $2 columns. printf's own %-Ns counts bytes, and so
-# does ${#1} outside a UTF-8 locale, so the arrow is measured as one ASCII char.
-pad() {
-  local plain="${1//→/-}"
-  local n=$(( $2 - ${#plain} ))
-  if (( n > 0 )); then printf '%s%*s' "$1" "$n" ""; else printf '%s' "$1"; fi
-}
-
 # The "Version" cell of a vendor's row in the README "Vendor skills" table.
 readme_vendor_version() {
   awk -F'|' -v link="](https://github.com/$1)" '
@@ -262,9 +610,9 @@ readme_vendor_version() {
 
 # Links one vendor's skills into $2. Sets LINK_NEW (links that were missing or
 # pointed elsewhere) and LINK_MISSING (pinned skills the vendor no longer
-# ships), one name per line. Pass "quiet" as $3 to skip the per-skill log.
+# ships), one name per line. Prints nothing: callers report.
 link_one_vendor() {
-  local entry="$1" skills_dir="$2" quiet="${3:-}"
+  local entry="$1" skills_dir="$2"
   LINK_NEW=""
   LINK_MISSING=""
 
@@ -276,7 +624,7 @@ link_one_vendor() {
   local vendor_skills_path="$SCRIPT_DIR/vendor/$vendor_name/$skills_subdir"
 
   if [[ ! -d "$vendor_skills_path" ]]; then
-    echo "  Warning: vendor skills not found at $vendor_skills_path (run git submodule update)" >&2
+    warn "vendor skills not found at $vendor_skills_path (run git submodule update)"
     return 0
   fi
 
@@ -293,9 +641,6 @@ link_one_vendor() {
     skill_dirs=("$vendor_skills_path"/*/)
   fi
 
-  if [[ "$quiet" != quiet ]]; then
-    echo "  Linking $vendor_name skills ($(version_label "$(vendor_version "$vendor_name" "$skills_subdir")"))..."
-  fi
   local skill_dir
   for skill_dir in "${skill_dirs[@]}"; do
     local skill_name rel_target
@@ -312,14 +657,11 @@ link_one_vendor() {
       # An unmatched glob is not a skill; a pinned name with no directory is.
       [[ -n "${skills_filter:-}" ]] || continue
       LINK_MISSING+="$skill_name"$'\n'
-      if [[ "$quiet" != quiet ]]; then
-        echo "    Warning: $skill_name is pinned in VENDOR_SKILLS but $vendor_name no longer ships it" >&2
-      fi
       continue
     fi
 
+    # An own skill of the same name takes priority over the vendor's.
     if [[ -e "$link_path" ]] && [[ ! -L "$link_path" ]]; then
-      [[ "$quiet" == quiet ]] || echo "    Skipped $skill_name (local skill takes priority)"
       continue
     fi
 
@@ -331,20 +673,34 @@ link_one_vendor() {
     # points at a directory makes ln create the link *inside* that directory,
     # producing nested self-symlinks inside the submodules.
     ln -sfn "$rel_target" "$link_path"
-    [[ "$quiet" == quiet ]] || echo "    Linked $skill_name"
   done
 }
 
+# Links every vendor's skills into $1 and prints one summary line.
 link_vendor_skills() {
-  local entry
+  local entry skill link count=0
   for entry in "${VENDOR_SKILLS[@]}"; do
     link_one_vendor "$entry" "$1"
+    while IFS= read -r skill; do
+      [[ -n "$skill" ]] || continue
+      warn "$skill is pinned in VENDOR_SKILLS but ${entry%%:*} no longer ships it"
+    done <<< "$LINK_MISSING"
   done
+  for link in "$1"/*; do
+    if [[ -L "$link" ]]; then count=$((count + 1)); fi
+  done
+  ok "$count vendor skills linked into skills/ ${C_DIM}(${#VENDOR_SKILLS[@]} packs)${C_RESET}"
 }
 
 # One line of detail under a vendor's row in the update report.
 vendor_note() {
   echo "      $1 $2"
+}
+
+# The lines of $1 as a comma-separated list under a vendor note, wrapped to
+# the terminal so a long list of skills does not run off the edge.
+vendor_names() {
+  join_lines "$1" | fold -s -w $(( TERM_COLS > 52 ? TERM_COLS - 12 : 68 )) | sed 's/^/          /;s/ *$//'
 }
 
 update_vendor() {
@@ -380,8 +736,12 @@ update_vendor() {
 
   local noun="vendors"
   [[ ${#entries[@]} -ne 1 ]] || noun="vendor"
-  echo "${C_BOLD}Updating ${#entries[@]} $noun from upstream${C_RESET}"
-  echo ""
+  term_size
+  title "Updating ${#entries[@]} $noun from upstream"
+  if [[ "$IS_TTY" = false ]]; then
+    echo "Updating ${#entries[@]} $noun from upstream"
+    echo ""
+  fi
 
   local updated=0 failed=0 attention=0
   for entry in "${entries[@]}"; do
@@ -400,14 +760,10 @@ update_vendor() {
       old_skills=$(vendor_skill_names "$vendor_name" "$skills_subdir")
     fi
 
-    if [[ "$IS_TTY" = true ]]; then
-      printf '  %s %s  %s' "${C_DIM}…" "$padded_name" "fetching${C_RESET}"
-    fi
     local out status=0
-    out=$(git -C "$SCRIPT_DIR" submodule update --init --remote --merge -- "$path" 2>&1) || status=$?
-    if [[ "$IS_TTY" = true ]]; then
-      printf '\r\033[K'
-    fi
+    spin "$padded_name  fetching upstream" \
+      git -C "$SCRIPT_DIR" submodule update --init --remote --merge -- "$path" || status=$?
+    out="$RUN_OUT"
 
     if [[ $status -ne 0 ]]; then
       echo "  ${C_RED}✗${C_RESET} $padded_name  ${C_RED}update failed${C_RESET}"
@@ -446,7 +802,7 @@ update_vendor() {
     # the staged pointer, which would silently undo this update.
     git -C "$SCRIPT_DIR" add -- "$path"
 
-    link_one_vendor "$entry" "$SCRIPT_DIR/skills" quiet
+    link_one_vendor "$entry" "$SCRIPT_DIR/skills"
 
     local skill added="" removed=""
     if [[ -n "$old_sha" ]]; then
@@ -469,15 +825,18 @@ update_vendor() {
     linked+=$(lines_not_in "$LINK_NEW" "$added")
     if [[ -n "$linked" ]]; then
       attention=$((attention + 1))
-      vendor_note "${C_GREEN}+${C_RESET}" "linked into skills/: ${C_BOLD}$(join_lines "$linked")${C_RESET}"
-      vendor_note " " "each needs a README.md row and an index.html card (./install.sh --check lists what is missing)"
+      vendor_note "${C_GREEN}+${C_RESET}" "linked into skills/:"
+      vendor_names "$linked"
+      vendor_note " " "${C_YELLOW}each needs a README.md row and an index.html card${C_RESET}"
     fi
     if [[ -n "$unlinked" ]]; then
-      vendor_note "${C_DIM}+${C_RESET}" "new upstream, not linked: $(join_lines "$unlinked")"
+      vendor_note "${C_DIM}+${C_RESET}" "new upstream, not linked:"
+      vendor_names "$unlinked"
       vendor_note " " "${C_DIM}add a name to the $vendor_name entry in VENDOR_SKILLS to link it${C_RESET}"
     fi
     if [[ -n "$shadowed" ]]; then
-      vendor_note "${C_DIM}+${C_RESET}" "new upstream, hidden by your own skill of the same name: $(join_lines "$shadowed")"
+      vendor_note "${C_DIM}+${C_RESET}" "new upstream, hidden by your own skill of the same name:"
+      vendor_names "$shadowed"
     fi
     while IFS= read -r skill; do
       [[ -n "$skill" ]] || continue
@@ -529,10 +888,11 @@ update_vendor() {
   fi
 
   echo ""
-  echo "${C_BOLD}Staged${C_RESET} ${C_DIM}(undo one with: git restore --staged vendor/<name> && git submodule update vendor/<name>)${C_RESET}"
+  echo "${C_BOLD}Staged${C_RESET}"
   for name in "${pending[@]}"; do
     echo "  vendor/$name"
   done
+  echo "  ${C_DIM}undo one: git restore --staged vendor/<name> && git submodule update vendor/<name>${C_RESET}"
 
   echo ""
   echo "${C_BOLD}Catalog check${C_RESET}"
@@ -595,22 +955,22 @@ check_skills() {
     md="$dir/SKILL.md"
 
     if [[ ! -f "$md" ]]; then
-      echo "  ✗ $skill_name: missing SKILL.md"
+      echo "  ${C_RED}✗${C_RESET} $skill_name: missing SKILL.md"
       errors=$((errors + 1))
       continue
     fi
 
     decl_name="$(sed -n 's/^name:[[:space:]]*//p' "$md" | head -1 | tr -d ' "'\''\r')"
     if [[ -z "$decl_name" ]]; then
-      echo "  ✗ $skill_name: SKILL.md has no 'name:' frontmatter"
+      echo "  ${C_RED}✗${C_RESET} $skill_name: SKILL.md has no 'name:' frontmatter"
       errors=$((errors + 1))
     elif [[ "$decl_name" != "$skill_name" ]]; then
-      echo "  ✗ $skill_name: frontmatter name '$decl_name' != directory name"
+      echo "  ${C_RED}✗${C_RESET} $skill_name: frontmatter name '$decl_name' != directory name"
       errors=$((errors + 1))
     fi
 
     if ! grep -qE '^description:' "$md"; then
-      echo "  ✗ $skill_name: SKILL.md has no 'description:' frontmatter"
+      echo "  ${C_RED}✗${C_RESET} $skill_name: SKILL.md has no 'description:' frontmatter"
       errors=$((errors + 1))
     fi
   done
@@ -618,13 +978,13 @@ check_skills() {
   local s
   for s in "${dir_skills[@]}"; do
     in_array "$s" "${arr_skills[@]}" || {
-      echo "  ✗ $s: skill directory not listed in install.sh SKILLS array"
+      echo "  ${C_RED}✗${C_RESET} $s: skill directory not listed in install.sh SKILLS array"
       errors=$((errors + 1))
     }
   done
   for s in "${arr_skills[@]}"; do
     [[ -d "$src/$s" ]] || {
-      echo "  ✗ $s: in SKILLS array but no skills/$s directory"
+      echo "  ${C_RED}✗${C_RESET} $s: in SKILLS array but no skills/$s directory"
       errors=$((errors + 1))
     }
   done
@@ -640,23 +1000,23 @@ check_skills() {
     skill_name="$(basename "$item")"
     total=$((total + 1))
     if ! grep -qF "](skills/$skill_name/SKILL.md)" "$readme"; then
-      echo "  ✗ $skill_name: not listed in the README.md skill catalog"
+      echo "  ${C_RED}✗${C_RESET} $skill_name: not listed in the README.md skill catalog"
       errors=$((errors + 1))
     fi
     if ! grep -qF "href=\"skills/$skill_name/SKILL.md\"" "$index"; then
-      echo "  ✗ $skill_name: not listed in index.html"
+      echo "  ${C_RED}✗${C_RESET} $skill_name: not listed in index.html"
       errors=$((errors + 1))
     fi
   done
   while read -r listed; do
     [[ -d "$src/$listed" || -L "$src/$listed" ]] || {
-      echo "  ✗ $listed: in README.md but no skills/$listed directory"
+      echo "  ${C_RED}✗${C_RESET} $listed: in README.md but no skills/$listed directory"
       errors=$((errors + 1))
     }
   done < <(grep -o '](skills/[^/]*/SKILL.md)' "$readme" | sed 's#](skills/##;s#/SKILL.md)##')
   while read -r listed; do
     [[ -d "$src/$listed" || -L "$src/$listed" ]] || {
-      echo "  ✗ $listed: in index.html but no skills/$listed directory"
+      echo "  ${C_RED}✗${C_RESET} $listed: in index.html but no skills/$listed directory"
       errors=$((errors + 1))
     }
   done < <(grep -o 'href="skills/[^/]*/SKILL.md"' "$index" | sed 's#href="skills/##;s#/SKILL.md"##')
@@ -664,21 +1024,21 @@ check_skills() {
   local badge tagline
   badge="$(grep -o 'badge/skills-[0-9]*-' "$readme" | head -1 | tr -dc '0-9')"
   if [[ "$badge" != "$total" ]]; then
-    echo "  ✗ README.md skills badge says ${badge:-?} but skills/ has $total entries"
+    echo "  ${C_RED}✗${C_RESET} README.md skills badge says ${badge:-?} but skills/ has $total entries"
     errors=$((errors + 1))
   fi
   tagline="$(grep -o '<p class="tagline">[0-9]*' "$index" | head -1 | tr -dc '0-9')"
   if [[ "$tagline" != "$total" ]]; then
-    echo "  ✗ index.html tagline says ${tagline:-?} skills but skills/ has $total entries"
+    echo "  ${C_RED}✗${C_RESET} index.html tagline says ${tagline:-?} skills but skills/ has $total entries"
     errors=$((errors + 1))
   fi
 
   if [[ $errors -eq 0 ]]; then
-    echo "OK: ${#dir_skills[@]} own skills valid and in sync with the SKILLS array; README.md and index.html list all $total skills."
+    ok "${#dir_skills[@]} own skills valid and in sync with the SKILLS array; README.md and index.html list all $total skills."
     return 0
   fi
   echo ""
-  echo "$errors problem(s) found."
+  echo "  ${C_RED}${C_BOLD}$errors problem(s) found.${C_RESET}"
   return 1
 }
 
@@ -686,62 +1046,120 @@ check_skills() {
 # Cursor loads skills from a symlinked top-level dir, so a single dir symlink
 # works there. Claude Code does NOT, so it needs per-skill symlinks instead.
 install_self() {
+  title "Linking this repo into this machine"
   resolve_source_dir
   local source_dir="$SOURCE_DIR"
   init_vendor_submodules
-
-  echo "Linking vendor skills into repo skills/ ..."
   link_vendor_skills "$source_dir"
 
   if [[ -d "$HOME/.cursor" ]]; then
     if [[ -e "$HOME/.cursor/skills" && ! -L "$HOME/.cursor/skills" ]]; then
-      echo "  Warning: ~/.cursor/skills is a real directory, not a symlink; leaving it untouched." >&2
+      warn "Cursor: ~/.cursor/skills is a real directory, not a symlink; leaving it untouched."
     else
       ln -sfn "$source_dir" "$HOME/.cursor/skills"
-      echo "  Cursor: ~/.cursor/skills -> $source_dir"
+      ok "Cursor       ~/.cursor/skills → $(tilde "$source_dir")"
     fi
   fi
 
   if [[ -d "$HOME/.claude" ]]; then
     mkdir -p "$HOME/.claude/skills"
-    local entry name
+    local entry name count=0
     for entry in "$source_dir"/*/; do
       name="$(basename "$entry")"
       ln -sfn "$source_dir/$name" "$HOME/.claude/skills/$name"
+      count=$((count + 1))
     done
-    echo "  Claude: per-skill symlinks in ~/.claude/skills"
+    ok "Claude Code  $count skills linked in ~/.claude/skills"
   fi
 
-  echo ""
-  echo "Done."
+  if [[ ! -d "$HOME/.cursor" && ! -d "$HOME/.claude" ]]; then
+    warn "Neither ~/.cursor nor ~/.claude exists, so there was nothing to link into."
+  fi
+
+  finish
 }
 
+# Installs one skill into $3. Sets INSTALL_RESULT to installed or skipped.
+# Pass "quiet" as $4 when the caller reports progress itself.
 install_skill() {
-  local source_dir="$1"
-  local skill_name="$2"
-  local target="$3"
-
+  local source_dir="$1" skill_name="$2" target="$3" quiet="${4:-}"
   local src="$source_dir/$skill_name"
   local dest="$target/$skill_name"
 
   if [[ ! -d "$src" ]]; then
+    if [[ "$quiet" == quiet ]]; then printf '\r\033[K'; fi
     echo "Error: Skill '$skill_name' not found in $source_dir" >&2
     return 1
   fi
 
-  if ! confirm_overwrite "$dest"; then
-    echo "  Skipped $skill_name"
-    return 0
+  INSTALL_RESULT=skipped
+  if [[ -d "$dest" && "$FORCE" = false && "$EXISTING_POLICY" != overwrite ]]; then
+    if [[ "$EXISTING_POLICY" == skip ]] || ! confirm_overwrite "$dest"; then
+      [[ "$quiet" == quiet ]] || echo "  Skipped $skill_name"
+      return 0
+    fi
   fi
 
   mkdir -p "$target"
   rm -rf "$dest"
   if [[ "$SYMLINK" = true ]]; then
     ln -sfn "$src" "$dest"
-    echo "  Linked $skill_name -> $dest"
+    [[ "$quiet" == quiet ]] || echo "  Linked $skill_name -> $dest"
   else
     cp -r "$src" "$dest"
-    echo "  Installed $skill_name -> $dest"
+    [[ "$quiet" == quiet ]] || echo "  Installed $skill_name -> $dest"
+  fi
+  INSTALL_RESULT=installed
+}
+
+# Installs the skills named after $2 into $2. With a keyboard it asks once what
+# to do with the ones already there and shows a progress bar; otherwise it logs
+# one line per skill and confirms each overwrite as before.
+install_many() {
+  local source_dir="$1" target="$2"; shift 2
+  local total=$# name existing=0 current=0 installed=0 skipped="" quiet=""
+
+  if [[ "$INTERACTIVE" = true && "$FORCE" = false && "$EXISTING_POLICY" == ask ]]; then
+    for name in "$@"; do
+      if [[ -d "$target/$name" ]]; then existing=$((existing + 1)); fi
+    done
+    if (( existing > 0 )); then
+      menu_select "$existing of $total already exist in $(tilde "$target")" \
+        "Overwrite|replace them with the version from this repo" \
+        "Skip existing|keep what is there and install the rest" \
+        "Cancel|leave everything as it is"
+      case "$MENU_INDEX" in
+        0) EXISTING_POLICY=overwrite ;;
+        1) EXISTING_POLICY=skip ;;
+        *) echo "  ${C_DIM}Cancelled. Nothing was changed.${C_RESET}"; exit 0 ;;
+      esac
+    fi
+  fi
+  if [[ "$IS_TTY" = true && ( "$INTERACTIVE" = true || "$FORCE" = true ) ]]; then quiet=quiet; fi
+
+  if [[ -z "$quiet" ]]; then
+    local plural="s"
+    if (( total == 1 )); then plural=""; fi
+    echo "Installing $total skill$plural to $target..."
+  fi
+  for name in "$@"; do
+    current=$((current + 1))
+    if [[ -n "$quiet" ]]; then progress "$current" "$total" "$name"; fi
+    install_skill "$source_dir" "$name" "$target" "$quiet"
+    if [[ "$INSTALL_RESULT" == installed ]]; then
+      installed=$((installed + 1))
+    else
+      skipped+="${skipped:+, }$name"
+    fi
+  done
+
+  if [[ -n "$quiet" ]]; then
+    local verb="copied into" noun="skills"
+    if [[ "$SYMLINK" = true ]]; then verb="linked into"; fi
+    if (( installed == 1 )); then noun="skill"; fi
+    printf '\r\033[K'
+    ok "$installed $noun $verb $(tilde "$target")"
+    if [[ -n "$skipped" ]]; then echo "    ${C_DIM}kept as they were: $skipped${C_RESET}"; fi
   fi
 }
 
@@ -761,21 +1179,38 @@ pick_platform() {
   if [[ ${#platform_arr[@]} -eq 1 ]]; then
     TARGET_DIR="${platform_arr[0]#*:}"
     local name="${platform_arr[0]%%:*}"
-    echo "Detected platform: $name"
-    echo "Install directory: $TARGET_DIR"
+    if [[ "$IS_TTY" = true ]]; then
+      ok "Found $name ${C_DIM}·${C_RESET} installing into $(tilde "$TARGET_DIR")"
+    else
+      echo "Detected platform: $name"
+      echo "Install directory: $TARGET_DIR"
+    fi
+    return
+  fi
+
+  local p
+  if [[ "$INTERACTIVE" = true ]]; then
+    local -a items=()
+    local label
+    for p in "${platform_arr[@]}"; do
+      label="Cursor"
+      if [[ "${p%%:*}" == claude ]]; then label="Claude Code"; fi
+      items+=("$label|$(tilde "${p#*:}")")
+    done
+    menu_select "Where should they go?" "${items[@]}"
+    TARGET_DIR="${platform_arr[$MENU_INDEX]#*:}"
     return
   fi
 
   echo "Multiple platforms detected:"
   local i=1
   for p in "${platform_arr[@]}"; do
-    local name="${p%%:*}"
-    local path="${p#*:}"
-    echo "  $i) $name ($path)"
-    ((i++))
+    echo "  $i) ${p%%:*} (${p#*:})"
+    i=$((i + 1))
   done
 
   printf "Pick a platform [1-%d]: " "${#platform_arr[@]}"
+  local choice
   read -r choice
   choice=$((choice - 1))
 
@@ -788,18 +1223,32 @@ pick_platform() {
 }
 
 pick_skills() {
+  local entry idx
+  if [[ "$INTERACTIVE" = true ]]; then
+    local -a items=()
+    for entry in "${SKILLS[@]}"; do
+      items+=("${entry%%:*}|${entry#*:}")
+    done
+    multi_select "Which skills?" "${items[@]}"
+    for idx in $PICKED; do
+      entry="${SKILLS[$idx]}"
+      SELECTED_SKILLS+=("${entry%%:*}")
+    done
+    if [[ ${#SELECTED_SKILLS[@]} -eq ${#SKILLS[@]} ]]; then INSTALL_ALL=true; fi
+    return
+  fi
+
   echo ""
   echo "Available skills:"
   local i=1
   for entry in "${SKILLS[@]}"; do
-    local name="${entry%%:*}"
-    local desc="${entry#*:}"
-    echo "  $i) $name -- $desc"
-    ((i++))
+    echo "  $i) ${entry%%:*} -- ${entry#*:}"
+    i=$((i + 1))
   done
   echo "  a) Install all"
 
   printf "Pick skills (comma-separated numbers, or 'a' for all): "
+  local selection
   read -r selection
 
   if [[ "$selection" = "a" ]]; then
@@ -807,26 +1256,47 @@ pick_skills() {
     return
   fi
 
+  local picks=() p
   IFS=',' read -ra picks <<< "$selection"
-  local selected=()
   for p in "${picks[@]}"; do
     p=$(echo "$p" | tr -d ' ')
-    local idx=$((p - 1))
+    idx=$((p - 1))
     if [[ $idx -ge 0 ]] && [[ $idx -lt ${#SKILLS[@]} ]]; then
-      local entry="${SKILLS[$idx]}"
-      selected+=("${entry%%:*}")
+      entry="${SKILLS[$idx]}"
+      SELECTED_SKILLS+=("${entry%%:*}")
     fi
   done
 
-  if [[ ${#selected[@]} -eq 0 ]]; then
+  if [[ ${#SELECTED_SKILLS[@]} -eq 0 ]]; then
     echo "No valid skills selected." >&2
     exit 1
   fi
+}
 
-  SELECTED_SKILLS=("${selected[@]}")
+# Shown when the script runs bare inside a clone: every action without having
+# to remember its flag.
+home_menu() {
+  banner
+  menu_select "What do you want to do?" \
+    "Install skills|pick skills and where to copy them" \
+    "Link this repo|symlink every skill into ~/.cursor and ~/.claude   --self" \
+    "Update vendors|pull the latest upstream vendor skills   --update-vendor" \
+    "Check catalogs|validate skills, README.md and index.html   --check" \
+    "Help|show every flag   --help" \
+    "Quit|"
+  case "$MENU_INDEX" in
+    1) SELF=true ;;
+    2) UPDATE_VENDOR=true ;;
+    3) CHECK=true ;;
+    4) echo ""; usage; exit 0 ;;
+    5) exit 0 ;;
+  esac
 }
 
 main() {
+  local bare=false
+  if [[ $# -eq 0 ]]; then bare=true; fi
+
   while [[ $# -gt 0 ]]; do
     case "$1" in
       --all) INSTALL_ALL=true; shift ;;
@@ -845,7 +1315,15 @@ main() {
     esac
   done
 
+  local in_repo=false
+  if [[ -d "$SCRIPT_DIR/skills" && -f "$SCRIPT_DIR/.gitmodules" ]]; then in_repo=true; fi
+
+  if [[ "$bare" = true && "$INTERACTIVE" = true ]]; then
+    if [[ "$in_repo" = true ]]; then home_menu; else banner; fi
+  fi
+
   if [[ "$CHECK" = true ]]; then
+    title "Checking skills and catalogs"
     if check_skills; then exit 0; else exit 1; fi
   fi
 
@@ -859,60 +1337,45 @@ main() {
     return
   fi
 
+  title "Installing skills"
   resolve_source_dir
   local source_dir="$SOURCE_DIR"
 
-  init_vendor_submodules
+  # Vendor skills only exist next to a full clone with its submodules, not in
+  # the shallow download a remote install works from.
+  if [[ "$in_repo" = true ]]; then
+    init_vendor_submodules
+    link_vendor_skills "$source_dir"
+  fi
 
   if [[ -z "$TARGET_DIR" ]]; then
     pick_platform
-  else
-    mkdir -p "$TARGET_DIR"
   fi
 
-  echo ""
-
+  local -a names=()
+  local entry
   if [[ -n "$SINGLE_SKILL" ]]; then
-    install_skill "$source_dir" "$SINGLE_SKILL" "$TARGET_DIR"
-  elif [[ "$INSTALL_ALL" = true ]]; then
-    echo "Installing all skills to $TARGET_DIR..."
-    for entry in "${SKILLS[@]}"; do
-      install_skill "$source_dir" "${entry%%:*}" "$TARGET_DIR"
-    done
+    names=("$SINGLE_SKILL")
   else
-    SELECTED_SKILLS=()
-    pick_skills
+    if [[ "$INSTALL_ALL" = false ]]; then pick_skills; fi
     if [[ "$INSTALL_ALL" = true ]]; then
-      echo "Installing all skills to $TARGET_DIR..."
-      for entry in "${SKILLS[@]}"; do
-        install_skill "$source_dir" "${entry%%:*}" "$TARGET_DIR"
-      done
+      for entry in "${SKILLS[@]}"; do names+=("${entry%%:*}"); done
     else
-      echo "Installing selected skills to $TARGET_DIR..."
-      for name in "${SELECTED_SKILLS[@]}"; do
-        install_skill "$source_dir" "$name" "$TARGET_DIR"
-      done
+      names=("${SELECTED_SKILLS[@]}")
     fi
   fi
 
-  echo ""
-  echo "Linking vendor skills..."
-  link_vendor_skills "$source_dir"
-
-  # The SKILLS array only lists own skills, so vendor skills (the symlinks just
-  # created in $source_dir) need their own pass to reach the target.
-  if [[ "$SYMLINK" = true && "$INSTALL_ALL" = true ]]; then
-    echo ""
-    echo "Linking vendor skills into $TARGET_DIR..."
+  # The SKILLS array only lists own skills, so vendor skills (the symlinks in
+  # $source_dir) are added here when everything is being linked.
+  if [[ "$SYMLINK" = true && "$INSTALL_ALL" = true && "$in_repo" = true ]]; then
     local link
     for link in "$source_dir"/*; do
-      [[ -L "$link" ]] || continue
-      install_skill "$source_dir" "$(basename "$link")" "$TARGET_DIR"
+      if [[ -L "$link" ]]; then names+=("$(basename "$link")"); fi
     done
   fi
 
-  echo ""
-  echo "Done."
+  install_many "$source_dir" "$TARGET_DIR" "${names[@]}"
+  finish
 }
 
 main "$@"

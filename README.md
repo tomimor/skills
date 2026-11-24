@@ -212,7 +212,10 @@ curl -fsSL https://raw.githubusercontent.com/tomimor/skills/main/install.sh | ba
 curl -fsSL https://raw.githubusercontent.com/tomimor/skills/main/install.sh | bash -s -- --skill pr-dashboard
 ```
 
-Running `install.sh` with no flags starts an interactive picker.
+Running `install.sh` with no flags is interactive. Inside a clone it opens a menu (install, link this repo, update
+vendors, check catalogs); from the `curl` one-liner it goes straight to picking skills. Move with the arrow keys,
+toggle with space, confirm with enter. Piped or CI runs print plain text with no colors or prompts beyond the flags
+you pass.
 
 **Manual install** — copy any skill directory into your platform's skills folder:
 

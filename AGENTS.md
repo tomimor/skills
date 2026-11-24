@@ -187,6 +187,18 @@ verifies all of them and CI fails on any mismatch, so run it before every commit
 
 The check reports, per skill, which file is missing it, and flags catalog entries whose directory no longer exists.
 
+## Editing `install.sh`
+
+- **Bash 3.2.** macOS still ships it, so no associative arrays, `mapfile`, `${var,,}`, `read -t` with fractions, or
+  `"${arr[@]}"` on an array that may be empty (it is an "unbound variable" error under `set -u`).
+- **Fancy output is terminal-only.** Colors, spinners and the progress bar are gated on `IS_TTY`; the arrow-key menus
+  on `INTERACTIVE` (a keyboard reachable through `/dev/tty`). Piped and CI runs must stay plain text with no escape
+  codes and no new prompts, so route output through the existing helpers (`ok`, `warn`, `title`, `spin`,
+  `menu_select`, `multi_select`) instead of hand-written escapes.
+- **Anything redrawn must fit on one line.** The menus move the cursor up by a fixed number of rows, so a row that
+  wraps corrupts the screen. Cut text with `fit` against `TERM_COLS`.
+- CI runs `shellcheck install.sh`, `install.sh --help` and `install.sh --check`. Run all three before committing.
+
 ## Key files
 
 | File | Purpose |
