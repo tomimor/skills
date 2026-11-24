@@ -768,6 +768,7 @@
           <tr><td><code>--symlink</code></td><td>Symlink skills into the target instead of copying (live edits)</td></tr>
           <tr><td><code>--self</code></td><td>Wire this repo into your own <code>~/.cursor</code> and <code>~/.claude</code> with edit-once symlinks</td></tr>
           <tr><td><code>--check</code></td><td>Validate frontmatter, <code>SKILLS</code>-array sync, and that <code>README.md</code> and <code>index.html</code> list every skill with the right count, then exit (used in CI)</td></tr>
+          <tr><td><code>update</code></td><td>Pull this repo, update the vendor packs, and re-link every skill into <code>~/.cursor</code> and <code>~/.claude</code>. Once <code>--self</code> has run it works from any folder as <code>skills update</code></td></tr>
           <tr><td><code>--update-vendor [name...]</code></td><td>Update vendor submodules to their latest upstream (all, or only the named ones), re-link their skills, stage the new pointers, and report what changed</td></tr>
         </tbody>
       </table>

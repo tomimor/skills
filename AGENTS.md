@@ -26,6 +26,12 @@ Re-create the per-skill symlinks if anything drifts:
 ./install.sh --symlink --all --force --target ~/.claude/skills
 ```
 
+`./install.sh --self` does that wiring for both editors and also writes a `skills` launcher into `~/.local/bin` (or
+`~/bin`), so the script runs from any folder. The everyday command is then `skills update`: it runs
+`git pull --ff-only`, restarts itself if the pull brought new commits, updates every vendor to its latest upstream
+(the same as `--update-vendor`, so it can leave staged pointers and the follow-up steps below), and re-links
+everything. If the pull fails it still re-links, skips the vendor update, and exits non-zero.
+
 ## Adding a new own skill
 
 Own skills are skills you write and maintain yourself. They live as regular directories under `skills/`.

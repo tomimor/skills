@@ -57,7 +57,10 @@ TARGET_DIR=""
 INSTALL_ALL=false
 SINGLE_SKILL=""
 FORCE=false
+UPDATE=false
 UPDATE_VENDOR=false
+VENDOR_FAILED=0
+VENDOR_PENDING=false
 VENDOR_ONLY=()
 SYMLINK=false
 CHECK=false
@@ -79,7 +82,7 @@ INSTALL_RESULT=""
 IS_TTY=false
 INTERACTIVE=false
 CURSOR_HIDDEN=false
-BANNER_SHOWN=false
+BANNER_SHOWN="${SKILLS_BANNER_SHOWN:-false}"   # true when a pulled script takes over mid-run
 SPIN_TMP=""
 STTY_SAVED=""
 RUN_OUT=""
@@ -389,10 +392,15 @@ multi_select() {
 usage() {
   banner
   local b="$C_BOLD" a="$C_ACCENT" d="$C_DIM" r="$C_RESET" entry
-  echo "${b}Usage:${r} install.sh [OPTIONS]"
+  echo "${b}Usage:${r} install.sh [update] [OPTIONS]"
   echo ""
   echo "Install agent skills to your Cursor or Claude Code skills directory."
   echo "Run it with no options for an interactive menu."
+  echo ""
+  echo "${b}Commands:${r}"
+  printf '  %s%-26s%s %s\n' "$a" "update" "$r" "Pull this repo, update the vendor packs, and re-link every"
+  printf '  %-26s %s\n' "" "skill into ~/.cursor and ~/.claude. After --self has run once"
+  printf '  %-26s %s\n' "" "this works from any folder as: skills update"
   echo ""
   echo "${b}Options:${r}"
   while IFS='|' read -r flag text; do
@@ -662,11 +670,28 @@ vendor_note() {
   done < <(printf '%s %s\n' "$2" "$(join_lines "$3")" | fold -s -w $(( TERM_COLS > 54 ? TERM_COLS - 14 : 66 )))
 }
 
-update_vendor() {
+# Stops with an error unless this script sits in a git clone of the repo.
+require_clone() {
   if [[ ! -f "$SCRIPT_DIR/.gitmodules" ]] || ! git -C "$SCRIPT_DIR" rev-parse --git-dir &>/dev/null; then
-    echo "Error: --update-vendor only works inside a git clone of $REPO_URL." >&2
-    return 1
+    echo "Error: $1 only works inside a git clone of $REPO_URL." >&2
+    exit 1
   fi
+}
+
+# Width of the vendor-name column, so every vendor table lines up.
+vendor_name_width() {
+  local entry name width=0
+  for entry in "${VENDOR_SKILLS[@]}"; do
+    name="${entry%%:*}"
+    if (( ${#name} > width )); then width=${#name}; fi
+  done
+  echo "$width"
+}
+
+# Moves each vendor (all, or those in VENDOR_ONLY) to its latest upstream
+# commit, re-links its skills and stages the new pointer. Prints one row per
+# vendor and counts the ones that failed in VENDOR_FAILED.
+fetch_vendors() {
 
   local -a entries=()
   local entry name found
@@ -687,11 +712,8 @@ update_vendor() {
     done
   fi
 
-  local name_width=0
-  for entry in "${VENDOR_SKILLS[@]}"; do
-    name="${entry%%:*}"
-    if (( ${#name} > name_width )); then name_width=${#name}; fi
-  done
+  local name_width
+  name_width=$(vendor_name_width)
 
   local noun="vendors"
   [[ ${#entries[@]} -ne 1 ]] || noun="vendor"
@@ -780,10 +802,15 @@ update_vendor() {
   local summary="$updated updated, $(( ${#entries[@]} - updated - failed )) up to date"
   [[ $failed -eq 0 ]] || summary+=", ${C_RED}$failed failed${C_RESET}"
   echo "  $summary"
+  VENDOR_FAILED=$failed
+}
 
-  # What follows covers every staged vendor pointer, so a second run still says
-  # what is left to do after an earlier one already pulled the updates.
-  local staged
+# Prints what is left to do by hand for every staged vendor pointer, and sets
+# VENDOR_PENDING. It looks at the index rather than at this run, so a later run
+# still says what an earlier one left unfinished.
+vendor_next_steps() {
+  local entry name_width staged
+  name_width=$(vendor_name_width)
   staged=$(git -C "$SCRIPT_DIR" diff --cached --name-only -- vendor)
 
   local -a pending=()
@@ -804,10 +831,8 @@ update_vendor() {
     fi
   done
 
-  if [[ ${#pending[@]} -eq 0 ]]; then
-    [[ $failed -eq 0 ]] || return 1
-    return 0
-  fi
+  [[ ${#pending[@]} -gt 0 ]] || return 0
+  VENDOR_PENDING=true
 
   local message joined
   printf -v joined '%s, ' "${pending[@]}"
@@ -829,8 +854,13 @@ update_vendor() {
   echo "    $step. Commit:"
   echo "         git add skills README.md index.html install.sh"
   echo "         git commit -m \"$message\""
+}
 
-  [[ $failed -eq 0 ]] || return 1
+update_vendor() {
+  require_clone --update-vendor
+  fetch_vendors
+  vendor_next_steps
+  [[ $VENDOR_FAILED -eq 0 ]]
 }
 
 in_array() {
@@ -955,8 +985,7 @@ check_skills() {
 # Wire this repo into the author's own machine with edit-once symlinks.
 # Cursor loads skills from a symlinked top-level dir, so a single dir symlink
 # works there. Claude Code does NOT, so it needs per-skill symlinks instead.
-install_self() {
-  banner "Linking this repo into this machine"
+link_machine() {
   resolve_source_dir
   local source_dir="$SOURCE_DIR"
   init_vendor_submodules
@@ -986,7 +1015,116 @@ install_self() {
     warn "Neither ~/.cursor nor ~/.claude exists, so there was nothing to link into."
   fi
 
+  if [[ "$source_dir" == "$SCRIPT_DIR/skills" ]]; then install_launcher; fi
+}
+
+install_self() {
+  banner "Linking this repo into this machine"
+  link_machine
   finish
+}
+
+# Puts a `skills` command on the PATH that runs this script from any folder,
+# so the whole routine is `skills update`. Never replaces someone else's.
+install_launcher() {
+  local dir target="" on_path=true
+  target=$(command -v skills 2>/dev/null || true)
+  if [[ -z "$target" ]]; then
+    for dir in "$HOME/.local/bin" "$HOME/bin"; do
+      if [[ ":$PATH:" == *":$dir:"* && -d "$dir" && -w "$dir" ]]; then target="$dir/skills"; break; fi
+    done
+  fi
+  if [[ -z "$target" ]]; then
+    mkdir -p "$HOME/.local/bin"
+    target="$HOME/.local/bin/skills"
+    on_path=false
+  fi
+  if [[ -e "$target" ]] && ! grep -qF "Launcher for $REPO_URL" "$target" 2>/dev/null; then
+    warn "Another 'skills' command already lives at $(tilde "$target"); leaving it alone."
+    return 0
+  fi
+
+  printf '#!/usr/bin/env bash\n# Launcher for %s, written by install.sh.\nexec "%s/install.sh" "$@"\n' \
+    "$REPO_URL" "$SCRIPT_DIR" > "$target"
+  chmod +x "$target"
+  ok "Command      skills update ${C_DIM}· $(tilde "$target")${C_RESET}"
+  [[ "$on_path" = true ]] || add_to_path "$HOME/.local/bin"
+}
+
+# $1 is not on the PATH: offers to add it to the shell's startup file, or
+# prints the line to add when there is nobody to ask.
+add_to_path() {
+  local line="export PATH=\"\$HOME/.local/bin:\$PATH\"" rc=""
+  case "${SHELL:-}" in
+    */zsh) rc="$HOME/.zshrc" ;;
+    */bash) rc="$HOME/.bashrc"; [[ ! -f "$HOME/.bash_profile" ]] || rc="$HOME/.bash_profile" ;;
+  esac
+  if [[ -n "$rc" ]] && grep -qF "$line" "$rc" 2>/dev/null; then
+    echo "    ${C_DIM}open a new terminal for the skills command to be found${C_RESET}"
+    return 0
+  fi
+  if [[ "$INTERACTIVE" = true && -n "$rc" ]]; then
+    menu_select "Add $(tilde "$1") to your PATH?" \
+      "Yes|append one line to $(tilde "$rc")" \
+      "No|I will add it myself"
+    if [[ "$MENU_INDEX" -eq 0 ]]; then
+      printf '\n# Added by %s/install.sh for the skills command\n%s\n' "$SCRIPT_DIR" "$line" >> "$rc"
+      echo "    ${C_DIM}open a new terminal for the skills command to be found${C_RESET}"
+      return 0
+    fi
+  fi
+  warn "$(tilde "$1") is not on your PATH. Add this line to your shell's startup file:"
+  echo "      $line" >&2
+}
+
+# Fast-forwards this clone to its upstream. When that brings in new commits it
+# starts the freshly pulled script in place of this one, so the rest of the run
+# uses the new skill lists and the new code.
+pull_repo() {
+  local before after count
+  if [[ -n "${SKILLS_PULLED:-}" ]]; then
+    ok "Repo updated ${C_DIM}· $SKILLS_PULLED${C_RESET}"
+    return 0
+  fi
+
+  before=$(git -C "$SCRIPT_DIR" rev-parse HEAD)
+  if ! spin "Pulling the repo" git -C "$SCRIPT_DIR" pull --ff-only --quiet; then
+    echo "  ${C_RED}✗ Could not pull the repo${C_RESET}"
+    printf '%s\n' "$RUN_OUT" | grep -v '^[[:space:]]*$' | tail -3 | sed 's/^/      /'
+    return 1
+  fi
+  after=$(git -C "$SCRIPT_DIR" rev-parse HEAD)
+  if [[ "$before" == "$after" ]]; then
+    ok "Repo already up to date"
+    return 0
+  fi
+
+  count="$(git -C "$SCRIPT_DIR" rev-list --count "$before..$after") new commits"
+  [[ "$count" != "1 new commits" ]] || count="1 new commit"
+  SKILLS_PULLED="$count" SKILLS_BANNER_SHOWN="$BANNER_SHOWN" exec "$BASH" "$SCRIPT_DIR/install.sh" update
+}
+
+# The whole routine in one go: pull the repo, move the vendor packs to their
+# latest upstream, and re-link every skill into this machine.
+update_all() {
+  require_clone update
+  banner "Updating skills"
+  if [[ "$IS_TTY" = false && -z "${SKILLS_PULLED:-}" ]]; then echo "Updating skills"; fi
+
+  local pulled=true
+  pull_repo || pulled=false
+  if [[ "$pulled" = true ]]; then
+    echo ""
+    fetch_vendors
+    echo ""
+  else
+    warn "Skipping the vendor update until the pull works."
+  fi
+
+  link_machine
+  if [[ "$pulled" = true ]]; then vendor_next_steps; fi
+  [[ "$VENDOR_PENDING" = true || "$pulled" = false ]] || finish
+  [[ "$pulled" = true && $VENDOR_FAILED -eq 0 ]]
 }
 
 # Installs one skill into $3. Sets INSTALL_RESULT to installed or skipped.
@@ -1189,13 +1327,11 @@ home_menu() {
   banner
   menu_select "What do you want to do?" \
     "Install skills|choose what to copy and where" \
-    "Link this repo|symlink everything into Cursor and Claude Code" \
-    "Update vendors|pull the latest third-party skills" \
+    "Update|pull this repo, update vendor packs, re-link everything" \
     "Check catalogs|validate skills, README.md and index.html"
   case "$MENU_INDEX" in
-    1) SELF=true ;;
-    2) UPDATE_VENDOR=true ;;
-    3) CHECK=true ;;
+    1) UPDATE=true ;;
+    2) CHECK=true ;;
   esac
 }
 
@@ -1205,6 +1341,7 @@ main() {
 
   while [[ $# -gt 0 ]]; do
     case "$1" in
+      update) UPDATE=true; shift ;;
       --all) INSTALL_ALL=true; shift ;;
       --skill) SINGLE_SKILL="$2"; shift 2 ;;
       --target) TARGET_DIR="$2"; shift 2 ;;
@@ -1231,6 +1368,11 @@ main() {
   if [[ "$CHECK" = true ]]; then
     banner "Checking skills and catalogs"
     if check_skills; then exit 0; else exit 1; fi
+  fi
+
+  if [[ "$UPDATE" = true ]]; then
+    update_all
+    return
   fi
 
   if [[ "$SELF" = true ]]; then
