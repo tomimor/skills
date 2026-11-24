@@ -1,6 +1,6 @@
-# Agent Guide Spec — Section-by-Section Templates
+# Agent Guide Spec: Section-by-Section Templates
 
-**Reference material for the `agent-guide-bootstrap` skill.** Consult the templates and rationale below when generating files. Do not execute this document as a standalone prompt — the workflow and critical rules live in [SKILL.md](../SKILL.md).
+**Reference material for the `agent-guide-bootstrap` skill.** Consult the templates and rationale below when generating files. Do not execute this document as a standalone prompt: the workflow and critical rules live in [SKILL.md](../SKILL.md).
 
 The skill's workflow (explore → identify → clarify → generate → verify) calls into the sections of this spec when it needs exact structure: the AGENTS.md skeleton, domain-guide templates, the "Do Not" discovery checklist, and the example of "what good looks like".
 

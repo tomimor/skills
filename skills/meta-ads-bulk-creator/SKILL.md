@@ -42,8 +42,8 @@ account:
 creatives:
   - id: hero_a
     files:
-      "4:5":  hero_a_4x5.jpg   # required — used as Image File Name
-      "9:16": hero_a_9x16.jpg  # required — checked exists, for Stories/Reels
+      "4:5":  hero_a_4x5.jpg   # required, used as Image File Name
+      "9:16": hero_a_9x16.jpg  # required, checked exists, for Stories/Reels
 
 campaigns:
   - name: "Spring 2026 sale"   # 35 chars max
@@ -80,8 +80,8 @@ When the brief omits a field, the script applies these. Full table in [reference
 | Special Ad Categories | `none` |
 | Buying Type | AUCTION |
 | UTM tags | `utm_source=facebook&utm_medium=paid_social&utm_campaign={campaign_name}&utm_content={ad_name}` |
-| Optimization Goal — Outcome Leads | `CONVERSATIONS` |
-| Optimization Goal — Outcome Sales | **No default** — brief must specify |
+| Optimization Goal (Outcome Leads) | `CONVERSATIONS` |
+| Optimization Goal (Outcome Sales) | **No default**: brief must specify |
 | Required image aspect ratios | 4:5 + 9:16 |
 | Image File Name source | The 4:5 file from each creative |
 
@@ -104,8 +104,8 @@ Brief-level warnings (don't block):
 - Title > 27 chars (mobile Feed truncation).
 - Body > 125 chars ("See more" link appears).
 - Description > 30 chars (often hidden on mobile).
-- Status mismatch (e.g. ACTIVE ad inside PAUSED ad set — won't run).
-- Special Ad Category set + narrow targeting in brief — script drops the targeting and warns.
+- Status mismatch (e.g. ACTIVE ad inside PAUSED ad set, which won't run).
+- Special Ad Category set + narrow targeting in brief: script drops the targeting and warns.
 
 See [references/limits.md](references/limits.md) for the full list and [references/columns.md](references/columns.md) for every column's format and enum.
 
@@ -118,14 +118,14 @@ python scripts/build_import.py brief.yml \
 ```
 
 Flags:
-- `--check` — validate only, do not write files. Use this first.
-- `--out <dir>` — output directory (default `./output`).
-- `--images <dir>` — directory with the image files referenced in the brief. The script verifies every `Image File Name` and every creative's 4:5 + 9:16 files exist with exact case.
-- `--spec <path>` — alternate `spec.json` path (default `scripts/spec.json`).
+- `--check`: validate only, do not write files. Use this first.
+- `--out <dir>`: output directory (default `./output`).
+- `--images <dir>`: directory with the image files referenced in the brief. The script verifies every `Image File Name` and every creative's 4:5 + 9:16 files exist with exact case.
+- `--spec <path>`: alternate `spec.json` path (default `scripts/spec.json`).
 
 Outputs:
-- `output/output.xlsx` — for human review (143 columns, all cells populated).
-- `output/output.txt` — UTF-16 LE BOM, tab-separated, `\r\n` line endings. **This is the file you upload.**
+- `output/output.xlsx`: for human review (143 columns, all cells populated).
+- `output/output.txt`: UTF-16 LE BOM, tab-separated, `\r\n` line endings. **This is the file you upload.**
 
 ## Updating to a newer template
 
@@ -145,12 +145,12 @@ If Meta releases a new `AdsManagerTemplate_vX.X.xltx`:
 
 ## Reference files
 
-- [references/columns.md](references/columns.md) — all 143 columns: level, format, required state, valid values (auto-generated).
-- [references/workflow.md](references/workflow.md) — Ads Manager UI steps, file size limits, common rejection reasons.
-- [references/limits.md](references/limits.md) — 2026 char/format limits, file encoding details.
-- [references/enums.md](references/enums.md) — quick lookup for objectives, optimization goals, CTAs, placements.
-- [references/creative-matrix.md](references/creative-matrix.md) — matrix expansion rules, naming pattern.
-- [references/best-practices.md](references/best-practices.md) — full table of hardcoded defaults with rationale.
+- [references/columns.md](references/columns.md): all 143 columns with level, format, required state, valid values (auto-generated).
+- [references/workflow.md](references/workflow.md): Ads Manager UI steps, file size limits, common rejection reasons.
+- [references/limits.md](references/limits.md): 2026 char/format limits, file encoding details.
+- [references/enums.md](references/enums.md): quick lookup for objectives, optimization goals, CTAs, placements.
+- [references/creative-matrix.md](references/creative-matrix.md): matrix expansion rules, naming pattern.
+- [references/best-practices.md](references/best-practices.md): full table of hardcoded defaults with rationale.
 
 ## Out of scope
 

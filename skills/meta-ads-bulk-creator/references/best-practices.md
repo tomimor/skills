@@ -6,7 +6,7 @@ These are the "if the brief doesn't say otherwise, do this" values the build scr
 
 | Setting | Default | Override key in brief |
 |---------|---------|-----------------------|
-| Ads per ad set (no matrix) | 3–5 (script errors if > 5) | — |
+| Ads per ad set (no matrix) | 3–5 (script errors if > 5) | none |
 | Ads per ad set (with matrix) | 27 (3 × 3 × 3) | `creative_matrix` axis sizes |
 | Budget mode | CBO (set `daily_budget` at campaign level) | Set `daily_budget` at ad-set level for ABO |
 | Ad sets per campaign | 1 (one audience per campaign) | Add more entries under `ad_sets:` |
@@ -27,7 +27,7 @@ These are the "if the brief doesn't say otherwise, do this" values the build scr
 
 | Setting | Default | Override key |
 |---------|---------|--------------|
-| Required aspect ratios per creative | 4:5 + 9:16 (script errors if either missing) | — |
+| Required aspect ratios per creative | 4:5 + 9:16 (script errors if either missing) | none |
 | `Image File Name` value | The 4:5 file from `creatives[].files["4:5"]` | `ads[].image_file_name` |
 | Default matrix shape | 3 titles × 3 bodies × 3 creative_ids = 27 ads | `creative_matrix.titles/bodies/creative_ids` |
 
@@ -36,9 +36,9 @@ These are the "if the brief doesn't say otherwise, do this" values the build scr
 | Setting | Default | Override key |
 |---------|---------|--------------|
 | Placements | Advantage+ Auto (leave platform/position columns blank) | Manual placements via column overrides |
-| Optimization Goal — Outcome Leads | `CONVERSATIONS` (Click-to-Message / WhatsApp) | `ad_sets[].optimization_goal` |
-| Optimization Goal — Outcome Sales | **No default** — script errors unless specified | `ad_sets[].optimization_goal` |
-| Optimization Goal — other objectives | None hardcoded — Meta uses its per-objective default | `ad_sets[].optimization_goal` |
+| Optimization Goal (Outcome Leads) | `CONVERSATIONS` (Click-to-Message / WhatsApp) | `ad_sets[].optimization_goal` |
+| Optimization Goal (Outcome Sales) | **No default**: script errors unless specified | `ad_sets[].optimization_goal` |
+| Optimization Goal (other objectives) | None hardcoded: Meta uses its per-objective default | `ad_sets[].optimization_goal` |
 
 ## Launch hygiene
 
@@ -48,7 +48,7 @@ These are the "if the brief doesn't say otherwise, do this" values the build scr
 | Ad Set Status | PAUSED | `ad_sets[].status` |
 | Ad Status | PAUSED | `ads[].status` |
 | Special Ad Categories | `none` | `campaigns[].special_ad_categories` |
-| Special-cat conflict | Drop incompatible targeting (custom audiences, lookalikes, age < 18) and emit per-row warning | — |
+| Special-cat conflict | Drop incompatible targeting (custom audiences, lookalikes, age < 18) and emit per-row warning | none |
 | UTM tags | `utm_source=facebook&utm_medium=paid_social&utm_campaign={campaign_name}&utm_content={ad_name}` | `ads[].url_tags` (per-ad) or `creative_matrix.url_tags` (matrix-wide) |
 
 ## Default campaign shape (with empty/minimal brief)
@@ -68,7 +68,7 @@ Toggle the campaign / ad set / ad to ACTIVE in Ads Manager after reviewing previ
 ## Why these defaults
 
 - **Broad + Advantage+ placements**: 2026 Andromeda-era best practice. Meta's algorithm finds buyers more efficiently than detailed targeting in most accounts.
-- **CBO**: same reason — let Meta distribute spend across ad sets based on performance signals.
+- **CBO**: same reason. Let Meta distribute spend across ad sets based on performance signals.
 - **PAUSED everywhere**: human review before any spend. Cheap insurance against typos in URLs, audiences, or budgets that multiply across 27 ads.
 - **27-ad matrix**: enough creative variation to find outliers without overwhelming a single ad set. Pair with Advantage+ Creative downstream if you want Meta to mix-and-match the elements automatically.
 - **AR + 25–54**: skill author's primary market and ICP age band. Override per brief.

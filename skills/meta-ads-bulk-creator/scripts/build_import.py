@@ -523,12 +523,12 @@ def validate_rows(rows: list[dict], spec: dict, report: BuildReport) -> None:
         ad_status = str(row.get("Ad Status", "")).upper()
         if ad_status == "ACTIVE" and adset_status and adset_status != "ACTIVE":
             report.warn(
-                f"Ad '{ad_name}' is ACTIVE but ad set is {adset_status} — ad will not run",
+                f"Ad '{ad_name}' is ACTIVE but ad set is {adset_status}, so the ad will not run",
                 row=i,
             )
         if adset_status == "ACTIVE" and camp_status and camp_status != "ACTIVE":
             report.warn(
-                f"Ad set is ACTIVE but campaign is {camp_status} — ad set will not run",
+                f"Ad set is ACTIVE but campaign is {camp_status}, so the ad set will not run",
                 row=i,
             )
 
@@ -559,7 +559,7 @@ def validate_images(rows: list[dict], images_dir: Path | None, report: BuildRepo
                 if fname.lower() in available_lower:
                     report.error(
                         f"Creative '{cid}' image '{fname}' not found at exact case in {images_dir} "
-                        f"(found case-insensitive match '{available_lower[fname.lower()]}' — "
+                        f"(found case-insensitive match '{available_lower[fname.lower()]}', but "
                         "Meta requires exact case)"
                     )
                 else:

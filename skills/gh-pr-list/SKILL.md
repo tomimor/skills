@@ -41,7 +41,7 @@ If both groups are empty, report "No tienes PRs abiertos" and stop.
 ## Output
 
 Render the message directly in the chat using markdown (not inside a fenced
-code block — the user wants to see the rendered links and copy them to
+code block: the user wants to see the rendered links and copy them to
 Slack, which accepts markdown-style links `[title](url)`).
 
 Exact format:

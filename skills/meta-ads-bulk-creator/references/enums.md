@@ -49,7 +49,7 @@ Common 2026 values by objective:
 | Outcome Traffic | `LINK_CLICKS`, `LANDING_PAGE_VIEWS` |
 | App Promotion | `APP_INSTALLS`, `OFFSITE_CONVERSIONS`, `IN_APP_VALUE` |
 
-The full enum has 60+ values — see `columns.md` for the complete list under `Optimization Goal`.
+The full enum has 60+ values. See `columns.md` for the complete list under `Optimization Goal`.
 
 ## Billing Event (column BF)
 
@@ -83,10 +83,10 @@ The most-used 2026 CTAs:
 - Engagement: `LIKE_PAGE`, `WATCH_VIDEO`, `WATCH_MORE`, `LISTEN_NOW`, `INTERESTED`
 - Travel / events: `BOOK_TRAVEL`, `GET_DIRECTIONS`, `GET_SHOWTIMES`, `GET_EVENT_TICKETS`, `CHECK_AVAILABILITY`
 
-The full enum has 100+ values — see `columns.md`.
+The full enum has 100+ values. See `columns.md`.
 
 ## Creative Type (column CT)
 
-`Page post ad` (most common — links the ad to a Page post), `Standard` (right-column-only), or leave blank.
+`Page post ad` (most common, links the ad to a Page post), `Standard` (right-column-only), or leave blank.
 
 When using `Page post ad`, populate `Link Object ID` (column W) with the Page ID and optionally `Story ID` (column DN) with an existing post ID for social-proof preservation.

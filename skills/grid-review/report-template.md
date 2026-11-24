@@ -1,28 +1,28 @@
-# Grid Review — {page or URL}
+# Grid Review: {page or URL}
 
 **Mode:** {explicit | inferred} grid · **Confidence:** {high | medium | low}
 **Detected:** {N} columns (explicit grid) / ≈{N} inferred column bands · {baseline}px baseline ({rate}% of line-heights on rhythm)
 **Widths audited:** {1440, 1180, 768}
 
-> One-line verdict: is the grid load-bearing, decorative, or absent — and does the content want the
+> One-line verdict: is the grid load-bearing, decorative, or absent, and does the content want the
 > grid it has?
 
 ---
 
-## 1. Measured violations (mechanical — px, not opinion)
+## 1. Measured violations (mechanical: px, not opinion)
 
 Sorted by severity, worst offset first. Each cites the law from `grid-discipline.md` and a one-line fix.
 
 | Sev | Finding | Where | Measured | Fix |
 |-----|---------|-------|----------|-----|
 | Must | Column item off the grid | `selector` | left +14px @1440 | `grid-column: 6 / 13` (snap to line) |
-| Must | Justified body text | `selector` | — | `text-align: left` |
+| Must | Justified body text | `selector` | n/a | `text-align: left` |
 | Should | Headline ink off the line | `selector` | inkOffset 9px | `margin-left: 9px` after fonts load |
 | Should | Baseline broken | `selector` | line-height 27px vs 8px unit | `line-height: 24px` |
 
-(Only list real offenders. If a width passes clean, say so — don't pad.)
+(Only list real offenders. If a width passes clean, say so. Don't pad.)
 
-## 2. Principled critique (Vignelli lens — judgment on the measured signals)
+## 2. Principled critique (Vignelli lens: judgment on the measured signals)
 
 - **Grid appropriateness:** {does the content want this grid? one honest sentence}
 - **Type scale:** {distinctTextSizes} distinct sizes, head/body {ratio}× → {scale soup? weak contrast?}

@@ -56,25 +56,25 @@ const check = (cond, name, okDetail, failDetail) =>
   add(cond ? 'OK' : 'FAIL', name, cond ? okDetail : failDetail);
 
 check(!!title, '<title>', title, 'missing');
-if (title && title.length > 60) add('WARN', '<title> length', `${title.length} chars — may truncate in tabs/SERPs (keep ≲60)`);
+if (title && title.length > 60) add('WARN', '<title> length', `${title.length} chars, may truncate in tabs/SERPs (keep ≲60)`);
 
 const desc = metas['description'];
 check(!!desc, 'meta description', `${desc?.length} chars`, 'missing');
-if (desc && (desc.length < 50 || desc.length > 160)) add('WARN', 'description length', `${desc.length} chars — aim for 50–160`);
+if (desc && (desc.length < 50 || desc.length > 160)) add('WARN', 'description length', `${desc.length} chars, aim for 50–160`);
 
 for (const t of ['og:title', 'og:description', 'og:image', 'og:url', 'og:type', 'og:site_name']) {
   check(!!metas[t], t, metas[t], 'missing');
 }
-check(!!metas['twitter:card'], 'twitter:card', metas['twitter:card'], "missing — X falls back to OG but card type won't be summary_large_image");
+check(!!metas['twitter:card'], 'twitter:card', metas['twitter:card'], "missing, so X falls back to OG but card type won't be summary_large_image");
 if (metas['twitter:card'] && !['summary', 'summary_large_image', 'app', 'player'].includes(metas['twitter:card']))
   add('FAIL', 'twitter:card value', `"${metas['twitter:card']}" is not a valid card type`);
 
 if (!metas['og:image:width'] || !metas['og:image:height'])
-  add('WARN', 'og:image:width/height', 'missing — first-share render on Facebook/WhatsApp may skip the image until the scraper fetches it');
+  add('WARN', 'og:image:width/height', 'missing, so the first-share render on Facebook/WhatsApp may skip the image until the scraper fetches it');
 
 check(!!links['canonical']?.length, 'link rel=canonical', links['canonical']?.[0], 'missing');
 check(!!links['icon']?.length || !!links['shortcut icon']?.length, 'favicon link', (links['icon'] || links['shortcut icon'])?.join(', '), 'missing');
-check(!!links['apple-touch-icon']?.length, 'apple-touch-icon', links['apple-touch-icon']?.[0], 'missing — iOS share sheet / home screen falls back to a page screenshot');
+check(!!links['apple-touch-icon']?.length, 'apple-touch-icon', links['apple-touch-icon']?.[0], 'missing, so the iOS share sheet / home screen falls back to a page screenshot');
 check(!!links['manifest']?.length, 'link rel=manifest', links['manifest']?.[0], 'missing');
 check(!!metas['theme-color'], 'theme-color', metas['theme-color'], 'missing');
 
@@ -89,9 +89,9 @@ const describe = (r) => `${r.type} ${(r.bytes / 1024).toFixed(0)}KB`;
 
 const checkOgImage = (label, r) => {
   if (label !== 'og:image') return;
-  if (r.bytes > 5 * 1024 * 1024) add('FAIL', 'og:image weight', `${(r.bytes / 1048576).toFixed(1)}MB — several scrapers cap at ~5MB (WhatsApp far less)`);
-  else if (r.bytes > 300 * 1024) add('WARN', 'og:image weight', `${(r.bytes / 1024).toFixed(0)}KB — WhatsApp may skip images this heavy; aim <300KB`);
-  if (/svg/.test(r.type)) add('FAIL', 'og:image format', 'SVG is not rendered by scrapers — use PNG/JPEG');
+  if (r.bytes > 5 * 1024 * 1024) add('FAIL', 'og:image weight', `${(r.bytes / 1048576).toFixed(1)}MB, and several scrapers cap at ~5MB (WhatsApp far less)`);
+  else if (r.bytes > 300 * 1024) add('WARN', 'og:image weight', `${(r.bytes / 1024).toFixed(0)}KB, and WhatsApp may skip images this heavy; aim <300KB`);
+  if (/svg/.test(r.type)) add('FAIL', 'og:image format', 'SVG is not rendered by scrapers. Use PNG/JPEG');
 };
 
 const assets = new Map(); // href -> label
@@ -111,7 +111,7 @@ for (const [href, label] of assets) {
   }
   const isShareImage = label === 'og:image' || label === 'twitter:image';
   if (isShareImage && !/^https?:\/\//.test(href))
-    add('FAIL', `${label} absolute URL`, `"${href}" is relative — scrapers require an absolute URL`);
+    add('FAIL', `${label} absolute URL`, `"${href}" is relative, and scrapers require an absolute URL`);
 
   let r;
   try {
@@ -121,12 +121,12 @@ for (const [href, label] of assets) {
   }
 
   if (!r.ok && isShareImage && target.origin !== new URL(url).origin) {
-    // production host not live yet — check the same path on the server
+    // production host not live yet: check the same path on the server
     // under test so a pre-deploy run doesn't hard-fail
     try {
       const local = await probe(new URL(target.pathname + target.search, url).href);
       if (local.ok) {
-        add('WARN', `${label} fetch`, `${target.href} → ${r.status}, but the same path serves locally (${describe(local)}) — expected before deploy; re-verify on the live URL`);
+        add('WARN', `${label} fetch`, `${target.href} → ${r.status}, but the same path serves locally (${describe(local)}). Expected before deploy; re-verify on the live URL`);
         checkOgImage(label, local);
         continue;
       }
@@ -144,9 +144,9 @@ for (const [href, label] of assets) {
       const man = JSON.parse(new TextDecoder().decode(await (await fetch(target.href)).arrayBuffer()));
       const sizes = (man.icons || []).map((i) => i.sizes);
       if (!sizes.includes('192x192') || !sizes.includes('512x512'))
-        add('WARN', 'manifest icons', `sizes present: [${sizes}] — installable PWAs need 192x192 and 512x512`);
+        add('WARN', 'manifest icons', `has sizes [${sizes}]. Installable PWAs need 192x192 and 512x512`);
       if (!(man.icons || []).some((i) => (i.purpose || '').includes('maskable')))
-        add('WARN', 'manifest maskable', 'no maskable icon — Android may letterbox the icon');
+        add('WARN', 'manifest maskable', 'no maskable icon, so Android may letterbox the icon');
       for (const k of ['name', 'short_name']) if (!man[k]) add('WARN', `manifest ${k}`, 'missing');
     } catch {
       add('FAIL', 'manifest JSON', 'did not parse as JSON');
@@ -159,7 +159,7 @@ const pad = (s) => s.padEnd(4);
 let fails = 0;
 for (const { level, name, detail } of results) {
   if (level === 'FAIL') fails++;
-  console.log(`${pad(level)} ${name}${detail ? ` — ${detail}` : ''}`);
+  console.log(`${pad(level)} ${name}${detail ? `: ${detail}` : ''}`);
 }
 console.log(`\n${results.filter((r) => r.level === 'OK').length} ok, ${results.filter((r) => r.level === 'WARN').length} warn, ${fails} fail`);
 process.exit(fails ? 1 : 0);
