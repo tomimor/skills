@@ -167,11 +167,27 @@ Vendor skills are third-party packs tracked as git submodules under `vendor/` an
 | snapcn | [snapcndev/snapcn](https://github.com/snapcndev/snapcn) | main (2026-10-13) | `snapcn`, `remotion-product-demo`, `remotion-launch-video`. Upstream also ships `remotion-motion-graphics`, `remotion-logo-animation`, `remotion-explainer-video`, `remotion-kinetic-typography`; add any of them to the `snapcn` entry in `VENDOR_SKILLS` to link it |
 | agent-browser | [vercel-labs/agent-browser](https://github.com/vercel-labs/agent-browser) | v0.43.0+ main (2026-11-20) | `modern-web-guidance`, pinned from `skill-data/` (the directory the CLI serves skills from). The `agent-browser` stub under upstream's `skills/` is deliberately not linked: its description tells agents to prefer agent-browser over every other browser tool. `skill-data/` also ships `core`, `dogfood`, `electron`, `slack`, `derive-client`, `webmcp-gen`, `vercel`, `vercel-sandbox`, `agentcore`; add any of them to the `agent-browser` entry in `VENDOR_SKILLS` to link it |
 
+**Keep a clone up to date with one command:**
+
+```bash
+./install.sh --self   # once: links the repo into ~/.cursor and ~/.claude and adds a `skills` command to your PATH
+skills update         # from any folder: git pull, update the vendor packs, re-link every skill
+```
+
+`skills` is this same script, so `skills` alone opens the menu and every flag below works with it too.
+
 **Update all vendors to their latest upstream:**
 
 ```bash
 ./install.sh --update-vendor
 ```
+
+Pass names to update only some of them, e.g. `./install.sh --update-vendor impeccable cloudflare`.
+
+The command prints one line per vendor (old → new version and commit count), notes skills that upstream added or
+that are left dangling, stages the new submodule pointers, and ends with a prompt to paste into a coding agent that
+finishes the job (README versions, catalogs, commit). On a terminal the prompt is also copied to the clipboard. A
+vendor that fails to update is reported with git's error and does not stop the others.
 
 <details>
 <summary><strong>Add a new vendor</strong></summary>
@@ -208,7 +224,10 @@ curl -fsSL https://raw.githubusercontent.com/tomimor/skills/main/install.sh | ba
 curl -fsSL https://raw.githubusercontent.com/tomimor/skills/main/install.sh | bash -s -- --skill pr-dashboard
 ```
 
-Running `install.sh` with no flags starts an interactive picker.
+Running `install.sh` with no flags is interactive. Inside a clone it opens a menu (install, update, check
+catalogs); from the `curl` one-liner it goes straight to picking skills. Move with the arrow keys,
+toggle with space, confirm with enter. Piped or CI runs print plain text with no colors or prompts beyond the flags
+you pass.
 
 **Manual install.** Copy any skill directory into your platform's skills folder:
 
@@ -228,7 +247,8 @@ cp -r skills/pr-dashboard ~/.claude/skills/     # Claude Code
 | `--symlink` | Symlink skills into the target instead of copying (live edits) |
 | `--self` | Wire this repo into your own `~/.cursor` and `~/.claude` with edit-once symlinks |
 | `--check` | Validate frontmatter, `SKILLS`-array sync, and that `README.md` and `index.html` list every skill with the right count, then exit (used in CI) |
-| `--update-vendor` | Update vendor submodules to their latest versions |
+| `update` | Pull this repo, update the vendor packs, and re-link every skill into `~/.cursor` and `~/.claude`. Once `--self` has run it works from any folder as `skills update` |
+| `--update-vendor [name...]` | Update vendor submodules to their latest upstream (all, or only the named ones), re-link their skills, stage the new pointers, and report what changed |
 
 ## Platform compatibility
 

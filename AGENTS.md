@@ -26,6 +26,12 @@ Re-create the per-skill symlinks if anything drifts:
 ./install.sh --symlink --all --force --target ~/.claude/skills
 ```
 
+`./install.sh --self` does that wiring for both editors and also writes a `skills` launcher into `~/.local/bin` (or
+`~/bin`), so the script runs from any folder. The everyday command is then `skills update`: it runs
+`git pull --ff-only`, restarts itself if the pull brought new commits, updates every vendor to its latest upstream
+(the same as `--update-vendor`, so it can leave staged pointers and the follow-up steps below), and re-links
+everything. If the pull fails it still re-links, skips the vendor update, and exits non-zero.
+
 ## Adding a new own skill
 
 Own skills are skills you write and maintain yourself. They live as regular directories under `skills/`.
@@ -139,7 +145,7 @@ linked under the vendor name, e.g. `"anatomy:wheresryan22/anatomy:."` → `skill
 
 - **Never edit files inside `vendor/`**. Those are managed by the upstream repo. To make changes, contribute upstream or override with an own skill of the same name (own skills take priority over vendor symlinks).
 - **Name conflicts**: if an own skill and a vendor skill share the same name, the own skill wins. The `link_vendor_skills` function in `install.sh` skips symlink creation when a non-symlink directory already exists.
-- **Updating vendors**: run `./install.sh --update-vendor` to pull latest from all vendor submodules and re-link.
+- **Updating vendors**: run `./install.sh --update-vendor` to pull latest from all vendor submodules and re-link, or `./install.sh --update-vendor <name>...` for only some of them.
 
 ## Updating vendor skills
 
@@ -147,21 +153,33 @@ linked under the vendor name, e.g. `"anatomy:wheresryan22/anatomy:."` → `skill
 ./install.sh --update-vendor
 ```
 
-This runs `git submodule update --remote --merge` and re-creates the symlinks. After updating:
+Pass vendor names to update only those: `./install.sh --update-vendor impeccable cloudflare`.
 
-1. **Stage the submodule pointers immediately** (`git add vendor/*`). Every other `install.sh` invocation runs
-   `git submodule update --init`, which resets each submodule to the pointer in the index -- an unstaged bump is
-   silently undone the next time you run the script.
-2. Check whether upstream renamed or split a skill directory (`ls -l skills/` shows dangling symlinks). Re-point the
+For each vendor this runs `git submodule update --init --remote --merge`, re-creates the symlinks, and **stages the
+new submodule pointer**. Staging matters: every other `install.sh` invocation runs `git submodule update --init`,
+which checks each submodule out at the pointer in the index, so an unstaged bump would be undone (the script now
+says so when it happens). A vendor that fails to update is reported with git's error and the rest still run; the
+exit code is non-zero if any failed.
+
+The report shows, per vendor, the old → new version and the number of new commits. Under a vendor it notes skills
+that were newly linked (they are not in the catalogs yet), new upstream skills that were not linked because the
+vendor is pinned, and dangling symlinks. It ends with a prompt for a coding agent that covers the remaining steps
+(printed, and copied to the clipboard on a terminal). If you are the agent handed that prompt, these are the steps:
+
+1. Fix what the report flags. A newly linked skill needs a README row and an `index.html` card (or pin the vendor in
+   `VENDOR_SKILLS` to drop it). A dangling symlink means upstream renamed or split a skill: re-point or delete the
    symlink and update the `VENDOR_SKILLS` filter, the README row, and the `index.html` card to the new name.
-3. Refresh the "Vendor skills" table in `README.md` (version from the vendor's `plugin.json` or `SKILL.md`
-   frontmatter, or `main (<date>)` when there is none) and any version mentioned in that vendor's catalog rows.
-4. Run `./install.sh --check`, then commit:
+2. Refresh the "Vendor skills" table in `README.md` with the versions the report prints (from the vendor's
+   `plugin.json` or `SKILL.md` frontmatter, or `main (<date>)` when there is none) and any version mentioned in that
+   vendor's catalog rows.
+3. Run `./install.sh --check`, then commit. The pointers are already staged:
 
 ```bash
-git add vendor/<name> README.md index.html
+git add skills README.md index.html install.sh
 git commit -m "update <name> to v<new-version>"
 ```
+
+To back out of an update before committing: `git restore --staged vendor/<name> && git submodule update vendor/<name>`.
 
 ## Keeping the catalogs in sync
 
@@ -175,6 +193,20 @@ verifies all of them and CI fails on any mismatch, so run it before every commit
 | `index.html` | One `<div class="skill">` card per skill (same sections and order as the README) and the `<p class="tagline">N agent skills ...` count |
 
 The check reports, per skill, which file is missing it, and flags catalog entries whose directory no longer exists.
+
+## Editing `install.sh`
+
+- **Bash 3.2.** macOS still ships it, so no associative arrays, `mapfile`, `${var,,}`, `read -t` with fractions, or
+  `"${arr[@]}"` on an array that may be empty (it is an "unbound variable" error under `set -u`).
+- **Fancy output is terminal-only.** Colors, spinners and the progress bar are gated on `IS_TTY`; the arrow-key menus
+  on `INTERACTIVE` (a keyboard reachable through `/dev/tty`). Piped and CI runs must stay plain text with no escape
+  codes and no new prompts, so route output through the existing helpers (`ok`, `warn`, `banner`, `spin`,
+  `menu_select`, `multi_select`) instead of hand-written escapes.
+- **One accent color.** `C_ACCENT` for anything interactive or branded, and green/yellow/red only for outcomes
+  (done, needs attention, failed). No other colors.
+- **Anything redrawn must fit on one line.** The menus move the cursor up by a fixed number of rows, so a row that
+  wraps corrupts the screen. Cut text with `fit` against `TERM_COLS`.
+- CI runs `shellcheck install.sh`, `install.sh --help` and `install.sh --check`. Run all three before committing.
 
 ## Key files
 
