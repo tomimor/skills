@@ -50,5 +50,5 @@ depth and a clean edge.
 - **Look for**: content images (avatars, thumbnails, screenshots) with no outline.
 - **Recommendation**: `outline: 1px solid rgba(0, 0, 0, 0.1)` in light mode and
   `rgba(255, 255, 255, 0.1)` in dark mode.
-- **Important**: the outline color must be pure black or pure white — never a tinted neutral (slate,
+- **Important**: the outline color must be pure black or pure white, never a tinted neutral (slate,
   zinc, etc.). A tinted outline picks up the surface color behind it and reads as dirt on the edge.

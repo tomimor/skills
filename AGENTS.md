@@ -85,6 +85,7 @@ SKILLS=(
 - **SKILL.md body**: under 500 lines; use reference files for detailed content
 - **Reference files**: one level deep only (link from SKILL.md, never chain references)
 - **No narration comments**: don't add comments that just repeat what the code does
+- **No em dashes**: never write the em dash character (U+2014) in prose, code comments, or output templates. Use a comma for a short pause, a colon for an explanation, parentheses for a longer aside, or a period to separate ideas (the rule is in the Mechanics table of `skills/writing-voice/SKILL.md`). Leave it only where it is data (scanner rules that detect it, quoted "before" examples, test fixtures, scraped content). The one prose exception is `writing-google-style`, which follows Google style and its unspaced em dash
 
 ## Adding a new vendor skill set
 

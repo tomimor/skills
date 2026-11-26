@@ -1,4 +1,4 @@
-# Blazing Fast Web — playbook
+# Blazing Fast Web: playbook
 
 Detection recipes and fixes per front, with stack-specific commands. Read the
 section for the front you're working on.

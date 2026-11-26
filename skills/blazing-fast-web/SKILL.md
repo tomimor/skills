@@ -62,7 +62,7 @@ with `--type`, INP and long-task time while typing. Run Lighthouse once at
 the start and once at the end if the user cares about the score; it is too
 slow and noisy to use as the per-step yardstick.
 
-## Phase 0 — Scope
+## Phase 0: Scope
 
 1. **Detect the stack**: framework (Next.js, Remix, Vite + React, Vue,
    SvelteKit…), rendering mode (SSR/SSG/SPA), bundler, ORM/DB, hosting/CDN.
@@ -77,7 +77,7 @@ slow and noisy to use as the per-step yardstick.
    The dev server ships unminified code and extra checks, so its numbers
    don't reflect what users get.
 
-## Phase 1 — Baseline
+## Phase 1: Baseline
 
 For each target flow capture, 3 runs, median:
 
@@ -99,7 +99,7 @@ Write the baseline into the ledger before touching code, and keep a pristine
 copy of the original (a copy of the production build, a git worktree, or the
 original server on a second port) for the final A/B.
 
-## Phase 2 — Find and fix, five fronts
+## Phase 2: Find and fix, five fronts
 
 Hunt across all five, then fix in order of **impact on the target flows**,
 biggest first. Detailed detection recipes and fixes per stack are in
@@ -139,7 +139,7 @@ biggest first. Detailed detection recipes and fixes per stack are in
 
 ### 4. Slow queries and N+1
 - **Detect**: Sentry N+1 / slow-DB issues; ORM query logging while running
-  one request (count queries — a list of 50 items making 51 queries is
+  one request (count queries: a list of 50 items making 51 queries is
   N+1); `EXPLAIN ANALYZE` on the slowest ones; missing indexes on filter,
   join and sort columns.
 - **Fix**: eager loading / joins (`include`, `select_related`,
@@ -160,7 +160,7 @@ biggest first. Detailed detection recipes and fixes per stack are in
 - **Measure**: LCP, CLS, bytes of images/fonts, main-thread time from third
   parties.
 
-## Phase 3 — The loop
+## Phase 3: The loop
 
 For each candidate fix, in impact order:
 
@@ -188,7 +188,7 @@ The point is a faster app, not an exhaustive search. Long sessions spent on
 - **Skip changes whose expected gain is below your measured noise.**
 - Explore with 1 quick run; use the full 3 runs only to decide keep/revert.
 
-## Phase 4 — Final A/B
+## Phase 4: Final A/B
 
 Machines drift over a long session (other processes, thermal throttling), so
 step-by-step numbers taken an hour apart aren't directly comparable. End by
@@ -200,7 +200,7 @@ same conditions, 3+ runs each. That comparison is the headline result.
 End with the ledger and a short summary:
 
 ```markdown
-## Performance results — <app>, <date>
+## Performance results: <app>, <date>
 
 Conditions: production build, Chrome mobile throttling, median of 3 runs.
 

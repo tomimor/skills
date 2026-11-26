@@ -17,19 +17,19 @@ image assets, and verify everything end-to-end.
 
 ## Workflow
 
-Five phases, in order. Don't skip the audit — most projects have partial
+Five phases, in order. Don't skip the audit: most projects have partial
 metadata, and duplicating tags is itself a bug (scrapers pick one arbitrarily).
 
-### Phase 1 — Detect the framework
+### Phase 1: Detect the framework
 
-Check, in order: `next.config.*` (Next.js — App Router if `app/` exists),
+Check, in order: `next.config.*` (Next.js: App Router if `app/` exists),
 `astro.config.*` (Astro), `nuxt.config.*` (Nuxt), `svelte.config.*`
 (SvelteKit), `vite.config.*` + `index.html` (Vite SPA), plain `*.html`
 (static). The implementation route for each is in
-[references/frameworks.md](references/frameworks.md) — read it before
+[references/frameworks.md](references/frameworks.md). Read it before
 writing any code in Phase 4.
 
-### Phase 2 — Audit what exists
+### Phase 2: Audit what exists
 
 Find the current `<head>` (or metadata config) and every existing asset.
 Build a three-column table: **tag/asset → present? → correct?**, covering
@@ -41,7 +41,7 @@ summary instead of a large card.
 
 Show the audit table to the user before changing anything.
 
-### Phase 3 — Gather content: infer first, ask only gaps
+### Phase 3: Gather content (infer first, ask only gaps)
 
 Infer from the repo before asking anything:
 
@@ -54,25 +54,25 @@ Infer from the repo before asking anything:
 | Source logo | `logo*`, `icon*` in `public/`, `assets/`, `static/`, root; existing favicon |
 | Locale | `<html lang>`, i18n config |
 
-Then ask the user — one batched round of questions — **only** the fields
-that are missing or ambiguous — typically: marketing-quality description (the inferred
+Then ask the user (one batched round of questions) **only** the fields
+that are missing or ambiguous, typically: marketing-quality description (the inferred
 one is often dev-facing), production URL if not deployed yet, X/Twitter
 handle (`twitter:site`), and which image to use as the icon source if none
 found. Propose the inferred values as defaults so a single "looks good"
 answer can approve everything.
 
-### Phase 4 — Implement
+### Phase 4: Implement
 
 Write the complete metadata set using the framework-idiomatic route from
-[references/frameworks.md](references/frameworks.md). The canonical target —
-every tag, attribute, and recommended value — is
+[references/frameworks.md](references/frameworks.md). The canonical target
+(every tag, attribute, and recommended value) is
 [references/checklist.md](references/checklist.md). Rules that apply
 regardless of framework:
 
 - **Fix, don't append.** Replace wrong/duplicate tags; never leave two
   `og:title`s in the document. When a replacement orphans an old asset file
   (a retired favicon, a superseded og image), list it in the report so the
-  user can delete it — don't delete user-created files yourself.
+  user can delete it. Don't delete user-created files yourself.
 - **`og:image` and `og:url` must be absolute URLs** (scheme + host). This is
   the single most common breakage.
 - **Per-page vs site-wide.** Site-wide defaults (site_name, favicon,
@@ -81,7 +81,7 @@ regardless of framework:
   per page. For content sites, wire the per-page mechanism, don't hardcode.
 - Platform quirks that shape values (WhatsApp image weight, Discord
   `theme_color`, iMessage rules) are in
-  [references/platforms.md](references/platforms.md) — consult it when the
+  [references/platforms.md](references/platforms.md). Consult it when the
   user cares about a specific platform.
 
 **Assets.** Generate what the audit marked missing:
@@ -91,7 +91,7 @@ regardless of framework:
   (ImageMagick, falls back to npx sharp-cli). If the logo is an SVG, also
   ship it directly as `<link rel="icon" type="image/svg+xml">`.
 - og:image 1200×630: read
-  [references/og-image-design.md](references/og-image-design.md) first — it
+  [references/og-image-design.md](references/og-image-design.md) first: it
   has the content rules (**never print the URL/domain on the image**; a
   5–7 word hook instead of the full og:title; safe zone; ≤300KB) and three
   reference cards to calibrate against. The layout is
@@ -103,39 +103,39 @@ regardless of framework:
   pass `.jpg` for gradient/photo-heavy cards). Open the PNG and check it
   against the rules before wiring it up. For content collections, generate
   one card per page from the same template with the page title.
-  The script imports `playwright` from the project — `npm i -D playwright`
+  The script imports `playwright` from the project: `npm i -D playwright`
   if absent (browser download can be skipped when a system Chromium exists;
   the script falls back to it automatically). In Next.js App Router prefer
-  the native `opengraph-image.tsx` + `ImageResponse` route instead — see
-  frameworks.md. If the user already has a designed og:image, use it —
+  the native `opengraph-image.tsx` + `ImageResponse` route instead (see
+  frameworks.md). If the user already has a designed og:image, use it:
   never overwrite existing brand assets, only add missing ones.
 - `site.webmanifest` with `name`, `short_name`, `icons` (192, 512, and a
   `purpose: "maskable"` 512), `theme_color`, `background_color`,
   `display: "standalone"`.
 
-### Phase 5 — Verify
+### Phase 5: Verify
 
 1. Start the dev server (or build+preview for SSG so meta tags are in the
-   actual HTML response, not client-rendered — scrapers don't run JS).
-2. Run `node scripts/verify-share-ready.mjs <url>` — it parses the rendered
+   actual HTML response, not client-rendered: scrapers don't run JS).
+2. Run `node scripts/verify-share-ready.mjs <url>`. It parses the rendered
    head, checks every required tag, fetches each asset (status,
    content-type, weight), and validates the manifest. Fix every FAIL; report
    WARNs to the user with a recommendation. On a not-yet-deployed site the
-   production og:image URL can't resolve — the script detects this (same
+   production og:image URL can't resolve. The script detects this (same
    path serves locally) and reports it as a WARN to re-verify after deploy,
    not a FAIL.
 3. Spot-check with `curl -A "facebookexternalhit/1.1" <url>` that the tags
    are present in the raw HTML for a scraper user-agent.
 4. Close with the **post-deploy checklist** (these need a public URL):
-   - Facebook Sharing Debugger — also the way to bust FB/WhatsApp's cache
+   - Facebook Sharing Debugger: also the way to bust FB/WhatsApp's cache
      ("Scrape Again")
-   - LinkedIn Post Inspector — busts LinkedIn's ~7-day cache
-   - X/Twitter: paste the URL in a draft post to preview — check X's
+   - LinkedIn Post Inspector: busts LinkedIn's ~7-day cache
+   - X/Twitter: paste the URL in a draft post to preview, and check X's
      headline overlay doesn't cover anything important
-   - WhatsApp: send the link to yourself — confirm the large card (not a
+   - WhatsApp: send the link to yourself and confirm the large card (not a
      thumbnail) appears
    - Discord/Slack/Telegram: paste in a private channel/saved messages
-   - Remind the user: scrapers cache aggressively — after changing an
+   - Remind the user: scrapers cache aggressively. After changing an
      og:image, either bust caches via the debuggers or version the image
      URL (`og.png?v=2`).
 

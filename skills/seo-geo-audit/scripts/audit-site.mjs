@@ -39,7 +39,7 @@ try {
   base = new URL(url);
   if (!/^https?:$/.test(base.protocol)) throw new Error('not http(s)');
 } catch {
-  console.error(`Invalid URL "${url}" — include the scheme, e.g. https://example.com`);
+  console.error(`Invalid URL "${url}": include the scheme, e.g. https://example.com`);
   process.exit(2);
 }
 const results = [];
@@ -65,7 +65,7 @@ function printReport() {
   let lastSection = '';
   for (const r of results) {
     if (r.section !== lastSection) { console.log(`\n== ${r.section} ==`); lastSection = r.section; }
-    console.log(`${ICON[r.level]}  ${r.name}${r.detail ? ` — ${r.detail}` : ''}`);
+    console.log(`${ICON[r.level]}  ${r.name}${r.detail ? `: ${r.detail}` : ''}`);
   }
   const counts = results.reduce((a, r) => ((a[r.level] = (a[r.level] ?? 0) + 1), a), {});
   console.log(`\nSummary: ${Object.entries(counts).sort((a, b) => ORDER[a[0]] - ORDER[b[0]]).map(([k, v]) => `${v} ${k}`).join(', ') || 'nothing checked'}`);
@@ -107,10 +107,10 @@ try {
   home = r.final;
   finalUrl = new URL(r.finalUrl);
   if (!home) fail('homepage fetch', `redirect loop or >10 hops: ${r.hops.map((h) => h.status).join(' → ')}`);
-  else if (home.status !== 200) fail('homepage fetch', `status ${home.status} — fix this first; nothing downstream is meaningful while the homepage errors`);
+  else if (home.status !== 200) fail('homepage fetch', `status ${home.status}. Fix this first; nothing downstream is meaningful while the homepage errors`);
   else {
     ok('homepage fetch', `${home.status} at ${r.finalUrl}`);
-    if (r.hops.length > 2) warn('redirect chain', `${r.hops.length - 1} hops to reach final URL — collapse to one redirect`);
+    if (r.hops.length > 2) warn('redirect chain', `${r.hops.length - 1} hops to reach final URL (collapse to one redirect)`);
   }
   if (!home || home.status !== 200) { printReport(); process.exit(1); }
   homeHtml = await home.text();
@@ -120,7 +120,7 @@ try {
   if (results.length) printReport();
   process.exit(2);
 }
-// base for site-relative probes — supports subpath deployments (https://user.github.io/repo/)
+// base for site-relative probes: supports subpath deployments (https://user.github.io/repo/)
 const siteBase = finalUrl.pathname.endsWith('/') ? finalUrl.href : new URL('.', finalUrl.href).href;
 const toLocalUrl = (u) => { try { const p = new URL(u); return new URL(p.pathname + p.search, finalUrl.origin).href; } catch { return u; } };
 
@@ -134,8 +134,8 @@ if (!LOCAL) {
     httpVariant.protocol = 'http:';
     const r = await get(httpVariant.href);
     if ([301, 308].includes(r.status)) ok('http→https redirect', `${r.status}`);
-    else if ([302, 307].includes(r.status)) warn('http→https redirect', `${r.status} temporary — use 301/308`);
-    else if (r.status === 200) fail('http→https redirect', 'http:// serves 200 — duplicate protocol versions');
+    else if ([302, 307].includes(r.status)) warn('http→https redirect', `${r.status} temporary, use 301/308`);
+    else if (r.status === 200) fail('http→https redirect', 'http:// serves 200 (duplicate protocol versions)');
     else info('http→https redirect', `status ${r.status}`);
   } catch { info('http→https redirect', 'http variant unreachable (fine if port 80 closed)'); }
 
@@ -148,9 +148,9 @@ if (!LOCAL) {
       const loc = new URL(r.headers.get('location') ?? '', alt.href);
       if (loc.hostname === finalUrl.hostname) ok('www/apex canonical host', `${alt.hostname} → ${finalUrl.hostname} (${r.status})`);
       else warn('www/apex canonical host', `${alt.hostname} redirects to ${loc.hostname}, not ${finalUrl.hostname}`);
-    } else if (r.status === 200) fail('www/apex canonical host', `${alt.hostname} also serves 200 — duplicate hosts, pick one and 301 the other`);
+    } else if (r.status === 200) fail('www/apex canonical host', `${alt.hostname} also serves 200 (duplicate hosts): pick one and 301 the other`);
     else info('www/apex canonical host', `${alt.hostname}: status ${r.status}`);
-  } catch { info('www/apex canonical host', 'alternate host does not resolve — no duplicate-host risk'); }
+  } catch { info('www/apex canonical host', 'alternate host does not resolve, so no duplicate-host risk'); }
 
   const hsts = home.headers.get('strict-transport-security');
   if (hsts) ok('HSTS', hsts);
@@ -159,20 +159,20 @@ if (!LOCAL) {
 
 // ---------------------------------------------------------------- 2. robots.txt
 section = 'robots.txt';
-// training-corpus opt-out tokens vs search/answer/live-fetch agents — blocking has
+// training-corpus opt-out tokens vs search/answer/live-fetch agents: blocking has
 // different consequences per class (see references/geo.md)
 const TRAINING_BOTS = ['GPTBot', 'ClaudeBot', 'Google-Extended', 'Applebot-Extended', 'CCBot', 'meta-externalagent', 'Bytespider'];
 const ANSWER_BOTS = ['OAI-SearchBot', 'ChatGPT-User', 'Claude-SearchBot', 'Claude-User', 'PerplexityBot', 'Perplexity-User', 'Meta-ExternalFetcher'];
 let sitemapUrls = [];
 try {
   const r = await get(new URL('/robots.txt', finalUrl.origin).href, { redirect: 'follow' });
-  if (r.status >= 500) fail('robots.txt', `status ${r.status} — Google initially treats an erroring robots.txt as full-disallow`);
-  else if (r.status === 404) warn('robots.txt', '404 — crawlers assume everything allowed; add one to declare sitemap + AI-crawler policy');
+  if (r.status >= 500) fail('robots.txt', `status ${r.status}. Google initially treats an erroring robots.txt as full-disallow`);
+  else if (r.status === 404) warn('robots.txt', '404, so crawlers assume everything allowed; add one to declare sitemap + AI-crawler policy');
   else if (r.status !== 200) info('robots.txt', `status ${r.status}`);
   else {
     const text = (await r.text()).replace(/^﻿/, '');
     if (/^\s*<(!doctype|html)/i.test(text)) {
-      fail('robots.txt', 'returns 200 but the body is HTML — crawlers can\'t parse it; serve plain text');
+      fail('robots.txt', 'returns 200 but the body is HTML, which crawlers can\'t parse; serve plain text');
       throw new Error('skip-robots-parse');
     }
     ok('robots.txt', `200, ${text.length} bytes`);
@@ -207,7 +207,7 @@ try {
       g.rules.some((r2) => r2.type === 'disallow' && r2.value === '/') &&
       !g.rules.some((r2) => r2.type === 'allow' && r2.value === '/');
     if (blockedRoot(groupFor('anybot')))
-      fail('global disallow', 'User-agent: * / Disallow: / — the whole site is blocked from crawling');
+      fail('global disallow', 'User-agent: * / Disallow: / (the whole site is blocked from crawling)');
     else ok('global rules', 'no blanket Disallow: / for *');
     if (sitemapUrls.length) ok('Sitemap directive', sitemapUrls.join(', '));
     else warn('Sitemap directive', 'no Sitemap: line in robots.txt');
@@ -215,8 +215,8 @@ try {
     const blockedA = ANSWER_BOTS.filter((b) => blockedRoot(groupFor(b)));
     const allowed = [...TRAINING_BOTS, ...ANSWER_BOTS].filter((b) => !blockedT.includes(b) && !blockedA.includes(b));
     info('AI crawlers allowed', allowed.join(', ') || 'none');
-    if (blockedT.length) info('AI training bots blocked', `${blockedT.join(', ')} — training opt-out only; does not remove the site from AI answers`);
-    if (blockedA.length) info('AI search/answer bots blocked', `${blockedA.join(', ')} — this removes the site from AI answers/citations; intentional?${blockedA.includes('Perplexity-User') ? ' (Perplexity-User ignores robots.txt by design — a rule here is cosmetic)' : ''}`);
+    if (blockedT.length) info('AI training bots blocked', `${blockedT.join(', ')} (training opt-out only; does not remove the site from AI answers)`);
+    if (blockedA.length) info('AI search/answer bots blocked', `${blockedA.join(', ')}. This removes the site from AI answers/citations; intentional?${blockedA.includes('Perplexity-User') ? ' (Perplexity-User ignores robots.txt by design, so a rule here is cosmetic)' : ''}`);
   }
 } catch (e) { if (e.message !== 'skip-robots-parse') fail('robots.txt', `fetch error: ${e.message}`); }
 
@@ -224,7 +224,7 @@ try {
 section = 'Sitemap';
 const sitemapDeclared = sitemapUrls.length > 0;
 if (LOCAL) {
-  // a local build's robots.txt declares the production sitemap URL — fetch the same path locally
+  // a local build's robots.txt declares the production sitemap URL, so fetch the same path locally
   sitemapUrls = sitemapUrls.map(toLocalUrl);
 }
 if (!sitemapDeclared) {
@@ -257,11 +257,11 @@ for (const smUrl of sitemapUrls.slice(0, 3)) {
     }
     const xml = r.xml;
     if (!/<(urlset|sitemapindex)[\s>]/i.test(xml)) {
-      fail(`sitemap ${smUrl}`, `response is not sitemap XML (content-type: ${r.contentType ?? 'unknown'}) — likely a soft-404 HTML page`);
+      fail(`sitemap ${smUrl}`, `response is not sitemap XML (content-type: ${r.contentType ?? 'unknown'}), likely a soft-404 HTML page`);
       continue;
     }
     sitemapFound = true;
-    if (xml.length > 50 * 1024 * 1024) fail(`sitemap size`, `${(xml.length / 1e6).toFixed(1)}MB — over the 50MB uncompressed limit`);
+    if (xml.length > 50 * 1024 * 1024) fail(`sitemap size`, `${(xml.length / 1e6).toFixed(1)}MB, over the 50MB uncompressed limit`);
     const isIndex = /<sitemapindex[\s>]/i.test(xml);
     let urlsetXml = xml;
     if (isIndex) {
@@ -276,25 +276,25 @@ for (const smUrl of sitemapUrls.slice(0, 3)) {
     }
     const locs = extractLocs(urlsetXml);
     if (!locs.length) { fail(`sitemap ${smUrl}`, 'no <loc> entries found'); continue; }
-    if (!isIndex && locs.length > 50000) fail('sitemap URL count', `${locs.length} — over the 50,000-per-file limit; split into a sitemap index`);
+    if (!isIndex && locs.length > 50000) fail('sitemap URL count', `${locs.length}, over the 50,000-per-file limit; split into a sitemap index`);
     else ok(`sitemap URLs`, `${locs.length} URLs${isIndex ? ' (first child)' : ''}`);
     const rel = locs.filter((l) => !/^https?:\/\//i.test(l));
     if (rel.length) fail('sitemap <loc> URLs', `${rel.length} relative URLs (must be absolute), e.g. ${rel[0]}`);
     const crossHost = locs.filter((l) => { try { return new URL(l).hostname !== finalUrl.hostname; } catch { return true; } });
     if (LOCAL && crossHost.length === locs.length - rel.length && crossHost.length > 0) {
-      // local audit of a build whose sitemap lists production URLs — expected; sample them against the local origin
-      info('sitemap host', `sitemap lists ${crossHost[0].split('/')[2] ?? 'production'} URLs (expected for a local build) — sampling their paths against ${finalUrl.origin}`);
+      // local audit of a build whose sitemap lists production URLs (expected): sample them against the local origin
+      info('sitemap host', `sitemap lists ${crossHost[0].split('/')[2] ?? 'production'} URLs (expected for a local build), sampling their paths against ${finalUrl.origin}`);
     } else if (crossHost.length) warn('sitemap host match', `${crossHost.length} URLs on a different host, e.g. ${crossHost[0]}`);
     const badLastmod = [...urlsetXml.matchAll(/<lastmod>\s*([^<]+?)\s*<\/lastmod>/gi)]
       .map((m) => m[1].trim()).filter((d) => Number.isNaN(Date.parse(d)));
-    if (badLastmod.length) warn('sitemap lastmod', `${badLastmod.length} unparseable dates, e.g. "${badLastmod[0]}" — use W3C datetime`);
+    if (badLastmod.length) warn('sitemap lastmod', `${badLastmod.length} unparseable dates, e.g. "${badLastmod[0]}" (use W3C datetime)`);
     pageUrls = locs;
     break;
   } catch (e) { fail(`sitemap ${smUrl}`, `fetch error: ${e.message}`); }
 }
 if (!sitemapDeclared && !sitemapFound)
-  warn('sitemap', 'no sitemap found at conventional paths — optional per Google, but recommended precisely for new sites with few inbound links');
-if (!pageUrls.length) info('page sampling', 'no usable sitemap — page-level checks limited to the homepage');
+  warn('sitemap', 'no sitemap found at conventional paths. Optional per Google, but recommended precisely for new sites with few inbound links');
+if (!pageUrls.length) info('page sampling', 'no usable sitemap, so page-level checks are limited to the homepage');
 
 // ---------------------------------------------------------------- 4. page-level checks
 section = 'Pages';
@@ -306,7 +306,7 @@ async function auditPage(pageUrl, html, headers, { isHome }) {
 
   const title = head.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1]?.trim();
   if (!title) p('<title>', 'FAIL', 'missing');
-  else if (title.length > 60) p('<title>', 'WARN', `${title.length} chars — may truncate in SERPs (keep ≲60)`);
+  else if (title.length > 60) p('<title>', 'WARN', `${title.length} chars, may truncate in SERPs (keep ≲60)`);
   else p('<title>', 'OK', `"${title}"`);
   if (title) seenTitles.set(title, [...(seenTitles.get(title) ?? []), new URL(pageUrl).pathname]);
 
@@ -314,9 +314,9 @@ async function auditPage(pageUrl, html, headers, { isHome }) {
   const metaName = (n) => metas.find((a) => a.name?.toLowerCase() === n)?.content;
 
   const desc = metaName('description');
-  if (!desc) p('meta description', 'WARN', 'missing — search/AI engines will synthesize a snippet');
+  if (!desc) p('meta description', 'WARN', 'missing, so search/AI engines will synthesize a snippet');
   else if (desc.length > 160) p('meta description', 'WARN', `${desc.length} chars (keep 50–160)`);
-  else if (desc.length < 50) p('meta description', 'INFO', `${desc.length} chars — short (aim for 50–160)`);
+  else if (desc.length < 50) p('meta description', 'INFO', `${desc.length} chars, short (aim for 50–160)`);
   else p('meta description', 'OK', `${desc.length} chars`);
   if (desc) seenDescs.set(desc, [...(seenDescs.get(desc) ?? []), new URL(pageUrl).pathname]);
 
@@ -333,15 +333,15 @@ async function auditPage(pageUrl, html, headers, { isHome }) {
     return t === 'noindex' || t === 'none';
   });
   const metaNoindex = robotsMetas.find(hasNoindex);
-  if (metaNoindex !== undefined) p('meta robots', LOCAL ? 'INFO' : 'FAIL', `"${metaNoindex}" — page is noindexed`);
-  if (hasNoindex(xRobots)) p('X-Robots-Tag', LOCAL ? 'INFO' : 'FAIL', `"${xRobots}" — page is noindexed at the header level`);
+  if (metaNoindex !== undefined) p('meta robots', LOCAL ? 'INFO' : 'FAIL', `page is noindexed ("${metaNoindex}")`);
+  if (hasNoindex(xRobots)) p('X-Robots-Tag', LOCAL ? 'INFO' : 'FAIL', `page is noindexed at the header level ("${xRobots}")`);
   if (metaNoindex === undefined && !hasNoindex(xRobots)) p('indexable', 'OK', 'no noindex in meta robots or X-Robots-Tag');
 
   // canonical
   const linkTags = [...head.matchAll(/<link\s+[^>]*>/gi)].map((m) => parseAttrs(m[0]));
   const canonicals = linkTags.filter((a) => a.rel?.toLowerCase() === 'canonical');
-  if (!canonicals.length) p('canonical', 'WARN', 'no rel=canonical — add a self-referencing one to guard against URL-parameter duplicates');
-  else if (canonicals.length > 1) p('canonical', 'FAIL', `${canonicals.length} canonical tags — search engines ignore conflicting canonicals`);
+  if (!canonicals.length) p('canonical', 'WARN', 'no rel=canonical. Add a self-referencing one to guard against URL-parameter duplicates');
+  else if (canonicals.length > 1) p('canonical', 'FAIL', `${canonicals.length} canonical tags, and search engines ignore conflicting canonicals`);
   else {
     const href = canonicals[0].href ?? '';
     if (!/^https?:\/\//i.test(href)) p('canonical', 'FAIL', `"${href}" is not absolute`);
@@ -351,10 +351,10 @@ async function auditPage(pageUrl, html, headers, { isHome }) {
       if (canon.origin === page.origin && samePath) p('canonical', 'OK', 'self-referencing');
       else if (canon.hostname === page.hostname && samePath) {
         if (canon.protocol !== page.protocol)
-          p('canonical', 'FAIL', `"${href}" — wrong protocol (${canon.protocol} vs served ${page.protocol}) — canonical must match the served origin`);
-        else p('canonical', LOCAL ? 'INFO' : 'WARN', `"${href}" — port differs from the served URL (${canon.port || 'default'} vs ${page.port || 'default'})`);
-      } else if (LOCAL && samePath) p('canonical', 'INFO', `points to ${canon.origin}${canon.pathname} — production origin, expected in a local build`);
-      else p('canonical', LOCAL ? 'INFO' : 'WARN', `points to ${href} — this page declares itself a duplicate; intended?`);
+          p('canonical', 'FAIL', `"${href}" has the wrong protocol (${canon.protocol} vs served ${page.protocol}). Canonical must match the served origin`);
+        else p('canonical', LOCAL ? 'INFO' : 'WARN', `port of "${href}" differs from the served URL (${canon.port || 'default'} vs ${page.port || 'default'})`);
+      } else if (LOCAL && samePath) p('canonical', 'INFO', `points to ${canon.origin}${canon.pathname} (production origin, expected in a local build)`);
+      else p('canonical', LOCAL ? 'INFO' : 'WARN', `points to ${href}, so this page declares itself a duplicate; intended?`);
     }
   }
 
@@ -364,7 +364,7 @@ async function auditPage(pageUrl, html, headers, { isHome }) {
     if (langAttr) p('html lang', 'OK', langAttr);
     else p('html lang', 'WARN', 'missing lang attribute on <html>');
     if (metas.some((a) => a.name?.toLowerCase() === 'viewport')) p('viewport', 'OK', '');
-    else p('viewport', 'FAIL', 'no viewport meta — fails mobile-first indexing basics');
+    else p('viewport', 'FAIL', 'no viewport meta, which fails mobile-first indexing basics');
     if (/<meta\s+charset/i.test(head) || /charset=/i.test(headers.get('content-type') ?? '')) p('charset', 'OK', '');
     else p('charset', 'WARN', 'no charset declared in meta or Content-Type');
     if (linkTags.some((a) => /icon/.test(a.rel ?? ''))) p('favicon', 'OK', '');
@@ -372,7 +372,7 @@ async function auditPage(pageUrl, html, headers, { isHome }) {
       const fav = await get(new URL('/favicon.ico', pageUrl).href, { redirect: 'follow', timeout: 8000 }).catch(() => null);
       if (fav?.status === 200 && /image|icon/i.test(fav.headers.get('content-type') ?? ''))
         p('favicon', 'OK', 'default /favicon.ico served (no <link rel=icon>, which is fine)');
-      else p('favicon', 'WARN', 'no icon link and no /favicon.ico — favicons show in SERPs and AI citations');
+      else p('favicon', 'WARN', 'no icon link and no /favicon.ico. Favicons show in SERPs and AI citations');
     }
   }
 
@@ -384,7 +384,7 @@ async function auditPage(pageUrl, html, headers, { isHome }) {
 
   // JSON-LD
   const ldBlocks = [...html.matchAll(/<script[^>]*type\s*=\s*["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
-  if (!ldBlocks.length) p('JSON-LD', 'WARN', 'no structured data — add Organization/WebSite (and page-type schema) as JSON-LD');
+  if (!ldBlocks.length) p('JSON-LD', 'WARN', 'no structured data. Add Organization/WebSite (and page-type schema) as JSON-LD');
   else {
     const types = [];
     let parseErrors = 0;
@@ -417,7 +417,7 @@ async function auditPage(pageUrl, html, headers, { isHome }) {
       } catch { return false; }
     });
     const hasDefault = hreflangs.some((a) => a.hreflang.toLowerCase() === 'x-default');
-    p('hreflang', hasSelf ? 'OK' : 'WARN', `${hreflangs.length} alternates${hasSelf ? ', self-referencing' : ' — missing self-reference (required)'}${hasDefault ? ', has x-default' : ', no x-default'}`);
+    p('hreflang', hasSelf ? 'OK' : 'WARN', `${hreflangs.length} alternates${hasSelf ? ', self-referencing' : ', missing self-reference (required)'}${hasDefault ? ', has x-default' : ', no x-default'}`);
     const bad = hreflangs.filter((a) =>
       !/^[a-z]{2,3}(-[A-Za-z]{4})?(-[A-Za-z]{2}|-\d{3})?$|^x-default$/i.test(a.hreflang) ||
       /-uk$/i.test(a.hreflang)); // the classic: en-UK is invalid, the region code is GB
@@ -428,7 +428,7 @@ async function auditPage(pageUrl, html, headers, { isHome }) {
   if (isHome) {
     const og = (n) => metas.find((a) => a.property?.toLowerCase() === n)?.content;
     if (og('og:title') && og('og:image')) p('Open Graph', 'OK', 'og:title + og:image present');
-    else p('Open Graph', 'WARN', 'og:title/og:image incomplete — link previews and some AI surfaces use these');
+    else p('Open Graph', 'WARN', 'og:title/og:image incomplete. Link previews and some AI surfaces use these');
   }
 
   // rendering heuristic: is there real content in the raw HTML?
@@ -442,9 +442,9 @@ async function auditPage(pageUrl, html, headers, { isHome }) {
     /<div[^>]*id\s*=\s*["']?(root|app|__next|__nuxt|svelte)["']?[^>]*>\s*<\/div>/i.test(html) ||
     /<noscript[^>]*>[^<]*(enable JavaScript|JavaScript is required)/i.test(html);
   if (bodyText.length < 200 && csrMarkers)
-    p('server-rendered content', 'FAIL', `empty app-root container and only ${bodyText.length} chars of text in raw HTML — content is client-rendered; most AI crawlers do not execute JS`);
+    p('server-rendered content', 'FAIL', `empty app-root container and only ${bodyText.length} chars of text in raw HTML. Content is client-rendered; most AI crawlers do not execute JS`);
   else if (bodyText.length < 200)
-    p('server-rendered content', 'WARN', `only ${bodyText.length} chars of text in raw HTML — thin for search/AI snippets (fine if the page is genuinely minimal)`);
+    p('server-rendered content', 'WARN', `only ${bodyText.length} chars of text in raw HTML, thin for search/AI snippets (fine if the page is genuinely minimal)`);
   else p('server-rendered content', 'OK', `${bodyText.length} chars of text in raw HTML`);
 
   // mixed content: http:// in resource-loading positions only
@@ -472,10 +472,10 @@ for (const pUrl of sampled) {
   try {
     const r = await follow(pUrl);
     if (!r.final || r.final.status !== 200) {
-      fail(`${new URL(pUrl).pathname}`, `sitemap URL returns ${r.final?.status ?? 'redirect loop'} — sitemaps must list only 200-status canonical URLs`);
+      fail(`${new URL(pUrl).pathname}`, `sitemap URL returns ${r.final?.status ?? 'redirect loop'}. Sitemaps must list only 200-status canonical URLs`);
       continue;
     }
-    if (r.hops.length > 1) warn(`${new URL(pUrl).pathname}`, `sitemap URL redirects (${r.hops.length - 1} hop${r.hops.length > 2 ? 's' : ''}) — list final URLs directly`);
+    if (r.hops.length > 1) warn(`${new URL(pUrl).pathname}`, `sitemap URL redirects (${r.hops.length - 1} hop${r.hops.length > 2 ? 's' : ''}). List final URLs directly`);
     await auditPage(r.finalUrl, await r.final.text(), r.final.headers, { isHome: false });
   } catch (e) { warn(`${new URL(pUrl).pathname}`, `fetch error: ${e.message}`); }
 }
@@ -489,11 +489,11 @@ for (const [d, paths] of seenDescs) if (paths.length > 1)
 // ---------------------------------------------------------------- 5. server behavior
 section = 'Server behavior';
 
-// 404 handling (probe under the site's base path, not the bare origin — matters for subpath deployments)
+// 404 handling (probe under the site's base path, not the bare origin, which matters for subpath deployments)
 try {
   const r = await get(new URL(`definitely-not-a-page-${Date.now()}`, siteBase).href, { redirect: 'follow' });
   if (r.status === 404 || r.status === 410) ok('404 handling', `${r.status} for unknown paths`);
-  else if (r.status === 200) fail('404 handling', 'unknown path returns 200 (soft 404) — search engines waste crawl budget and may index junk URLs');
+  else if (r.status === 200) fail('404 handling', 'unknown path returns 200 (soft 404). Search engines waste crawl budget and may index junk URLs');
   else warn('404 handling', `unknown path returns ${r.status}`);
 } catch (e) { info('404 handling', `error: ${e.message}`); }
 
@@ -504,18 +504,18 @@ if (slashProbe) {
     const pu = new URL(slashProbe);
     const variant = pu.pathname.endsWith('/') ? pu.pathname.slice(0, -1) : pu.pathname + '/';
     const r = await get(new URL(variant, pu.origin).href);
-    if (r.status >= 300 && r.status < 400) ok('trailing slash', `variant redirects (${r.status}) — single canonical form`);
-    else if (r.status === 200) warn('trailing slash', `both ${pu.pathname} and ${variant} serve 200 — duplicate URLs unless canonicals disambiguate`);
+    if (r.status >= 300 && r.status < 400) ok('trailing slash', `variant redirects (${r.status}), single canonical form`);
+    else if (r.status === 200) warn('trailing slash', `both ${pu.pathname} and ${variant} serve 200 (duplicate URLs unless canonicals disambiguate)`);
     else info('trailing slash', `variant returns ${r.status}`);
   } catch { /* skip */ }
-} else info('trailing slash', 'not checked — no non-root page available from the sitemap');
+} else info('trailing slash', 'not checked (no non-root page available from the sitemap)');
 
 // compression + caching + nosniff on the homepage response
-// dev/preview servers legitimately skip compression and hardening headers — informational in --local mode
+// dev/preview servers legitimately skip compression and hardening headers, so these are informational in --local mode
 const hdrLevel = LOCAL ? info : warn;
 const enc = home.headers.get('content-encoding');
 if (enc) ok('compression', enc);
-else hdrLevel('compression', 'no content-encoding on HTML — enable gzip/brotli' + (LOCAL ? ' (check production)' : ''));
+else hdrLevel('compression', 'no content-encoding on HTML. Enable gzip/brotli' + (LOCAL ? ' (check production)' : ''));
 if ((home.headers.get('x-content-type-options') ?? '').toLowerCase() === 'nosniff') ok('X-Content-Type-Options', 'nosniff');
 else hdrLevel('X-Content-Type-Options', 'missing nosniff' + (LOCAL ? ' (check production)' : ''));
 
@@ -527,7 +527,7 @@ if (assetUrl) {
     const r = await get(new URL(assetUrl, finalUrl.href).href, { redirect: 'follow' });
     const cc = r.headers.get('cache-control') ?? '';
     if (/max-age=(\d{5,})/.test(cc) || /immutable/.test(cc)) ok('asset caching', cc);
-    else hdrLevel('asset caching', `Cache-Control: "${cc || '(none)'}" on ${assetUrl} — long-lived caching (immutable + hashed filenames) helps CWV${LOCAL ? ' (check production)' : ''}`);
+    else hdrLevel('asset caching', `Cache-Control: "${cc || '(none)'}" on ${assetUrl}. Long-lived caching (immutable + hashed filenames) helps CWV${LOCAL ? ' (check production)' : ''}`);
   } catch { /* skip */ }
 }
 
@@ -535,8 +535,8 @@ if (assetUrl) {
 section = 'GEO / discovery';
 try {
   const r = await get(new URL('llms.txt', siteBase).href, { redirect: 'follow' });
-  if (r.status === 200 && /text\/(plain|markdown)/.test(r.headers.get('content-type') ?? '')) info('llms.txt', 'present (emerging convention; no confirmed adoption by major AI engines — harmless, low priority)');
-  else info('llms.txt', 'not present (emerging convention; no confirmed adoption by major AI engines — optional)');
+  if (r.status === 200 && /text\/(plain|markdown)/.test(r.headers.get('content-type') ?? '')) info('llms.txt', 'present (emerging convention with no confirmed adoption by major AI engines: harmless, low priority)');
+  else info('llms.txt', 'not present (emerging convention with no confirmed adoption by major AI engines: optional)');
 } catch { /* skip */ }
 
 // ---------------------------------------------------------------- report

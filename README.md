@@ -2,7 +2,7 @@
 
 # 🧠 skills
 
-[![Skills](https://img.shields.io/badge/skills-67-1f6feb?style=flat-square)](#skills)
+[![Skills](https://img.shields.io/badge/skills-68-1f6feb?style=flat-square)](#skills)
 [![Install](https://img.shields.io/badge/install-one%20command-22c55e?style=flat-square)](#install)
 
 </div>
@@ -42,7 +42,7 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 
 ## Skills
 
-> **Legend** — 🟦 own skill · 🟧 vendor skill (git submodule)
+> **Legend:** 🟦 own skill · 🟧 vendor skill (git submodule)
 
 ### 🐙 GitHub & Git
 
@@ -83,13 +83,14 @@ Every skill, mine or third-party, is discoverable from one `skills/` directory. 
 | 🟦 [share-ready](skills/share-ready/SKILL.md) | Audit + fully configure how a site looks when shared (Open Graph, Twitter/X cards, per-platform quirks) and in the browser (title, favicons, theme-color, web manifest). Detects the framework, infers brand values from the repo, generates missing assets (favicon set, 1200×630 og:image), and verifies everything end-to-end with a local script. |
 | 🟦 [seo-geo-audit](skills/seo-geo-audit/SKILL.md) | Technical SEO/GEO audit + fixes for a site: crawlability, sitemaps, robots.txt + AI crawler policy (GPTBot, ClaudeBot, PerplexityBot…), canonicals, structured data, rendering strategy, hreflang, CWV basics, and search-engine verification. Ships a dependency-free live-site auditor script and a verified-vs-folklore GEO reference. |
 | 🟦 [footer-design](skills/footer-design/SKILL.md) | Pick a footer to replicate from [footer.design](https://www.footer.design), then rebuild it. Ships an index of all ~780 footers, each described from its screenshots: layout pattern (giant-wordmark, link-columns…), theme and measured palette, link count and groups, height, rebuild effort, content (opening hours, newsletter, address, payment icons, language switcher…) and link labels. Search uses hard filters for requirements and weighted soft filters for vibe; finalists go into numbered contact sheets and an HTML gallery. For the rebuild, a Playwright inspector measures the live footer (grid, rules, type, artwork, animation-aware) and `compare` puts the result next to the source. Ships 4 eval cases in `evals/`: 30/30 checks pass with the skill vs 22/30 without, in less than half the time. |
-| 🟧 [emil-design-eng](skills/emil-design-eng/SKILL.md) | Build-time companion to `review-animations`: Emil Kowalski's design-engineering playbook for crafting interfaces that feel right — animation decision framework, component building, transforms, gestures, performance, a11y. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
+| 🟧 [emil-design-eng](skills/emil-design-eng/SKILL.md) | Build-time companion to `review-animations`: Emil Kowalski's design-engineering playbook for crafting interfaces that feel right (animation decision framework, component building, transforms, gestures, performance, a11y). From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
 | 🟧 [animation-vocabulary](skills/animation-vocabulary/SKILL.md) | Reverse-lookup glossary that turns a vague description of a motion effect into its exact term ("the bouncy thing when a popover opens" → Pop in; "the iOS rubber-band scroll" → Rubber-banding). For naming an effect, not designing or building one. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
 | 🟧 [apple-design](skills/apple-design/SKILL.md) | Apple's approach to interface design and fluid, physical motion, translated for the web: gesture-driven UI, spring animations, drag/swipe/sheet interactions, momentum and interruptible transitions, translucent materials and depth, typography, reduced-motion, and the design foundations behind Apple-style interfaces. From [emilkowalski/skill](https://github.com/emilkowalski/skill). |
 | 🟧 [state-machine](skills/state-machine/SKILL.md) | Workbench for one component: renders it in every state its code can reach (loading, empty, error, plan tier, role, flags…) on a throwaway route with realistic mock data and a keyboard-driven state switcher, without editing the component. User-invoked (`/state-machine`). From [jakubkrehel/skills](https://github.com/jakubkrehel/skills). |
 | 🟧 [break](skills/break/SKILL.md) | Stress-tests one component: renders it under every worst-case scenario that can reach it (long text, huge lists, narrow containers…) side by side on a temporary page and marks what visibly breaks. User-invoked (`/break`). From [jakubkrehel/skills](https://github.com/jakubkrehel/skills). |
 | 🟧 [variant](skills/variant/SKILL.md) | Builds three deliberately different versions of a component (structure, density, emphasis, type or voice) behind a picker in the real page so you can flip between them and choose. User-invoked (`/variant`). From [jakubkrehel/skills](https://github.com/jakubkrehel/skills). |
 | 🟧 [anatomy](skills/anatomy/SKILL.md) | Explains a technical idea as an invented physical machine, drawn as a detailed, interactive isometric SVG figure with optional WebGL shaders (fire, water, light) and a beta 3D mode. Heavy: a figure takes 30–90 min, a hero 2–4 h. Needs Node 20.10+ and Chrome. From [wheresryan22/anatomy](https://github.com/wheresryan22/anatomy). |
+| 🟧 [modern-web-guidance](skills/modern-web-guidance/SKILL.md) | Looks up Chrome's [Modern Web Guidance](https://developer.chrome.com/docs/modern-web-guidance) for a UI task (`npx modern-web-guidance` search and retrieve, with Baseline data), applies it, then checks the built page in a real browser with the `agent-browser` CLI: layout shift (CLS before and after), reduced motion, light/dark color scheme, and dialog focus and inertness. Reports one row per rule with recorded evidence; a rule with no browser check stays unverified. Needs the `agent-browser` CLI, Node, and `ffmpeg` for recordings. v0.43.0, from [vercel-labs/agent-browser](https://github.com/vercel-labs/agent-browser). |
 
 ### 💡 Product, thinking & writing
 
@@ -159,11 +160,12 @@ Vendor skills are third-party packs tracked as git submodules under `vendor/` an
 | Impeccable | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | v4.4.0 (2026-09-24) | `impeccable` |
 | improve | [shadcn/improve](https://github.com/shadcn/improve) | v1.0.0 | `improve` |
 | Remotion | [remotion-dev/skills](https://github.com/remotion-dev/skills) | v4.0.529 (2026-09-25) | `remotion-best-practices` (router that bundles the 11 per-topic skills) |
-| Emil Kowalski | [emilkowalski/skill](https://github.com/emilkowalski/skill) | main (2026-09-24) | `review-animations`, `emil-design-eng`, `animation-vocabulary`, `apple-design` — upstream also ships `animate`, `animate-expo`, `improve-animations`, `find-animation-opportunities`, `prototype`, `pick-ui-library`, `mobile-native`, `ask-sonner`, `write-swift`; add any of them to the `emil` entry in `VENDOR_SKILLS` to link it |
+| Emil Kowalski | [emilkowalski/skill](https://github.com/emilkowalski/skill) | main (2026-09-24) | `review-animations`, `emil-design-eng`, `animation-vocabulary`, `apple-design`. Upstream also ships `animate`, `animate-expo`, `improve-animations`, `find-animation-opportunities`, `prototype`, `pick-ui-library`, `mobile-native`, `ask-sonner`, `write-swift`; add any of them to the `emil` entry in `VENDOR_SKILLS` to link it |
 | Cloudflare | [cloudflare/skills](https://github.com/cloudflare/skills) | v1.0.2 (2026-10-12) | All 18 skills (see [☁️ Cloudflare](#️-cloudflare)) |
-| Jakub Krehel | [jakubkrehel/skills](https://github.com/jakubkrehel/skills) | v1.10.3 (2026-10-10) | `state-machine`, `break`, `variant` — upstream also ships `better-interface`, `better-ui`, `better-typography`, `better-colors`, `better-accessibility`, `better-layout`, `better-writing`, `interface-review`, `explain-interface`, `build-design`; add any of them to the `jakubkrehel` entry in `VENDOR_SKILLS` to link it |
+| Jakub Krehel | [jakubkrehel/skills](https://github.com/jakubkrehel/skills) | v1.10.3 (2026-10-10) | `state-machine`, `break`, `variant`. Upstream also ships `better-interface`, `better-ui`, `better-typography`, `better-colors`, `better-accessibility`, `better-layout`, `better-writing`, `interface-review`, `explain-interface`, `build-design`; add any of them to the `jakubkrehel` entry in `VENDOR_SKILLS` to link it |
 | Anatomy | [wheresryan22/anatomy](https://github.com/wheresryan22/anatomy) | v1.0.0+ main (2026-10-12) | `anatomy` (the repo root is the skill, so its entry uses `.` as the skills path) |
-| snapcn | [snapcndev/snapcn](https://github.com/snapcndev/snapcn) | main (2026-10-13) | `snapcn`, `remotion-product-demo`, `remotion-launch-video` — upstream also ships `remotion-motion-graphics`, `remotion-logo-animation`, `remotion-explainer-video`, `remotion-kinetic-typography`; add any of them to the `snapcn` entry in `VENDOR_SKILLS` to link it |
+| snapcn | [snapcndev/snapcn](https://github.com/snapcndev/snapcn) | main (2026-10-13) | `snapcn`, `remotion-product-demo`, `remotion-launch-video`. Upstream also ships `remotion-motion-graphics`, `remotion-logo-animation`, `remotion-explainer-video`, `remotion-kinetic-typography`; add any of them to the `snapcn` entry in `VENDOR_SKILLS` to link it |
+| agent-browser | [vercel-labs/agent-browser](https://github.com/vercel-labs/agent-browser) | v0.43.0+ main (2026-11-20) | `modern-web-guidance`, pinned from `skill-data/` (the directory the CLI serves skills from). The `agent-browser` stub under upstream's `skills/` is deliberately not linked: its description tells agents to prefer agent-browser over every other browser tool. `skill-data/` also ships `core`, `dogfood`, `electron`, `slack`, `derive-client`, `webmcp-gen`, `vercel`, `vercel-sandbox`, `agentcore`; add any of them to the `agent-browser` entry in `VENDOR_SKILLS` to link it |
 
 **Keep a clone up to date with one command:**
 
@@ -227,7 +229,7 @@ catalogs); from the `curl` one-liner it goes straight to picking skills. Move wi
 toggle with space, confirm with enter. Piped or CI runs print plain text with no colors or prompts beyond the flags
 you pass.
 
-**Manual install** — copy any skill directory into your platform's skills folder:
+**Manual install.** Copy any skill directory into your platform's skills folder:
 
 ```bash
 cp -r skills/pr-dashboard ~/.cursor/skills/    # Cursor
@@ -257,7 +259,7 @@ Skills use the same `SKILL.md` format everywhere. The only difference is where t
 | Cursor | `~/.cursor/skills/<skill-name>/` |
 | Claude Code | `~/.claude/skills/<skill-name>/` |
 
-Most GitHub-related skills need the [GitHub CLI](https://cli.github.com/) (`gh`). `writing-voice`, `writing-google-style`, `teach`, and `remotion-best-practices` have no extra requirements — `writing-google-style` ships a scanner script, but it needs only `bash` and `awk`. `impeccable` downloads its self-contained launcher binary once on first run (no Node or other runtime needed).
+Most GitHub-related skills need the [GitHub CLI](https://cli.github.com/) (`gh`). `writing-voice`, `writing-google-style`, `teach`, and `remotion-best-practices` have no extra requirements. `writing-google-style` ships a scanner script, but it needs only `bash` and `awk`. `impeccable` downloads its self-contained launcher binary once on first run (no Node or other runtime needed). `modern-web-guidance` needs the [agent-browser](https://github.com/vercel-labs/agent-browser) CLI (`npm i -g agent-browser && agent-browser install`, which downloads Chrome), Node for `npx modern-web-guidance`, and `ffmpeg` for its recordings.
 
 ## License
 

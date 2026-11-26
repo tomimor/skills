@@ -73,11 +73,11 @@ Short, scannable, capped at ~7 findings. Format:
 
 Severities:
 
-- **Must fix** — the prompt will likely produce wrong or unusable output as-is.
-- **Should fix** — the prompt works but leaks tokens, drifts in style, or under-specifies.
-- **Nice to have** — polish, naming, ordering.
+- **Must fix**: the prompt will likely produce wrong or unusable output as-is.
+- **Should fix**: the prompt works but leaks tokens, drifts in style, or under-specifies.
+- **Nice to have**: polish, naming, ordering.
 
-If more than 7 findings, group them ("Multiple negative-only instructions throughout — see rewrite") rather than enumerating each.
+If more than 7 findings, group them ("Multiple negative-only instructions throughout, see rewrite") rather than enumerating each.
 
 ### Step 5: Produce the rewrite
 
@@ -106,12 +106,12 @@ The rewrite must NOT:
 
 ## Anti-Patterns to Fix on Sight
 
-- **"Be helpful / be concise / be professional"** — vague. Replace with concrete behavior or examples.
-- **"Don't hallucinate"** — tell the model what to do instead: "Only state claims supported by the provided documents. If unsure, say 'not in the documents.'"
-- **"You are an AI assistant"** — generic role, no signal. Give a specific role tied to the task.
-- **Stacked negatives** ("don't do X, don't do Y, never do Z") — convert to a positive spec or a single `<constraints>` block.
-- **Examples wrapped in prose** — pull them into `<example>` tags so the model can find the boundary.
-- **Output format described in adjectives** ("a clean, well-formatted response") — show a literal template instead.
+- **"Be helpful / be concise / be professional"**: vague. Replace with concrete behavior or examples.
+- **"Don't hallucinate"**: tell the model what to do instead, for example "Only state claims supported by the provided documents. If unsure, say 'not in the documents.'"
+- **"You are an AI assistant"**: generic role, no signal. Give a specific role tied to the task.
+- **Stacked negatives** ("don't do X, don't do Y, never do Z"): convert to a positive spec or a single `<constraints>` block.
+- **Examples wrapped in prose**: pull them into `<example>` tags so the model can find the boundary.
+- **Output format described in adjectives** ("a clean, well-formatted response"): show a literal template instead.
 
 ## Rewrite Self-Check
 

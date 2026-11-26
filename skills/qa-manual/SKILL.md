@@ -11,7 +11,7 @@ description: >-
 # QA Manual (web)
 
 Structured manual QA of a web feature, driven through Chrome MCP. The output
-is evidence — `verification-before-completion` is the gate that consumes it.
+is evidence: `verification-before-completion` is the gate that consumes it.
 
 ## When to use
 
@@ -50,9 +50,9 @@ For each case (happy path + edges):
 2. **Reset state if needed.** Clear localStorage, cookies, IndexedDB if the
    test needs a clean slate. A test that only passes with stale state isn't a
    real test.
-3. **Exercise the flow.** Click, type, submit — mimic a real user. Use
+3. **Exercise the flow.** Click, type, submit: mimic a real user. Use
    Chrome MCP's interaction tools (`form_input` for form fields, plus
-   whatever click/navigation tools the connected Chrome MCP exposes — check
+   whatever click/navigation tools the connected Chrome MCP exposes: check
    the available tool list if unsure).
 4. **Capture three signals each step:**
    - **Visual:** capture a screenshot of the result using Chrome MCP's
@@ -83,9 +83,9 @@ Example:
 >
 > 1. **Happy path:** login → callback → land on dashboard. **Pass.**
 >    Screenshot captured.
-> 2. **Edge — missing state param:** callback URL stripped of `state`.
+> 2. **Edge (missing state param):** callback URL stripped of `state`.
 >    **Pass.** Redirects to login with error toast. Screenshot.
-> 3. **Edge — double-submit:** trigger callback twice in 200ms.
+> 3. **Edge (double-submit):** trigger callback twice in 200ms.
 >    **Pass.** Idempotent, single session.
 >
 > **Console:** clean.
@@ -109,8 +109,8 @@ Example:
 
 ## Pair with
 
-- `verification-before-completion` — the gate that consumes this skill's
+- `verification-before-completion`: the gate that consumes this skill's
   output before allowing a "done" claim.
-- `ui-review` — broader visual / a11y / typography review. This skill is
+- `ui-review`: broader visual / a11y / typography review. This skill is
   about behavior; that one is about polish.
-- `verify-pr` — when verifying a whole PR end-to-end, not just one feature.
+- `verify-pr`: when verifying a whole PR end-to-end, not just one feature.

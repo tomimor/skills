@@ -162,7 +162,7 @@
 
     <header>
       <h1>skills</h1>
-      <p class="tagline">67 agent skills I use daily across Cursor and Claude Code.</p>
+      <p class="tagline">68 agent skills I use daily across Cursor and Claude Code.</p>
       <p>
         <a class="cta primary" href="#install">Install</a>
         <a class="cta" href="https://github.com/tomimor/skills">View on GitHub</a>
@@ -435,7 +435,7 @@
             <a href="skills/emil-design-eng/SKILL.md">emil-design-eng</a>
             <span class="badge vendor">vendor</span>
           </div>
-          <p>Build-time companion to <code>review-animations</code>: Emil Kowalski’s design-engineering playbook for crafting interfaces that feel right — animation decision framework, component building, transforms, gestures, performance, a11y. From <a href="https://github.com/emilkowalski/skill">emilkowalski/skill</a>.</p>
+          <p>Build-time companion to <code>review-animations</code>: Emil Kowalski’s design-engineering playbook for crafting interfaces that feel right (animation decision framework, component building, transforms, gestures, performance, a11y). From <a href="https://github.com/emilkowalski/skill">emilkowalski/skill</a>.</p>
         </div>
         <div class="skill">
           <div class="skill-head">
@@ -478,6 +478,13 @@
             <span class="badge vendor">vendor</span>
           </div>
           <p>Explains a technical idea as an invented physical machine, drawn as a detailed, interactive isometric SVG figure with optional WebGL shaders (fire, water, light) and a beta 3D mode. Heavy: a figure takes 30–90 min, a hero 2–4 h. Needs Node 20.10+ and Chrome. From <a href="https://github.com/wheresryan22/anatomy">wheresryan22/anatomy</a>.</p>
+        </div>
+        <div class="skill">
+          <div class="skill-head">
+            <a href="skills/modern-web-guidance/SKILL.md">modern-web-guidance</a>
+            <span class="badge vendor">vendor</span>
+          </div>
+          <p>Looks up Chrome's <a href="https://developer.chrome.com/docs/modern-web-guidance">Modern Web Guidance</a> for a UI task (<code>npx modern-web-guidance</code> search and retrieve, with Baseline data), applies it, then checks the built page in a real browser with the <code>agent-browser</code> CLI: layout shift (CLS before and after), reduced motion, light/dark color scheme, and dialog focus and inertness. Reports one row per rule with recorded evidence; a rule with no browser check stays unverified. Needs the <code>agent-browser</code> CLI, Node, and <code>ffmpeg</code> for recordings. v0.43.0, from <a href="https://github.com/vercel-labs/agent-browser">vercel-labs/agent-browser</a>.</p>
         </div>
       </div>
 
@@ -781,7 +788,7 @@
           <tr><td>Claude Code</td><td><code>~/.claude/skills/&lt;skill-name&gt;/</code></td></tr>
         </tbody>
       </table>
-      <p>Most GitHub-related skills need the <a href="https://cli.github.com/">GitHub CLI</a> (<code>gh</code>). <code>writing-voice</code>, <code>writing-google-style</code>, <code>teach</code>, and <code>remotion-best-practices</code> have no extra requirements (<code>writing-google-style</code> ships a scanner script that needs only <code>bash</code> and <code>awk</code>). <code>impeccable</code> downloads its self-contained launcher binary once on first run.</p>
+      <p>Most GitHub-related skills need the <a href="https://cli.github.com/">GitHub CLI</a> (<code>gh</code>). <code>writing-voice</code>, <code>writing-google-style</code>, <code>teach</code>, and <code>remotion-best-practices</code> have no extra requirements (<code>writing-google-style</code> ships a scanner script that needs only <code>bash</code> and <code>awk</code>). <code>impeccable</code> downloads its self-contained launcher binary once on first run. <code>modern-web-guidance</code> needs the <a href="https://github.com/vercel-labs/agent-browser">agent-browser</a> CLI (<code>npm i -g agent-browser &amp;&amp; agent-browser install</code>, which downloads Chrome), Node for <code>npx modern-web-guidance</code>, and <code>ffmpeg</code> for its recordings.</p>
     </section>
 
     <footer>

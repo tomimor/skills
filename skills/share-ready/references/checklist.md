@@ -2,18 +2,18 @@
 
 Every tag/asset the audit (Phase 2) checks and the implementation (Phase 4)
 targets. The canonical head block at the bottom is the framework-neutral
-reference — frameworks.md maps it to each framework's API.
+reference, and frameworks.md maps it to each framework's API.
 
 ## Title & description
 
 | Item | Recommended | Notes |
 |---|---|---|
-| `<title>` | ≤60 chars, brand last (`Page — Site`) | Browser tab text; also the fallback for og:title |
+| `<title>` | ≤60 chars, brand last (`Page - Site`) | Browser tab text; also the fallback for og:title |
 | `<meta name="description">` | 50–160 chars, marketing copy | Fallback for og:description; shown in SERPs |
 
 ## Open Graph (link previews everywhere)
 
-Used by Facebook, WhatsApp, LinkedIn, Discord, Slack, Telegram, iMessage —
+Used by Facebook, WhatsApp, LinkedIn, Discord, Slack, Telegram, iMessage,
 and by X when no twitter:* tags exist.
 
 | Tag | Value | Notes |
@@ -43,20 +43,20 @@ summary card instead of the large image.
 |---|---|---|
 | `twitter:card` | `summary_large_image` | Or `summary` for square-logo style |
 | `twitter:site` | `@brandhandle` | Optional; attribution |
-| `twitter:title` / `twitter:description` / `twitter:image` | Omit if same as OG | X falls back to og:* — don't duplicate for no reason |
+| `twitter:title` / `twitter:description` / `twitter:image` | Omit if same as OG | X falls back to og:*, so don't duplicate for no reason |
 
 `summary_large_image` renders ~2:1; the 1200×630 og:image works. 5MB max.
 
 ## Favicons & app icons (the minimal modern set)
 
-Five files + manifest cover everything — dozens of sizes are obsolete since
+Five files + manifest cover everything. Dozens of sizes are obsolete since
 browsers resize what you ship:
 
 | File | Size | Purpose |
 |---|---|---|
 | `favicon.ico` | multi-size 16/32/48 at site root | Legacy browsers, old crawlers, tools that hit `/favicon.ico` blind |
 | `icon.svg` | vector | Modern browsers; supports dark mode via internal `@media (prefers-color-scheme)` CSS |
-| `apple-touch-icon.png` | 180×180, **opaque** | iOS home screen/share sheet; iOS puts black behind alpha — flatten on a background. Art that fills the frame edge-to-edge usually looks better with ~20px of breathing room baked into the source |
+| `apple-touch-icon.png` | 180×180, **opaque** | iOS home screen/share sheet; iOS puts black behind alpha, so flatten on a background. Art that fills the frame edge-to-edge usually looks better with ~20px of breathing room baked into the source |
 | `icon-192.png` | 192×192 | Manifest: Android home screen |
 | `icon-512.png` | 512×512 | Manifest: splash screen |
 | `icon-maskable-512.png` | 512×512, art within center 80% | Manifest `purpose: "maskable"`: Android adaptive icons. Safe zone = centered circle, radius 40% of width (409px on 512). Check at maskable.app |
@@ -67,7 +67,7 @@ browsers resize what you ship:
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 ```
 
-The explicit `sizes="32x32"` on the ICO line is deliberate — it works around
+The explicit `sizes="32x32"` on the ICO line is deliberate: it works around
 Chrome preferring the ICO over the higher-quality SVG.
 
 ## Web app manifest
@@ -93,7 +93,7 @@ Preferred extension `.webmanifest` (served as `application/manifest+json`);
 ```
 
 - `short_name` ≤12 chars or launchers truncate it.
-- Don't add legacy `apple-mobile-web-app-capable` meta tags — the manifest
+- Don't add legacy `apple-mobile-web-app-capable` meta tags: the manifest
   replaced them.
 - HTML `<meta name="theme-color">` overrides the manifest's `theme_color`
   when both exist.
@@ -110,7 +110,7 @@ Preferred extension `.webmanifest` (served as `application/manifest+json`);
 Colors the Android Chrome toolbar / installed-PWA title bar / Safari chrome.
 Any valid CSS color; the `media` attribute takes any media query. Support is
 uneven: Firefox and regular desktop Chrome tabs ignore it (desktop Chrome
-applies it only to installed PWAs), and alpha values are ignored — don't
+applies it only to installed PWAs), and alpha values are ignored. Don't
 treat it as guaranteed, treat it as free polish. The manifest's `theme_color`
 additionally rejects transparency and CSS variables. Pair with
 `<meta name="color-scheme" content="light dark">` so native form controls
@@ -128,7 +128,7 @@ across `www`/non-www and trailing-slash variants.
 ## Canonical head block (framework-neutral)
 
 ```html
-<title>Page Title — Site Name</title>
+<title>Page Title - Site Name</title>
 <meta name="description" content="50–160 char marketing description." />
 <link rel="canonical" href="https://example.com/" />
 

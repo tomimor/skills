@@ -13,7 +13,7 @@ description: >-
 Find the top 3 GitHub issues in the current repo that are best suited for
 an AI agent to pick up, and produce a kickoff prompt for each.
 
-This skill is **read-only**. Never assign, label, or comment on any issue —
+This skill is **read-only**. Never assign, label, or comment on any issue:
 the output is for the user to act on.
 
 ## Resolve the current repo
@@ -60,7 +60,7 @@ Skip the issue (do not include in the ranking) if any of these are true:
   or flag the issue as blocked on another task or external input.
 - Security-sensitive (auth, crypto, secrets handling) without clear scope.
 - Comment thread shows reviewers disagreeing on the desired behavior.
-- Title or labels indicate a question, discussion, or RFC — not work.
+- Title or labels indicate a question, discussion, or RFC, not work.
 
 ## Pick the top 3
 
@@ -79,7 +79,7 @@ One block per pick, separated by `---`:
 ````
 ## Top AI-ready issues in OWNER/REPO
 
-### 1. [#NUMBER — Title](URL)
+### 1. [#NUMBER: Title](URL)
 - Score: 13/15 (Clarity 3, Scope 3, Self-contained 2, Size 3, Signal 2)
 - Labels: bug, good first issue
 - Why it's AI-ready: <2-3 sentences distilled from the issue>
@@ -105,7 +105,7 @@ Reference: <issue URL>
 ### 2. ...
 ````
 
-The kickoff prompt is the deliverable — it must be self-contained enough to
+The kickoff prompt is the deliverable: it must be self-contained enough to
 paste into a fresh agent chat (Cursor, Codex, Claude Code) and start work
 without further questions.
 
@@ -121,6 +121,6 @@ Scanned N open issues in OWNER/REPO, M passed the rubric, top K shown.
   light on detail, lower the Scope score; do not fabricate.
 - Do NOT pick issues with active reviewer debate, even if otherwise clear.
 - Do NOT pad the list to 3 when fewer issues qualify.
-- Do NOT include the full issue body in the kickoff prompt — distill it.
+- Do NOT include the full issue body in the kickoff prompt. Distill it.
 - Do NOT recommend issues assigned to someone or already linked to a PR; the
   search query should exclude them, but double-check before ranking.

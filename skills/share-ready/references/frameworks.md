@@ -7,14 +7,14 @@ How to implement the canonical checklist per framework. Detect first
 
 Prefer the typed APIs over hand-written `<meta>` tags.
 
-### Site-wide defaults — `app/layout.tsx`
+### Site-wide defaults: `app/layout.tsx`
 
 ```tsx
 import type { Metadata, Viewport } from 'next'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://example.com'),
-  title: { default: 'Site Name', template: '%s — Site Name' },
+  title: { default: 'Site Name', template: '%s - Site Name' },
   description: 'Marketing description.',
   openGraph: {
     type: 'website',
@@ -40,19 +40,19 @@ Gotchas (verified against the Next.js docs):
 
 - **Always set `metadataBase`.** The docs claim a missing one is a build
   error, but the implementation actually falls back to a default
-  (localhost/deploy URL) — worse, because relative `og:image`s then silently
+  (localhost/deploy URL). That is worse, because relative `og:image`s then silently
   resolve against the wrong host in some environments. Set it once in the
   root layout; relative paths compose against it.
 - **`themeColor`, `colorScheme`, `viewport` inside `metadata` are deprecated**
-  (since Next 14) — they belong in the separate `viewport`/`generateViewport`
+  (since Next 14): they belong in the separate `viewport`/`generateViewport`
   export.
 - **Merging is shallow, per segment.** A child page that defines its own
-  `openGraph` replaces the parent's whole `openGraph` object — repeat
+  `openGraph` replaces the parent's whole `openGraph` object, so repeat
   `siteName`/`type` or centralize in a helper.
 - Per-page: export `metadata` or `generateMetadata()` from each `page.tsx`
   with `title`, `description`, `openGraph`, `alternates.canonical`.
 
-### File conventions (icons & og:image) — preferred over the config object
+### File conventions (icons & og:image), preferred over the config object
 
 Files in `app/` auto-inject the tags and **override** the metadata object:
 
@@ -63,7 +63,7 @@ Files in `app/` auto-inject the tags and **override** the metadata object:
 - `app/opengraph-image.alt.txt` → `og:image:alt`
 - `app/manifest.ts` → typed web manifest
 
-Dynamic og:image — `app/opengraph-image.tsx`:
+Dynamic og:image, in `app/opengraph-image.tsx`:
 
 ```tsx
 import { ImageResponse } from 'next/og'
@@ -97,11 +97,11 @@ its own card. When using this, skip `scripts/render-og-image.mjs`.
 
 Note: Next.js streams metadata for JS-executing bots but serves it in the
 `<head>` for HTML-only scrapers (facebookexternalhit etc.) via user-agent
-detection — no extra work needed, but verify with the curl spot-check.
+detection. No extra work needed, but verify with the curl spot-check.
 
 ### Next.js Pages Router
 
-No Metadata API — use `next/head` in `_app.tsx`/pages, or the `next-seo`
+No Metadata API: use `next/head` in `_app.tsx`/pages, or the `next-seo`
 package. Same tags as the canonical head block.
 
 ## Astro
@@ -130,7 +130,7 @@ const imageURL = new URL(image, Astro.site)
 ```
 
 Use it in the base layout's `<head>` with per-page props. **Set `site` in
-`astro.config.mjs`** — it's what makes URLs absolute. Static assets
+`astro.config.mjs`**: it's what makes URLs absolute. Static assets
 (favicons, manifest, og.png) go in `public/`. The `astro-seo` package is a
 maintained alternative.
 
@@ -145,11 +145,11 @@ twitterCard, ... })` is typed and XSS-safe. Absolute og:image: compose from
 
 `<svelte:head>` in `+layout.svelte` for site-wide tags and in `+page.svelte`
 for per-page overrides, fed from `+page.ts` `load` data. Assets in `static/`.
-Ensure prerendering or SSR is on for shared routes — scrapers don't run JS.
+Ensure prerendering or SSR is on for shared routes: scrapers don't run JS.
 
 ## Vite SPA / plain HTML
 
-Everything goes directly in `index.html`'s `<head>` — use the canonical head
+Everything goes directly in `index.html`'s `<head>`: use the canonical head
 block from checklist.md verbatim, assets in `public/` (Vite) or the web root.
 
 **SPA warning (applies to any client-rendered site):** scrapers do not
